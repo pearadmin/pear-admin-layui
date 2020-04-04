@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" href="../../../component/layui/css/layui.css" />
+	    <link rel="stylesheet" href="../../../component/notiflix/notiflix-2.0.0.css"/>
+		<link rel="stylesheet" href="../../../admin/css/pearButton.css"/>
+		<link rel="stylesheet" href="../../../admin/css/pearOper.css"/>
+		<style>
+	    	.pear-container{
+	    		background-color: whitesmoke;
+	    		margin: 10px;
+	    	}
+	    </style>
+	</head>
+	<body class="pear-container">
+		
+	
+		<div class="layui-card">
+			<div class="layui-card-header">消息提醒</div>
+			<div class="layui-card-body">
+				<div>
+					<span>pearOper.Report("success","成功消息",msg)</span>
+					<br>
+					<br>
+					<span>pearOper.Report("failure","错误消息",msg)</span>
+					<br>
+					<br>
+					<span>pearOper.Report("warning","警告消息",msg)</span>
+					<br>
+					<br>
+					<span>pearOper.Report("info","详情消息",msg)</span>
+					<br>
+					<br>
+				</div>
+			
+				<button class="report-info pear-btn pear-btn-primary">通用消息</button>&nbsp;&nbsp;
+				<button class="report-success pear-btn pear-btn-success">成功消息</button>&nbsp;&nbsp;
+				<button class="report-failure pear-btn pear-btn-danger">错误消息</button>&nbsp;&nbsp;
+				<button class="report-warning pear-btn pear-btn-warming">警告消息</button>&nbsp;&nbsp;
+				
+			</div>
+		</div>
+		
+		<div class="layui-card">
+			<div class="layui-card-header">消息提醒</div>
+			<div class="layui-card-body">
+				<div>
+					<span>pearOper.msg("success","成功消息",msg)</span>
+					<br>
+					<br>
+					<span>pearOper.msg("failure","错误消息",msg)</span>
+					<br>
+					<br>
+					<span>pearOper.msg("warning","警告消息",msg)</span>
+					<br>
+					<br>
+					<span>pearOper.msg("info","详情消息",msg)</span>
+					<br>
+					<br>
+				</div>
+			
+				<button class="notice-info pear-btn pear-btn-primary">通用消息</button>&nbsp;&nbsp;
+				<button class="notice-success pear-btn pear-btn-success">成功消息</button>&nbsp;&nbsp;
+				<button class="notice-failure pear-btn pear-btn-danger">错误消息</button>&nbsp;&nbsp;
+				<button class="notice-warning pear-btn pear-btn-warming">警告消息</button>&nbsp;&nbsp;
+				
+			</div>
+		</div>
+	  
+		<div class="layui-card">
+			<div class="layui-card-header">消息提醒</div>
+			<div class="layui-card-body">
+				
+				<div>
+					<br>
+					<span>
+						pearOper.confirm({ 
+							title : 标题 ,
+							message : 内容 ,
+							success : 成功函数 ,
+							cancle : 取消函数 
+						})
+					</span>
+					<br>
+					<br>
+					
+				</div>
+			
+				<button class="confirm pear-btn pear-btn-primary">通用消息</button>&nbsp;&nbsp;
+				
+			</div>
+		</div>
+		
+		
+		<div class="layer-right">
+		
+		</div>
+	    
+	   
+		
+		
+		<script src="../../../component/layui/layui.js"></script>
+	    <script>
+			layui.use(['element','jquery','pearOper','code'],function(){
+				var element = layui.element;
+				var $ = layui.jquery;
+				var pearOper = layui.pearOper;
+				
+				var msg = '"Do not try to become a person of success but try to become a person of value." <br><br>- Albert Einstein'
+				
+				$(".report-success").click(function(){
+					
+					pearOper.report({type:"success",title:"成功消息",message:msg});
+				
+				})
+				
+				$(".report-failure").click(function(){
+					
+					pearOper.report({type:"failure",title:"成功消息",message:msg});
+				
+				})
+				
+				$(".report-warning").click(function(){
+					
+					pearOper.report({type:"warning",title:"成功消息",message:msg});
+				
+				})
+				
+				$(".report-info").click(function(){
+					
+					pearOper.report({type:"info",title:"成功消息",message:msg});
+				
+				})
+				
+				$(".notice-success").click(function(){
+					
+					pearOper.notice({position:'right-top',type:"success",title:"成功消息"});
+				
+				})
+				
+				$(".notice-failure").click(function(){
+					
+					pearOper.notice({position:'right-top',type:"failure",title:"成功消息"});
+				
+				})
+				
+				$(".notice-warning").click(function(){
+					
+					pearOper.notice({position:'right-top',type:"warning",title:"成功消息"});
+				
+				})
+				
+				$(".notice-info").click(function(){
+					
+					pearOper.notice({position:'right-top',type:"info",title:"成功消息"});
+				
+				})
+				
+				$(".confirm").click(function(){
+					
+					
+					pearOper.confirm({
+						title:"确认框",
+						message:msg,
+						success:function(){
+							console.log("确认")
+						},
+						cancle:function(){
+							console.log("取消");
+						}
+					})
+				})
+				
+			})
+		</script>
+	</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>工作台</title>
+		<link rel="stylesheet" href="../../component/layui/css/layui.css" />
+		<link rel="stylesheet" href="../../component/font-awesome-4.7.0/css/font-awesome.css" />
+	
+		<style>
+			.avatar {
+				width: 110px;
+				height: 110px;
+				border-radius: 100px;
+				margin: 10px;
+				margin-left: 35px;
+			}
+
+			#info {
+				margin-top: 20px;
+			}
+
+			#info .info-title {
+
+				opacity: 0.8;
+				font-size: 18px;
+			}
+
+			#info .info-content {
+				margin-top: 40px;
+				font-size: 13px;
+				color: gray;
+			}
+			.card{
+				width:100%;
+				height:160px;
+				background-color: whitesmoke;
+				border-radius: 5px;
+				
+			}
+			.card .header .avatar{
+				width: 25px;
+				height: 25px;
+				margin:20px;
+			}
+			.card .header{
+				color: dimgray;
+			}
+			.card .body{
+				color:gray;
+			}
+			.card .body{
+				margin-left:20px;
+				margin-right:20px;
+			}
+			.card .footer{
+				margin-left:20px;
+				margin-right:20px;
+				margin-top:20px;
+				font-size: 13px;
+				color: gray;
+				position: absolute;
+				
+			}
+		
+			.card:hover{
+				box-shadow: 0px 0px 5px darkgray;
+				background-color: white;
+			}
+			.list{
+			
+			}
+			
+			.list .list-item{
+			       height: 40px;
+				   line-height: 40px;
+				   color: gray;
+				   padding: 5px;
+				   padding-left: 15px;
+				   border-radius: 3px;
+			}
+			
+			.list .list-item:hover{
+				background-color: whitesmoke;
+			}
+			
+			
+			.list .list-item .title{
+				font-size:14px;
+				width: 100%;
+			}
+			.list .list-item .footer{
+				position: absolute;
+				right: 30px;
+				font-size: 12px;
+			}
+			
+		
+		</style>
+
+	</head>
+	<body style="background-color: gainsboro;" class="layui-anim layui-anim-upbit">
+		<div class="layui-card">
+			<div class="layui-card-body">
+				<div class="layui-row">
+					<div class="layui-col-md2 layui-col-xs4 layui-hide-xs">
+						<img src="../../assets/images/avatar.jpg" style="box-shadow:2px 0px 10px gray;" class="avatar">
+					</div>
+					<div class="layui-col-md8 layui-col-xs12">
+						<div id="info">
+							<h3 class="info-title">晚上好，就眠仪式，休息一会儿吧 !</h3>
+							<div class="info-content"> 前端工程师 | 蚂蚁金服 | 软件二部 | Lay平台 </div>
+						</div>
+					</div>
+					<div class="layui-col-md2 layui-col-xs2 layui-hide-xs">
+						<div style="height: 20px!important;"></div>
+						<a href='https://gitee.com/Jmysy/Pear-One-Layui'><img src='https://gitee.com/Jmysy/Pear-One-Layui/widgets/widget_3.svg?color=756ae8' alt='Fork me on Gitee/'></img></a>
+					</div>
+				</div>
+
+
+			</div>
+		</div>
+
+		<div class="layui-pearone-container layui-row layui-col-space10" style="margin-left:5px;margin-right: 5px;">
+			<div class="layui-col-md9 layui-row">
+		
+				<div class="layui-col-md12">
+					<div class="layui-card">
+						<div class="layui-card-header">我的项目</div>
+						<div class="layui-card-body">
+							<div class="layui-row layui-col-space10">
+								<div class="layui-col-md4">
+									<div  class="card">
+										<div class="header">
+										<img class="avatar" src="../../assets/images/avatar.jpg"></img><span class="title">PearOne</span>
+									    </div>
+										<div class="body">
+									        城镇中有那么多的酒馆，她却偏偏走进了我的酒馆
+										</div>
+										<div class="footer">9小时前</div>
+									</div>
+								</div>
+								<div class="layui-col-md4">
+									<div  class="card">
+										<div class="header">
+										<img class="avatar" src="../../assets/images/avatar.jpg"></img><span class="title">Angular</span>
+									    </div>
+										<div class="body">
+											希望是一个好东西，也许是最好的，好东西是不会消亡
+										</div>
+										<div class="footer">9小时前</div>
+									</div>
+								</div>
+								<div class="layui-col-md4">
+									<div  class="card">
+										<div class="header">
+										<img class="avatar" src="../../assets/images/avatar.jpg"></img><span class="title">Vue</span>
+									    </div>
+										<div class="body">
+											生命就像一盒巧克力，结果往往出人意料
+										</div>
+										<div class="footer">9小时前</div>
+									</div>
+								</div>
+								<div class="layui-col-md4">
+									<div  class="card">
+										<div class="header">
+										<img class="avatar" src="../../assets/images/avatar.jpg"></img><span class="title">BootStrap</span>
+									    </div>
+										<div class="body">
+											一切都在不可避免的走向庸俗
+										</div>
+										<div class="footer">9小时前</div>
+									</div>
+								</div>
+								<div class="layui-col-md4">
+									<div  class="card">
+										<div class="header">
+										<img class="avatar" src="../../assets/images/avatar.jpg"></img><span class="title">Ant Design</span>
+									    </div>
+										<div class="body">
+											你要是愿意，我就永远爱你，你要是不愿意，我就永远相思
+										</div>
+										<div class="footer">9小时前</div>
+									</div>
+								</div>
+								<div class="layui-col-md4">
+									<div  class="card">
+										<div class="header">
+										<img class="avatar" src="../../assets/images/avatar.jpg"></img><span class="title">Jmys</span>
+									    </div>
+										<div class="body">
+											在所谓'人世间'摸爬滚打至今，我唯一愿意是为真理的，一切都会过去
+										</div>
+										<div class="footer">9小时前</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="layui-card">
+						<div class="layui-card-header">开源动态</div>
+						<div class="layui-card-body">
+						<script src='https://gitee.com/Jmysy/Pear-One-Layui/widget_preview' async defer></script>
+						<div id="osc-gitee-widget-tag"></div>
+						<style>
+						.osc_pro_color {color: #4183c4 !important;}
+						.osc_panel_color {background-color: #ffffff !important;}
+						.osc_background_color {background-color: #ffffff !important;}
+						.osc_border_color {border-color: #e3e9ed !important;}
+						.osc_desc_color {color: #666666 !important;}
+						.osc_link_color * {color: #9b9b9b !important;}
+						</style>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			<div class="layui-col-md3">
+				<div class="layui-card">
+					<div class="layui-card-header">最近更新</div>
+					<div class="layui-card-body">
+						<ul class="list">
+							<li class="list-item"><span class="title">兼容多系统菜单模式</span><span class="footer">2019-12-15   11:28</span></li>
+							<li class="list-item"><span class="title">可视化配置选项卡样式</span><span class="footer">2019-12-14   10:30</span></li>
+							<li class="list-item"><span class="title">兼容多标签页切换</span><span class="footer">2019-12-9   14:58</span></li>
+							<li class="list-item"><span class="title">扩展下拉组件</span><span class="footer">2019-12-7   9:06</span></li>
+							<li class="list-item"><span class="title">加入第三方消息通知</span><span class="footer">2019-12-5   22:18</span></li>
+							<li class="list-item"><span class="title">扩展卡片样式</span><span class="footer">2019-12-1   10:26</span></li>
+							<li class="list-item"><span class="title">框架正式开源</span><span class="footer">2019-11-27   07:23</span></li>
+							<li class="list-item"><button class="layui-btn layui-btn-normal layui-btn-fluid">查 看 更 多</button></li>
+					   </ul>
+				
+					</div>
+				</div>
+				
+				<div class="layui-card">
+					<div class="layui-card-header">版本信息</div>
+					<div class="layui-card-body">
+						<table class="layui-table">
+							<thead>
+								<tr>
+									<th>脚手框架</th>
+									<th>Pear One</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>开源作者</td>
+									<td>就 眠 仪 式</td>
+								</tr>
+								<tr>
+									<td>当前版本</td>
+									<td>1.0.1 Version</td>
+								</tr>
+								<tr>
+									<td>基于框架</td>
+									<td>Layui | JQuery | awesome</td>
+								</tr>
+								<tr>
+									<td>开源协议</td>
+									<td>Apache License</td>
+								</tr>
+								<tr>
+									<td>开发周期</td>
+									<td>2019 年 11 月 15 日</td>
+								</tr>
+
+								<tr>
+									<td>下载渠道</td>
+									<td>
+										<button class="layui-btn layui-btn-normal layui-btn-sm">
+											<i class="fa fa-gitlab"></i><span>&nbsp;码 云</span>
+										</button>
+										<button class="layui-btn layui-btn-primary layui-btn-sm">
+											<i class="fa fa-github"></i><span>&nbsp;Git Hub</span>
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+					</div>
+				</div>
+			</div>
+		
+	
+
+
+
+
+		</div>
+		<script src="../../component/layui/layui.js"></script>
+		<script>
+			layui.use(['carousel', 'form'], function() {
+				var carousel = layui.carousel,
+					form = layui.form;
+
+			
+
+
+
+			});
+		</script>
+
+	</body>
+</html>

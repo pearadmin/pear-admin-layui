@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>首页三</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link rel="stylesheet" href="../../component/layui/css/layui.css" media="all">
+
+		<style>
+			.top-panel {
+				border-radius: 4px;
+				text-align: center;
+			}
+
+			.top-panel>.layui-card-body {
+				height: 60px;
+			}
+
+			.top-panel-number {
+				line-height: 60px;
+				font-size: 30px;
+				border-right: 1px solid #eceff9;
+			}
+
+			.top-panel-tips {
+				line-height: 30px;
+				font-size: 12px
+			}
+
+			.pear-container {
+				background-color: whitesmoke;
+				margin: 10px;
+			}
+
+			.card {
+				width: 100%;
+				height: 160px;
+				background-color: whitesmoke;
+				border-radius: 5px;
+
+			}
+
+			.card .header .avatar {
+				width: 28px;
+				height: 28px;
+				margin: 20px;
+				border-radius: 50px;
+			}
+
+			.card .header {
+				color: dimgray;
+			}
+
+			.card .body {
+				color: gray;
+			}
+
+			.card .body {
+				margin-left: 20px;
+				margin-right: 20px;
+			}
+
+			.card .footer {
+				margin-left: 20px;
+				margin-right: 20px;
+				margin-top: 20px;
+				font-size: 13px;
+				color: gray;
+				position: absolute;
+
+			}
+			
+			.list{
+			
+			}
+			
+			.list .list-item{
+			       height: 40px;
+				   line-height: 40px;
+				   color: gray;
+				   padding: 5px;
+				   padding-left: 15px;
+				   border-radius: 4px;
+				   margin-top: 5.2px;
+			}
+			
+			.list .list-item:hover{
+				background-color: whitesmoke;
+			}
+			
+			
+			.list .list-item .title{
+				font-size:14px;
+				width: 100%;
+			}
+			.list .list-item .footer{
+				position: absolute;
+				right: 30px;
+				font-size: 12px;
+			}
+		</style>
+	</head>
+	<body class="pear-container">
+		<div>
+
+			<div class="layui-row layui-col-space10">
+				<div class="layui-col-xs6 layui-col-md3">
+                    <div class="layui-card top-panel">
+						<div class="layui-card-header">要展示的指标名称</div>
+						<div class="layui-card-body">
+							<div class="layui-row layui-col-space5">
+								<div class="layui-col-xs9 layui-col-md8 top-panel-number">
+									9,04,0
+								</div>
+								<div class="layui-col-xs3 layui-col-md4 top-panel-tips">
+									本周 <a style="color: #1aa094">0.12</a><br>
+									季度 <a style="color: #bd3004">0.06</a>
+								</div>
+							</div>
+						</div>
+					</div>
+                </div>
+				<div class="layui-col-xs6 layui-col-md3">
+                    <div class="layui-card top-panel">
+						<div class="layui-card-header">要展示的指标名称</div>
+						<div class="layui-card-body">
+							<div class="layui-row layui-col-space5">
+								<div class="layui-col-xs9 layui-col-md8 top-panel-number">
+									6,34,4
+								</div>
+								<div class="layui-col-xs3 layui-col-md4 top-panel-tips">
+									本周 <a style="color: #1aa094">0.12</a><br>
+									季度 <a style="color: #bd3004">0.06</a>
+								</div>
+							</div>
+						</div>
+					</div>
+                </div>
+				<div class="layui-col-xs6 layui-col-md3">
+                    <div class="layui-card top-panel">
+						<div class="layui-card-header">要展示的指标名称</div>
+						<div class="layui-card-body">
+							<div class="layui-row layui-col-space5">
+								<div class="layui-col-xs9 layui-col-md8 top-panel-number">
+									1,34,1
+								</div>
+								<div class="layui-col-xs3 layui-col-md4  top-panel-tips">
+									本周 <a style="color: #1aa094">0.12</a><br>
+									季度 <a style="color: #bd3004">0.06</a>
+								</div>
+							</div>
+						</div>
+					</div>
+                </div>
+				<div class="layui-col-xs6 layui-col-md3">
+                    <div class="layui-card top-panel">
+						<div class="layui-card-header">要展示的指标名称</div>
+						<div class="layui-card-body">
+							<div class="layui-row layui-col-space5">
+								<div class="layui-col-xs9 layui-col-md8 top-panel-number">
+									7,04,6
+								</div>
+								<div class="layui-col-xs3 layui-col-md4 top-panel-tips">
+								    本周 <a style="color: #1aa094">0.12</a><br>
+									季度 <a style="color: #bd3004">0.06</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<div class="layui-row layui-col-space10">
+				<div class="layui-col-md9">
+					<div class="layui-card">
+						<div class="layui-card-header">项目列表</div>
+						<div class="layui-card-body">
+							<div class="layui-row layui-col-space10">
+								<div class="layui-col-md4">
+									<div class="card">
+										<div class="header">
+											<img class="avatar" src="../../admin/images/avatar.jpg"></img><span class="title">PearOne</span>
+										</div>
+										<div class="body">
+											城镇中有那么多的酒馆，她却偏偏走进了我的酒馆
+										</div>
+										<div class="footer">10小时前</div>
+									</div>
+								</div>
+								<div class="layui-col-md4">
+									<div class="card">
+										<div class="header">
+											<img class="avatar" src="../../admin/images/avatar.jpg"></img><span class="title">Angular</span>
+										</div>
+										<div class="body">
+											希望是一个好东西，也许是最好的，好东西是不会消亡
+										</div>
+										<div class="footer">1小时前</div>
+									</div>
+								</div>
+								<div class="layui-col-md4">
+									<div class="card">
+										<div class="header">
+											<img class="avatar" src="../../admin/images/avatar.jpg"></img><span class="title">Vue</span>
+										</div>
+										<div class="body">
+											生命就像一盒巧克力，结果往往出人意料
+										</div>
+										<div class="footer">2小时前</div>
+									</div>
+								</div>
+								<div class="layui-col-md4">
+									<div class="card">
+										<div class="header">
+											<img class="avatar" src="../../admin/images/avatar.jpg"></img><span class="title">BootStrap</span>
+										</div>
+										<div class="body">
+											一切都在不可避免的走向庸俗
+										</div>
+										<div class="footer">3小时前</div>
+									</div>
+								</div>
+								<div class="layui-col-md4">
+									<div class="card">
+										<div class="header">
+											<img class="avatar" src="../../admin/images/avatar.jpg"></img><span class="title">Ant Design</span>
+										</div>
+										<div class="body">
+											你要是愿意我就永远爱你，你要是不愿意我就永远相思
+										</div>
+										<div class="footer">10小时前</div>
+									</div>
+								</div>
+								<div class="layui-col-md4">
+									<div class="card">
+										<div class="header">
+											<img class="avatar" src="../../admin/images/avatar.jpg"></img><span class="title">Jmys</span>
+										</div>
+										<div class="body">
+											在所谓'人世间'摸爬滚打至今，一切都会过去
+										</div>
+										<div class="footer">24小时前</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="layui-card">
+						<div class="layui-card-header">开源动态</div>
+						<div class="layui-card-body">
+						<script src='https://gitee.com/Jmysy/Pear-One-Layui/widget_preview' async defer></script>
+						<div id="osc-gitee-widget-tag"></div>
+						<style>
+						.osc_pro_color {color: #4183c4 !important;}
+						.osc_panel_color {background-color: #ffffff !important;}
+						.osc_background_color {background-color: #ffffff !important;}
+						.osc_border_color {border-color: #e3e9ed !important;}
+						.osc_desc_color {color: #666666 !important;}
+						.osc_link_color * {color: #9b9b9b !important;}
+						</style>
+						</div>
+					</div>
+				</div>
+				<div class="layui-col-md3">
+					<div class="layui-card">
+						<div class="layui-card-header">最近更新</div>
+						<div class="layui-card-body">
+							<ul class="list">
+								<li class="list-item"><span class="title">兼容多系统菜单模式</span><span class="footer">2019-12-15   11:28</span></li>
+								<li class="list-item"><span class="title">兼容多标签页切换</span><span class="footer">2019-12-9   14:58</span></li>
+								<li class="list-item"><span class="title">扩展下拉组件</span><span class="footer">2019-12-7   9:06</span></li>
+								<li class="list-item"><span class="title">扩展卡片样式</span><span class="footer">2019-12-1   10:26</span></li>
+								<li class="list-item"><span class="title">Pear Admin 框架正式开源</span><span class="footer">2019-11-27   07:23</span></li>
+								<li class="list-item"><button class="layui-btn layui-btn-normal layui-btn-fluid">查 看 更 多</button></li>
+						   </ul>
+						</div>
+					</div>
+					<div class="layui-card">
+						<div class="layui-card-header">版本信息</div>
+						<div class="layui-card-body">
+							<table class="layui-table">
+								<thead>
+									<tr>
+										<th>项目名称</th>
+										<th>Pear Admin</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>开源作者</td>
+										<td>就 眠 仪 式</td>
+									</tr>
+									<tr>
+										<td>当前版本</td>
+										<td>2.0.1 Version</td>
+									</tr>
+									<tr>
+										<td>基于框架</td>
+										<td>Layui | JQuery | awesome</td>
+									</tr>
+									<tr>
+										<td>开源协议</td>
+										<td>Apache License</td>
+									</tr>
+									<tr>
+										<td>开发周期</td>
+										<td>2019 年 11 月 15 日</td>
+									</tr>
+									<tr>
+										<td>产品定位</td>
+										<td>Layui 前端模板框架</td>
+									</tr>
+									<tr>
+										<td>所属社区</td>
+										<td>Pear 社区</td>
+									</tr>
+									<tr>
+										<td>开发文档</td>
+										<td><a href="">查看文档</a></td>
+									</tr>
+									<tr>
+										<td>下载渠道</td>
+										<td>
+											<button class="layui-btn layui-btn-normal layui-btn-sm">
+												<i class="fa fa-gitlab"></i><span>&nbsp;码 云</span>
+											</button>
+											<button class="layui-btn layui-btn-primary layui-btn-sm">
+												<i class="fa fa-github"></i><span>&nbsp;Git Hub</span>
+											</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+					
+						</div>
+					</div>
+				</div>
+			</div>
+        </div>
+		<!--</div>-->
+		<script src="../../component/layui/layui.js" charset="utf-8"></script>
+		<script>
+			layui.use(['layer', 'echarts'], function() {
+				var $ = layui.jquery,
+					layer = layui.layer,
+					echarts = layui.echarts;
+			});
+		</script>
+	</body>
+</html>

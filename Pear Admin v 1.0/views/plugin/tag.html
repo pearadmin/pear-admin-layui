@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>弹层封装</title>
+		<link href="../../assets/css/pearone.css" rel="stylesheet" />
+		<link href="../../component/layui/css/layui.css" rel="stylesheet"/>
+		<link href="../../component/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+		<script src="../../component/layui/layui.js"></script>
+	    <link rel="stylesheet" href="../../modules/lay-modules/tag/tag.css" />
+		
+		
+		<style>
+			body{
+				margin:10px;
+				background-color: lightgray;
+			}
+			.tag-item{
+				background-color:#009688;
+				color: white;
+				border:none; 
+			}
+			.tag-item:hover{
+		
+				color: white;
+				
+			}
+			
+			.tag-item-normal {
+				background-color: #1E9FFF;
+				color: white;
+				border: none;
+			}
+			
+			.tag-item-warm {
+				background-color: #FFB800;
+				color: white;
+				border: none;
+			}
+			
+			.tag-item-danger{
+				background-color: #FF5722;
+				color: white;
+			    border: none;
+			}
+			
+			.tag-item-dark{
+				background-color: #525252;
+				color: white;
+				border: none;
+			}
+			.tag-item-primary{
+				background-color:white!important;
+				color: dimgray;
+				border: 1px solid dimgray;
+			}
+			
+			.tag-item-normal:hover {
+			
+				color: white!important;
+			}
+			
+			.tag-item-warm:hover {
+			
+				color: white;
+			}
+			
+			.tag-item-danger:hover{
+			
+				color: white;
+			}
+			
+			.tag-item-dark:hover{
+			
+				color: white;
+			}
+			
+			.tag-item-primary:hover{
+				color: dimgray;
+				border: 1px solid dimgray;
+			}
+			
+		</style>
+	</head>
+	<body class="layui-bg-gray pearone-container">
+	     <div class="layui-card">
+			 <div class="layui-card-header">弹层封装</div>
+			 <div class="layui-card-body">
+				
+				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+				    <legend>默认风格的TAG</legend>
+				</fieldset>
+				<div class="layui-btn-container tag">
+				    <button lay-id="11" type="button" class="tag-item">网站设置</button>
+				    <button lay-id="22" type="button" class="tag-item tag-item-normal">用户管理</button>
+				    <button lay-id="33" type="button" class="tag-item tag-item-danger">权限分配</button>
+				    <button lay-id="44" type="button" class="tag-item tag-item-warm">商品管理</button>
+				    <button lay-id="55" type="button" class="tag-item tag-item-dark">订单管理</button>
+					<button lay-id="55" type="button" class="tag-item tag-item-primary">主要标签</button>
+				</div>
+				
+				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+				    <legend>动态操作TAG</legend>
+				</fieldset>
+				<!--lay-allowclose="true" 允许关闭标签 值：lay-allowclose="" |lay-allowclose="true" -->
+				<!--lay-newTag="true" 允许新增标签  值：lay-newTag="" |lay-newTag="true" -->
+				<div class="layui-btn-container tag" lay-filter="demo" lay-allowclose="true" lay-newTag="true">
+				    <button lay-id="11" type="button" class="tag-item">网站设置</button>
+				    <button lay-id="22" type="button" class="tag-item">用户管理</button>
+				    <button lay-id="33" type="button" class="tag-item">权限分配</button>
+				    <button lay-id="44" type="button" class="tag-item">商品管理</button>
+				    <button lay-id="55" type="button" class="tag-item">订单管理</button>
+				    <!--自定义新增标签按钮元素 button-new-tag -->
+				    <!--<button type="button" class="layui-btn layui-btn-primary layui-btn-sm layui-btn-radius button-new-tag">+ New Tag</button>-->
+				</div>
+				<div class="site-demo-button" style="margin-bottom: 0;">
+				    <button class="layui-btn site-demo-active" data-type="tagAdd">增加Tag项</button>
+				    <button class="layui-btn site-demo-active" data-type="tagDelete">删除：商品管理</button>
+				</div>
+				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+				    <legend>圆角风格的TAG</legend>
+				</fieldset>
+				<div class="layui-btn-container tag" lay-filter="test" lay-newTag="true">
+				    <button lay-id="11" type="button" class="tag-item">网站设置</button>
+				    <button lay-id="22" type="button" class="tag-item tag-item-normal">用户管理</button>
+				    <button lay-id="33" type="button" class="tag-item tag-item-warm">权限分配</button>
+				    <button lay-id="44" type="button" class="tag-item tag-item-danger">商品管理</button>
+				    <button lay-id="55" type="button" class="tag-item tag-item-dark">订单管理</button>
+					  <button lay-id="55" type="button" class="tag-item tag-item-primary">订单管理</button>
+				</div>
+				
+				<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+				    <legend>带删除功能的TAG</legend>
+				</fieldset>
+				<div class="layui-btn-container tag" lay-allowclose="true">
+				    <button lay-id="11" type="button" class="tag-item">网站设置</button>
+				    <button lay-id="22" type="button" class="tag-item">用户管理</button>
+				    <button lay-id="33" type="button" class="tag-item">权限分配</button>
+				    <button lay-id="44" type="button" class="tag-item">商品管理</button>
+				    <button lay-id="55" type="button" class="tag-item">订单管理</button>
+				</div>
+				
+			 </div>
+		 </div>
+	</body>
+	
+	<script src="../../modules/lay-config.js"></script>
+<script>
+    //config的设置是全局的
+    layui.use('tag', function () {
+        var $ = layui.jquery
+            , tag = layui.tag; //Tag的切换功能，切换事件监听等，需要依赖tag模块
+
+        //全局设置
+        /*tag.set({
+          likeHref: 'modules/tag.css', //tag.css所在的路径
+          skin: 'layui-btn layui-btn-primary layui-btn-sm layui-btn-radius',//标签样式
+          tagText: '添加标签' //标签添加按钮提示文本
+        });*/
+
+        //指定渲染 lay-filter="test" 圆角风格的TAG
+        tag.render("test", {
+            skin: 'layui-btn layui-btn-primary layui-btn-sm layui-btn-radius',//标签样式
+            tagText: '<i class="layui-icon layui-icon-add-1"></i>添加标签' //标签添加按钮提示文本
+        });
+
+        //触发事件
+        var active = {
+            tagAdd: function () {
+                //新增一个Tag项
+                tag.add('demo', {
+                    text: '新选项' + (Math.random() * 1000 | 0) //用于演示
+                    , id: new Date().getTime() //实际使用一般是规定好的id，这里以时间戳模拟下
+                })
+            }
+            , tagDelete: function (othis) {
+                //删除指定Tag项
+                tag.delete('demo', '44'); //删除：“商品管理”
+                othis.addClass('layui-btn-disabled');
+            }
+        };
+
+        $('.site-demo-active').on('click', function () {
+            var othis = $(this), type = othis.data('type');
+            active[type] ? active[type].call(this, othis) : '';
+        });
+
+        tag.on('click(demo)', function (data) {
+            console.log('点击');
+            console.log(this); //当前Tag标签所在的原始DOM元素
+            console.log(data.index); //得到当前Tag的所在下标
+            console.log(data.elem); //得到当前的Tag大容器
+        });
+
+        tag.on('add(demo)', function (data) {
+            console.log('新增');
+            console.log(this); //当前Tag标签所在的原始DOM元素
+            console.log(data.index); //得到当前Tag的所在下标
+            console.log(data.elem); //得到当前的Tag大容器
+            console.log(data.othis); //得到新增的DOM对象
+            //return false; //返回false 取消新增操作； 同from表达提交事件。
+        });
+
+        tag.on('delete(demo)', function (data) {
+            console.log('删除');
+            console.log(this); //当前Tag标签所在的原始DOM元素
+            console.log(data.index); //得到当前Tag的所在下标
+            console.log(data.elem); //得到当前的Tag大容器
+            //return false; //返回false 取消删除操作； 同from表达提交事件。
+        });
+
+
+    });
+</script>
+</html>
+

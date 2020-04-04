@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" href="../../../component/layui/css/layui.css" />
+		<link rel="stylesheet" href="../../../admin/css/pearButton.css" />
+		<style>
+			.pear-container {
+	    		margin: 10px;
+	    		background-color: whitesmoke;
+	    	}
+		</style>
+	</head>
+	<body class="pear-container">
+		<div class="layui-card">
+			<div class="layui-card-header">加密操作</div>
+			<div class="layui-card-body">
+				<form class="layui-form" action="javascript:void(0);">
+					<div class="layui-form-item layui-input-inline">
+						<input id="enter" value="123456" type="text" class="layui-input" />
+					</div>
+					<div class="layui-form-item layui-input-inline">
+						<select name="encode" lay-verify="">
+							<option value="">加密方式</option>
+							<option value="1">MD5</option>
+							<option value="2">SHA1</option>
+							<option value="3">SHA256</option>
+							<option value="4">SHA512</option>
+							<option value="5">rmd160</option>
+							<option value="6">crc32</option>
+							<option value="7">Base64Encode</option>
+						</select>
+					</div>
+					<div class="layui-form-item layui-input-inline">
+						<button id="encode" class="pear-btn pear-btn-primary" plain>Encode</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="layui-card">
+			<div class="layui-card-header">加密结果</div>
+			<div class="layui-card-body" id="end">
+
+			</div>
+		</div>
+		<div class="layui-card">
+			<div class="layui-card-header">加密结果</div>
+			<div class="layui-card-body" id="end">
+				<div>
+					<span>pearHash.md5( str )  --  MD5加密</span>
+					<br>
+					<br>
+					<span>pearHash.sha1( str )  --  SHA1加密</span>
+					<br>
+					<br>
+					<span>pearHash.sha256( str )  --  SHA256加密</span>
+					<br>
+					<br>
+					<span>pearHash.sha512( str )  --  SHA512加密</span>
+					<br>
+					<br>
+					<span>pearHash.rmd160( str )  --  RMD160加密</span>
+					<br>
+					<br>
+					<span>pearHash.crc32( str )  --  CRC32加密</span>
+					<br>
+					<br>
+					<span>pearHash.Base64Encode( str )  --  BASE64加密</span>
+					<br>
+					<br>
+				</div>
+			</div>
+		</div>
+
+
+
+
+
+		<script src="../../../component/layui/layui.js"></script>
+		<script>
+			layui.use(['pearHash', 'form', 'jquery','layer'], function() {
+				var pearHash = layui.pearHash;
+				var form = layui.form;
+				var $ = layui.jquery;
+				var layer = layui.layer;
+
+				$("#encode").click(function() {
+
+					var encode = $("[name='encode']").val();
+
+					var end;
+
+					if (encode == 1) {
+
+						end = pearHash.md5($("#enter").val());
+
+					} else if (encode == 2) {
+
+						end = pearHash.sha1($("#enter").val());
+					} else if (encode == 3) {
+
+						end = pearHash.sha256($("#enter").val());
+					} else if (encode == 4) {
+
+						end = pearHash.sha512($("#enter").val());
+					} else if (encode == 5) {
+
+						end = pearHash.rmd160($("#enter").val());
+					} else if (encode == 6) {
+
+						end = pearHash.crc32($("#enter").val());
+					} else if (encode == 7) {
+
+						end = pearHash.Base64Encode($("#enter").val());
+					} else{
+						
+						layer.msg("请选择加密方式",{icon:3,time:1000});
+					}
+
+
+
+					$("#end").append('<button plain class="pear-btn pear-btn-primary">加密方式 : ' + $("[value=" + $("[name='encode']")
+							.val() + "]").text() + '&nbsp;&nbsp;&nbsp;&nbsp;明文 : ' + $("#enter").val() +
+						'&nbsp;&nbsp;&nbsp;&nbsp;加密 : ' + end + '</button><br><br>');
+				})
+			})
+		</script>
+	</body>
+</html>
