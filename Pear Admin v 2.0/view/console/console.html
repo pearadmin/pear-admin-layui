@@ -25,6 +25,8 @@
 			}
 
 			.top-panel-tips {
+				padding-left: 8px;
+				padding-top: 16px;
 				line-height: 30px;
 				font-size: 12px
 			}
@@ -38,8 +40,7 @@
 				width: 100%;
 				height: 160px;
 				background-color: whitesmoke;
-				border-radius: 5px;
-
+				border-radius: 4px;
 			}
 
 			.card .header .avatar {
@@ -69,21 +70,24 @@
 				font-size: 13px;
 				color: gray;
 				position: absolute;
-
-			}
-			
-			.list{
-			
 			}
 			
 			.list .list-item{
-			       height: 40px;
-				   line-height: 40px;
+			       height: 34px;
+				   line-height: 34px;
 				   color: gray;
 				   padding: 5px;
 				   padding-left: 15px;
 				   border-radius: 4px;
 				   margin-top: 5.2px;
+			}
+			
+			.custom-tab .layui-tab-title{
+			       border-bottom-width: 0px; 
+			       border-bottom-style: none;
+			}
+			.custom-tab .layui-tab-title li{
+		      	   margin-left: 10px;
 			}
 			
 			.list .list-item:hover{
@@ -92,7 +96,7 @@
 			
 			
 			.list .list-item .title{
-				font-size:14px;
+				font-size:13px;
 				width: 100%;
 			}
 			.list .list-item .footer{
@@ -100,23 +104,27 @@
 				right: 30px;
 				font-size: 12px;
 			}
+			
+			.top-panel-tips i {
+			
+				font-size: 33px;
+			}
+		
 		</style>
 	</head>
 	<body class="pear-container">
 		<div>
-
-			<div class="layui-row layui-col-space10">
+            <div class="layui-row layui-col-space10">
 				<div class="layui-col-xs6 layui-col-md3">
                     <div class="layui-card top-panel">
-						<div class="layui-card-header">要展示的指标名称</div>
+						<div class="layui-card-header">今日访问</div>
 						<div class="layui-card-body">
 							<div class="layui-row layui-col-space5">
 								<div class="layui-col-xs9 layui-col-md8 top-panel-number">
 									9,04,0
 								</div>
 								<div class="layui-col-xs3 layui-col-md4 top-panel-tips">
-									本周 <a style="color: #1aa094">0.12</a><br>
-									季度 <a style="color: #bd3004">0.06</a>
+									<i class="layui-icon layui-icon-app" style="color: #4099FF;"></i>
 								</div>
 							</div>
 						</div>
@@ -124,15 +132,14 @@
                 </div>
 				<div class="layui-col-xs6 layui-col-md3">
                     <div class="layui-card top-panel">
-						<div class="layui-card-header">要展示的指标名称</div>
+						<div class="layui-card-header">提交次数</div>
 						<div class="layui-card-body">
 							<div class="layui-row layui-col-space5">
 								<div class="layui-col-xs9 layui-col-md8 top-panel-number">
 									6,34,4
 								</div>
 								<div class="layui-col-xs3 layui-col-md4 top-panel-tips">
-									本周 <a style="color: #1aa094">0.12</a><br>
-									季度 <a style="color: #bd3004">0.06</a>
+									<i class="layui-icon layui-icon-component" style="color: #DD4A68;"></i>
 								</div>
 							</div>
 						</div>
@@ -140,15 +147,14 @@
                 </div>
 				<div class="layui-col-xs6 layui-col-md3">
                     <div class="layui-card top-panel">
-						<div class="layui-card-header">要展示的指标名称</div>
+						<div class="layui-card-header">下载数量</div>
 						<div class="layui-card-body">
 							<div class="layui-row layui-col-space5">
 								<div class="layui-col-xs9 layui-col-md8 top-panel-number">
 									1,34,1
 								</div>
 								<div class="layui-col-xs3 layui-col-md4  top-panel-tips">
-									本周 <a style="color: #1aa094">0.12</a><br>
-									季度 <a style="color: #bd3004">0.06</a>
+								   <i class="layui-icon layui-icon-carousel" style="color: #5FB878;"></i>
 								</div>
 							</div>
 						</div>
@@ -156,95 +162,101 @@
                 </div>
 				<div class="layui-col-xs6 layui-col-md3">
                     <div class="layui-card top-panel">
-						<div class="layui-card-header">要展示的指标名称</div>
+						<div class="layui-card-header">流量统计</div>
 						<div class="layui-card-body">
 							<div class="layui-row layui-col-space5">
 								<div class="layui-col-xs9 layui-col-md8 top-panel-number">
 									7,04,6
 								</div>
 								<div class="layui-col-xs3 layui-col-md4 top-panel-tips">
-								    本周 <a style="color: #1aa094">0.12</a><br>
-									季度 <a style="color: #bd3004">0.06</a>
+								    <i class="layui-icon layui-icon-cart" style="color: #E6A23C;"></i>
 								</div>
 							</div>
 						</div>
 					</div>
-
 				</div>
 			</div>
 			<div class="layui-row layui-col-space10">
 				<div class="layui-col-md9">
 					<div class="layui-card">
-						<div class="layui-card-header">项目列表</div>
 						<div class="layui-card-body">
-							<div class="layui-row layui-col-space10">
-								<div class="layui-col-md4">
-									<div class="card">
-										<div class="header">
-											<img class="avatar" src="../../admin/images/avatar.jpg"></img><span class="title">PearOne</span>
-										</div>
-										<div class="body">
-											城镇中有那么多的酒馆，她却偏偏走进了我的酒馆
-										</div>
-										<div class="footer">10小时前</div>
-									</div>
-								</div>
-								<div class="layui-col-md4">
-									<div class="card">
-										<div class="header">
-											<img class="avatar" src="../../admin/images/avatar.jpg"></img><span class="title">Angular</span>
-										</div>
-										<div class="body">
-											希望是一个好东西，也许是最好的，好东西是不会消亡
-										</div>
-										<div class="footer">1小时前</div>
-									</div>
-								</div>
-								<div class="layui-col-md4">
-									<div class="card">
-										<div class="header">
-											<img class="avatar" src="../../admin/images/avatar.jpg"></img><span class="title">Vue</span>
-										</div>
-										<div class="body">
-											生命就像一盒巧克力，结果往往出人意料
-										</div>
-										<div class="footer">2小时前</div>
-									</div>
-								</div>
-								<div class="layui-col-md4">
-									<div class="card">
-										<div class="header">
-											<img class="avatar" src="../../admin/images/avatar.jpg"></img><span class="title">BootStrap</span>
-										</div>
-										<div class="body">
-											一切都在不可避免的走向庸俗
-										</div>
-										<div class="footer">3小时前</div>
-									</div>
-								</div>
-								<div class="layui-col-md4">
-									<div class="card">
-										<div class="header">
-											<img class="avatar" src="../../admin/images/avatar.jpg"></img><span class="title">Ant Design</span>
-										</div>
-										<div class="body">
-											你要是愿意我就永远爱你，你要是不愿意我就永远相思
-										</div>
-										<div class="footer">10小时前</div>
-									</div>
-								</div>
-								<div class="layui-col-md4">
-									<div class="card">
-										<div class="header">
-											<img class="avatar" src="../../admin/images/avatar.jpg"></img><span class="title">Jmys</span>
-										</div>
-										<div class="body">
-											在所谓'人世间'摸爬滚打至今，一切都会过去
-										</div>
-										<div class="footer">24小时前</div>
-									</div>
-								</div>
-							</div>
+							
+							<div class="layui-tab custom-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+							  <ul class="layui-tab-title">
+							    <li class="layui-this">项目列表</li>
+							    <li>数据统计</li>
+							  </ul>
+							  <div class="layui-tab-content">
+								  <div class="layui-row layui-col-space10">
+								  	<div class="layui-col-md4">
+								  		<div class="card">
+								  			<div class="header">
+								  				<img class="avatar" src="../../admin/images/avatar.jpg"></img><span class="title">PearOne</span>
+								  			</div>
+								  			<div class="body">
+								  				城镇中有那么多的酒馆，她却偏偏走进了我的酒馆
+								  			</div>
+								  			<div class="footer">10小时前</div>
+								  		</div>
+								  	</div>
+								  	<div class="layui-col-md4">
+								  		<div class="card">
+								  			<div class="header">
+								  				<img class="avatar" src="../../admin/images/avatar.jpg"></img><span class="title">Angular</span>
+								  			</div>
+								  			<div class="body">
+								  				希望是一个好东西，也许是最好的，好东西是不会消亡
+								  			</div>
+								  			<div class="footer">1小时前</div>
+								  		</div>
+								  	</div>
+								  	<div class="layui-col-md4">
+								  		<div class="card">
+								  			<div class="header">
+								  				<img class="avatar" src="../../admin/images/avatar.jpg"></img><span class="title">Vue</span>
+								  			</div>
+								  			<div class="body">
+								  				生命就像一盒巧克力，结果往往出人意料
+								  			</div>
+								  			<div class="footer">2小时前</div>
+								  		</div>
+								  	</div>
+								  	<div class="layui-col-md4">
+								  		<div class="card">
+								  			<div class="header">
+								  				<img class="avatar" src="../../admin/images/avatar.jpg"></img><span class="title">BootStrap</span>
+								  			</div>
+								  			<div class="body">
+								  				一切都在不可避免的走向庸俗
+								  			</div>
+								  			<div class="footer">3小时前</div>
+								  		</div>
+								  	</div>
+								  	<div class="layui-col-md4">
+								  		<div class="card">
+								  			<div class="header">
+								  				<img class="avatar" src="../../admin/images/avatar.jpg"></img><span class="title">Ant Design</span>
+								  			</div>
+								  			<div class="body">
+								  				你要是愿意我就永远爱你，你要是不愿意我就永远相思
+								  			</div>
+								  			<div class="footer">10小时前</div>
+								  		</div>
+								  	</div>
+								  	<div class="layui-col-md4">
+								  		<div class="card">
+								  			<div class="header">
+								  				<img class="avatar" src="../../admin/images/avatar.jpg"></img><span class="title">Jmys</span>
+								  			</div>
+								  			<div class="body">
+								  				在所谓'人世间'摸爬滚打至今，一切都会过去
+								  			</div>
+								  			<div class="footer">24小时前</div>
+								  		</div>
+								  	</div>
+								  </div> 
+							  </div>
+							</div>   
 						</div>
 					</div>
 					<div class="layui-card">
@@ -268,12 +280,13 @@
 						<div class="layui-card-header">最近更新</div>
 						<div class="layui-card-body">
 							<ul class="list">
+								<li class="list-item"><span class="title">系统布局优化</span><span class="footer">2019-12-15   11:28</span></li>
 								<li class="list-item"><span class="title">兼容多系统菜单模式</span><span class="footer">2019-12-15   11:28</span></li>
 								<li class="list-item"><span class="title">兼容多标签页切换</span><span class="footer">2019-12-9   14:58</span></li>
 								<li class="list-item"><span class="title">扩展下拉组件</span><span class="footer">2019-12-7   9:06</span></li>
 								<li class="list-item"><span class="title">扩展卡片样式</span><span class="footer">2019-12-1   10:26</span></li>
 								<li class="list-item"><span class="title">Pear Admin 框架正式开源</span><span class="footer">2019-11-27   07:23</span></li>
-								<li class="list-item"><button class="layui-btn layui-btn-normal layui-btn-fluid">查 看 更 多</button></li>
+								<li class="list-item" style="height: 37px;"><button class="layui-btn layui-btn-normal layui-btn-fluid">查 看 更 多</button></li>
 						   </ul>
 						</div>
 					</div>
@@ -342,10 +355,11 @@
 		<!--</div>-->
 		<script src="../../component/layui/layui.js" charset="utf-8"></script>
 		<script>
-			layui.use(['layer', 'echarts'], function() {
+			layui.use(['layer', 'echarts','element'], function() {
 				var $ = layui.jquery,
 					layer = layui.layer,
-					echarts = layui.echarts;
+					echarts = layui.echarts,
+					element = layui.element;
 			});
 		</script>
 	</body>
