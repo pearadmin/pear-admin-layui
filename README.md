@@ -1,11 +1,11 @@
-# Pear Admin Layui     :fa-meh-o: 
+# Pear Admin Layui    :gift: 
 
 最近更新  2020 年 4 月 4 日  
  
 
 #### 软件介绍
 
-致力于提供 简洁 而 不简单 的前端框架
+致力于提供 简洁 而 不简单 的前端框架   :loudspeaker: 
 
 基于Layui的后台管理系统模板，扩展Layui原生UI样式，整合第三方开源组件，提供便捷快速的开发方式，延续LayuiAdmin
 
@@ -26,9 +26,11 @@ Pear Admin v 2.0 :http://jmysy.gitee.io/pear-one-layui/Pear%20Admin%20v%202.0/
 Pear Admin Layui 目前支持单页面与多标签页的切换，仅仅通过简单的API接口初始化就可以, 遇到问题及时拍板，加群讨论，如有意愿加入开源的
 伙伴可群内私信作者，第三期更新订版时会推出相关API文档
 
+单页面布局  :tada: 
 
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/0415/004334_68c3352e_4835367.png "(LH930[%[)8$L4}(2%5`6TM.png")
 
+多选项卡布局  :tada: 
 
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/0415/004345_c763f6ea_4835367.png "3[(4M6GWDUJ)0CP}W`}{W}H.png")
 
