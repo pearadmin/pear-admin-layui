@@ -5,12 +5,10 @@
 			.pear-admin .layui-side{
 				transition: all .3s;
 			}
-			
 			.pear-admin .layui-logo .title{
 				font-size: 20px;
 			}
-			
-		    .layui-header .layui-nav-more{
+			.layui-header .layui-nav-more{
 				display: none!important;
 			}
 			
@@ -34,17 +32,14 @@
 				width: calc(100% - 220px);
 				background-color: white;
 			}
-			
 			.pear-admin .layui-header .layui-nav-img{
 				width: 30px;
 				height: 30px;
 			}
-			
 			.pear-admin .layui-layout-control{
 				left: 120px;
 				position: absolute;
 			}
-			
 			.pear-admin .layui-logo{
 				width: 220px;
 			    height: 60px;
@@ -52,45 +47,51 @@
 				background-color: #28333E;
 	
 			}
-			
 			.pear-admin .layui-logo img{
 				width: 36px;
 				height: 36px;
 			}
-			
-
+			.pear-admin .layui-logo .title{
+				font-size: 21px;
+				font-weight: 550;
+				color: #5FB878;
+				position: relative;
+				top: 5px;
+				margin-left: 5px;
+			}
+			.pear-admin .layui-logo .logo{
+				display: none;
+			}
+			.pear-mini .layui-logo .title{
+				display: none;
+			}
+			.pear-mini .layui-logo .logo{
+				display: inline-block;
+			}
 			.pear-admin .layui-side {
 				top: 0px;
 				width: 220px;
 				box-shadow: 2px 0 6px rgba(0, 21, 41, .35);
 				z-index: 9999;
 			}
-			
-		
-			
 			.pear-admin .layui-side-scroll::-webkit-scrollbar{
 				width:0px;
 				height:0px;
 			}
-			
 			.pear-admin .layui-side-scroll{
-			   height: calc(100% - 60px);
+			   height: calc(100% - 102px);
 			   background-color: #28333E;
 			   
 			}
-			
 			.pear-admin .layui-header .layui-nav .layui-nav-item>a {
 				color: black;
 				font-size: 15px;
 			}
-			
-
 			.pear-admin .layui-body {
 				left: 220px;
 				bottom: 0px;
 			}
-
-			.pear-admin .layui-layout-left {
+            .pear-admin .layui-layout-left {
 				left: 0px;
 				
 			}
@@ -99,57 +100,95 @@
 			.pear-mini .layui-side{
 				width: 60px;
 			}
-			
 			.pear-mini .layui-header{
 				left: 60px;
 				width: calc(100% - 60px);
 			}
-			
 			.pear-mini .layui-body{
 				left: 60px;
 			}
-			
 			.pear-mini .layui-logo{
 				width: 60px;
 			}
-			
 			.pear-mini .layui-nav-tree .layui-nav-item span{
 				display: none;
+			}
+			.pear-mini  .bottom-nav li{
+				width: 100%!important;
+			}
+			.pear-mini .layui-side-scroll{
+				height: calc(100% - 228px);
+			}
+			
+			/** 快捷按键 */
+			.bottom-nav {
+			    position: absolute;
+			    bottom: 0;
+			    left: 0;
+			    width: 100%;
+			    box-shadow: 0 -2px 0 rgba(0,0,0,.3);
+				background-color: #28333E;
+			}
+			.bottom-nav li {
+			    display: block;
+			    float: left;
+			    width: 25%;
+			    padding: 6px;
+			    box-sizing: border-box;
+			    text-align: center;
+			}
+			.bottom-nav *{
+				color: white;
+			}
+			.bottom-nav li a {
+			    cursor: pointer;
+			    display: block;
+			    width: 100%;
+			    height: 30px;
+				line-height: 30px;
+			    color: #666;
+			    border-radius: 4px;
+			}
+			.bottom-nav li a:hover{
+				background-color: #5FB878;
 			}
 			
 			
 			/** 顶 部 菜 单 样 式 */
-			
 			.pear-admin .layui-header .layui-nav .layui-nav-bar {
 				top: 0px !important;
 				height: 2px !important;
 				background-color: #5FB878;
 			}
-			
 			.pear-admin .layui-header .layui-nav .layui-this:after {
 				display: none;
 			}
 			
 			/** 新增兼容 */
 			@media screen and (max-width:768px) {
+				
+				
+				.pear-mini  .bottom-nav{
+					display: none;
+				}
+				.pear-mini .layui-side-scroll{
+					height: calc(100% - 62px);
+				}
+				
 			    /** 隐 藏 布 局 样 式 */
 			    .pear-mini .layui-side{
 			    	width: 0px;
 			    }
-			    
 			    .pear-mini .layui-header{
 			    	left: 0px;
 			    	width: 100%;
 			    }
-			    
 			    .pear-mini .layui-body{
 			    	left: 0px;
 			    }
-			    
 			    .pear-mini .layui-logo{
 			    	width: 0px;
 			    }
-				
 				.pear-admin .layui-body{
 					left: 0px;
 				}
@@ -157,7 +196,6 @@
 					left: 0px;
 					width: 100%;
 				}
-				
 				.pear-admin .pear-cover{
 					width: 100%;
 					height: 100%;
@@ -167,7 +205,6 @@
 					z-index: 1000;
 					opacity: 0;
 				}
-				
 				.pear-mini .pear-cover{
 					display: none;
 				}
@@ -210,6 +247,4 @@
 			
 			.layui-layer-dialog .layui-layer-content{
 				padding: 0px!important;
-			}
-			
-			
+			}		

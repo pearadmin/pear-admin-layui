@@ -242,7 +242,6 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 			
 			if(index === option.defaultMenu){
 	              
-				
 				controlItem  = '<li pear-id="'+item.id+'" class="layui-this layui-nav-item"><a href="#">'+item.title+'</a></li>';
 				  			
 				menuItem = '<ul  pear-id="'+item.id+'" lay-filter="'+option.elem+'" class="layui-nav arrow layui-nav-tree pear-nav-tree">';
@@ -369,7 +368,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	        // 封 装
 			
 		}else{
-			content += '<div class="toast"><i class="layui-icon layui-icon-more"></i></div>';
+			content += '<div class="toast"> 无 内 容 </div>';
 		
 		   /* 暂 无 数 据&nbsp;&nbsp;&nbsp;&nbsp; */
 		}

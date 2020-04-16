@@ -54,6 +54,7 @@
 			pearAdmin:"extends/pearAdmin",
 			pearFrame:"extends/pearFrame",
 			pearSocial:"extends/pearSocial",
+			pearNotice:"extends/pearNotice",
 			echarts:"extends/echarts",
 			echartsTheme:"extends/echartsTheme",
 			treetable:"extends/treetable",

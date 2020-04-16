@@ -77,7 +77,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pear
 
 				$("body").on("click", ".refresh", function() {
 
-					bodyTab.refresh(1000);
+					bodyTab.refresh(500);
 				})
 
 				sideMenu.click(function(dom, data) {
@@ -88,7 +88,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pear
 						url: data.menuUrl,
 						icon: data.menuIcon,
 						close: true
-					}, 300);
+					},300);
 
 					compatible();
 				})
@@ -105,7 +105,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pear
 				});
 
 				$("body").on("click", ".refresh", function() {
-					bodyFrame.refresh(1000);
+					bodyFrame.refresh(500);
 				})
 
 				sideMenu.click(function(dom, data) {

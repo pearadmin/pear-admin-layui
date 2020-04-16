@@ -4,16 +4,15 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<link rel="stylesheet" href="component/layui/css/layui.css" />
-		<link rel="stylesheet" href="admin/css/pearMenu.css"/>
+		<link rel="stylesheet" href="admin/css/pearMenu.css" />
 		<link rel="stylesheet" href="admin/css/pearTab.css" />
-		<link rel="stylesheet" href="admin/css/pearTheme.css"/>
-		<link rel="stylesheet" href="admin/css/pearLoad.css"/>
-		<link rel="stylesheet" href="admin/css/pearFrame.css"/>
-		<link rel="stylesheet" href="admin/css/pearAdmin.css"/>
-		<link rel="stylesheet" href="admin/css/pearSocial.css"/>
-	    <style id="pearone-bg-color">
-		     /** 自 定 义 主 题 */
-		</style>
+		<link rel="stylesheet" href="admin/css/pearTheme.css" />
+		<link rel="stylesheet" href="admin/css/pearLoad.css" />
+		<link rel="stylesheet" href="admin/css/pearFrame.css" />
+		<link rel="stylesheet" href="admin/css/pearAdmin.css" />
+		<link rel="stylesheet" href="admin/css/pearNotice.css" />
+		<link rel="stylesheet" href="admin/css/pearSocial.css" />
+		<style id="pearone-bg-color"></style>
 	</head>
 	<body class="layui-layout-body  pear-admin">
 		<!-- 布局框架 -->
@@ -26,71 +25,96 @@
 				<div id="control" class="layui-layout-control"></div>
 				<ul class="layui-nav layui-layout-right">
 					<li class="layui-nav-item layui-hide-xs"><a href="#" class="fullScreen layui-icon layui-icon-screen-full"></a></li>
-					<li class="layui-nav-item layui-hide-xs"><a href="#" class="layui-icon layui-icon-website"></a></li>
+					<li class="layui-nav-item layui-hide-xs"><a href="https://gitee.com/Jmysy/Pear-One-Layui" class="layui-icon layui-icon-website"></a></li>
+					<li class="layui-nav-item" id="headerNotice"></li>
 					<li class="layui-nav-item" lay-unselect="">
-					    <a href="#" class="notice layui-icon layui-icon-notice"><span class="layui-badge-dot"></span></a>
-					    <dl class="layui-nav-child">
-					      <dd><a href="javascript:;"> 收到一条消息 </a></dd>
-						  <dd><a href="javascript:;"> 收到一条消息 </a></dd>
-						  <dd><a href="javascript:;"> 收到一条消息 </a></dd>
-					      <dd><a href="javascript:;"> 收到一条消息 </a></dd>
-					    </dl>
-					</li>
-					<li class="layui-nav-item" lay-unselect="">
-					    <a href="javascript:;"><img src="admin/images/avatar.jpg" class="layui-nav-img">就眠仪式</a>
-					    <dl class="layui-nav-child">
-					      <dd><a href="javascript:;">个人信息</a></dd>
-						  <dd><a href="javascript:;">安全配置</a></dd>
-						  <dd><a href="javascript:;">打开百度</a></dd>
-					      <dd><a href="javascript:;">注销登陆</a></dd>
-					    </dl>
+						<a href="javascript:;"><img src="admin/images/avatar.jpg" class="layui-nav-img">就眠仪式</a>
+						<dl class="layui-nav-child">
+							<dd><a href="javascript:;" class="pearson">个人信息</a></dd>
+							<dd><a href="javascript:;">安全配置</a></dd>
+							<dd><a href="javascript:;">打开百度</a></dd>
+							<dd><a href="javascript:;">注销登陆</a></dd>
+						</dl>
 					</li>
 					<li class="setting layui-nav-item"><a href="#" class="layui-icon layui-icon-more-vertical"></a></li>
 				</ul>
 			</div>
 			<div class="layui-side layui-bg-black">
-                <div class="layui-logo">
+				<div class="layui-logo">
 					<img class="logo" src="admin/images/logo.png" />
+					<span class="title">Pear Admin</span>
 				</div>
 				<div class="layui-side-scroll">
 					<div id="sideMenu"></div>
 				</div>
+				<ul class="bottom-nav">
+					<li class="head-nav-item">
+						<a href="javascript:;"><i class="layui-icon layui-icon-notice"></i></a>
+					</li>
+					<li class="head-nav-item theme">
+						<a href="javascript:;"><i class="layui-icon layui-icon-theme"></i></a>
+					</li>
+					<li class="head-nav-item">
+						<a href="javascript:;"><i class="layui-icon layui-icon-username"></i></a>
+					</li>
+					<li class="head-nav-item">
+						<a href="javascript:;"><i class="layui-icon layui-icon-edit"></i></a>
+					</li>
+				</ul>
 			</div>
 			<div class="layui-body">
-			    <div id="content" ></div>
+				<div id="content"></div>
 			</div>
 		</div>
-		
+
 		<!-- 移动端 遮盖层 -->
 		<div class="pear-cover"></div>
-		
+
 		<!-- 初始加载 动画-->
 		<div class="preloader">
 			<div class="preloader-inner"></div>
 		</div>
-		
+
 		<script src="component/layui/layui.js"></script>
 		<script>
-			layui.use(['pearAdmin','jquery','pearTab'],function(){
+			layui.use(['pearAdmin', 'jquery', 'pearTab', 'pearNotice'], function() {
 				var pearAdmin = layui.pearAdmin;
 				var $ = layui.jquery;
 				var pearTab = layui.pearTab;
-				
+				var pearNotice = layui.pearNotice;
+
+				/**
+				 * 框架初始化配置
+				 * */
 				var config = {
-					keepLoad:1000,                        // 主 页 加 载 过 度 时 长 可为 false
-					muiltTab:true,                        // 是 否 开 启 多 标 签 页 true 开启 false 关闭
-					control:false,                        // 是 否 开 启 多 系 统 菜 单 true 开启 false 关闭
-					theme:"dark-theme",                   // 默 认 主 题 样 式 dark-theme 默认主题 light-theme 亮主题
-					index:'view/console/console.html',    // 默 认 加 载 主 页
-					data:'admin/data/menu.json',          // 菜 单 数 据 加 载 地 址
-				    done:function(){
+					keepLoad: false, // 主 页 加 载 过 度 时 长 可为 false
+					muiltTab: true, // 是 否 开 启 多 标 签 页 true 开启 false 关闭
+					control: false, // 是 否 开 启 多 系 统 菜 单 true 开启 false 关闭
+					theme: "dark-theme", // 默 认 主 题 样 式 dark-theme 默认主题 light-theme 亮主题
+					index: 'view/console/console.html', // 默 认 加 载 主 页
+					data: 'admin/data/menu.json', // 菜 单 数 据 加 载 地 址
+					done: function() {
 						/** 框架初始化 */
 					}
 				};
-			
-				pearAdmin.render(config);	
+
+				/**
+				 * 框架初始化
+				 * */
+				pearAdmin.render(config);
+
+				/**
+				 * 消息组件初始化
+				 * */
+				pearNotice.render({
+					elem: 'headerNotice',
+					url: 'admin/data/notice.json',
+					height: '200px',
+					click: function(id, title) {
+						layer.msg("当前监听消息" + id + "消息标题:" + title);
+					}
+				})
 			})
-			
 		</script>
 	</body>
 </html>
