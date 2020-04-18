@@ -19,7 +19,9 @@
 .layui-table-tool .layui-inline{border-radius: 3px!important;width: 30px!important;height: 30px!important;line-height: 20px!important;}
 .layui-table-view .layui-table[lay-skin=line]{border: none!important;}
 
-
+.layui-elem-quote{
+	border-left: 5px solid #5FB878!important;
+}
 
 
 .pear-btn {

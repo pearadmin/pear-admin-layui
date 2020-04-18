@@ -73,6 +73,7 @@
 		<!-- 初始加载 动画-->
 		<div class="preloader">
 			<div class="preloader-inner"></div>
+			<div class="preloader-message">系统初始化...</div>
 		</div>
 
 		<script src="component/layui/layui.js"></script>
@@ -87,7 +88,7 @@
 				 * 框架初始化配置
 				 * */
 				var config = {
-					keepLoad: false, // 主 页 加 载 过 度 时 长 可为 false
+					keepLoad: 1200, // 主 页 加 载 过 度 时 长 可为 false
 					muiltTab: true, // 是 否 开 启 多 标 签 页 true 开启 false 关闭
 					control: false, // 是 否 开 启 多 系 统 菜 单 true 开启 false 关闭
 					theme: "dark-theme", // 默 认 主 题 样 式 dark-theme 默认主题 light-theme 亮主题

@@ -24,6 +24,42 @@
 		}]
 	},
 	{
+		"id": 4,
+		"title": "系统管理",
+		"icon": "layui-icon layui-icon-face-cry",
+		"type": 0,
+		"href": "",
+		"spread": true,
+		"children": [{
+				"id": 41,
+				"title": "用户管理",
+				"icon": "layui-icon layui-icon-username",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/system/user.html",
+				"spread": true
+			},
+			{
+				"id": 42,
+				"title": "角色管理",
+				"icon": "layui-icon layui-icon-user",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/system/role.html",
+				"spread": true
+			},
+			{
+				"id": 43,
+				"title": "权限管理",
+				"icon": "layui-icon layui-icon-user",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/system/power.html",
+				"spread": true
+			}
+		]
+	},
+	{
 		"id": 2,
 		"title": "扩展组件",
 		"icon": "layui-icon layui-icon-face-cry",
@@ -151,74 +187,10 @@
 		"type": 0,
 		"href": "",
 		"spread": true,
-		"children": [{
-				"id": 31,
-				"title": "数据统计",
-				"icon": "layui-icon layui-icon-face-smile",
-				"type": 0,
-				"openType": "_iframe",
-				"href": "view/error/403.html",
-				"spread": true,
-				"children": []
-			},
-			{
-				"id": 32,
-				"title": "数据表格",
-				"icon": "layui-icon layui-icon-face-cry",
-				"type": 0,
-				"openType": "_iframe",
-				"href": "view/error/404.html",
-				"spread": true,
-				"children": []
-			},
-
-			{
-				"id": 33,
-				"title": "卡片列表",
-				"icon": "layui-icon layui-icon-face-cry",
-				"type": 0,
-				"openType": "_iframe",
-				"href": "view/error/500.html",
-				"children": []
-			}
+		"children": [
 		]
 	},
-	{
-		"id": 4,
-		"title": "系统管理",
-		"icon": "layui-icon layui-icon-face-cry",
-		"type": 0,
-		"href": "",
-		"spread": true,
-		"children": [{
-				"id": 41,
-				"title": "用户管理",
-				"icon": "layui-icon layui-icon-username",
-				"type": 1,
-				"openType": "_iframe",
-				"href": "view/system/user.html",
-				"spread": true
-			},
-			{
-				"id": 42,
-				"title": "角色管理",
-				"icon": "layui-icon layui-icon-user",
-				"type": 1,
-				"openType": "_iframe",
-				"href": "view/system/role.html",
-				"spread": true
-			},
-			{
-				"id": 43,
-				"title": "权限管理",
-				"icon": "layui-icon layui-icon-user",
-				"type": 1,
-				"openType": "_iframe",
-				"href": "view/system/power.html",
-				"spread": true
-			}
-		]
-	}, {
+	 {
 		"id": "error",
 		"title": "错误页面",
 		"icon": "layui-icon layui-icon-face-cry",

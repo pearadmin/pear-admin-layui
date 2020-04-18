@@ -57,6 +57,12 @@
     animation: spin 1.5s linear infinite;
 }
 
+.preloader .preloader-message {
+    display: block;
+    position: relative;
+    left: 50%;
+    top: 50%;
+}
 
 @keyframes spin {
     0% {

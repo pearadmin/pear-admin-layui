@@ -195,11 +195,7 @@ layui.define(['jquery', 'element'], function (exports) {
 		
 		  }
 	    }
-		
 		element.tabChange(elem,opt.id);
-		
-		
-		
 	}
 	
 	
