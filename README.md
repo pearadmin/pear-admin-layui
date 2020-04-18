@@ -21,7 +21,7 @@ Pear Admin v 1.0 :http://jmysy.gitee.io/pear-one-layui/Pear%20Admin%20v%201.0/
 
 Pear Admin v 2.0 :http://jmysy.gitee.io/pear-one-layui/Pear%20Admin%20v%202.0/
 
-交流链接: [交流群](https://jq.qq.com/?_wv=1027&k=5OdSmve)
+交流链接: [交流群](https://jq.qq.com/?_wv=1027&k=5OdSmve) QQ 群: 682110771
 
 Pear Admin Layui 目前支持单页面与多标签页的切换，仅仅通过简单的API接口初始化就可以, 遇到问题及时拍板，加群讨论，如有意愿加入开源的
 伙伴可群内私信作者，第三期更新订版时会推出相关API文档
