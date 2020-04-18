@@ -24,7 +24,16 @@
 				 background-color: white!important;
 				 color: black!important;
 			 }
+			 
+			 .light-theme .bottom-nav {
+				 background-color: white!important;
+				 box-shadow: none;
+				 border-top: whitesmoke 1px solid;
+			 }
 			
+			.light-theme .bottom-nav *{
+				color: dimgray;
+			}
 			
 		    /** 通 用 框 架 布 局 */
             .pear-admin .layui-header {

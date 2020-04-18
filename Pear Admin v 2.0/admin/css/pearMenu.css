@@ -114,6 +114,15 @@
 }
 
 
+
+  .pear-nav-tree .layui-nav-child dd a span{
+      margin-left: 25px!important;
+   }
+   .pear-nav-tree .layui-nav-child dd a i{
+       display: none;
+    }
+	
+
 /* #409eff */
 
 /** 亮 样 式*/
