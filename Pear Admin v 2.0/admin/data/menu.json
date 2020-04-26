@@ -92,6 +92,15 @@
 						"openType": "_iframe",
 						"href": "view/common/basic/form.html",
 						"spread": true
+					},
+					{
+						"id": 213,
+						"title": "多选下拉",
+						"icon": "layui-icon layui-icon-face-smile",
+						"type": 1,
+						"openType": "_iframe",
+						"href": "view/common/basic/formSelects.html",
+						"spread": true
 					}
 				]
 			},

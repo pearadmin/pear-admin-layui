@@ -57,6 +57,7 @@
 			pearNotice:"extends/pearNotice",
 			echarts:"extends/echarts",
 			echartsTheme:"extends/echartsTheme",
+			formSelects:'extends/formSelects-v4',
 			treetable:"extends/treetable",
 			"layui.all": "../layui.all"
 		};

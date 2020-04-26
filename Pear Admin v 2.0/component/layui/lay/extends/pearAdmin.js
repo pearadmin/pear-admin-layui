@@ -35,7 +35,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pear
 				theme: option.theme,
 				height: '100%',
 				control: option.control ? 'control' : false, // control 
-				defaultMenu: 0,
+				defaultMenu: 1,
 				defaultOpen: 0, //默认打开菜单
 				accordion: true,
 				url: option.data, //数据地址
