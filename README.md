@@ -17,9 +17,9 @@
 
 开源地址:https://gitee.com/Jmysy/Pear-One-Layui
 
-Pear Admin v 1.0 :http://jmysy.gitee.io/pear-one-layui/Pear%20Admin%20v%201.0/
+Pear Admin v 1.0 :http://jmysy.gitee.io/pear-admin-layui/Pear%20Admin%20v%201.0/
 
-Pear Admin v 2.0 :http://jmysy.gitee.io/pear-one-layui/Pear%20Admin%20v%202.0/
+Pear Admin v 2.0 :http://jmysy.gitee.io/pear-admin-layui/Pear%20Admin%20v%202.0/
 
 交流链接: [交流群](https://jq.qq.com/?_wv=1027&k=5OdSmve) QQ 群: 682110771
 
