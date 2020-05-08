@@ -2,7 +2,7 @@
 		"id": 1,
 		"title": "工作空间",
 		"type": 0,
-		"icon": "layui-icon layui-icon-home",
+		"icon": "layui-icon layui-icon-console",
 		"spread": true,
 		"href": "",
 		"children": [{
@@ -26,7 +26,7 @@
 	{
 		"id": 4,
 		"title": "系统管理",
-		"icon": "layui-icon layui-icon-face-cry",
+		"icon": "layui-icon layui-icon-set-fill",
 		"type": 0,
 		"href": "",
 		"spread": true,
@@ -62,7 +62,7 @@
 	{
 		"id": 2,
 		"title": "扩展组件",
-		"icon": "layui-icon layui-icon-face-cry",
+		"icon": "layui-icon layui-icon-component",
 		"type": 0,
 		"href": "",
 		"spread": true,
@@ -202,7 +202,7 @@
 	 {
 		"id": "error",
 		"title": "错误页面",
-		"icon": "layui-icon layui-icon-face-cry",
+		"icon": "layui-icon layui-icon-auz",
 		"type": 0,
 		"href": "",
 		"spread": true,
