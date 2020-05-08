@@ -140,10 +140,19 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pear
 			style +=
 				'.light-theme .pear-nav-tree .layui-this a:hover,.light-theme .pear-nav-tree .layui-this,.light-theme .pear-nav-tree .layui-this a,.pear-nav-tree .layui-this a,.pear-nav-tree .layui-this{background-color: ' +
 				color + '!important;}';
+           
+		    // 自定义 Logo 标题演示
+			style+=
+			'.pear-admin .layui-logo .title{color:'+
+             color+'!important;}';
 
 			// 自 定 义 标 签 配 色
 			style += '.pear-frame-title .dot,.pear-tab .layui-this .pear-tab-active{background-color: ' + color +
 				'!important;}';
+
+            // 自 定 义 快 捷 菜 单
+			style += '.bottom-nav li a:hover{background-color:'+
+			color +'!important;}';
 
 			// 自 定 义 顶 部 配 色
 			style += '.pear-admin .layui-header .layui-nav .layui-nav-bar{background-color: ' + color + '!important;}'
