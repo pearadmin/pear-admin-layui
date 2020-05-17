@@ -1,9 +1,10 @@
 .lay-step {
     font-size: 0;
-    width: 400px;
     margin: 0 auto;
     max-width: 100%;
-    padding-left: 200px;
+	width: 80%;
+	padding-left: 13%;
+	
 }
 
 .step-item {
