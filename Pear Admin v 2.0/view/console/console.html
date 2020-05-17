@@ -7,7 +7,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 		<link rel="stylesheet" href="../../component/layui/css/layui.css" media="all">
-        <style>
+		<style>
 			.top-panel {
 				border-radius: 4px;
 				text-align: center;
@@ -70,52 +70,53 @@
 				color: gray;
 				position: absolute;
 			}
-			
-			.list .list-item{
-			       height: 33px;
-				   line-height: 33px;
-				   color: gray;
-				   padding: 5px;
-				   padding-left: 15px;
-				   border-radius: 4px;
-				   margin-top: 5.2px;
+
+			.list .list-item {
+				height: 33px;
+				line-height: 33px;
+				color: gray;
+				padding: 5px;
+				padding-left: 15px;
+				border-radius: 4px;
+				margin-top: 5.2px;
 			}
-			
-			.custom-tab .layui-tab-title{
-			       border-bottom-width: 0px; 
-			       border-bottom-style: none;
+
+			.custom-tab .layui-tab-title {
+				border-bottom-width: 0px;
+				border-bottom-style: none;
 			}
-			.custom-tab .layui-tab-title li{
-		      	   margin-left: 10px;
+
+			.custom-tab .layui-tab-title li {
+				margin-left: 10px;
 			}
-			
-			.list .list-item:hover{
+
+			.list .list-item:hover {
 				background-color: whitesmoke;
 			}
-			
-			
-			.list .list-item .title{
-				font-size:13px;
+
+
+			.list .list-item .title {
+				font-size: 13px;
 				width: 100%;
 			}
-			.list .list-item .footer{
+
+			.list .list-item .footer {
 				position: absolute;
 				right: 30px;
 				font-size: 12px;
 			}
-			
+
 			.top-panel-tips i {
-			
+
 				font-size: 33px;
 			}
-		
 		</style>
 	</head>
 	<body class="pear-container">
 		<div>
-            <div class="layui-row layui-col-space10">
+			<div class="layui-row layui-col-space10">
 				<div class="layui-col-xs6 layui-col-md3">
-                    <div class="layui-card top-panel">
+					<div class="layui-card top-panel">
 						<div class="layui-card-header">今日访问</div>
 						<div class="layui-card-body">
 							<div class="layui-row layui-col-space5">
@@ -128,9 +129,9 @@
 							</div>
 						</div>
 					</div>
-                </div>
+				</div>
 				<div class="layui-col-xs6 layui-col-md3">
-                    <div class="layui-card top-panel">
+					<div class="layui-card top-panel">
 						<div class="layui-card-header">提交次数</div>
 						<div class="layui-card-body">
 							<div class="layui-row layui-col-space5">
@@ -143,9 +144,9 @@
 							</div>
 						</div>
 					</div>
-                </div>
+				</div>
 				<div class="layui-col-xs6 layui-col-md3">
-                    <div class="layui-card top-panel">
+					<div class="layui-card top-panel">
 						<div class="layui-card-header">下载数量</div>
 						<div class="layui-card-body">
 							<div class="layui-row layui-col-space5">
@@ -153,14 +154,14 @@
 									1,34,1
 								</div>
 								<div class="layui-col-xs4 layui-col-md4  top-panel-tips">
-								   <i class="layui-icon layui-icon-carousel" style="color: #5FB878;"></i>
+									<i class="layui-icon layui-icon-carousel" style="color: #5FB878;"></i>
 								</div>
 							</div>
 						</div>
 					</div>
-                </div>
+				</div>
 				<div class="layui-col-xs6 layui-col-md3">
-                    <div class="layui-card top-panel">
+					<div class="layui-card top-panel">
 						<div class="layui-card-header">流量统计</div>
 						<div class="layui-card-body">
 							<div class="layui-row layui-col-space5">
@@ -168,7 +169,7 @@
 									7,04,6
 								</div>
 								<div class="layui-col-xs4 layui-col-md4 top-panel-tips">
-								    <i class="layui-icon layui-icon-cart" style="color: #E6A23C;"></i>
+									<i class="layui-icon layui-icon-cart" style="color: #E6A23C;"></i>
 								</div>
 							</div>
 						</div>
@@ -180,23 +181,23 @@
 					<div class="layui-card">
 						<div class="layui-card-body">
 							<div class="layui-tab custom-tab layui-tab-brief" lay-filter="docDemoTabBrief">
-							    <div id="echarts-records" style="background-color:#ffffff;min-height:400px;padding: 10px"></div>
-							</div>   
+								<div id="echarts-records" style="background-color:#ffffff;min-height:400px;padding: 10px"></div>
+							</div>
 						</div>
 					</div>
 					<div class="layui-card">
 						<div class="layui-card-header">开源动态</div>
 						<div class="layui-card-body">
-						<script src='https://gitee.com/Jmysy/Pear-One-Layui/widget_preview' async defer></script>
-						<div id="osc-gitee-widget-tag"></div>
-						<style>
-						.osc_pro_color {color: #4183c4 !important;}
-						.osc_panel_color {background-color: #ffffff !important;}
-						.osc_background_color {background-color: #ffffff !important;}
-						.osc_border_color {border-color: #e3e9ed !important;}
-						.osc_desc_color {color: #666666 !important;}
-						.osc_link_color * {color: #9b9b9b !important;}
-						</style>
+							<script src='https://gitee.com/Jmysy/Pear-Admin-Layui/widget_preview' async defer></script>
+							<div id="osc-gitee-widget-tag"></div>
+							<style>
+							.osc_pro_color {color: #4183c4 !important;}
+							.osc_panel_color {background-color: #ffffff !important;}
+							.osc_background_color {background-color: #ffffff !important;}
+							.osc_border_color {border-color: #e3e9ed !important;}
+							.osc_desc_color {color: #666666 !important;}
+							.osc_link_color * {color: #9b9b9b !important;}
+							</style>
 						</div>
 					</div>
 				</div>
@@ -205,16 +206,15 @@
 						<div class="layui-card-header">最近更新</div>
 						<div class="layui-card-body">
 							<ul class="list">
-								<li class="list-item"><span class="title">新增消息组件</span><span class="footer">2019-12-15   11:28</span></li>
-								<li class="list-item"><span class="title">移动端兼容</span><span class="footer">2019-12-15   11:28</span></li>
-								<li class="list-item"><span class="title">系统布局优化</span><span class="footer">2019-12-15   11:28</span></li>
-								<li class="list-item"><span class="title">兼容多系统菜单模式</span><span class="footer">2019-12-15   11:28</span></li>
-								<li class="list-item"><span class="title">兼容多标签页切换</span><span class="footer">2019-12-9   14:58</span></li>
-								<li class="list-item"><span class="title">扩展下拉组件</span><span class="footer">2019-12-7   9:06</span></li>
-								<li class="list-item"><span class="title">扩展卡片样式</span><span class="footer">2019-12-1   10:26</span></li>
-								<li class="list-item"><span class="title">Pear Admin 框架正式开源</span><span class="footer">2019-11-27   07:23</span></li>
+								<li class="list-item"><span class="title">新增消息组件</span><span class="footer">2019-12-15 11:28</span></li>
+								<li class="list-item"><span class="title">移动端兼容</span><span class="footer">2019-12-15 11:28</span></li>
+								<li class="list-item"><span class="title">系统布局优化</span><span class="footer">2019-12-15 11:28</span></li>
+								<li class="list-item"><span class="title">兼容多系统菜单模式</span><span class="footer">2019-12-15 11:28</span></li>
+								<li class="list-item"><span class="title">兼容多标签页切换</span><span class="footer">2019-12-9 14:58</span></li>
+								<li class="list-item"><span class="title">扩展下拉组件</span><span class="footer">2019-12-7 9:06</span></li>
+								<li class="list-item"><span class="title">扩展卡片样式</span><span class="footer">2019-12-1 10:26</span></li>
 								<li class="list-item" style="height: 37px;"><button class="layui-btn layui-btn-normal layui-btn-fluid">查 看 更 多</button></li>
-						   </ul>
+							</ul>
 						</div>
 					</div>
 					<div class="layui-card">
@@ -273,112 +273,112 @@
 									</tr>
 								</tbody>
 							</table>
-					
+
 						</div>
 					</div>
 				</div>
 			</div>
-        </div>
+		</div>
 		<!--</div>-->
 		<script src="../../component/layui/layui.js" charset="utf-8"></script>
 		<script>
-		    layui.use(['layer', 'echarts','element'], function () {
-		        var $ = layui.jquery,
-		            layer = layui.layer,
+			layui.use(['layer', 'echarts', 'element'], function() {
+				var $ = layui.jquery,
+					layer = layui.layer,
 					element = layui.element,
-		            echarts = layui.echarts;
-	
-		        var echartsRecords = echarts.init(document.getElementById('echarts-records'), 'walden');
-		
-		        var optionRecords = {
-		            title: {
-		                text: ''
-		            },
-		            tooltip: {
-		                trigger: 'axis',
-		                axisPointer: {
-		                    type: 'cross',
-		                    label: {
-		                        backgroundColor: '#6a7985'
-		                    }
-		                }
-		            },
-		            legend: {
-		                data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']
-		            },
-		            toolbox: {
-		                feature: {
-		                    saveAsImage: {}
-		                }
-		            },
-		            grid: {
-		                left: '3%',
-		                right: '4%',
-		                bottom: '3%',
-		                containLabel: true
-		            },
-		            xAxis: [
-		                {
-		                    type: 'category',
-		                    boundaryGap: false,
-		                    data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
-		                }
-		            ],
-		            yAxis: [
-		                {
-		                    type: 'value'
-		                }
-		            ],
-		            series: [
-		                {
-		                    name: '邮件营销',
-		                    type: 'line',
-		                    stack: '总量',
-		                    areaStyle: {},
-		                    data: [120, 132, 101, 134, 90, 230, 210]
-		                },
-		                {
-		                    name: '联盟广告',
-		                    type: 'line',
-		                    areaStyle: {},
-		                    data: [220, 182, 200, 234, 290, 330, 310]
-		                },
-		                {
-		                    name: '视频广告',
-		                    type: 'line',
-		                    stack: '总量',
-		                    areaStyle: {},
-		                    data: [900, 600, 450, 599, 650, 750, 900]
-		                },
-		                {
-		                    name: '直接访问',
-		                    type: 'line',
-		                    stack: '总量',
-		                    areaStyle: {},
-		                    data: [600, 454, 545, 699, 899, 1000, 1100]
-		                },
-		                {
-		                    name: '搜索引擎',
-		                    type: 'line',
-		                    stack: '总量',
-		                    label: {
-		                        normal: {
-		                            show: true,
-		                            position: 'top'
-		                        }
-		                    },
-		                    areaStyle: {},
-		                    data: [820, 932, 901, 934, 1290, 1330, 1320]
-		                }
-		            ]
-		        };
-		        echartsRecords.setOption(optionRecords);
-		
-		        window.onresize = function () {
-		            echartsRecords.resize();
-		        }
-		
-		    });
+					echarts = layui.echarts;
+
+				var echartsRecords = echarts.init(document.getElementById('echarts-records'), 'walden');
+
+				var optionRecords = {
+					"title": {
+						"text": ""
+					},
+					"tooltip": {
+						"trigger": "axis",
+						"axisPointer": {
+							"type": "cross",
+							"label": {
+								"backgroundColor": "#6a7985"
+							}
+						}
+					},
+					"legend": {
+						"data": ["邮件营销", "联盟广告", "视频广告", "直接访问", "搜索引擎"]
+					},
+					"toolbox": {
+						"feature": {
+							"saveAsImage": {}
+						}
+					},
+					"grid": {
+						"left": "3%",
+						"right": "4%",
+						"bottom": "3%",
+						"containLabel": true
+					},
+					"xAxis": [{
+						"type": "category",
+						"boundaryGap": false,
+						"data": ["周一", "周二", "周三", "周四", "周五", "周六", "周日"]
+					}],
+					"yAxis": [{
+						"type": "value"
+					}],
+					"series": [{
+							"name": "邮件营销",
+							"type": "line",
+							"stack": "总量",
+							"areaStyle": {},
+							"data": [120, 132, 101, 134, 90, 230, 210]
+						},
+						{
+							"name": "联盟广告",
+							"type": "line",
+							"stack": "总量",
+							"areaStyle": {},
+							"data": [220, 182, 191, 234, 290, 330, 310]
+						},
+						{
+							"name": "视频广告",
+							"type": "line",
+							"stack": "总量",
+							"areaStyle": {},
+							"data": [150, 232, 201, 154, 190, 330, 410]
+						},
+						{
+							"name": "直接访问",
+							"type": "line",
+							"stack": "总量",
+							"areaStyle": {
+								"normal": {}
+							},
+							"data": [320, 332, 301, 334, 390, 330, 320]
+						},
+						{
+							"name": "搜索引擎",
+							"type": "line",
+							"stack": "总量",
+							"label": {
+								"normal": {
+									"show": true,
+									"position": "top"
+								}
+							},
+							"areaStyle": {
+								"normal": {}
+							},
+							"data": [820, 932, 901, 934, 1290, 1330, 1320]
+						}
+					]
+				};
+				echartsRecords.setOption(optionRecords);
+
+				window.onresize = function() {
+					echartsRecords.resize();
+				}
+
+			});
 		</script>
 	</body>
 </html>

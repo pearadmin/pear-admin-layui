@@ -55,6 +55,8 @@
 			pearFrame:"extends/pearFrame",
 			pearSocial:"extends/pearSocial",
 			pearNotice:"extends/pearNotice",
+			pearStep:"extends/pearStep",
+			tinymce:"extends/tinymce/tinymce",
 			echarts:"extends/echarts",
 			echartsTheme:"extends/echartsTheme",
 			formSelects:'extends/formSelects-v4',
