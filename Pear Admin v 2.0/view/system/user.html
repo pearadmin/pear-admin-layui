@@ -86,7 +86,7 @@
 		        let form = layui.form;
 		        let $ = layui.jquery;
 		
-		        let MODULE_PATH = "/system/user/";
+		        let MODULE_PATH = "operate/";
 		
 		        let cols = [
 		            [
@@ -148,7 +148,7 @@
 		                title: '新增',
 		                shade: 0.1,
 		                area: ['500px', '400px'],
-		                content: MODULE_PATH + 'add'
+		                content: MODULE_PATH + 'add.html'
 		            });
 		        }
 		
@@ -158,7 +158,7 @@
 		                title: '修改',
 		                shade: 0.1,
 		                area: ['500px', '400px'],
-		                content: MODULE_PATH + 'edit?userId='+obj.data['userId']
+		                content: MODULE_PATH + 'edit.html'
 		            });
 		        }
 		

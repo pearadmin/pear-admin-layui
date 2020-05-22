@@ -81,7 +81,7 @@
         let $ = layui.jquery;
         let treetable = layui.treetable;
 
-        let MODULE_PATH = "/system/power/";
+        let MODULE_PATH = "operate/";
 
         window.render = function(){
             treetable.render({
@@ -137,7 +137,7 @@
                 title: '新增',
                 shade: 0.1,
                 area: ['450px', '500px'],
-                content: MODULE_PATH + 'add'
+                content: MODULE_PATH + 'add.html'
             });
         }
 
@@ -147,7 +147,7 @@
                 title: '修改',
                 shade: 0.1,
                 area: ['450px', '500px'],
-                content: MODULE_PATH + 'edit?powerId='+obj.data['powerId']
+                content: MODULE_PATH + 'edit.html'
             });
         }
         window.remove = function(obj){
