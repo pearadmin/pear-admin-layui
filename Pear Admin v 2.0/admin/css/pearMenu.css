@@ -67,15 +67,26 @@
 	display: none!important;
 }
 
-.pear-nav-control .layui-this{
-	background-color: #F0F0F0;
+.pear-nav-control a{
+	font-weight: 500;
+	font-size: 14px;
 }
 
-.pear-nav-control .layui-nav-bar{
-	display: none;
+.pear-nav-control .layui-nav-bar {
+	top: 0px !important;
 }
 
+.pear-nav-control .layui-this *{
+	color: #51A351!important;
+	font-weight: 600;
+	font-size: 15px;
+}
 
+.pear-nav-control a:hover{
+	font-weight: 600;
+	color: #51A351!important;
+	font-size: 15px;
+}
 
 /** 隐 藏 后 子 级 悬 浮 菜 单 */
 .pear-nav-tree .layui-nav-hover{

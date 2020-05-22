@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>首页三</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link rel="stylesheet" href="../../component/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="../../admin/css/pearButton.css" />
+		<style>
+			.pear-container {
+				background-color: whitesmoke;
+				margin: 10px;
+			}
+
+			.pear-card {
+				width: 100%;
+				height: 66px;
+				background-color: #F8F8F8;
+				display: inline-block;
+				border-radius: 5px;
+				text-align: center;
+				margin-bottom: 3px;
+			}
+
+			.pear-card2 {
+				width: 100%;
+				height: 90px;
+				background-color: #F8F8F8;
+				display: inline-block;
+				border-radius: 5px;
+				text-align: center;
+				margin-bottom: 3px;
+			}
+
+			.pear-card2 i {
+				font-size: 30px;
+				height: 90px;
+				line-height: 90px;
+			}
+
+			.pear-card i {
+				font-size: 30px;
+				height: 66px;
+				line-height: 66px;
+			}
+
+			.layui-col-md3 {
+				text-align: center;
+			}
+
+			.pear-card-title {
+				margin-top: 3px;
+			}
+
+			.person img {
+				width: 90px;
+				height: 90px;
+				border-radius: 4px;
+				margin-top: 8px;
+				margin-left: 8px;
+			}
+			
+
+			.pear-card2 .count {
+				color: #51A351;
+				font-size: 30px;
+				margin-top: 12px;
+			}
+
+			.pear-card2 .title {
+				color: gray;
+				font-size: 14px;
+				margin-top: 14px;
+			}
+
+			.pear-card-status {
+				padding: 0 10px 10px;
+			}
+
+			.pear-card-status li {
+				position: relative;
+				padding: 10px 0;
+				border-bottom: 1px solid #EEE;
+			}
+
+			.pear-card-status li h3 {
+				padding-bottom: 5px;
+				font-weight: 700;
+			}
+
+			.pear-card-status li p {
+				padding-bottom: 10px;
+			}
+
+			.pear-card-status li>span {
+				color: #999;
+			}
+
+			.pear-reply {
+				position: absolute;
+				right: 20px;
+			}
+			.person .title{
+				font-size: 17px;
+				font-weight: 600;
+				margin-left: 12px;
+			}
+		</style>
+	</head>
+	<body class="pear-container">
+		<div class="layui-row layui-col-space10">
+			<div class="layui-col-md4">
+				<div class="layui-card">
+					<div class="layui-card-header">
+						快捷菜单
+					</div>
+					<div class="layui-card-body">
+						<div class="layui-row layui-col-space10">
+							<div class="layui-col-md3">
+								<div class="pear-card">
+									<i class="layui-icon layui-icon-home"></i>
+								</div>
+								<span class="pear-card-title">主页</span>
+							</div>
+							<div class="layui-col-md3">
+								<div class="pear-card">
+									<i class="layui-icon layui-icon-camera"></i>
+								</div>
+								<span class="pear-card-title">弹层</span>
+							</div>
+							<div class="layui-col-md3">
+								<div class="pear-card">
+									<i class="layui-icon layui-icon-star"></i>
+								</div>
+								<span class="pear-card-title">聊天</span>
+							</div>
+							<div class="layui-col-md3">
+								<div class="pear-card">
+									<i class="layui-icon layui-icon-camera"></i>
+								</div>
+								<span class="pear-card-title">相机</span>
+							</div>
+							<div class="layui-col-md3">
+								<div class="pear-card">
+									<i class="layui-icon layui-icon-console"></i>
+								</div>
+								<span class="pear-card-title">表单</span>
+							</div>
+							<div class="layui-col-md3">
+								<div class="pear-card">
+									<i class="layui-icon layui-icon-auz"></i>
+								</div>
+								<span class="pear-card-title">安全</span>
+							</div>
+							<div class="layui-col-md3">
+								<div class="pear-card">
+									<i class="layui-icon layui-icon-cart"></i>
+								</div>
+								<span class="pear-card-title">公告</span>
+							</div>
+							<div class="layui-col-md3">
+								<div class="pear-card">
+									<i class="layui-icon layui-icon-app"></i>
+								</div>
+								<span class="pear-card-title">更多</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md4">
+				<div class="layui-card">
+					<div class="layui-card-header">
+						代办任务
+					</div>
+					<div class="layui-card-body">
+						<div class="layui-row layui-col-space10">
+							<div class="layui-col-md6">
+								<div class="pear-card2">
+									<div class="title">待审评论</div>
+									<div class="count">21</div>
+								</div>
+							</div>
+							<div class="layui-col-md6">
+								<div class="pear-card2">
+									<div class="title">待审帖子</div>
+									<div class="count">32</div>
+								</div>
+							</div>
+							<div class="layui-col-md6">
+								<div class="pear-card2">
+									<div class="title">待审文章</div>
+									<div class="count">14</div>
+								</div>
+							</div>
+							<div class="layui-col-md6">
+								<div class="pear-card2">
+									<div class="title">待审用户</div>
+									<div class="count">63</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md4">
+				<div class="layui-card">
+					<div class="layui-card-header">
+						个人信息
+					</div>
+					<div class="layui-card-body person" style="height: 195px;">
+						<img src="../../admin/images/avatar.jpg" />
+						<span class="title">晚上好，<span style="color: #51A351;">就眠仪式</span>，我猜你可能累了</span>
+						<div>
+						<div class="process-title" style="position: absolute;margin-top: -6px;">
+							&nbsp;&nbsp;完 成 度 :
+						</div>
+						<div style="margin-top: 28px;width: 80%;margin-left: 80px;" class="layui-progress">
+						    <div  class="layui-progress-bar layui-bg-orange" lay-percent="30%"></div>
+						</div>
+						 <br>
+						 <div class="process-title" style="position: absolute;margin-top: 7px;">
+						 	&nbsp;&nbsp;容 错 率 :
+						 </div>
+						<div class="layui-progress" style="margin-top: 15px;width: 80%;margin-left: 80px;">
+						    <div  class="layui-progress-bar layui-bg-green" lay-percent="40%"></div>
+						</div>	
+						</div>
+						
+						
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md8">
+				<div class="layui-card">
+					<div class="layui-card-body">
+						<div class="layui-tab custom-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+							<div id="echarts-records" style="background-color:#ffffff;min-height:400px;"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md4">
+				<div class="layui-card">
+					<div class="layui-card-header">留言板</div>
+					<div class="layui-card-body">
+						<ul class="pear-card-status layuiadmin-home2-usernote">
+							<li>
+								<h3>Pear Admin</h3>
+								<p>当浑浊变成了一种常态，那么清白就成了一种罪过。</p>
+								<span>4月30日 22:43</span>
+								<a href="javascript:;" data-id="1" class="layui-btn layui-btn-xs pear-reply">回复</a>
+							</li>
+							<li>
+								<h3>Ant Design</h3>
+								<p>那是一种内在的东西，他们到达不了，也无法触及！</p>
+								<span>5月12日 01:25</span>
+								<a href="javascript:;" data-id="1" class="layui-btn layui-btn-xs pear-reply">回复</a>
+							</li>
+							</li>
+							<li>
+								<h3>Angular</h3>
+								<p>希望是一个好东西,也许是最好的,好东西是不会消亡的！</p>
+								<span>6月11日 15:33</span>
+								<a href="javascript:;" data-id="1" class="layui-btn layui-btn-xs pear-reply">回复</a>
+							</li>
+							<li>
+								<h3>Bootstrap</h3>
+								<p>一切都在不可避免的走向庸俗。</p>
+								<span>2月09日 13:40</span>
+								<a href="javascript:;" data-id="1" class="layui-btn layui-btn-xs pear-reply">回复</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--</div>-->
+		<script src="../../component/layui/layui.js" charset="utf-8"></script>
+		<script>
+			layui.use(['layer', 'echarts', 'element'], function() {
+				var $ = layui.jquery,
+					layer = layui.layer,
+					element = layui.element,
+					echarts = layui.echarts;
+
+				var echartsRecords = echarts.init(document.getElementById('echarts-records'), 'walden');
+
+
+				let bgColor = "#fff";
+				let color = [
+					"#0090FF",
+					"#36CE9E",
+					"#FFC005",
+					"#FF515A",
+					"#8B5CFF",
+					"#00CA69"
+				];
+				let echartData = [{
+						name: "1",
+						value1: 100,
+						value2: 233
+					},
+					{
+						name: "2",
+						value1: 138,
+						value2: 233
+					},
+					{
+						name: "3",
+						value1: 350,
+						value2: 200
+					},
+					{
+						name: "4",
+						value1: 173,
+						value2: 180
+					},
+					{
+						name: "5",
+						value1: 180,
+						value2: 199
+					},
+					{
+						name: "6",
+						value1: 150,
+						value2: 233
+					},
+					{
+						name: "7",
+						value1: 180,
+						value2: 210
+					},
+					{
+						name: "8",
+						value1: 230,
+						value2: 180
+					}
+				];
+
+				let xAxisData = echartData.map(v => v.name);
+				//  ["1", "2", "3", "4", "5", "6", "7", "8"]
+				let yAxisData1 = echartData.map(v => v.value1);
+				// [100, 138, 350, 173, 180, 150, 180, 230]
+				let yAxisData2 = echartData.map(v => v.value2);
+				// [233, 233, 200, 180, 199, 233, 210, 180]
+				const hexToRgba = (hex, opacity) => {
+					let rgbaColor = "";
+					let reg = /^#[\da-f]{6}$/i;
+					if (reg.test(hex)) {
+						rgbaColor =
+							`rgba(${parseInt("0x" + hex.slice(1, 3))},${parseInt(
+					      "0x" + hex.slice(3, 5)
+					    )},${parseInt("0x" + hex.slice(5, 7))},${opacity})`;
+					}
+					return rgbaColor;
+				}
+
+				option = {
+					backgroundColor: bgColor,
+					color: color,
+					legend: {
+						right: 10,
+						top: 10
+					},
+					tooltip: {
+						trigger: "axis",
+						formatter: function(params) {
+							let html = '';
+							params.forEach(v => {
+								console.log(v)
+								html +=
+									`<div style="color: #666;font-size: 14px;line-height: 24px">
+					                <span style="display:inline-block;margin-right:5px;border-radius:10px;width:10px;height:10px;background-color:${color[v.componentIndex]};"></span>
+					                ${v.seriesName}.${v.name}
+					                <span style="color:${color[v.componentIndex]};font-weight:700;font-size: 18px">${v.value}</span>
+					                万元`;
+							})
+
+
+
+							return html
+						},
+						extraCssText: 'background: #fff; border-radius: 0;box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);color: #333;',
+						axisPointer: {
+							type: 'shadow',
+							shadowStyle: {
+								color: '#ffffff',
+								shadowColor: 'rgba(225,225,225,1)',
+								shadowBlur: 5
+							}
+						}
+					},
+					grid: {
+						top: 100,
+						containLabel: true
+					},
+					xAxis: [{
+						type: "category",
+						boundaryGap: false,
+						axisLabel: {
+							formatter: '{value}月',
+							textStyle: {
+								color: "#333"
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: "#D9D9D9"
+							}
+						},
+						data: xAxisData
+					}],
+					yAxis: [{
+						type: "value",
+						name: '单位：万千瓦时',
+						axisLabel: {
+							textStyle: {
+								color: "#666"
+							}
+						},
+						nameTextStyle: {
+							color: "#666",
+							fontSize: 12,
+							lineHeight: 40
+						},
+						splitLine: {
+							lineStyle: {
+								type: "dashed",
+								color: "#E9E9E9"
+							}
+						},
+						axisLine: {
+							show: false
+						},
+						axisTick: {
+							show: false
+						}
+					}],
+					series: [{
+						name: "2018",
+						type: "line",
+						smooth: true,
+						// showSymbol: false,/
+						symbolSize: 8,
+						zlevel: 3,
+						lineStyle: {
+							normal: {
+								color: color[0],
+								shadowBlur: 3,
+								shadowColor: hexToRgba(color[0], 0.5),
+								shadowOffsetY: 8
+							}
+						},
+						areaStyle: {
+							normal: {
+								color: new echarts.graphic.LinearGradient(
+									0,
+									0,
+									0,
+									1,
+									[{
+											offset: 0,
+											color: hexToRgba(color[0], 0.3)
+										},
+										{
+											offset: 1,
+											color: hexToRgba(color[0], 0.1)
+										}
+									],
+									false
+								),
+								shadowColor: hexToRgba(color[0], 0.1),
+								shadowBlur: 10
+							}
+						},
+						data: yAxisData1
+					}, {
+						name: "2019",
+						type: "line",
+						smooth: true,
+						// showSymbol: false,
+						symbolSize: 8,
+						zlevel: 3,
+						lineStyle: {
+							normal: {
+								color: color[1],
+								shadowBlur: 3,
+								shadowColor: hexToRgba(color[1], 0.5),
+								shadowOffsetY: 8
+							}
+						},
+						areaStyle: {
+							normal: {
+								color: new echarts.graphic.LinearGradient(
+									0,
+									0,
+									0,
+									1,
+									[{
+											offset: 0,
+											color: hexToRgba(color[1], 0.3)
+										},
+										{
+											offset: 1,
+											color: hexToRgba(color[1], 0.1)
+										}
+									],
+									false
+								),
+								shadowColor: hexToRgba(color[1], 0.1),
+								shadowBlur: 10
+							}
+						},
+						data: yAxisData2
+					}]
+				};
+
+				echartsRecords.setOption(option);
+			
+			    window.onresize = function() {
+			    	echartsRecords.resize();
+			    }
+			    
+			});
+		</script>
+	</body>
+</html>

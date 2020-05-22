@@ -11,7 +11,15 @@
 			"icon": "layui-icon layui-icon-console",
 			"type": 1,
 			"openType": "_iframe",
-			"href": "view/console/console.html",
+			"href": "view/console/console1.html",
+			"spread": true
+		},{
+			"id": 13,
+			"title": "数据分析",
+			"icon": "layui-icon layui-icon-console",
+			"type": 1,
+			"openType": "_iframe",
+			"href": "view/console/console2.html",
 			"spread": true
 		},{
 			"id": 12,
