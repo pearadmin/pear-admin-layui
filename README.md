@@ -32,19 +32,25 @@ Pear Admin Layui 目前支持单页面与多标签页的切换，仅仅通过简
 
 多选项卡布局  :tada: 
 
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0415/004345_c763f6ea_4835367.png "3[(4M6GWDUJ)0CP}W`}{W}H.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0523/134114_2e575a5b_4835367.png "H3[$MY[V)RU]~DXUM`52L}E.png")
 
 
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0415/004355_814480a2_4835367.png "6NRSAB{Q9{X$VN3BOZ]HH)W.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0523/134127_cdaf526d_4835367.png "1KQL6F_LX9~YJ3DA24MB`25.png")
 
 
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0415/004404_a82806f6_4835367.png "8YT67GA{~KY7GZ6%~C5XZ44.png")
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0523/134141_dd354de6_4835367.png "KNYNKCJ}GLY38W@OVZ%NOC4.png")
 
 
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/0415/004415_ba1298d9_4835367.png "HA3R1@QA]2P$JU~~VL)Q_IA.png")
 
 
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/0415/004427_fc00dd54_4835367.png "PRXW~U%~OMSJL{VG)}45O3E.png")
+
+
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0523/134207_95f386c4_4835367.png "]_0$9DPAEJ0Q~0I7BZKK804.png")
+
+
+![输入图片说明](https://images.gitee.com/uploads/images/2020/0523/134155_f5c8d0ea_4835367.png "8KWG(8RHQ({~M_FD1OXTF]H.png")
 
 
 ### 优秀开源推荐
