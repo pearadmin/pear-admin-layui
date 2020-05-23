@@ -15,6 +15,8 @@
 
 #### 共享地址
 
+官方网站:http://jmysy.gitee.io/pear-admin-social/
+
 开源地址:https://gitee.com/Jmysy/Pear-Admin-Layui
 
 Pear Admin v 1.0 :http://jmysy.gitee.io/pear-admin-layui/Pear%20Admin%20v%201.0/
