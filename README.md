@@ -59,6 +59,7 @@ Pear Admin Layui 目前支持单页面与多标签页的切换，仅仅通过简
 
 SpringBoot 后台管理系统：[SpringBoot_v2](http://gitee.com/bdj/SpringBoot_v2)
 
+SpringBoot 开源组件库: [Api Boot](https://apiboot.minbox.io)
 
 本框架为开源框架，Apache 开源协议，支持商用，学习
 
