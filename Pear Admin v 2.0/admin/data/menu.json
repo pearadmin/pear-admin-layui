@@ -222,7 +222,15 @@
 		"type": 0,
 		"href": "",
 		"spread": true,
-		"children": [
+		"children": [{
+				"id": 301,
+				"title": "任务列表",
+				"icon": "layui-icon layui-icon-face-smile",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/page/task.html",
+				"spread": true
+			}
 		]
 	},
 	 {

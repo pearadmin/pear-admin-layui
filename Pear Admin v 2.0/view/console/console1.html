@@ -111,6 +111,41 @@
 
 				font-size: 33px;
 			}
+
+			.layuiadmin-card-status {
+				padding: 0 10px 10px;
+			}
+
+			.layuiadmin-card-status dd {
+				padding: 15px 0;
+				border-bottom: 1px solid #EEE;
+				display: -webkit-flex;
+				display: flex;
+			}
+
+			.layuiadmin-card-status dd div.layui-status-img,
+			.layuiadmin-card-team .layui-team-img {
+				width: 32px;
+				height: 32px;
+				border-radius: 50%;
+				background-color: #009688;
+				margin-right: 15px;
+			}
+
+			.layuiadmin-card-status dd div.layui-status-img a {
+				width: 100%;
+				height: 100%;
+				display: inline-block;
+				text-align: center;
+				line-height: 32px;
+			}
+
+			.layuiadmin-card-status dd div span {
+				color: #BBB;
+			}
+			.layuiadmin-card-status dd div a{
+				color: #01AAED;
+			}
 		</style>
 	</head>
 	<body class="pear-container">
@@ -187,18 +222,52 @@
 						</div>
 					</div>
 					<div class="layui-card">
-						<div class="layui-card-header">开源动态</div>
+						<div class="layui-card-header">动态</div>
 						<div class="layui-card-body">
-							<script src='https://gitee.com/Jmysy/Pear-Admin-Layui/widget_preview' async defer></script>
-							<div id="osc-gitee-widget-tag"></div>
-							<style>
-							.osc_pro_color {color: #4183c4 !important;}
-							.osc_panel_color {background-color: #ffffff !important;}
-							.osc_background_color {background-color: #ffffff !important;}
-							.osc_border_color {border-color: #e3e9ed !important;}
-							.osc_desc_color {color: #666666 !important;}
-							.osc_link_color * {color: #9b9b9b !important;}
-							</style>
+							<dl class="layuiadmin-card-status">
+								<dd>
+									<div class="layui-status-img"><a href="javascript:;"><img style="width: 32px;height: 32px;border-radius: 50px;" src="../../../Pear%20Admin%20v%201.0/assets/images/avatar.jpg"></a></div>
+									<div>
+										<p>七彩枫叶 在 <a lay-href="https://gitee.com/Jmysy/Pear-Admin-Layui">Pear Admin 专区</a> 回答问题</p>
+										<span>几秒前</span>
+									</div>
+								</dd>
+								<dd>
+									<div class="layui-status-img"><a href="javascript:;"><img style="width: 32px;height: 32px;border-radius: 50px;" src="../../../Pear%20Admin%20v%201.0/assets/images/avatar.jpg"></a></div>
+									<div>
+										<p>简 在 <a lay-href="https://gitee.com/Jmysy/Pear-Admin-Layui">Pear Admin 专区</a> 进行了 <a lay-href="http://fly.layui.com/vipclub/list/layuiadmin/column/quiz/">提问</a></p>
+										<span>2天前</span>
+									</div>
+								</dd>
+								<dd>
+									<div class="layui-status-img"><a href="javascript:;"><img style="width: 32px;height: 32px;border-radius: 50px;" src="../../../Pear%20Admin%20v%201.0/assets/images/avatar.jpg"></a></div>
+									<div>
+										<p>恒宇少年 将 <a lay-href="https://gitee.com/Jmysy/Pear-Admin-Layui">Pear Admin </a> 更新至 2.3.0 版本</p>
+										<span>7天前</span>
+									</div>
+								</dd>
+								<dd>
+									<div class="layui-status-img"><a href="javascript:;"><img style="width: 32px;height: 32px;border-radius: 50px;" src="../../../Pear%20Admin%20v%201.0/assets/images/avatar.jpg"></a></div>
+									<div>
+										<p>如花 在 <a lay-href="https://gitee.com/Jmysy/Pear-Admin-Layui">Pear Admin 社区</a> 发布了 <a lay-href="http://fly.layui.com/column/suggest/">建议</a></p>
+										<span>7天前</span>
+									</div>
+								</dd>
+								<dd>
+									<div class="layui-status-img"><a href="javascript:;"><img style="width: 32px;height: 32px;border-radius: 50px;" src="../../../Pear%20Admin%20v%201.0/assets/images/avatar.jpg"></a></div>
+									<div>
+										<p>就眠仪式 在 <a lay-href="https://gitee.com/Jmysy/Pear-Admin-Layui">Pear Admin 社区</a> 发布了 <a lay-href="http://fly.layui.com/column/suggest/">建议</a></p>
+										<span>8天前</span>
+									</div>
+								</dd>
+								<dd>
+									<div class="layui-status-img"><a href="javascript:;"><img style="width: 32px;height: 32px;border-radius: 50px;" src="../../../Pear%20Admin%20v%201.0/assets/images/avatar.jpg"></a></div>
+									<div>
+										<p>贤心 在 <a lay-href="https://gitee.com/Jmysy/Pear-Admin-Layui">Pear Admin 专区</a> 进行了 <a lay-href="http://fly.layui.com/vipclub/list/layuiadmin/column/quiz/">提问</a></p>
+										<span>8天前</span>
+									</div>
+								</dd>
+							</dl>
 						</div>
 					</div>
 				</div>
@@ -214,7 +283,8 @@
 								<li class="list-item"><span class="title">兼容多标签页切换</span><span class="footer">2019-12-9 14:58</span></li>
 								<li class="list-item"><span class="title">扩展下拉组件</span><span class="footer">2019-12-7 9:06</span></li>
 								<li class="list-item"><span class="title">扩展卡片样式</span><span class="footer">2019-12-1 10:26</span></li>
-								<li class="list-item" style="height: 37px;"><button style="border-radius: 8px!important;" class="layui-btn layui-btn-normal layui-btn-fluid">查 看 更 多</button></li>
+								<li class="list-item" style="height: 37px;"><button style="border-radius: 8px!important;" class="layui-btn layui-btn-normal layui-btn-fluid">查
+										看 更 多</button></li>
 							</ul>
 						</div>
 					</div>
@@ -292,75 +362,75 @@
 				var echartsRecords = echarts.init(document.getElementById('echarts-records'), 'walden');
 
 				var option = {
-				    tooltip: {
-				        trigger: 'axis'
-				    },
-				    xAxis: [{
-				        type: 'category',
-				        data: ['2019-01','2019-02','2019-03','2019-04','2019-05','2019-06'],
-				        axisLine: {
-				            lineStyle: {
-				                color: "#999"
-				            }
-				        }
-				    }],
-				    yAxis: [{
-				        type: 'value',
-				        splitNumber: 4,
-				        splitLine: {
-				            lineStyle: {
-				                type: 'dashed',
-				                color: '#DDD'
-				            }
-				        },
-				        axisLine: {
-				            show: false,
-				            lineStyle: {
-				                color: "#333"
-				            },
-				        },
-				        nameTextStyle: {
-				            color: "#999"
-				        },
-				        splitArea: {
-				            show: false
-				        }
-				    }],
-				    series: [{
-				        name: '课时',
-				        type: 'line',
-				        data: [23,60,20,36,23,85],
-				        lineStyle: {
-				            normal: {
-				                width: 8,
-				                color: {
-				                    type: 'linear',
-				
-				                    colorStops: [{
-				                        offset: 0,
-				                        color: '#A9F387' // 0% 处的颜色
-				                    }, {
-				                        offset: 1,
-				                        color: '#48D8BF' // 100% 处的颜色
-				                    }],
-				                    globalCoord: false // 缺省为 false
-				                },
-				                shadowColor: 'rgba(72,216,191, 0.3)',
-				                shadowBlur: 10,
-				                shadowOffsetY: 20
-				            }
-				        },
-				        itemStyle: {
-				            normal: {
-				                color: '#fff',
-				                borderWidth: 10,
-				                /*shadowColor: 'rgba(72,216,191, 0.3)',
-				                shadowBlur: 100,*/
-				                borderColor: "#A9F387"
-				            }
-				        },
-				        smooth: true
-				    }]
+					tooltip: {
+						trigger: 'axis'
+					},
+					xAxis: [{
+						type: 'category',
+						data: ['2019-01', '2019-02', '2019-03', '2019-04', '2019-05', '2019-06'],
+						axisLine: {
+							lineStyle: {
+								color: "#999"
+							}
+						}
+					}],
+					yAxis: [{
+						type: 'value',
+						splitNumber: 4,
+						splitLine: {
+							lineStyle: {
+								type: 'dashed',
+								color: '#DDD'
+							}
+						},
+						axisLine: {
+							show: false,
+							lineStyle: {
+								color: "#333"
+							},
+						},
+						nameTextStyle: {
+							color: "#999"
+						},
+						splitArea: {
+							show: false
+						}
+					}],
+					series: [{
+						name: '课时',
+						type: 'line',
+						data: [23, 60, 20, 36, 23, 85],
+						lineStyle: {
+							normal: {
+								width: 8,
+								color: {
+									type: 'linear',
+
+									colorStops: [{
+										offset: 0,
+										color: '#A9F387' // 0% 处的颜色
+									}, {
+										offset: 1,
+										color: '#48D8BF' // 100% 处的颜色
+									}],
+									globalCoord: false // 缺省为 false
+								},
+								shadowColor: 'rgba(72,216,191, 0.3)',
+								shadowBlur: 10,
+								shadowOffsetY: 20
+							}
+						},
+						itemStyle: {
+							normal: {
+								color: '#fff',
+								borderWidth: 10,
+								/*shadowColor: 'rgba(72,216,191, 0.3)',
+								shadowBlur: 100,*/
+								borderColor: "#A9F387"
+							}
+						},
+						smooth: true
+					}]
 				};
 				echartsRecords.setOption(option);
 

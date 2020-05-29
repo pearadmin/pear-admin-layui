@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link href="../../component/layui/css/layui.css" rel="stylesheet" />
+		<link href="../../admin/css/pearCommon.css" rel="stylesheet" />
+	</head>
+	<body>
+		<body class="pear-container">
+		    <div class="layui-card">
+		        <div class="layui-card-body">
+		            <form class="layui-form" action="">
+		                <div class="layui-form-item">
+		                    <label class="layui-form-label">任务名称</label>
+		                    <div class="layui-input-inline">
+		                        <input type="text" name="realName" placeholder="" class="layui-input">
+		                    </div>
+		                    <label class="layui-form-label">执行人</label>
+		                    <div class="layui-input-inline">
+		                        <input type="text" name="username" placeholder="" class="layui-input">
+		                    </div>
+		                    <button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="user-query">
+		                        <i class="layui-icon layui-icon-search"></i>
+		                        查询
+		                    </button>
+		                    <button type="reset" class="pear-btn pear-btn-md">
+		                        <i class="layui-icon layui-icon-refresh"></i>
+		                        重置
+		                    </button>
+		                </div>
+		            </form>
+		        </div>
+		    </div>
+		    <div class="layui-card">
+		        <div class="layui-card-body">
+		            <table id="user-table" lay-filter="user-table"></table>
+		        </div>
+		    </div>
+		</body>
+
+		<script type="text/html" id="user-toolbar">
+		    <button class="pear-btn pear-btn-primary pear-btn-md" lay-event="add">
+		        <i class="layui-icon layui-icon-add-1"></i>
+		        新增
+		    </button>
+		    <button class="pear-btn pear-btn-danger pear-btn-md" lay-event="batchRemove">
+		        <i class="layui-icon layui-icon-delete"></i>
+		        删除
+		    </button>
+		</script>
+		
+		<script type="text/html" id="user-bar">
+		    <button class="pear-btn pear-btn-primary pear-btn-sm" lay-event="edit"><i class="layui-icon layui-icon-edit"></i></button>
+		    <button class="pear-btn pear-btn-danger pear-btn-sm" lay-event="remove"><i class="layui-icon layui-icon-delete"></i></button>
+		</script>
+		
+		<script type="text/html" id="user-enable">
+		    <input type="checkbox" name="enable" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="user-enable" checked = "{{ d.enable == 0 ? 'true' : 'false' }}">
+		</script>
+		
+		<script type="text/html" id="task-process">
+			<div class="layui-progress-bar layui-bg-green" style="width: {{d.process}};margin-top: 15px;"></div>
+		</script>
+		
+		<script type="text/html" id="task-priority">
+		    {{#if (d.priority == 0) { }}
+		    <button class="pear-btn pear-btn-danger pear-btn-sm" plain>紧急</button>
+		    {{# }else if(d.priority == 1){ }}
+		     <button class="pear-btn pear-btn-warming pear-btn-sm" plain>警告</button>
+		    {{# }else if(d.priority == 2){ }}
+		     <button class="pear-btn pear-btn-success pear-btn-sm" plain>正常</button>
+		    {{# } }}
+		</script>
+		
+		<script type="text/html" id="task-createTime">
+		    {{layui.util.toDateString(d.createTime, 'yyyy-MM-dd')}}
+		</script>
+		
+		<script src="../../component/layui/layui.js"></script>
+		<script>
+		    layui.use(['table','form','jquery','element'],function () {
+		        let table = layui.table;
+		        let form = layui.form;
+		        let $ = layui.jquery;
+				let element = layui.element;
+		
+		        let MODULE_PATH = "../system/operate/";
+		
+		        let cols = [
+		            [
+		                {type:'checkbox'},
+		                {title: '任务名称', field: 'taskName', align:'center', width:100},
+		                {title: '任务描述', field: 'taskInfo', align:'center'},
+		                {title: '进度', field: 'process', align:'center', width:350, templet:'#task-process'},
+		                {title: '优先级', field: 'priority', align:'center', width:150,templet:"#task-priority"},
+					    {title: '执行人', field: 'realName', align:'center',width:150},
+						{title: '发布时间', field: 'createTime', align:'center',width:200, templet:"#task-createTime"},
+		            
+		            ]
+		        ]
+		
+		        table.render({
+		            elem: '#user-table',
+		            url: '../../admin/data/task.json',
+		            page: true ,
+		            cols: cols ,
+		            skin: 'line',
+		            toolbar: '#user-toolbar',
+		            defaultToolbar: [{
+		                layEvent: 'refresh',
+		                icon: 'layui-icon-refresh',
+		            }, 'filter', 'print', 'exports']
+		        });
+		
+		        table.on('tool(user-table)', function(obj){
+		            if(obj.event === 'remove'){
+		                window.remove(obj);
+		            } else if(obj.event === 'edit'){
+		                window .edit(obj);
+		            }
+		        });
+		
+		        table.on('toolbar(user-table)', function(obj){
+		            if(obj.event === 'add'){
+		                window.add();
+		            } else if(obj.event === 'refresh'){
+		                window.refresh();
+		            } else if(obj.event === 'batchRemove'){
+		                window.batchRemove(obj);
+		            }
+		        });
+		
+		        form.on('submit(user-query)', function(data){
+		            table.reload('user-table',{where:data.field})
+		            return false;
+		        });
+		
+		        form.on('switch(user-enable)', function(obj){
+		            layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
+		        });
+		
+		        window.add = function(){
+		            layer.open({
+		                type: 2,
+		                title: '新增',
+		                shade: 0.1,
+		                area: ['500px', '400px'],
+		                content: MODULE_PATH + 'add.html'
+		            });
+		        }
+		
+		        window.edit = function(obj){
+		            layer.open({
+		                type: 2,
+		                title: '修改',
+		                shade: 0.1,
+		                area: ['500px', '400px'],
+		                content: MODULE_PATH + 'edit.html'
+		            });
+		        }
+		
+		        window.remove = function(obj){
+		            layer.confirm('确定要删除该用户', {icon: 3, title:'提示'}, function(index){
+		                layer.close(index);
+		                let loading = layer.load();
+		                $.ajax({
+		                    url: MODULE_PATH+"remove/"+obj.data['userId'],
+		                    dataType:'json',
+		                    type:'delete',
+		                    success:function(result){
+		                        layer.close(loading);
+		                        if(result.success){
+		                            layer.msg(result.msg,{icon:1,time:1000},function(){
+		                                obj.del();
+		                            });
+		                        }else{
+		                            layer.msg(result.msg,{icon:2,time:1000});
+		                        }
+		                    }
+		                })
+		            });
+		        }
+		
+		        window.batchRemove = function(obj){
+		            let data = table.checkStatus(obj.config.id).data;
+		            if(data.length === 0){
+		                layer.msg("未选中数据",{icon:3,time:1000});
+		                return false;
+		            }
+		            let ids = "";
+		            for(let i = 0;i<data.length;i++){
+		                ids += data[i].userId+",";
+		            }
+		            ids = ids.substr(0,ids.length-1);
+		            layer.confirm('确定要删除这些用户', {icon: 3, title:'提示'}, function(index){
+		                layer.close(index);
+		                let loading = layer.load();
+		                $.ajax({
+		                    url: MODULE_PATH+"batchRemove/"+ids,
+		                    dataType:'json',
+		                    type:'delete',
+		                    success:function(result){
+		                        layer.close(loading);
+		                        if(result.success){
+		                            layer.msg(result.msg,{icon:1,time:1000},function(){
+		                                table.reload('user-table');
+		                            });
+		                        }else{
+		                            layer.msg(result.msg,{icon:2,time:1000});
+		                        }
+		                    }
+		                })
+		            });
+		        }
+		
+		        window.refresh = function(param){
+		            table.reload('user-table');
+		        }
+		    })
+		</script>
+	</body>
+</html>
