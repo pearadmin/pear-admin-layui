@@ -60,7 +60,13 @@
 		</script>
 		
 		<script type="text/html" id="task-process">
-			<div class="layui-progress-bar layui-bg-green" style="width: {{d.process}};margin-top: 15px;"></div>
+			{{#if (d.priority == 0) { }}
+			<div class="layui-progress-bar layui-bg-red" style="width: {{d.process}};margin-top: 15px;"></div>
+			{{# }else if(d.priority == 1){ }}
+			 <div class="layui-progress-bar layui-bg-orange" style="width: {{d.process}};margin-top: 15px;"></div>
+			{{# }else if(d.priority == 2){ }}
+			 <div class="layui-progress-bar layui-bg-green" style="width: {{d.process}};margin-top: 15px;"></div>
+			{{# } }}
 		</script>
 		
 		<script type="text/html" id="task-priority">
