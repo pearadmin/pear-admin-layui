@@ -23,6 +23,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 			height:opt.height,
 			theme:opt.theme,
 			data:opt.data ? opt.data:[],
+			change: opt.change ? opt.change:function(){console.log("切换") },
 			done:opt.done ? opt.done: function(){ console.log("菜单渲染成功");}
 		}
 		
@@ -242,14 +243,14 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 			
 			if(index === option.defaultMenu){
 	              
-				controlItem  = '<li pear-id="'+item.id+'" class="layui-this layui-nav-item"><a href="#">'+item.title+'</a></li>';
+				controlItem  = '<li pear-href="'+item.href+'" pear-title="'+item.title+'" pear-id="'+item.id+'" class="layui-this layui-nav-item"><a href="#">'+item.title+'</a></li>';
 				  			
 				menuItem = '<ul  pear-id="'+item.id+'" lay-filter="'+option.elem+'" class="layui-nav arrow layui-nav-tree pear-nav-tree">';
 				   
 			}else{
 				
 				
-				controlItem = '<li pear-id="'+item.id+'" class="layui-nav-item"><a href="#">'+item.title+'</a></li>';
+				controlItem = '<li  pear-href="'+item.href+'" pear-title="'+item.title+'" pear-id="'+item.id+'" class="layui-nav-item"><a href="#">'+item.title+'</a></li>';
 							
 				menuItem = '<ul style="display:none" pear-id="'+item.id+'" lay-filter="'+option.elem+'" class="layui-nav arrow layui-nav-tree pear-nav-tree">';
 				
@@ -314,12 +315,9 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 			
 			$("#"+option.elem).find(".pear-nav-tree[pear-id='"+$(this).attr("pear-id")+"']").css({display:'block'});
 			
+			option.change($(this).attr("pear-id"),$(this).attr("pear-title"),$(this).attr("pear-href"))
 		})
 			
-		
-			
-	
-		
 	}
 	
     /** 加载子菜单 (递归)*/

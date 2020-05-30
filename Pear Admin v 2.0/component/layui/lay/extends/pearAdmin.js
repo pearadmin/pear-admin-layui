@@ -39,7 +39,8 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pear
 				defaultOpen: 0, //默认打开菜单
 				accordion: true,
 				url: option.data, //数据地址
-				parseData: false //请求后是否进行数据解析 函数
+				parseData: false, //请求后是否进行数据解析 函数
+				change: option.change
 			})
 
 
@@ -88,7 +89,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pear
 						url: data.menuUrl,
 						icon: data.menuIcon,
 						close: true
-					},300);
+					}, 300);
 
 					compatible();
 				})
@@ -110,7 +111,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pear
 
 				sideMenu.click(function(dom, data) {
 
-                    compatible();
+					compatible();
 					bodyFrame.changePage(data.menuUrl, data.menuTitle, true);
 
 				})
@@ -121,12 +122,12 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pear
 		this.keepLoad = function(option) {
 			// 关 闭 加 载 层
 			compatible();
-			
+
 			setTimeout(function() {
-				
+
 				$(".preloader").fadeOut(option.done);
 
-                // 设 置 关 闭 时 间
+				// 设 置 关 闭 时 间
 			}, option.keepLoad)
 		}
 
@@ -140,19 +141,19 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pear
 			style +=
 				'.light-theme .pear-nav-tree .layui-this a:hover,.light-theme .pear-nav-tree .layui-this,.light-theme .pear-nav-tree .layui-this a,.pear-nav-tree .layui-this a,.pear-nav-tree .layui-this{background-color: ' +
 				color + '!important;}';
-           
-		    // 自定义 Logo 标题演示
-			style+=
-			'.pear-admin .layui-logo .title{color:'+
-             color+'!important;}';
+
+			// 自定义 Logo 标题演示
+			style +=
+				'.pear-admin .layui-logo .title{color:' +
+				color + '!important;}';
 
 			// 自 定 义 标 签 配 色
 			style += '.pear-frame-title .dot,.pear-tab .layui-this .pear-tab-active{background-color: ' + color +
 				'!important;}';
 
-            // 自 定 义 快 捷 菜 单
-			style += '.bottom-nav li a:hover{background-color:'+
-			color +'!important;}';
+			// 自 定 义 快 捷 菜 单
+			style += '.bottom-nav li a:hover{background-color:' +
+				color + '!important;}';
 
 			// 自 定 义 顶 部 配 色
 			style += '.pear-admin .layui-header .layui-nav .layui-nav-bar{background-color: ' + color + '!important;}'
@@ -169,7 +170,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pear
 
 			// 自 定 义 滚 动 条 样 式
 
-            localStorage.setItem("theme-color", color);
+			localStorage.setItem("theme-color", color);
 
 			if ($("iframe").contents().find("#customTheme").length > 0) {
 
@@ -179,7 +180,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pear
 
 
 			var theme = "<style>";
-		
+
 			theme += '</style>';
 
 
@@ -189,10 +190,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pear
 		}
 
 
-
 		this.themeRender = function(option) {
-
-
 
 			var color = localStorage.getItem("theme-color");
 
@@ -245,9 +243,9 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pear
 	});
 
 
-    function compatible(){
+	function compatible() {
 		if ($(window).width() <= 768) {
-		    sideMenu.collaspe();
+			sideMenu.collaspe();
 			if ($(".pear-admin").is(".pear-mini")) {
 				$(".pear-admin").removeClass("pear-mini");
 			} else {
