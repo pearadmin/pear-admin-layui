@@ -99,7 +99,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pear
 				// 选 项 卡 初 始 API 文 档
 				bodyFrame = pearFrame.render({
 					elem: 'content',
-					title: '首 页',
+					title: '工作空间 / 首页',
 					url: option.index,
 					width: '100%',
 					height: '100%'
