@@ -70,6 +70,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 			var data = {
 				menuId: dom.attr("menu-id"),
 				menuTitle: dom.attr("menu-title"),
+				menuPath: dom.attr("menu-title"),
 				menuIcon: dom.attr("menu-icon"),
 				menuUrl: dom.attr("menu-url")
 			};
@@ -77,14 +78,14 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 			var doms = hash(dom);
 
 			if (doms.text() != '') {
-				data['menuTitle'] = doms.find("span").text() + " / " + data['menuTitle'];
+				data['menuPath'] = doms.find("span").text() + " / " + data['menuPath'];
 
 			}
 			var domss = hash(doms);
 
 			if (domss.text() != '') {
 
-				data['menuTitle'] = domss.find("span").text() + " / " + data['menuTitle'];
+				data['menuPath'] = domss.find("span").text() + " / " + data['menuPath'];
 
 			}
 
@@ -92,7 +93,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 
 			if (domsss.text() != '') {
 
-				data['menuTitle'] = domsss.find("span").text() + " / " + data['menuTitle'];
+				data['menuPath'] = domsss.find("span").text() + " / " + data['menuPath'];
 
 			}
 

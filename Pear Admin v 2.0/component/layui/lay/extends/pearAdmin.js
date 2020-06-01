@@ -82,6 +82,8 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pear
 				})
 
 				sideMenu.click(function(dom, data) {
+					 
+					
 
 					bodyTab.addTabOnly({
 						id: data.menuId,
@@ -112,7 +114,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pear
 				sideMenu.click(function(dom, data) {
 
 					compatible();
-					bodyFrame.changePage(data.menuUrl, data.menuTitle, true);
+					bodyFrame.changePage(data.menuUrl, data.menuPath, true);
 
 				})
 			}
