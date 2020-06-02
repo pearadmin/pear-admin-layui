@@ -118,6 +118,9 @@ body::-webkit-scrollbar-corner {
 	background: #f6f6f6;
 }
 
+.pear-btn i{
+	font-size: 13px;
+}
 
 
 .pear-btn {

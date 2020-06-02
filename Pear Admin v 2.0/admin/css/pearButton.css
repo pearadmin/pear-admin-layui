@@ -18,6 +18,10 @@
 	border-radius: 4px;
 }
 
+.pear-btn i{
+	font-size: 13px;
+}
+
 .pear-btn:hover {
 	opacity: .8;
 	filter: alpha(opacity=80);
