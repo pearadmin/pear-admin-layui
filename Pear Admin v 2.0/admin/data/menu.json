@@ -93,6 +93,15 @@
 						"spread": true
 					},
 					{
+							"id": 200,
+							"title": "字体图标",
+							"icon": "layui-icon layui-icon-face-smile",
+							"type": 1,
+							"openType": "_iframe",
+							"href": "view/common/basic/icon.html",
+							"spread": true
+						},
+					{
 						"id": 212,
 						"title": "表单集合",
 						"icon": "layui-icon layui-icon-face-smile",
