@@ -17,7 +17,9 @@
 
 官方网站 : http://www.pearadmin.cn
 
-开源地址 : https://gitee.com/Jmysy/Pear-Admin-Layui
+Gitee     开源地址 : https://gitee.com/Jmysy/Pear-Admin-Layui
+
+GitHub 开源地址 ：https://github.com/Jmysy/Pear-Admin-Layui
 
 Pear Admin v 1.0 : http://jmysy.gitee.io/pear-admin-layui/Pear%20Admin%20v%201.0/
 
