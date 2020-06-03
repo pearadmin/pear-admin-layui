@@ -19,7 +19,7 @@
 		<div class="layui-layout layui-layout-admin">
 			<div class="layui-header">
 				<ul class="layui-nav layui-layout-left">
-					<li class="collaspe layui-nav-item"><a href="#" class="layui-icon layui-icon-shrink-right"></a></li>
+					<li class="collaspe layui-nav-item layui-hide-xs"><a href="#" class="layui-icon layui-icon-shrink-right"></a></li>
 					<li class="refresh layui-nav-item"><a href="#" class="layui-icon layui-icon-refresh-1"></a></li>
 				</ul>
 				<div id="control" class="layui-layout-control"></div>
@@ -59,6 +59,11 @@
 		<!-- 初始加载 动画-->
 		<div class="preloader">
 			<div class="preloader-inner"></div>
+		</div>
+		
+		<!-- 移动端 的 收缩适配 -->
+		<div class="collaspe pe-collaspe layui-hide-sm">
+			<i class="layui-icon layui-icon-shrink-right"></i>
 		</div>
 
 		<script src="component/layui/layui.js"></script>
