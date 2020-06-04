@@ -1,11 +1,11 @@
-# Pear Admin Layui    :gift: 
+# Pear Admin Layui  
 
 最近更新  2020 年 5 月 22 日  
  
 
 #### 软件介绍
 
-致力于提供 简洁 而 不简单 的前端框架   :loudspeaker: 
+致力于提供 简洁 而 不简单 的前端框架  
 
 基于Layui的后台管理系统模板，扩展Layui原生UI样式，整合第三方开源组件，提供便捷快速的开发方式，延续LayuiAdmin
 
