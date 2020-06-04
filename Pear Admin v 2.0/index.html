@@ -69,11 +69,12 @@
 
 		<script src="component/layui/layui.js"></script>
 		<script>
-			layui.use(['pearAdmin', 'jquery', 'pearTab', 'pearNotice'], function() {
+			layui.use(['pearAdmin', 'jquery','layer', 'pearTab', 'pearNotice'], function() {
 				var pearAdmin = layui.pearAdmin;
 				var $ = layui.jquery;
 				var pearTab = layui.pearTab;
 				var pearNotice = layui.pearNotice;
+				var layer = layui.layer;
 
 				var config = {
 					keepLoad: 1200, // 主 页 加 载 过 度 时 长 可为 false
@@ -87,24 +88,15 @@
 				var option = {
 					elem: 'headerNotice',
 					url: 'admin/data/notice.json',
-					height: '200px',
+					height: '250px',
 					click: function(id, title) {
-						layer.msg("当前监听消息" + id + "消息标题:" + title);
+						layer.alert("点击消息 : "+id);
 					}
 				}
 
 				pearAdmin.render(config);
 
 				pearNotice.render(option);
-
-				$("body").on("click", ".pearson", function() {
-					pearTab.addTabOnlyByElem("content", {
-						id: 111,
-						title: "个人信息",
-						url: "view/system/person.html",
-						close: true
-					})
-				})
 
 			})
 		</script>

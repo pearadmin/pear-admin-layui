@@ -211,6 +211,14 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pear
         }
 	};
 
+    $("body").on("click", ".pearson", function() {
+    	pearTab.addTabOnlyByElem("content", {
+    		id: 111,
+    		title: "个人信息",
+    		url: "view/system/person.html",
+    		close: true
+    	})
+    })
 
 	$("body").on("click", ".collaspe,.pear-cover", function() {
 		sideMenu.collaspe();

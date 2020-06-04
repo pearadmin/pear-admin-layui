@@ -3,7 +3,6 @@
 		"title": "工作空间",
 		"type": 0,
 		"icon": "layui-icon layui-icon-console",
-		"spread": true,
 		"href": "",
 		"children": [{
 			"id": 11,
@@ -11,24 +10,21 @@
 			"icon": "layui-icon layui-icon-console",
 			"type": 1,
 			"openType": "_iframe",
-			"href": "view/console/console1.html",
-			"spread": true
+			"href": "view/console/console1.html"
 		},{
 			"id": 13,
 			"title": "数据分析",
 			"icon": "layui-icon layui-icon-console",
 			"type": 1,
 			"openType": "_iframe",
-			"href": "view/console/console2.html",
-			"spread": true
+			"href": "view/console/console2.html"
 		},{
 			"id": 12,
 			"title": "百度一下",
 			"icon": "layui-icon layui-icon-console",
 			"type": 1,
-			"openType": "_blank",
-			"href": "http://www.baidu.com",
-			"spread": true
+			"openType": "_iframe",
+			"href": "http://www.baidu.com"
 		}]
 	},
 	{
@@ -37,15 +33,13 @@
 		"icon": "layui-icon layui-icon-set-fill",
 		"type": 0,
 		"href": "",
-		"spread": true,
 		"children": [{
 				"id": 41,
 				"title": "用户管理",
 				"icon": "layui-icon layui-icon-username",
 				"type": 1,
 				"openType": "_iframe",
-				"href": "view/system/user.html",
-				"spread": true
+				"href": "view/system/user.html"
 			},
 			{
 				"id": 42,
@@ -53,8 +47,7 @@
 				"icon": "layui-icon layui-icon-user",
 				"type": 1,
 				"openType": "_iframe",
-				"href": "view/system/role.html",
-				"spread": true
+				"href": "view/system/role.html"
 			},
 			{
 				"id": 43,
@@ -62,8 +55,7 @@
 				"icon": "layui-icon layui-icon-user",
 				"type": 1,
 				"openType": "_iframe",
-				"href": "view/system/power.html",
-				"spread": true
+				"href": "view/system/power.html"
 			}
 		]
 	},
@@ -73,7 +65,6 @@
 		"icon": "layui-icon layui-icon-component",
 		"type": 0,
 		"href": "",
-		"spread": true,
 		"children": [
 
 			{
@@ -82,15 +73,13 @@
 				"icon": "layui-icon layui-icon-face-smile",
 				"type": 0,
 				"href": "view/common/message.html",
-				"spread": true,
 				"children": [{
 						"id": 211,
 						"title": "功能按钮",
 						"icon": "layui-icon layui-icon-face-smile",
 						"type": 1,
 						"openType": "_iframe",
-						"href": "view/common/basic/button.html",
-						"spread": true
+						"href": "view/common/basic/button.html"
 					},
 					{
 							"id": 200,
@@ -98,8 +87,7 @@
 							"icon": "layui-icon layui-icon-face-smile",
 							"type": 1,
 							"openType": "_iframe",
-							"href": "view/common/basic/icon.html",
-							"spread": true
+							"href": "view/common/basic/icon.html"
 						},
 					{
 						"id": 212,
@@ -107,8 +95,7 @@
 						"icon": "layui-icon layui-icon-face-smile",
 						"type": 1,
 						"openType": "_iframe",
-						"href": "view/common/basic/form.html",
-						"spread": true
+						"href": "view/common/basic/form.html"
 					},
 					{
 						"id": 215,
@@ -116,8 +103,7 @@
 						"icon": "layui-icon layui-icon-face-smile",
 						"type": 1,
 						"openType": "_iframe",
-						"href": "view/common/basic/step.html",
-						"spread": true
+						"href": "view/common/basic/step.html"
 					},
 					{
 						"id": 213,
@@ -125,8 +111,7 @@
 						"icon": "layui-icon layui-icon-face-smile",
 						"type": 1,
 						"openType": "_iframe",
-						"href": "view/common/basic/formSelects.html",
-						"spread": true
+						"href": "view/common/basic/formSelects.html"
 					}
 				]
 			},
@@ -136,15 +121,13 @@
 				"icon": "layui-icon layui-icon-face-smile",
 				"type": 0,
 				"href": "view/common/message.html",
-				"spread": true,
 				"children": [{
 						"id": 221,
 						"title": "数据表格",
 						"icon": "layui-icon layui-icon-face-smile",
 						"type": 1,
 						"openType": "_iframe",
-						"href": "view/common/senior/table.html",
-						"spread": true
+						"href": "view/common/senior/table.html"
 					},
 					{
 						"id": 222,
@@ -152,8 +135,7 @@
 						"icon": "layui-icon layui-icon-face-smile",
 						"type": 1,
 						"openType": "_iframe",
-						"href": "view/common/senior/treeTable.html",
-						"spread": true
+						"href": "view/common/senior/treeTable.html"
 					},
 					{
 						"id": 223, 
@@ -161,8 +143,7 @@
 						"icon": "layui-icon layui-icon-face-smile",
 						"type": 1,
 						"openType": "_iframe",
-						"href": "view/common/senior/tinymce.html",
-						"spread": true
+						"href": "view/common/senior/tinymce.html"
 					}
 				]
 			},
@@ -172,15 +153,13 @@
 				"icon": "layui-icon layui-icon-face-smile",
 				"type": 0,
 				"href": "view/common/message.html",
-				"spread": true,
 				"children": [{
 						"id": 231,
 						"title": "消息提醒",
 						"icon": "layui-icon layui-icon-face-smile",
 						"type": 1,
 						"openType": "_iframe",
-						"href": "view/common/popper/message.html",
-						"spread": true
+						"href": "view/common/popper/message.html"
 					},
 
 					{
@@ -189,8 +168,7 @@
 						"icon": "layui-icon layui-icon-face-smile",
 						"type": 1,
 						"openType": "_iframe",
-						"href": "view/common/popper/loading.html",
-						"spread": true
+						"href": "view/common/popper/loading.html"
 					},
 					{
 						"id": 233,
@@ -198,8 +176,7 @@
 						"icon": "layui-icon layui-icon-face-smile",
 						"type": 1,
 						"openType": "_iframe",
-						"href": "view/common/popper/drawer.html",
-						"spread": true
+						"href": "view/common/popper/drawer.html"
 					}
 				]
 			},
@@ -210,15 +187,13 @@
 				"icon": "layui-icon layui-icon-face-smile",
 				"type": 0,
 				"href": "view/common/table.html",
-				"spread": true,
 				"children": [{
 						"id": 241,
 						"title": "哈希加密",
 						"icon": "layui-icon layui-icon-face-cry",
 						"type": 1,
 						"openType": "_iframe",
-						"href": "view/common/other/hash.html",
-						"spread": true
+						"href": "view/common/other/hash.html"
 					}
 				]
 			}
@@ -230,15 +205,13 @@
 		"icon": "layui-icon layui-icon-face-cry",
 		"type": 0,
 		"href": "",
-		"spread": true,
 		"children": [{
 				"id": 301,
 				"title": "任务列表",
 				"icon": "layui-icon layui-icon-face-smile",
 				"type": 1,
 				"openType": "_iframe",
-				"href": "view/page/task.html",
-				"spread": true
+				"href": "view/page/task.html"
 			}
 		]
 	},
@@ -248,15 +221,13 @@
 		"icon": "layui-icon layui-icon-auz",
 		"type": 0,
 		"href": "",
-		"spread": true,
 		"children": [{
 				"id": 403,
 				"title": "403",
 				"icon": "layui-icon layui-icon-face-smile",
 				"type": 1,
 				"openType": "_iframe",
-				"href": "view/error/403.html",
-				"spread": true
+				"href": "view/error/403.html"
 			},
 			{
 				"id": 404,
@@ -264,8 +235,7 @@
 				"icon": "layui-icon layui-icon-face-cry",
 				"type": 1,
 				"openType": "_iframe",
-				"href": "view/error/404.html",
-				"spread": true
+				"href": "view/error/404.html"
 			},
 
 			{
@@ -274,12 +244,9 @@
 				"icon": "layui-icon layui-icon-face-cry",
 				"type": 1,
 				"openType": "_iframe",
-				"href": "view/error/500.html",
-				"spread": true
+				"href": "view/error/500.html"
 			}
 
 		]
 	}
-
-
 ]

@@ -68,7 +68,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 			 
 			 
 			 
-			 if(index==0){
+			 if(index === 0){
 			 
 			 noticeTitle += '<li class="layui-this">'+item.title+'</li>';
 			 
