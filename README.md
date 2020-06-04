@@ -30,11 +30,7 @@ Pear Admin v 2.0 : http://jmysy.gitee.io/pear-admin-layui/Pear%20Admin%20v%202.0
 Pear Admin Layui 目前支持单页面与多标签页的切换，仅仅通过简单的API接口初始化就可以, 遇到问题及时拍板，加群讨论，如有意愿加入开源的
 伙伴可群内私信作者，第三期更新订版时会推出相关API文档
 
-单页面布局  :tada: 
 
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0415/004334_68c3352e_4835367.png "(LH930[%[)8$L4}(2%5`6TM.png")
-
-多选项卡布局  :tada: 
 
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/0523/134114_2e575a5b_4835367.png "H3[$MY[V)RU]~DXUM`52L}E.png")
 
