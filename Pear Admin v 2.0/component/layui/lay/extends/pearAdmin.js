@@ -82,8 +82,8 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pear
 				})
 
 				sideMenu.click(function(dom, data) {
-					 
-					
+
+
 
 					bodyTab.addTabOnly({
 						id: data.menuId,
@@ -205,29 +205,29 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pear
 
 
 		this.menuSkin = function(theme) {
-            $(".pear-admin").removeClass("light-theme");
+			$(".pear-admin").removeClass("light-theme");
 			$(".pear-admin").removeClass("dark-theme");
 			$(".pear-admin").addClass(theme);
-        }
+		}
 	};
 
-    $("body").on("click", ".pearson", function() {
-    	pearTab.addTabOnlyByElem("content", {
-    		id: 111,
-    		title: "个人信息",
-    		url: "view/system/person.html",
-    		close: true
-    	})
-    })
+	$("body").on("click", ".pearson", function() {
+		pearTab.addTabOnlyByElem("content", {
+			id: 111,
+			title: "个人信息",
+			url: "view/system/person.html",
+			close: true
+		})
+	})
 
 	$("body").on("click", ".collaspe,.pear-cover", function() {
 		sideMenu.collaspe();
 		if ($(".pear-admin").is(".pear-mini")) {
-		    $(".layui-icon-spread-left").addClass("layui-icon-shrink-right")
-		    $(".layui-icon-spread-left").removeClass("layui-icon-spread-left")
+			$(".layui-icon-spread-left").addClass("layui-icon-shrink-right")
+			$(".layui-icon-spread-left").removeClass("layui-icon-spread-left")
 			$(".pear-admin").removeClass("pear-mini");
 		} else {
-	    	$(".layui-icon-shrink-right").addClass("layui-icon-spread-left")
+			$(".layui-icon-shrink-right").addClass("layui-icon-spread-left")
 			$(".layui-icon-shrink-right").removeClass("layui-icon-shrink-right")
 			$(".pear-admin").addClass("pear-mini");
 		}
@@ -258,7 +258,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pear
 	function compatible() {
 		if ($(window).width() <= 768) {
 			sideMenu.collaspe();
-			if ($(".pear-admin").is(".pear-mini")) {	
+			if ($(".pear-admin").is(".pear-mini")) {
 				$(".layui-icon-spread-left").addClass("layui-icon-shrink-right")
 				$(".layui-icon-spread-left").removeClass("layui-icon-spread-left")
 				$(".pear-admin").removeClass("pear-mini");
@@ -415,8 +415,6 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pear
 		});
 	}
 
-
-
-
+ 
 	exports('pearAdmin', pearAdmin);
 })
