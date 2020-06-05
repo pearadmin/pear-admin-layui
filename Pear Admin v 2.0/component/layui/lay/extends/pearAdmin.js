@@ -127,7 +127,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pear
 
 			setTimeout(function() {
 
-				$(".preloader").fadeOut(option.done);
+				$(".loader-main").fadeOut(option.done);
 
 				// 设 置 关 闭 时 间
 			}, option.keepLoad)

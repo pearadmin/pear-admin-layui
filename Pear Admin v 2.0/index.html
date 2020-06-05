@@ -24,9 +24,8 @@
 				</ul>
 				<div id="control" class="layui-layout-control"></div>
 				<ul class="layui-nav layui-layout-right">
-					<li class="layui-nav-item layui-hide-xs"><a href="http://www.pearadmin.cn" class="layui-icon layui-icon-home"></a></li>
 					<li class="layui-nav-item layui-hide-xs"><a href="#" class="fullScreen layui-icon layui-icon-screen-full"></a></li>
-					<li class="layui-nav-item layui-hide-xs"><a href="https://gitee.com/Jmysy/Pear-Admin-Layui" class="layui-icon layui-icon-website"></a></li>
+					<li class="layui-nav-item layui-hide-xs"><a href="http://www.pearadmin.cn" class="layui-icon layui-icon-website"></a></li>
 					<li class="layui-nav-item layui-hide-xs" id="headerNotice"></li>
 					<li class="layui-nav-item" lay-unselect="">
 						<a href="javascript:;"><img src="admin/images/avatar.jpg" class="layui-nav-img">就眠仪式</a>
@@ -58,9 +57,12 @@
 		<div class="pear-cover"></div>
 
 		<!-- 初始加载 动画-->
-		<div class="preloader">
-			<div class="preloader-inner"></div>
+		<div class="loader-main">
+		   <div class="loader"></div>	
 		</div>
+	    
+	
+		<!-- <div class="loader"></div> -->
 
 		<!-- 移动端 的 收缩适配 -->
 		<div class="collaspe pe-collaspe layui-hide-sm">
@@ -77,7 +79,7 @@
 				var layer = layui.layer;
 
 				var config = {
-					keepLoad: 1200, // 主 页 加 载 过 度 时 长 可为 false
+					keepLoad: 2000, // 主 页 加 载 过 度 时 长 可为 false
 					muiltTab: true, // 是 否 开 启 多 标 签 页 true 开启 false 关闭
 					control: false, // 是 否 开 启 多 系 统 菜 单 true 开启 false 关闭
 					theme: "dark-theme", // 默 认 主 题 样 式 dark-theme 默认主题 light-theme 亮主题
@@ -95,7 +97,6 @@
 				}
 
 				pearAdmin.render(config);
-
 				pearNotice.render(option);
 
 			})
