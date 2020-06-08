@@ -1,16 +1,34 @@
-<h1 align="center">
-  Pear Admin Layui
-</h1>
-<h2> </h2>
-<p align="center">
-    <a href="#">
-        <img src="https://img.shields.io/badge/Layui-2.5.6+-green.svg" alt="Layui Version">
-    </a>
-    <a href="#">
-        <img src="https://img.shields.io/badge/Pear%20Admin%20Layui-2.0.0%20-green.svg" alt="Pear Admin Layui Version">
-    </a>
-</p>
- 
+<div align="center">
+  <a href="https://gridea.dev">
+    <img src="public/app-icons/gridea.png"  width="80px" height="80px">
+  </a>
+  <h1 align="center">
+    Gridea
+  </h1>
+  <h3 align="center">
+    A static blog writing client
+  </h3>
+
+  [Download](https://github.com/getgridea/gridea/releases) | [Homepage](http://hvenotes.fehey.com/)
+
+  <a href="https://github.com/getgridea/gridea/releases/latest">
+    <img src="https://img.shields.io/github/release/getgridea/gridea.svg?style=flat-square" alt="">
+  </a>
+
+  <a href="https://github.com/getgridea/gridea/blob/master/LICENSE">
+    <img src="https://img.shields.io/github/license/getgridea/gridea.svg?style=flat-square" alt="">
+  </a>
+  
+  <a href="https://github.com/getgridea/gridea/releases/latest">
+    <img alt="GitHub All Releases" src="https://img.shields.io/github/downloads/getgridea/gridea/total.svg?color=%2312b886&style=flat-square">
+  </a>
+
+</div>
+
+<div align="center">
+  <img src="gridea-app-en.png">
+
+</div>
 
 #### 软件介绍
 
