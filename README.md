@@ -3,10 +3,10 @@
     <img src="public/app-icons/gridea.png"  width="80px" height="80px">
   </a>
   <h1 align="center">
-    Gridea
+    Pear Admin Layui
   </h1>
   <h3 align="center">
-    A static blog writing client
+    开箱即用的前后端解决方案
   </h3>
 
   [Download](https://github.com/getgridea/gridea/releases) | [Homepage](http://hvenotes.fehey.com/)
@@ -26,8 +26,7 @@
 </div>
 
 <div align="center">
-  <img src="gridea-app-en.png">
-
+  <img src="https://images.gitee.com/uploads/images/2020/0608/171728_9d217622_4835367.jpeg">
 </div>
 
 #### 软件介绍
