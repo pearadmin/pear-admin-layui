@@ -110,40 +110,15 @@
 			<div class="layui-col-md4">
 				<div class="layui-card">
 					<div class="layui-card-header">
-						个人信息
+						每日推荐
 					</div>
 					<div class="layui-card-body person" style="height: 195px;">
 						
-						<div>
-						<div class="process-title" style="position: absolute;margin-top: -6px;">
-							&nbsp;&nbsp;完 成 度 30% :
+						<div class="layui-carousel" id="test1">
+						  <div carousel-item>
+						    <div><a target="_blank" href="https://blog.yuqiyu.com"><img src="../../admin/images/springboot.png" style="width: 100%;height: 100%;margin: 0px;"></a></div>
+						  </div>
 						</div>
-						<div style="margin-top: 28px;width: 65%;margin-left: 120px;" class="layui-progress">
-						    <div  class="layui-progress-bar layui-bg-orange" lay-percent="30%"></div>
-						</div>
-						 <br>
-						 <div class="process-title" style="position: absolute;margin-top: 7px;">
-						 	&nbsp;&nbsp;容 错 率 50% :
-						 </div>
-						<div class="layui-progress" style="margin-top: 15px;width: 65%;margin-left: 120px;">
-						    <div  class="layui-progress-bar layui-bg-green" lay-percent="50%"></div>
-						</div>	
-						<br>
-						 <div class="process-title" style="position: absolute;margin-top: 7px;">
-						 	&nbsp;&nbsp;康 复 率 60% :
-						 </div>
-						<div class="layui-progress" style="margin-top: 15px;width: 65%;margin-left: 120px;">
-						    <div  class="layui-progress-bar layui-bg-blue" lay-percent="60%"></div>
-						</div>	
-						<br>
-						 <div class="process-title" style="position: absolute;margin-top: 7px;">
-						 	&nbsp;&nbsp;回 调 率 30% :
-						 </div>
-						<div class="layui-progress" style="margin-top: 15px;width: 65%;margin-left: 120px;">
-						    <div  class="layui-progress-bar layui-bg-red" lay-percent="30%"></div>
-						</div>	
-						</div>
-						
 						
 					</div>
 				</div>
@@ -201,14 +176,23 @@
 		<!--</div>-->
 		<script src="../../component/layui/layui.js" charset="utf-8"></script>
 		<script>
-			layui.use(['layer', 'echarts', 'element','pearTab'], function() {
+			layui.use(['layer', 'echarts','carousel', 'element','pearTab'], function() {
 				var $ = layui.jquery,
 					layer = layui.layer,
 					element = layui.element,
 					pearTab = layui.pearTab,
-					echarts = layui.echarts;
+					echarts = layui.echarts,
+						carousel = layui.carousel,
+					carousel = layui.carousel;
 				
 
+carousel.render({
+					elem: '#test1'
+					,width: '100% '
+					,height: '100%'
+					,interval: 5000 //每2秒，自动轮播
+					,arrow: 'always'
+				});
 				var echartsRecords = echarts.init(document.getElementById('echarts-records'), 'walden');
 
                 $("body").on("click","[data-url]",function(){
