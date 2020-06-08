@@ -1,13 +1,15 @@
 <div align="center">
-
+  <a href="https://gridea.dev">
+    <img src="public/app-icons/gridea.png"  width="80px" height="80px">
+  </a>
   <h1 align="center">
     Pear Admin Layui
   </h1>
-
   <h3 align="center">
-    开 箱 即 用 的 前 后 端 解 决 方 案
+    开箱即用的前后端解决方案
   </h3>
-  [下载](https://github.com/getgridea/gridea/releases) | [官网](http://www.pearadmin.cn/)
+
+  [下 载](https://github.com/getgridea/gridea/releases) | [主 页](http://hvenotes.fehey.com/)
 
   <a href="https://github.com/getgridea/gridea/releases/latest">
     <img src="https://img.shields.io/github/release/getgridea/gridea.svg?style=flat-square" alt="">
@@ -16,8 +18,15 @@
   <a href="https://github.com/getgridea/gridea/blob/master/LICENSE">
     <img src="https://img.shields.io/github/license/getgridea/gridea.svg?style=flat-square" alt="">
   </a>
- 
 
+  <a href="https://github.com/getgridea/gridea/releases/latest">
+    <img alt="GitHub All Releases" src="https://img.shields.io/github/downloads/getgridea/gridea/total.svg?color=%2312b886&style=flat-square">
+  </a>
+
+</div>
+
+<div align="center">
+  <img src="gridea-app.png">
 </div>
 
 
