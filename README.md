@@ -14,7 +14,7 @@
 </div>
 
 <div align="center">
-  <img  width="80%" style="border-radius:10px;margin-top:20px;margin-bottom:10px;box-shadow: 2px 0 6px lightgray;" src="Pear Admin v 2.0/admin/images/message2.png" />
+  <img  width="80%" style="border-radius:10px;margin-top:20px;margin-bottom:10px;box-shadow: 2px 0 6px gray;" src="Pear Admin v 2.0/admin/images/message2.png" />
 </div>
 
 
