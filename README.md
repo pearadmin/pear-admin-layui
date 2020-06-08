@@ -37,32 +37,12 @@
 
 供相对完善的开发方案，只为成为更好的轮子，项目不定时更新，建议 Star watch 一份
 
+
 #### 开源地址
 
 Gitee     开源地址 : https://gitee.com/Jmysy/Pear-Admin-Layui
 
 GitHub 开源地址 ：https://github.com/Jmysy/Pear-Admin-Layui
-
-
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0523/134114_2e575a5b_4835367.png "H3[$MY[V)RU]~DXUM`52L}E.png")
-
-
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0523/134127_cdaf526d_4835367.png "1KQL6F_LX9~YJ3DA24MB`25.png")
-
-
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0523/134141_dd354de6_4835367.png "KNYNKCJ}GLY38W@OVZ%NOC4.png")
-
-
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0415/004415_ba1298d9_4835367.png "HA3R1@QA]2P$JU~~VL)Q_IA.png")
-
-
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0415/004427_fc00dd54_4835367.png "PRXW~U%~OMSJL{VG)}45O3E.png")
-
-
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0523/134207_95f386c4_4835367.png "]_0$9DPAEJ0Q~0I7BZKK804.png")
-
-
-![输入图片说明](https://images.gitee.com/uploads/images/2020/0523/134155_f5c8d0ea_4835367.png "8KWG(8RHQ({~M_FD1OXTF]H.png")
 
 
 ### 优秀开源推荐
@@ -73,8 +53,5 @@ SpringBoot 开源组件库: [Api Boot](https://apiboot.minbox.io)
 
 本框架为开源框架，Apache 开源协议，支持商用，学习
 
-如果对你有帮助 欢迎 Start
-
-项 目 不 间 断 更 新 ......
 
 
