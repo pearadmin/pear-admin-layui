@@ -1,6 +1,12 @@
+<p align="center">
 # Pear Admin Layui    :gift: 
-
-最近更新  2020 年 5 月 22 日  
+</p>
+<p align="center">
+    <img src="https://www.travis-ci.org/hengboy/api-boot.svg?branch=master" alt="build">
+    <a href="#">
+        <img src="https://img.shields.io/badge/Pear%20Admin%20Layui-2.0.0%20-green.svg" alt="Pear Admin Layui Version">
+    </a>
+</p>
  
 
 #### 软件介绍
