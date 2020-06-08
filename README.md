@@ -25,11 +25,11 @@
         <img src="https://img.shields.io/badge/Layui-2.5.6+-green.svg" alt="Layui Version">
     </a>
 </p>
-
+<br>
 <div align="center">
-  <img  width="80%" style="border-radius:10px;margin-top:20px;margin-bottom:10px;box-shadow: 2px 0 6px gray;" src="Pear Admin v 2.0/admin/images/message2.png" />
+  <img  width="90%" style="border-radius:10px;margin-top:20px;margin-bottom:20px;box-shadow: 2px 0 6px gray;" src="Pear Admin v 2.0/admin/images/message2.png" />
 </div>
-
+<br>
 
 #### 项目介绍
 
