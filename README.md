@@ -9,7 +9,7 @@
     开 箱 即 用 的 前 后 端 解 决 方 案
   </h4> 
 
-  [预 览](https://github.com/getgridea/gridea/releases) | [官 网](http://www.pearadmin.cn/) | [交 流](https://jq.qq.com/?_wv=1027&k=5OdSmve)
+  [预 览](https://github.com/getgridea/gridea/releases)  |  [官 网](http://www.pearadmin.cn/)  |  [交 流](https://jq.qq.com/?_wv=1027&k=5OdSmve)
 
 </div>
 
@@ -19,10 +19,10 @@
         <img src="https://img.shields.io/badge/License-Apache%202.0-green.svg" alt="Apache License">
     </a>
     <a href="#">
-        <img src="https://img.shields.io/badge/JDK-1.8+-green.svg" alt="JDK Version">
+        <img src="https://img.shields.io/badge/Layui-Admin-Layui-2.0+-green.svg" alt="JDK Version">
     </a>
       <a href="#">
-        <img src="https://img.shields.io/badge/SpringBoot-2.0+-green.svg" alt="SpringBoot Version">
+        <img src="https://img.shields.io/badge/Layui-2.5.6+-green.svg" alt="SpringBoot Version">
     </a>
 </p>
 
