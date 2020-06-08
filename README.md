@@ -13,6 +13,19 @@
 
 </div>
 
+<p align="center">
+    <img src="https://www.travis-ci.org/hengboy/api-boot.svg?branch=master" alt="build">
+    <a href="https://github.com/weibocom/motan/blob/master/LICENSE">
+        <img src="https://img.shields.io/badge/License-Apache%202.0-green.svg" alt="Apache License">
+    </a>
+    <a href="#">
+        <img src="https://img.shields.io/badge/JDK-1.8+-green.svg" alt="JDK Version">
+    </a>
+      <a href="#">
+        <img src="https://img.shields.io/badge/SpringBoot-2.0+-green.svg" alt="SpringBoot Version">
+    </a>
+</p>
+
 <div align="center">
   <img  width="80%" style="border-radius:10px;margin-top:20px;margin-bottom:10px;box-shadow: 2px 0 6px gray;" src="Pear Admin v 2.0/admin/images/message2.png" />
 </div>
