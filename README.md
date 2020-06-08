@@ -1,5 +1,5 @@
 <p align="center">
-<h2>Pear Admin Layui</h2>
+    Pear Admin Layui
 </p>
 <p align="center">
     <img src="https://www.travis-ci.org/hengboy/api-boot.svg?branch=master" alt="build">
