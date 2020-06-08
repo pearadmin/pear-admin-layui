@@ -19,7 +19,7 @@
         <img src="https://img.shields.io/badge/License-Apache%202.0-green.svg" alt="Apache License">
     </a>
     <a href="#">
-        <img src="https://img.shields.io/badge/Pear-Admin-Layui-2.0+-green.svg" alt="JDK Version">
+        <img src="https://img.shields.io/badge/JQuery-2.0+-green.svg" alt="Jquery Version">
     </a>
       <a href="#">
         <img src="https://img.shields.io/badge/Layui-2.5.6+-green.svg" alt="Layui Version">
