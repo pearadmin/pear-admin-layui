@@ -25,7 +25,7 @@
 </p>
 <br>
 <div align="center">
-  <img  width="92%" style="border-radius:10px;margin-top:20px;margin-bottom:20px;box-shadow: 2px 0 6px gray;" src="Pear Admin v 2.0/admin/images/message2.png" />
+  <img  width="92%" style="border-radius:10px;margin-top:20px;margin-bottom:20px;box-shadow: 2px 0 6px gray;" src="Pear Admin v 2.0/admin/images/ttt.jpg" />
 </div>
 <br>
 
