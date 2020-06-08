@@ -1,6 +1,6 @@
-<h2 align="center">
+<h1 align="center">
   Pear Admin Layui
-</h2>
+</h1>
 <p align="center">
     <a href="#">
         <img src="https://img.shields.io/badge/Pear%20Admin%20Layui-2.0.0%20-green.svg" alt="Pear Admin Layui Version">
