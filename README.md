@@ -4,7 +4,7 @@
     Pear Admin Layui
   </h1>
 
-  [Download](https://github.com/getgridea/gridea/releases) | [Homepage](http://hvenotes.fehey.com/)
+  [下载](https://github.com/getgridea/gridea/releases) | [官网](http://www.pearadmin.cn/)
 
   <a href="https://github.com/getgridea/gridea/releases/latest">
     <img src="https://img.shields.io/github/release/getgridea/gridea.svg?style=flat-square" alt="">
