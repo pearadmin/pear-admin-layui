@@ -1,8 +1,7 @@
+<h2 align="center">
+  Pear Admin Layui
+</h2>
 <p align="center">
-   <span style="font-size:30px;"> Pear Admin Layui </span>
-</p>
-<p align="center">
-    <img src="https://www.travis-ci.org/hengboy/api-boot.svg?branch=master" alt="build">
     <a href="#">
         <img src="https://img.shields.io/badge/Pear%20Admin%20Layui-2.0.0%20-green.svg" alt="Pear Admin Layui Version">
     </a>
