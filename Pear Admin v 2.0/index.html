@@ -61,8 +61,8 @@
 		   <div class="loader"></div>	
 		</div>
 	    
-	
-		<!-- <div class="loader"></div> -->
+		<!-- 聊天组件 -->
+	    <div id="social"></div>
 
 		<!-- 移动端 的 收缩适配 -->
 		<div class="collaspe pe-collaspe layui-hide-sm">
@@ -71,12 +71,13 @@
 
 		<script src="component/layui/layui.js"></script>
 		<script>
-			layui.use(['pearAdmin', 'jquery', 'layer', 'pearTab', 'pearNotice'], function() {
+			layui.use(['pearAdmin', 'jquery','pearSocial', 'layer', 'pearTab', 'pearNotice'], function() {
 				var pearAdmin = layui.pearAdmin;
 				var $ = layui.jquery;
 				var pearTab = layui.pearTab;
 				var pearNotice = layui.pearNotice;
 				var layer = layui.layer;
+				var pearSocial = layui.pearSocial;
 
 				var config = {
 					keepLoad: 2000, // 主 页 加 载 过 度 时 长 可为 false
@@ -95,9 +96,12 @@
 						layer.alert("点击消息 : " + id);
 					}
 				}
-
-
-				pearAdmin.render(config);
+                var setting = {
+					elem: 'social'
+				}
+		   
+		        pearSocial.render(setting);
+		        pearAdmin.render(config);
 				pearNotice.render(option);
 
 			})

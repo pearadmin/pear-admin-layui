@@ -39,6 +39,7 @@
 	position: absolute;
 	margin-left: 60px;
 	background-color: lightgray;
+	
 }
 
 .pear-social .pear-social-body {
@@ -164,6 +165,9 @@
 	background-color: #E2E2E2;
 	height: calc(100% - 60px);
 	width: 100%;
+}
+.pear-social .pear-social-list .pear-social-list-body .layui-side-scroll{
+	background-color: #E2E2E2;
 }
 
 .pear-social .pear-social-list .pear-social-list-header .search {

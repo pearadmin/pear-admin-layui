@@ -26,12 +26,10 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 		
 		var social = '<div class="pear-social-entrance layui-icon layui-icon-dialogue" pear-id="'+option.elem+'"></div>';
 		
-		
-		
 		var body  = '<div class="pear-social" style="display:none;">'+
 			'<div class="pear-social-side">'+
 				'<div class="pear-social-avatar">'+
-					'<img src="assets/images/avatar.jpg" />'+
+					'<img src="admin/images/logo.png" />'+
 				'</div>'+
 		
 				'<div class="pear-social-control">'+
@@ -180,6 +178,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	
 	
 	$("body").on("click", ".screen-restore", function() {
+		
 		$(this).parents(".pear-social").css({
 			top: top
 		});
