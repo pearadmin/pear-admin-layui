@@ -29,7 +29,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 		var body  = '<div class="pear-social" style="display:none;">'+
 			'<div class="pear-social-side">'+
 				'<div class="pear-social-avatar">'+
-					'<img src="admin/images/logo.png" />'+
+					'<img src="admin/images/avatar.jpg" />'+
 				'</div>'+
 		
 				'<div class="pear-social-control">'+

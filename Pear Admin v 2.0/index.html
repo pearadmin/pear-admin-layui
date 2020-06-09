@@ -58,11 +58,11 @@
 
 		<!-- 初始加载 动画-->
 		<div class="loader-main">
-		   <div class="loader"></div>	
+			<div class="loader"></div>
 		</div>
-	    
+
 		<!-- 聊天组件 -->
-	    <div id="social"></div>
+		<div id="social"></div>
 
 		<!-- 移动端 的 收缩适配 -->
 		<div class="collaspe pe-collaspe layui-hide-sm">
@@ -71,7 +71,7 @@
 
 		<script src="component/layui/layui.js"></script>
 		<script>
-			layui.use(['pearAdmin', 'jquery','pearSocial', 'layer', 'pearTab', 'pearNotice'], function() {
+			layui.use(['pearAdmin', 'jquery', 'pearSocial', 'layer', 'pearTab', 'pearNotice'], function() {
 				var pearAdmin = layui.pearAdmin;
 				var $ = layui.jquery;
 				var pearTab = layui.pearTab;
@@ -96,12 +96,13 @@
 						layer.alert("点击消息 : " + id);
 					}
 				}
-                var setting = {
+				
+				var setting = {
 					elem: 'social'
 				}
-		   
-		        pearSocial.render(setting);
-		        pearAdmin.render(config);
+
+				pearSocial.render(setting);
+				pearAdmin.render(config);
 				pearNotice.render(option);
 
 			})
@@ -116,6 +117,5 @@
 				s.parentNode.insertBefore(hm, s);
 			})();
 		</script>
-
 	</body>
 </html>
