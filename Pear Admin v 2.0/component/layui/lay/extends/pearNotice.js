@@ -29,7 +29,9 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 		$("*[notice-id]").click(function(){
 			var id = $(this).attr("notice-id");
 			var title = $(this).attr("notice-title");
-		    option.click(id,title);
+			var context = $(this).attr("notice-context");
+			var form = $(this).attr("notice-form");
+		    option.click(id,title,context,form);
 		})
 		
 		return new pearNotice(option);
@@ -84,7 +86,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 			 
 			 $.each(item.children, function(i, note) {
 				 
-				 noticeContent += '<div class="pear-notice-item" notice-title="'+note.title+'" notice-id="'+note.id+'">'+
+				 noticeContent += '<div class="pear-notice-item" notice-form="'+note.form+'" notice-context="'+note.context+'" notice-title="'+note.title+'" notice-id="'+note.id+'">'+
 						 '<img src="'+note.avatar+'">'+
 						 '<span>'+note.title+'</span>'+
 						 '<span>'+note.time+'</span>'+

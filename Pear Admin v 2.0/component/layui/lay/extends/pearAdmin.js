@@ -1,4 +1,4 @@
-layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pearFrame'], function(exports) {
+layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pearNotice','pearFrame'], function(exports) {
 	"use strict";
 
 	var $ = layui.jquery,
@@ -6,6 +6,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pear
 		element = layui.element,
 		pearTab = layui.pearTab,
 		pearMenu = layui.pearMenu,
+		pearNotice = layui.pearNotice,
 		pearFrame = layui.pearFrame;
 
 	var bodyFrame;
@@ -23,6 +24,8 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pear
 			this.keepLoad(option);
 
 			this.themeRender(option);
+			
+			this.noticeRender(option);
 
 		}
 
@@ -45,6 +48,33 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pear
 
 
 		}
+		
+		this.noticeRender = function(option){
+			
+			var option = {
+				elem: 'headerNotice',
+				url: option.notice,
+				height: '250px',
+				click: function(id, title, context, form) {
+			         layer.open({
+			             type: 1 ,
+			             title: '消息',   //标题
+			             area: ['390px', '330px'],   //宽高
+			             shade: 0.4,   //遮罩透明度
+			             content: "<div style='background-color:whitesmoke;'><div class='layui-card'><div class='layui-card-body'>发件人 : "+form+"</div><div class='layui-card-header' >标题 : "+title+"</div><div class='layui-card-body' >内容 : "+context+"</div></div></div>",//支持获取DOM元素
+			             btn: ['确认'], //按钮组
+			             scrollbar: false ,//屏蔽浏览器滚动条
+			             yes: function(index){//layer.msg('yes');    //点击确定回调
+			                 layer.close(index);
+			                 showToast();
+			             }
+			         });
+				}
+			}
+			
+			pearNotice.render(option);
+		}
+		
 
 		this.bodyRender = function(option) {
 

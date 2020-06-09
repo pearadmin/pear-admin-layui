@@ -62,7 +62,7 @@
 		</div>
 
 		<!-- 聊天组件 -->
-		<div id="social"></div>
+		<div id="social layui-hide-xs"></div>
 
 		<!-- 移动端 的 收缩适配 -->
 		<div class="collaspe pe-collaspe layui-hide-sm">
@@ -85,24 +85,16 @@
 					theme: "dark-theme", // 默 认 主 题 样 式 dark-theme 默认主题 light-theme 亮主题
 					index: 'view/console/console1.html', // 默 认 加 载 主 页
 					data: 'admin/data/menu.json', // 菜 单 数 据 加 载 地 址
+					notice: 'admin/data/notice.json'
 				};
 
-				var option = {
-					elem: 'headerNotice',
-					url: 'admin/data/notice.json',
-					height: '250px',
-					click: function(id, title) {
-						layer.alert("点击消息 : " + id);
-					}
-				}
-				
-				var setting = {
-					elem: 'social'
-				}
-
+                var setting = {
+                	elem: 'social'
+                }
+                
 				pearSocial.render(setting);
 				pearAdmin.render(config);
-				pearNotice.render(option);
+				
 
 			})
 		</script>
