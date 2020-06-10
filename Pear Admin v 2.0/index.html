@@ -57,12 +57,12 @@
 		<div class="pear-cover"></div>
 
 		<!-- 初始加载 动画-->
-		<div class="loader-main">
+		<div pear-has-permission="loader" class="loader-main">
 			<div class="loader"></div>
 		</div>
 
 		<!-- 聊天组件 -->
-		<div id="social layui-hide-xs"></div>
+		<div pear-has-permission="social" id="social layui-hide-xs"></div>
 
 		<!-- 移动端 的 收缩适配 -->
 		<div class="collaspe pe-collaspe layui-hide-sm">
@@ -70,13 +70,12 @@
 		</div>
 		<script src="component/layui/layui.js"></script>
 		<script>
-			layui.use(['pearAdmin', 'jquery', 'pearSocial', 'layer', 'pearTab', 'pearNotice'], function() {
+			layui.use(['pearAdmin', 'jquery', 'pearSocial', 'layer'], function() {
 				var pearAdmin = layui.pearAdmin;
 				var $ = layui.jquery;
-				var pearTab = layui.pearTab;
-				var pearNotice = layui.pearNotice;
 				var layer = layui.layer;
 				var pearSocial = layui.pearSocial;
+				var pearAuth = layui.pearAuth;
 
 				var config = {
 					keepLoad: 2000, // 主 页 加 载 过 度 时 长 可为 false
@@ -85,7 +84,8 @@
 					theme: "dark-theme", // 默 认 主 题 样 式 dark-theme 默认主题 light-theme 亮主题
 					index: 'view/console/console1.html', // 默 认 加 载 主 页
 					data: 'admin/data/menu.json', // 菜 单 数 据 加 载 地 址
-					notice: 'admin/data/notice.json'
+					notice: 'admin/data/notice.json',
+					auth: 'admin/data/permission.json'  // 前端权限限制，false 关闭该功能
 				};
 
                 var setting = {

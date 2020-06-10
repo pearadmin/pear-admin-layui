@@ -53,6 +53,7 @@
 			pearHash:"extends/pearHash",
 			pearAdmin:"extends/pearAdmin",
 			pearFrame:"extends/pearFrame",
+			pearAuth:"extends/pearAuth",
 			pearSocial:"extends/pearSocial",
 			pearNotice:"extends/pearNotice",
 			pearStep:"extends/pearStep",

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" href="../../../component/layui/css/layui.css" />
+		<link rel="stylesheet" href="../../../admin/css/pearButton.css" />
+		<style>
+			.pear-container {
+				margin: 10px;
+				background-color: whitesmoke;
+			}
+		</style>
+	</head>
+	<body class="pear-container">
+		<div class="layui-row layui-col-space10">
+			<div class="layui-col-md12">
+				<div class="layui-card">
+					<div class="layui-card-header">
+						权限认证
+					</div>
+					<div class="layui-card-body">
+						<br>
+						<button pear-has-permission="permission-add" class="pear-btn pear-btn-primary"> 新增权限</button>&nbsp;&nbsp; pearmission-add (有权限)
+						<br>
+						<br>
+						<button pear-has-permission="permission-edit" class="pear-btn pear-btn-warming"> 修改权限</button>&nbsp;&nbsp; pearmission-edit (有权限)
+						<br>
+						<br>
+						<button pear-has-permission="permission-remove" class="pear-btn pear-btn-danger"> 删除权限</button>&nbsp;&nbsp; pearmission-remove (有权限)
+						<br>
+						<br>
+						<button pear-has-permission="permission-query" class="pear-btn pear-btn-danger"> 查询权限</button>&nbsp;&nbsp;  pearmission-query (无权限)
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md6">
+				<div class="layui-card" pear-has-permission="permission-add">
+					<div class="layui-card-header">
+						有权限卡片 (显示)
+					</div>
+					<div class="layui-card-body">
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md6">
+				<div class="layui-card" pear-has-permission="permission-add">
+					<div class="layui-card-header">
+						有权限卡片（显示）
+					</div>
+					<div class="layui-card-body">
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md6">
+				<div class="layui-card" pear-has-permission="permission-query">
+					<div class="layui-card-header">
+						有权限卡片
+					</div>
+					<div class="layui-card-body">
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md6">
+				<div class="layui-card" pear-has-permission="permission-query">
+					<div class="layui-card-header">
+						有权限卡片
+					</div>
+					<div class="layui-card-body">
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="../../../component/layui/layui.js"></script>
+		<script>
+			layui.use(['util', 'layer', 'pearAuth', 'form'], function() {
+
+
+				var util = layui.util;
+
+				var pearAuth = layui.pearAuth;
+				var form = layui.form;
+
+
+			});
+		</script>
+	</body>
+</html>

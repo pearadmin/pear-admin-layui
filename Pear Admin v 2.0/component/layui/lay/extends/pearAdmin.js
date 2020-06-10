@@ -1,4 +1,4 @@
-layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pearNotice','pearFrame'], function(exports) {
+layui.define(['table', 'jquery', 'element', 'form', 'pearAuth','pearTab', 'pearMenu', 'pearNotice','pearFrame'], function(exports) {
 	"use strict";
 
 	var $ = layui.jquery,
@@ -7,7 +7,8 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pear
 		pearTab = layui.pearTab,
 		pearMenu = layui.pearMenu,
 		pearNotice = layui.pearNotice,
-		pearFrame = layui.pearFrame;
+		pearFrame = layui.pearFrame,
+		pearAuth = layui.pearAuth;
 
 	var bodyFrame;
 	var sideMenu;
@@ -26,7 +27,16 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pear
 			this.themeRender(option);
 			
 			this.noticeRender(option);
+			
+			this.permissionRender(option);
 
+		}
+
+        this.permissionRender = function(option){
+			
+			if(option.auth!=false){
+			    pearAuth.loadPermission(option.auth);
+		    }
 		}
 
 		this.menuRender = function(option) {

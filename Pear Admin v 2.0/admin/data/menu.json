@@ -73,7 +73,15 @@
 				"icon": "layui-icon layui-icon-face-smile",
 				"type": 0,
 				"href": "view/common/message.html",
-				"children": [{
+				"children": [
+					{
+							"id": 216,
+							"title": "权限认证",
+							"icon": "layui-icon layui-icon-face-smile",
+							"type": 1,
+							"openType": "_iframe",
+							"href": "view/common/basic/auth.html"
+						},{
 						"id": 211,
 						"title": "功能按钮",
 						"icon": "layui-icon layui-icon-face-smile",
