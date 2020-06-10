@@ -51,13 +51,13 @@
 								<span class="pear-card-title">表单</span>
 							</div>
 							<div class="layui-col-md3 layui-col-sm3 layui-col-xs3">
-								<div class="pear-card" data-id="home5"  data-title="安全" data-url="http://www.baidu.com">
+								<div class="pear-card" data-id="home5" data-title="安全" data-url="http://www.baidu.com">
 									<i class="layui-icon layui-icon-auz"></i>
 								</div>
 								<span class="pear-card-title">安全</span>
 							</div>
 							<div class="layui-col-md3 layui-col-sm3 layui-col-xs3">
-								<div class="pear-card" data-id="home6"  data-title="公告" data-url="http://www.baidu.com">
+								<div class="pear-card" data-id="home6" data-title="公告" data-url="http://www.baidu.com">
 									<i class="layui-icon layui-icon-cart"></i>
 								</div>
 								<span class="pear-card-title">公告</span>
@@ -113,13 +113,14 @@
 						每日推荐
 					</div>
 					<div class="layui-card-body person" style="height: 195px;">
-						
+
 						<div class="layui-carousel" id="test1">
-						  <div carousel-item>
-						    <div><a target="_blank" href="https://blog.yuqiyu.com"><img src="../../admin/images/springboot.png" style="width: 100%;height: 100%;margin: 0px;"></a></div>
-						  </div>
+							<div carousel-item>
+								<div><a target="_blank" href="http://c.biancheng.net/design_pattern/"><img src="../../admin/images/designModel.png" style="width: 100%;height: 100%;margin: 0px;"></a></div>
+								<div><a target="_blank" href="https://blog.yuqiyu.com"><img src="../../admin/images/springboot.png" style="width: 100%;height: 100%;margin: 0px;"></a></div>
+							</div>
 						</div>
-						
+
 					</div>
 				</div>
 			</div>
@@ -176,28 +177,33 @@
 		<!--</div>-->
 		<script src="../../component/layui/layui.js" charset="utf-8"></script>
 		<script>
-			layui.use(['layer', 'echarts','carousel', 'element','pearTab'], function() {
+			layui.use(['layer', 'echarts', 'carousel', 'element', 'pearTab'], function() {
 				var $ = layui.jquery,
 					layer = layui.layer,
 					element = layui.element,
 					pearTab = layui.pearTab,
 					echarts = layui.echarts,
-						carousel = layui.carousel,
+					carousel = layui.carousel,
 					carousel = layui.carousel;
-				
 
-carousel.render({
-					elem: '#test1'
-					,width: '100% '
-					,height: '100%'
-					,interval: 5000 //每2秒，自动轮播
-					,arrow: 'always'
+
+				carousel.render({
+					elem: '#test1',
+					width: '100% ',
+					height: '100%',
+					interval: 5000 //每2秒，自动轮播
+						,
+					arrow: 'always'
 				});
 				var echartsRecords = echarts.init(document.getElementById('echarts-records'), 'walden');
 
-                $("body").on("click","[data-url]",function(){
-					parent.layui.pearTab.addTabOnlyByElem("content"
-					,{id:$(this).attr("data-id"),title:$(this).attr("data-title"),url:$(this).attr("data-url"),close:true})
+				$("body").on("click", "[data-url]", function() {
+					parent.layui.pearTab.addTabOnlyByElem("content", {
+						id: $(this).attr("data-id"),
+						title: $(this).attr("data-title"),
+						url: $(this).attr("data-url"),
+						close: true
+					})
 				})
 
 
@@ -431,11 +437,11 @@ carousel.render({
 				};
 
 				echartsRecords.setOption(option);
-			
-			    window.onresize = function() {
-			    	echartsRecords.resize();
-			    }
-			    
+
+				window.onresize = function() {
+					echartsRecords.resize();
+				}
+
 			});
 		</script>
 	</body>
