@@ -13,8 +13,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	pearAuth.prototype.loadPermission = function (url) {
 	  
 	  	var data = getData(url);
-	   
-		localStorage.setItem("auth_cache", data);
+	    sessionStorage.setItem("auth_cache", JSON.stringify(data));
 	} 
 	
 	/**
@@ -22,7 +21,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	 * */
 	pearAuth.prototype.clearPermission = function () {
 	    
-		localStorage.removeItem('auth_cache')
+		sessionStorage.removeItem('auth_cache')
 	} 
 		
 	/** 同 步 请 求 获 取 数 据 */
@@ -35,8 +34,8 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 			data = result;
 		});
 	
-	    
 		$.ajaxSettings.async = true;
+		
 		return data;
 	}
 	
@@ -48,9 +47,9 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	
 	     var b = false;
 	
-	     $.each(localStorage.getItem("auth_cache").split(","),function(i,auth){
+	     $.each(JSON.parse(sessionStorage.getItem('auth_cache')),function(i,auth){
 			 
-			 if(auth == permission){
+			 if(auth.code == permission){
 				 
 				 b = true;
 				 
