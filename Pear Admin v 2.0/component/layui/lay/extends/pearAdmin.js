@@ -218,7 +218,11 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 					'.pearone-color .color-content li.layui-this:after, .pearone-color .color-content li:hover:after {border: ' +
 					color + ' 2px solid!important;}';
 
-
+                style +='.layui-nav .layui-nav-child dd.layui-this a, .layui-nav-child dd.layui-this{background-color:'+color+'!important}';
+                
+				style +='.pear-social-entrance {background-color:'+color+'!important}';
+				
+				style +='.pear-admin .pe-collaspe {background-color:'+color+'!important}';
 
 				// 自 定 义 滚 动 条 样 式
 
