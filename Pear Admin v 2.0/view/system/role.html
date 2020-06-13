@@ -7,59 +7,57 @@
 		<link href="../../admin/css/pearCommon.css" rel="stylesheet" />
 	</head>
 	<body class="pear-container">
-	<div class="layui-card">
-	    <div class="layui-card-body">
-	        <form class="layui-form" action="">
-	            <div class="layui-form-item">
-	                <label class="layui-form-label">角色名称</label>
-	                <div class="layui-input-inline">
-	                    <input type="text" name="realName" placeholder="" class="layui-input">
-	                </div>
-	                <label class="layui-form-label">角色标识</label>
-	                <div class="layui-input-inline">
-	                    <input type="text" name="username" placeholder="" class="layui-input">
-	                </div>
-	                <button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="role-query">
-	                    <i class="layui-icon layui-icon-search"></i>
-	                    查询
-	                </button>
-	                <button type="reset" class="pear-btn pear-btn-md">
-	                    <i class="layui-icon layui-icon-refresh"></i>
-	                    重置
-	                </button>
-	            </div>
-	        </form>
-	    </div>
-	</div>
-	<div class="layui-card">
-	    <div class="layui-card-body">
-	        <table id="role-table" lay-filter="role-table"></table>
-	    </div>
-	</div>
-	</body>
-	
-	<script type="text/html" id="role-toolbar">
-	    <button class="pear-btn pear-btn-primary pear-btn-md" lay-event="add">
-	        <i class="layui-icon layui-icon-add-1"></i>
-	        新增
-	    </button>
-	    <button class="pear-btn pear-btn-danger pear-btn-md" lay-event="batchRemove">
-	        <i class="layui-icon layui-icon-delete"></i>
-	        删除
-	    </button>
-	</script>
-	
-	<script type="text/html" id="role-bar">
-	    <button class="pear-btn pear-btn-primary pear-btn-sm" lay-event="edit"><i class="layui-icon layui-icon-edit"></i></button>
-	    <button class="pear-btn pear-btn-warming pear-btn-sm" lay-event="power"><i class="layui-icon layui-icon-vercode"></i></button>
-	    <button class="pear-btn pear-btn-danger pear-btn-sm" lay-event="remove"><i class="layui-icon layui-icon-delete"></i></button>
-	</script>
-	
-	<script type="text/html" id="role-enable">
-	    <input type="checkbox" name="enable" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="user-enable" checked = "{{ d.id == 10003 ? 'true' : 'false' }}">
-	</script>
-
+		<div class="layui-card">
+			<div class="layui-card-body">
+				<form class="layui-form" action="">
+					<div class="layui-form-item">
+						<label class="layui-form-label">角色名称</label>
+						<div class="layui-input-inline">
+							<input type="text" name="realName" placeholder="" class="layui-input">
+						</div>
+						<label class="layui-form-label">角色标识</label>
+						<div class="layui-input-inline">
+							<input type="text" name="username" placeholder="" class="layui-input">
+						</div>
+						<button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="role-query">
+							<i class="layui-icon layui-icon-search"></i>
+							查询
+						</button>
+						<button type="reset" class="pear-btn pear-btn-md">
+							<i class="layui-icon layui-icon-refresh"></i>
+							重置
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="layui-card">
+			<div class="layui-card-body">
+				<table id="role-table" lay-filter="role-table"></table>
+			</div>
+		</div>
 		
+		<script type="text/html" id="role-toolbar">
+			<button class="pear-btn pear-btn-primary pear-btn-md" lay-event="add">
+				<i class="layui-icon layui-icon-add-1"></i>
+				新增
+			</button>
+			<button class="pear-btn pear-btn-danger pear-btn-md" lay-event="batchRemove">
+				<i class="layui-icon layui-icon-delete"></i>
+				删除
+			</button>
+		</script>
+		
+		<script type="text/html" id="role-bar">
+			<button class="pear-btn pear-btn-primary pear-btn-sm" lay-event="edit"><i class="layui-icon layui-icon-edit"></i></button>
+			<button class="pear-btn pear-btn-warming pear-btn-sm" lay-event="power"><i class="layui-icon layui-icon-vercode"></i></button>
+			<button class="pear-btn pear-btn-danger pear-btn-sm" lay-event="remove"><i class="layui-icon layui-icon-delete"></i></button>
+		</script>
+		
+		<script type="text/html" id="role-enable">
+			<input type="checkbox" name="enable" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="user-enable" checked = "{{ d.id == 10003 ? 'true' : 'false' }}">
+		</script>
+
 		<script src="../../component/layui/layui.js"></script>
 		<script>
 		    layui.use(['table','form','jquery'],function () {
