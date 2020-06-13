@@ -1,3 +1,4 @@
+
 layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pearMenu', 'pearNotice', 'pearFrame'],
 	function(exports) {
 		"use strict";
