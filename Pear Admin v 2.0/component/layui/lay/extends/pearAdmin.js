@@ -1,4 +1,3 @@
-
 layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pearMenu', 'pearNotice', 'pearFrame'],
 	function(exports) {
 		"use strict";
@@ -57,6 +56,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 					change: option.change
 				})
 
+                sideMenu.selectItem(option.select);
 
 			}
 
@@ -102,7 +102,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 						index: 0,
 						tabMax: 20,
 						data: [{
-							id: '11',
+							id: '0',
 							url: option.index,
 							title: '首页',
 							close: false
@@ -219,11 +219,12 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 					'.pearone-color .color-content li.layui-this:after, .pearone-color .color-content li:hover:after {border: ' +
 					color + ' 2px solid!important;}';
 
-                style +='.layui-nav .layui-nav-child dd.layui-this a, .layui-nav-child dd.layui-this{background-color:'+color+'!important}';
-                
-				style +='.pear-social-entrance {background-color:'+color+'!important}';
-				
-				style +='.pear-admin .pe-collaspe {background-color:'+color+'!important}';
+				style += '.layui-nav .layui-nav-child dd.layui-this a, .layui-nav-child dd.layui-this{background-color:' + color +
+					'!important}';
+
+				style += '.pear-social-entrance {background-color:' + color + '!important}';
+
+				style += '.pear-admin .pe-collaspe {background-color:' + color + '!important}';
 
 				// 自 定 义 滚 动 条 样 式
 
@@ -489,8 +490,8 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 
 					var color = localStorage.getItem("theme-color");
 
-					if (color!="null") {
-                      
+					if (color != "null") {
+
 						$(".select-color-item").removeClass("layui-icon")
 							.removeClass("layui-icon-ok");
 

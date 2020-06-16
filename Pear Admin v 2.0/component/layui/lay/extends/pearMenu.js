@@ -17,6 +17,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 			parseData: opt.parseData,
 			url: opt.url,
 			defaultOpen: opt.defaultOpen,
+			defaultSelect: opt.defaultSelect,
 			control: opt.control,
 			defaultMenu: opt.defaultMenu,
 			accordion: opt.accordion,
@@ -53,8 +54,6 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 		element.init();
 
 		downShow(option);
-
-
 
 		option.done();
 		return new pearMenu(option);
@@ -230,7 +229,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 
 			var content = '<li class="layui-nav-item" >';
 
-			if (i == option.defaultOpen && option.defaultOpen != false) {
+			if (i == option.defaultOpen) {
 				content = '<li class="layui-nav-item layui-nav-itemed" >';
 			}
 
@@ -251,6 +250,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 					'" ' + target + '><i class="' + item.icon + '"></i><span>' + item.title +
 					'</span></a>';
 			} else if (item.type == 1) {
+				
 				// 创 建 菜 单 结 构
 				content += '<a class="' + calss + '" menu-type="' + item.type + '" menu-url="' + item.href + '" menu-id="' +
 					item.id +

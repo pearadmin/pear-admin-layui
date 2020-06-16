@@ -5,7 +5,7 @@
 		"icon": "layui-icon layui-icon-console",
 		"href": "",
 		"children": [{
-			"id": 11,
+			"id": 0,
 			"title": "控制后台",
 			"icon": "layui-icon layui-icon-console",
 			"type": 1,
