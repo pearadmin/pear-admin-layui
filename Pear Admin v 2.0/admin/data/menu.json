@@ -146,6 +146,14 @@
 						"href": "view/common/senior/treeTable.html"
 					},
 					{
+						"id": 224, 
+						"title": "树状结构",
+						"icon": "layui-icon layui-icon-face-smile",
+						"type": 1,
+						"openType": "_iframe",
+						"href": "view/common/senior/dtree.html"
+					},
+					{
 						"id": 223, 
 						"title": "文本编辑",
 						"icon": "layui-icon layui-icon-face-smile",

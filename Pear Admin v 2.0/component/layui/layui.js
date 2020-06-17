@@ -47,6 +47,7 @@
 			code: "modules/code",
 			jquery: "modules/jquery",
 			mobile: "modules/mobile",
+			dtree:"extends/dtree",
 			pearTab:"extends/pearTab",
 			pearMenu:"extends/pearMenu",
 			pearOper:"extends/pearOper",
