@@ -36,11 +36,3 @@
 .pear-notice *::-webkit-scrollbar-corner{background: #f6f6f6;}
 
 
-.layer-anim-right {
-	-webkit-animation: am-horizontal-roll_show .6s ease-out;
-	animation: am-horizontal-roll_show .6s ease-out;			
-}
-			
-.layui-layer-dialog .layui-layer-content{
-	padding: 0px!important;
-}		
