@@ -11,14 +11,14 @@
 			"type": 1,
 			"openType": "_iframe",
 			"href": "view/console/console1.html"
-		},{
+		}, {
 			"id": 13,
 			"title": "数据分析",
 			"icon": "layui-icon layui-icon-console",
 			"type": 1,
 			"openType": "_iframe",
 			"href": "view/console/console2.html"
-		},{
+		}, {
 			"id": 12,
 			"title": "百度一下",
 			"icon": "layui-icon layui-icon-console",
@@ -73,15 +73,14 @@
 				"icon": "layui-icon layui-icon-face-smile",
 				"type": 0,
 				"href": "view/common/message.html",
-				"children": [
-					{
-							"id": 216,
-							"title": "权限认证",
-							"icon": "layui-icon layui-icon-face-smile",
-							"type": 1,
-							"openType": "_iframe",
-							"href": "view/common/basic/auth.html"
-						},{
+				"children": [{
+						"id": 216,
+						"title": "权限认证",
+						"icon": "layui-icon layui-icon-face-smile",
+						"type": 1,
+						"openType": "_iframe",
+						"href": "view/common/basic/auth.html"
+					}, {
 						"id": 211,
 						"title": "功能按钮",
 						"icon": "layui-icon layui-icon-face-smile",
@@ -90,13 +89,13 @@
 						"href": "view/common/basic/button.html"
 					},
 					{
-							"id": 200,
-							"title": "字体图标",
-							"icon": "layui-icon layui-icon-face-smile",
-							"type": 1,
-							"openType": "_iframe",
-							"href": "view/common/basic/icon.html"
-						},
+						"id": 200,
+						"title": "字体图标",
+						"icon": "layui-icon layui-icon-face-smile",
+						"type": 1,
+						"openType": "_iframe",
+						"href": "view/common/basic/icon.html"
+					},
 					{
 						"id": 212,
 						"title": "表单集合",
@@ -146,7 +145,7 @@
 						"href": "view/common/senior/treeTable.html"
 					},
 					{
-						"id": 224, 
+						"id": 224,
 						"title": "树状结构",
 						"icon": "layui-icon layui-icon-face-smile",
 						"type": 1,
@@ -154,7 +153,7 @@
 						"href": "view/common/senior/dtree.html"
 					},
 					{
-						"id": 223, 
+						"id": 223,
 						"title": "文本编辑",
 						"icon": "layui-icon layui-icon-face-smile",
 						"type": 1,
@@ -212,12 +211,12 @@
 						"href": "view/common/other/hash.html"
 					},
 					{
-							"id": 242,
-							"title": "省市级联",
-							"icon": "layui-icon layui-icon-face-cry",
-							"type": 1,
-							"openType": "_iframe",
-							"href": "view/common/other/area.html"
+						"id": 242,
+						"title": "省市级联",
+						"icon": "layui-icon layui-icon-face-cry",
+						"type": 1,
+						"openType": "_iframe",
+						"href": "view/common/other/area.html"
 					}
 				]
 			}
@@ -230,16 +229,23 @@
 		"type": 0,
 		"href": "",
 		"children": [{
-				"id": 301,
-				"title": "任务列表",
-				"icon": "layui-icon layui-icon-face-smile",
-				"type": 1,
-				"openType": "_iframe",
-				"href": "view/page/task.html"
-			}
-		]
+			"id": 301,
+			"title": "任务列表",
+			"icon": "layui-icon layui-icon-face-smile",
+			"type": 1,
+			"openType": "_iframe",
+			"href": "view/page/task.html"
+		},
+		{
+			"id": 302,
+			"title": "登录页面",
+			"icon": "layui-icon layui-icon-face-smile",
+			"type": 1,
+			"openType": "_iframe",
+			"href": "login.html"
+		}]
 	},
-	 {
+	{
 		"id": "error",
 		"title": "错误页面",
 		"icon": "layui-icon layui-icon-auz",
