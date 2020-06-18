@@ -58,6 +58,7 @@
 			pearSocial:"extends/pearSocial",
 			pearNotice:"extends/pearNotice",
 			pearStep:"extends/pearStep",
+			pearArea:"extends/pearArea",
 			tinymce:"extends/tinymce/tinymce",
 			echarts:"extends/echarts",
 			echartsTheme:"extends/echartsTheme",

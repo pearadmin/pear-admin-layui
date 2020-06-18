@@ -210,6 +210,14 @@
 						"type": 1,
 						"openType": "_iframe",
 						"href": "view/common/other/hash.html"
+					},
+					{
+							"id": 242,
+							"title": "省市级联",
+							"icon": "layui-icon layui-icon-face-cry",
+							"type": 1,
+							"openType": "_iframe",
+							"href": "view/common/other/area.html"
 					}
 				]
 			}
