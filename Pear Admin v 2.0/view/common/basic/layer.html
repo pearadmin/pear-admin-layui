@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<link href="../../../component/layui/css/layui.css" rel="stylesheet" />
+	<link href="../../../admin/css/pearCommon.css" rel="stylesheet" />
+</head>
+<body class="pear-container">
+	<div class="layui-card">
+		<div class="layui-card-body">
+			<table id="task-table" lay-filter="task-table"></table>
+		</div>
+	</div>
+
+	<script type="text/html" id="task-toolbar">
+		<button class="pear-btn pear-btn-primary pear-btn-md" lay-event="innerPageAdd">
+			<i class="layui-icon layui-icon-add-1"></i>
+			本页面新增
+		</button>
+		<button class="pear-btn pear-btn-primary pear-btn-md" lay-event="outerPageAdd">
+			<i class="layui-icon layui-icon-add-1"></i>
+			父页面新增
+		</button>
+	</script>
+
+	<script src="../../../component/layui/layui.js"></script>
+	<script>
+		layui.use(['table', 'form', 'jquery', 'element'], function () {
+			let table = layui.table;
+			let form = layui.form;
+			let $ = layui.jquery;
+			let element = layui.element;
+
+			let cols = [
+				[
+					{
+						title: '任务名称',
+						field: 'taskName',
+						align: 'center',
+						width: 100
+					},
+					{
+						title: '任务描述',
+						field: 'taskInfo',
+						align: 'center'
+					},
+					{
+						title: '执行人',
+						field: 'realName',
+						align: 'center',
+						width: 150
+					}
+				]
+			]
+
+			table.render({
+				elem: '#task-table',
+				url: '../../../admin/data/layer.json',
+				page: true,
+				cols: cols,
+				skin: 'line',
+				toolbar: '#task-toolbar',
+			});
+
+			table.on('toolbar(task-table)', function (obj) {
+				if (obj.event === 'innerPageAdd') {
+					window.innerPageAdd();
+				} else if (obj.event === 'outerPageAdd') {
+					window.outerPageAdd();
+				}
+			});
+
+			window.innerPageAdd = function () {
+				layer.open({
+					type: 2,
+					title: '新增',
+					shade: 0.1,
+					area: ['500px', '400px'],
+					content: '../basic/operate/innerPageAdd.html'
+				});
+			}
+
+			window.innerPageAddCallBack = function(index){
+				console.log("innerPageAddCallBack:do anything...");
+                layer.close(index); //关闭弹窗
+                table.reload("task-table");//table重新加载
+			}
+
+			window.outerPageAdd = function () {
+				parent.layer.open({
+					type: 2,
+					title: '新增',
+					shade: 0.1,
+					area: ['500px', '400px'],
+					content: 'view/common/basic/operate/outerPageAdd.html'
+				});
+			}
+
+			window.outerPageAddCallBack = function(index){
+				console.log("outerPageAddCallBack:do anything...");
+                parent.layer.close(index); //关闭弹窗
+                table.reload("task-table");//table重新加载
+			}
+		})
+	</script>
+</body>
+</html>
