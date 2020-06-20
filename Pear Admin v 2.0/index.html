@@ -96,6 +96,10 @@
 				pearSocial.render(setting);
 				pearAdmin.render(config);
 				
+				// 获取当前选中的tab
+				window.selectedWindow = function () {
+					return $(".layui-body .layui-tab-content .layui-show")[0].children[0].contentWindow;
+				}
 			})
 		</script>
 		<!-- 新 增 百 度 统 计  ( 可 移 除 )-->

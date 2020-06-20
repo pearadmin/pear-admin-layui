@@ -119,6 +119,14 @@
 						"type": 1,
 						"openType": "_iframe",
 						"href": "view/common/basic/formSelects.html"
+					},
+					{
+						"id": 217,
+						"title": "弹出窗体",
+						"icon": "layui-icon layui-icon-face-smile",
+						"type": 1,
+						"openType": "_iframe",
+						"href": "view/common/basic/layer.html"
 					}
 				]
 			},
