@@ -33,8 +33,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 			}
 
 			this.permissionRender = function(option) {
-
-				if (option.auth != false) {
+                if (option.auth != false) {
 					pearAuth.loadPermission(option.auth);
 				}
 			}
