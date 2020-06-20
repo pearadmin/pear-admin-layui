@@ -11,7 +11,7 @@
 			.pear-card-status {padding: 0 10px 10px;}
 			.pear-card-status li {position: relative;padding: 10px 0;border-bottom: 1px solid #EEE;}
 			.pear-card-status li h3 {padding-bottom: 5px;font-weight: 700;}
-			.pear-card-status li p {padding-bottom: 10px;}
+			.pear-card-status li p {padding-bottom: 10px;padding-top: 3px ;}
 			.pear-card-status li>span {color: #999;}
 			.pear-reply {position: absolute;right: 20px;}
 			.person .title{font-size: 17px;font-weight: 600;margin-left: 18px;margin-top: 16px;position: absolute;display: inline-block;}

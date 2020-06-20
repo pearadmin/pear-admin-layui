@@ -251,7 +251,16 @@
 			"type": 1,
 			"openType": "_iframe",
 			"href": "login.html"
-		}]
+		},
+		{
+			"id": 303,
+			"title": "留言板",
+			"icon": "layui-icon layui-icon-face-smile",
+			"type": 1,
+			"openType": "_iframe",
+			"href": "view/page/comment.html"
+		}
+		]
 	},
 	{
 		"id": "error",
@@ -286,5 +295,13 @@
 			}
 
 		]
+	},
+	{
+		"id": "307",
+		"title": "留言",
+		"icon": "layui-icon layui-icon-face-smile",
+		"type": 1,
+		"openType": "_iframe",
+		"href": "view/page/comment.html"
 	}
 ]
