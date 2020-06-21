@@ -34,6 +34,13 @@
 		"type": 0,
 		"href": "",
 		"children": [{
+				"id": 44,
+				"title": "部门管理",
+				"icon": "layui-icon layui-icon-username",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/system/organization.html"
+			},{
 				"id": 41,
 				"title": "用户管理",
 				"icon": "layui-icon layui-icon-username",
