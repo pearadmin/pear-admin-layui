@@ -14,7 +14,6 @@
 		</style>
 	</head>
 	<body>
-
 		<div class="layui-row layui-col-space10">
 			<div class="layui-col-md6">
 				<div class="layui-card">
@@ -27,7 +26,6 @@
 				</div>
 			</div>
 
-
 			<div class="layui-col-md6">
 				<div class="layui-card">
 					<div class="layui-card-header">
@@ -38,7 +36,7 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="layui-col-md6">
 				<div class="layui-card">
 					<div class="layui-card-header">
@@ -49,7 +47,7 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<div class="layui-col-md6">
 				<div class="layui-card">
 					<div class="layui-card-header">
@@ -63,46 +61,48 @@
 		</div>
 		<script src="../../../component/layui/layui.js"></script>
 		<script>
-			layui.use(['dtree', 'jquery'], function() {
+			layui.use(['dtree', 'jquery'], function () {
 				var $ = layui.jquery,
 					dtree = layui.dtree;
 
 				// 初始化树
 				dtree.render({
 					elem: "#demoTree",
+					initLevel: "1",
 					method: 'get',
 					url: "../../../admin/data/dtree.json"
 				});
 
 				dtree.render({
 					elem: "#demoTree2",
+					initLevel: "1",
 					method: 'get',
 					url: "../../../admin/data/dataTree2.json",
 					dataFormat: "list", //配置data的风格为list
 					checkbar: true //开启复选框
 				});
 
-
-                dtree.render({
+				dtree.render({
 					elem: "#demoTree3",
+					initLevel: "1",
 					method: 'get',
 					url: "../../../admin/data/dataTree2.json",
 					dataFormat: "list", //配置data的风格为list
 					checkbar: true //开启复选框
 				});
 
-                // 初始化树
-                dtree.render({
-                	elem: "#demoTree4",
-                	method: 'get',
-                	url: "../../../admin/data/dtree.json"
-                });
+				// 初始化树
+				dtree.render({
+					elem: "#demoTree4",
+					initLevel: "1",
+					method: 'get',
+					url: "../../../admin/data/dtree.json"
+				});
 
 				// 绑定节点点击
-				dtree.on("node('demoTree')", function(obj) {
+				dtree.on("node('demoTree')", function (obj) {
 					layer.msg(JSON.stringify(obj.param));
 				});
-
 			});
 		</script>
 	</body>
