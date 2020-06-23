@@ -3,34 +3,73 @@
 	<head>
 		<meta charset="utf-8">
 		<title></title>
-		<link rel="stylesheet" href="../../admin/css/pearButton.css"/>
+		<link rel="stylesheet" href="../../admin/css/pearButton.css" />
 		<link rel="stylesheet" href="../../component/layui/css/layui.css" />
 		<style>
 			.pear-container {
 				background-color: whitesmoke;
 				margin: 10px;
 			}
-			.layui-body{
-				    padding: 25px;
+
+			.layui-body {
+				padding: 25px;
 			}
-			.text-center{
+
+			.text-center {
 				text-align: center;
 			}
-			.user-info-head{
-				    width: 110px;
-				    height: 110px;
-				    line-height: 110px;
-				    position: relative;
-				    display: inline-block;
-				    border: 2px solid #eee;
-				    border-radius: 50%;
-				    overflow: hidden;
-				    cursor: pointer;
-				    margin: 0 auto;
+
+			.user-info-head {
+				width: 110px;
+				height: 110px;
+				line-height: 110px;
+				position: relative;
+				display: inline-block;
+				border-radius: 50%;
+				overflow: hidden;
+				cursor: pointer;
+				margin: 0 auto;
 			}
+
 			.layui-line-dash {
-			    border-bottom: 1px dashed #ccc;
-			    margin: 15px 0;
+				border-bottom: 1px dashed #ccc;
+				margin: 15px 0;
+			}
+
+			.comment {
+				position: absolute;
+				bottom: 3px;
+				right: 10px;
+				font-size: 12px;
+				color: dimgray;
+			}
+
+			.content {
+				padding-left: 13px;
+				font-size: 13px;
+				color: dimgray;
+			}
+
+			.title {
+				padding-left: 13.5px;
+			}
+
+			.layui-tab-title {
+				border-bottom: none;
+			}
+
+			.fl-item {
+				height: 30px;
+				font-size: 13.5;
+			}
+
+			.dot {
+				width: 10px;
+				height: 10px;
+				border-radius: 50px;
+				background-color: gray;
+				display: inline-block;
+				margin-right: 10px;
 			}
 		</style>
 	</head>
@@ -38,87 +77,128 @@
 		<div class="layui-row layui-col-space10">
 			<div class="layui-col-md3">
 				<div class="layui-card">
-					<div class="layui-card-header">头像展示</div>
-
 					<div class="layui-card-body" style="padding: 25px;">
 						<div class="text-center layui-text">
 							<div class="user-info-head" id="userInfoHead">
 								<img src="../../admin/images/avatar.jpg" width="115px" height="115px" alt="">
 							</div>
 							<h2 style="padding-top: 20px;font-size: 20px;">就眠仪式</h2>
-							<p style="padding-top: 8px;margin-top: 10px;">海纳百川，有容乃大</p>
-						</div>
-						<div class="layui-text" style="padding-top: 30px;">
-
-						</div>
-
-						<div>
-							<div class="process-title" style="position: absolute;margin-top: -6px;">
-								&nbsp;&nbsp;完 成 度 :
-							</div>
-							<div style="margin-top: 28px;width: 65%;margin-left: 80px;" class="layui-progress">
-								<div class="layui-progress-bar layui-bg-orange" lay-percent="30%"></div>
-							</div>
-							<br>
-							<div class="process-title" style="position: absolute;margin-top: 7px;">
-								&nbsp;&nbsp;容 错 率 :
-							</div>
-							<div class="layui-progress" style="margin-top: 15px;width: 65%;margin-left: 80px;">
-								<div class="layui-progress-bar layui-bg-blue" lay-percent="40%"></div>
-							</div>
-							<br>
-							<div class="process-title" style="position: absolute;margin-top: 7px;">
-								&nbsp;&nbsp;健 康 度 :
-							</div>
-							<div class="layui-progress" style="margin-top: 15px;width: 65%;margin-left: 80px;">
-								<div class="layui-progress-bar layui-bg-green" lay-percent="88%"></div>
-							</div>
+							<p style="padding-top: 8px;margin-top: 10px;font-size: 13.5px;">China ， 中国</p>
 						</div>
 					</div>
+					<div style="height: 45px;border-top: 1px whitesmoke solid;text-align: center;line-height: 45px;font-size: 13.5px;">
+						<span>今日事 ，今日毕</span>
+					</div>
+				</div>
 
+				<div class="layui-card">
+					<div class="layui-card-header">
+						归档
+					</div>
+					<div class="layui-card-body">
+						<div class="fl-item"><span class="dot"></span>数据结构</div>
+						<div class="fl-item"><span class="dot"></span>结构算法</div>
+						<div class="fl-item"><span class="dot"></span>开源夜谈</div>
+						<div class="fl-item"><span class="dot"></span>数据整合</div>
+						<div class="fl-item"><span class="dot"></span>其他相关</div>
+					</div>
 				</div>
 			</div>
 			<div class="layui-col-md9">
 				<div class="layui-card">
-					<div class="layui-card-header">个人信息 </div>
 					<div class="layui-card-body">
-						<div class="layui-form user-info-form layui-text" style="max-width: 400px;padding-top: 25px;">
-							<div class="layui-form-item">
-								<label class="layui-form-label">企业邮箱:</label>
-								<div class="layui-input-block">
-									<input type="text" name="email" value="peardesign@alipay.com" class="layui-input" lay-verify="required"
-									 required="">
-								</div>
-							</div>
-							<div class="layui-form-item">
-								<label class="layui-form-label">账户名称:</label>
-								<div class="layui-input-block">
-									<input type="text" name="name" value="就眠仪式" class="layui-input" lay-verify="required" required="">
-								</div>
-							</div>
-							<div class="layui-form-item">
-								<label class="layui-form-label">个人简介:</label>
-								<div class="layui-input-block">
-									<textarea name="desc" placeholder="个人简介" class="layui-textarea">帅气逼人</textarea>
-								</div>
-							</div>
-							<div class="layui-form-item">
-								<label class="layui-form-label">街道地址:</label>
-								<div class="layui-input-block">
-									<input type="text" name="address" value="高新区工专路 77 号" class="layui-input" lay-verify="required" required="">
-								</div>
-							</div>
-							<div class="layui-form-item">
-								<label class="layui-form-label">联系电话:</label>
-								<div class="layui-input-block">
-									<input type="text" name="address" value="1555555555" class="layui-input" lay-verify="required" required="">
-								</div>
-							</div>
-							<div class="layui-form-item">
-								<div class="layui-input-block">
-									<button class="pear-btn pear-btn-success" lay-filter="userInfoSubmit" lay-submit="">
-										更新信息
-									</button>
+						<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+							<ul class="layui-tab-title">
+								<li class="layui-this">我的文章</li>
+							</ul>
+							<div class="layui-tab-content">
+								<div class="layui-tab-item layui-show">
+
+									<div class="layui-row layui-col-space10" style="margin: 10px;">
+										<div class="layui-col-md1">
+											<img src="../../admin/images/act.jpg" style="width: 100%;height: 100%;border-radius: 5px;" />
+										</div>
+										<div class="layui-col-md11" style="height: 80px;">
+											<div class="title">为什么程序员们愿意在GitHub上开源自己的成果给别人免费使用和学习？</div>
+											<div class="content">
+												“Git的精髓在于让所有人的贡献无缝合并。而GitHub的天才之处，在于理解了Git的精髓。”来一句我们程序员们接地气的话：分享是一种快乐~
+											</div>
+											<div class="comment">2020-06-12 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 评论 5 点赞 12</div>
+										</div>
+									</div>
+									<div class="layui-row layui-col-space10" style="margin: 10px;">
+										<div class="layui-col-md1">
+											<img src="../../admin/images/act.jpg" style="width: 100%;height: 100%;border-radius: 5px;" />
+										</div>
+										<div class="layui-col-md11" style="height: 80px;">
+											<div class="title">为什么程序员们愿意在GitHub上开源自己的成果给别人免费使用和学习？</div>
+											<div class="content">
+												“Git的精髓在于让所有人的贡献无缝合并。而GitHub的天才之处，在于理解了Git的精髓。”来一句我们程序员们接地气的话：分享是一种快乐~
+											</div>
+											<div class="comment">2020-06-12 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 评论 5 点赞 12</div>
+										</div>
+									</div>
+									<div class="layui-row layui-col-space10" style="margin: 10px;">
+										<div class="layui-col-md1">
+											<img src="../../admin/images/act.jpg" style="width: 100%;height: 100%;border-radius: 5px;" />
+										</div>
+										<div class="layui-col-md11" style="height: 80px;">
+											<div class="title">为什么程序员们愿意在GitHub上开源自己的成果给别人免费使用和学习？</div>
+											<div class="content">
+												“Git的精髓在于让所有人的贡献无缝合并。而GitHub的天才之处，在于理解了Git的精髓。”来一句我们程序员们接地气的话：分享是一种快乐~
+											</div>
+											<div class="comment">2020-06-12 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 评论 5 点赞 12</div>
+										</div>
+									</div>
+									<div class="layui-row layui-col-space10" style="margin: 10px;">
+										<div class="layui-col-md1">
+											<img src="../../admin/images/act.jpg" style="width: 100%;height: 100%;border-radius: 5px;" />
+										</div>
+										<div class="layui-col-md11" style="height: 80px;">
+											<div class="title">为什么程序员们愿意在GitHub上开源自己的成果给别人免费使用和学习？</div>
+											<div class="content">
+												“Git的精髓在于让所有人的贡献无缝合并。而GitHub的天才之处，在于理解了Git的精髓。”来一句我们程序员们接地气的话：分享是一种快乐~
+											</div>
+											<div class="comment">2020-06-12 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 评论 5 点赞 12</div>
+										</div>
+									</div>
+									<div class="layui-row layui-col-space10" style="margin: 10px;">
+										<div class="layui-col-md1">
+											<img src="../../admin/images/act.jpg" style="width: 100%;height: 100%;border-radius: 5px;" />
+										</div>
+										<div class="layui-col-md11" style="height: 80px;">
+											<div class="title">为什么程序员们愿意在GitHub上开源自己的成果给别人免费使用和学习？</div>
+											<div class="content">
+												“Git的精髓在于让所有人的贡献无缝合并。而GitHub的天才之处，在于理解了Git的精髓。”来一句我们程序员们接地气的话：分享是一种快乐~
+											</div>
+											<div class="comment">2020-06-12 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 评论 5 点赞 12</div>
+										</div>
+									</div>
+									<div class="layui-row layui-col-space10" style="margin: 10px;">
+										<div class="layui-col-md1">
+											<img src="../../admin/images/act.jpg" style="width: 100%;height: 100%;border-radius: 5px;" />
+										</div>
+										<div class="layui-col-md11" style="height: 80px;">
+											<div class="title">为什么程序员们愿意在GitHub上开源自己的成果给别人免费使用和学习？</div>
+											<div class="content">
+												“Git的精髓在于让所有人的贡献无缝合并。而GitHub的天才之处，在于理解了Git的精髓。”来一句我们程序员们接地气的话：分享是一种快乐~
+											</div>
+											<div class="comment">2020-06-12 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 评论 5 点赞 12</div>
+										</div>
+									</div>
+									<div class="layui-row layui-col-space10" style="margin: 10px;">
+										<div class="layui-col-md1">
+											<img src="../../admin/images/act.jpg" style="width: 100%;height: 100%;border-radius: 5px;" />
+										</div>
+										<div class="layui-col-md11" style="height: 80px;">
+											<div class="title">为什么程序员们愿意在GitHub上开源自己的成果给别人免费使用和学习？</div>
+											<div class="content">
+												“Git的精髓在于让所有人的贡献无缝合并。而GitHub的天才之处，在于理解了Git的精髓。”来一句我们程序员们接地气的话：分享是一种快乐~
+											</div>
+											<div class="comment">2020-06-12 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 评论 5 点赞 12</div>
+										</div>
+									</div>
+
 								</div>
 							</div>
 						</div>
