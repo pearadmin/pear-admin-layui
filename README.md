@@ -7,7 +7,7 @@
     开 箱 即 用 的 前 后 端 解 决 方 案
   </h4> 
 
-  [预 览](http://jmysy.gitee.io/pear-admin-layui/Pear%20Admin%20v%202.0/)   |   [官 网](http://www.pearadmin.cn/)   |   [交 流](https://jq.qq.com/?_wv=1027&k=5OdSmve)
+  [预 览](http://jmysy.gitee.io/pear-admin-layui/)   |   [官 网](http://www.pearadmin.cn/)   |   [交 流](https://jq.qq.com/?_wv=1027&k=5OdSmve)
 
 </div>
 
@@ -29,6 +29,7 @@
 #### 项目介绍
 
 <p style="padding:20px;"  width="90%">
+
 基于Layui的后台管理系统模板，扩展Layui原生UI样式，整合第三方开源组件，提供便捷快速的开发方式，延续LayuiAdmin
 
 的设计风格，持续完善的样式与组件的维护，基于异步Ajax的菜单构建，相对完善的多标签页，单标签页的共存，为使用者提
