@@ -152,6 +152,14 @@
 						"href": "view/common/senior/table.html"
 					},
 					{
+							"id": 225,
+							"title": "卡片列表",
+							"icon": "layui-icon layui-icon-face-smile",
+							"type": 1,
+							"openType": "_iframe",
+							"href": "view/common/senior/card.html"
+						},
+					{
 						"id": 222,
 						"title": "树型表格",
 						"icon": "layui-icon layui-icon-face-smile",
