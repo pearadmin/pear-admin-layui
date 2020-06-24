@@ -48,7 +48,6 @@ GitHub 开源地址 ：https://github.com/Jmysy/Pear-Admin-Layui
 
 QQ 群: 682110771
 
-
 #### 项目截图
 
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/0611/081854_9d8e619f_4835367.jpeg "1591834182(1).jpg")
@@ -59,6 +58,9 @@ QQ 群: 682110771
 
 ![输入图片说明](https://images.gitee.com/uploads/images/2020/0611/081915_d433156a_4835367.jpeg "1591834304(1).jpg")
 
+### 基于 Pear Admin Layui 的项目应用
+
+Pear-Admin-Boot : [开源地址](https://gitee.com/Jmysy/Pear-Admin-Boot) :+1: 
 
 ### 优秀开源推荐
 
