@@ -54,9 +54,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 					parseData: false, //请求后是否进行数据解析 函数
 					change: option.change
 				})
-
                 sideMenu.selectItem(option.select);
-
 			}
 
 			this.noticeRender = function(option) {
@@ -83,7 +81,6 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 						});
 					}
 				}
-
 				pearNotice.render(option);
 			}
 
@@ -120,12 +117,13 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 
 					$("body").on("click", ".refresh", function() {
 
+                        $(".refresh").addClass("layui-anim");
+						$(".refresh").addClass("layui-anim-rotate");
+						$(".refresh").addClass("layui-anim-loop");
 						bodyTab.refresh(500);
 					})
 
 					sideMenu.click(function(dom, data) {
-
-
 
 						bodyTab.addTabOnly({
 							id: data.menuId,
@@ -150,7 +148,19 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 					});
 
 					$("body").on("click", ".refresh", function() {
-						bodyFrame.refresh(500);
+						$(".refresh a").removeClass("layui-icon-refresh-1");
+						$(".refresh a").addClass("layui-anim");
+						$(".refresh a").addClass("layui-anim-rotate");
+						$(".refresh a").addClass("layui-anim-loop"); 
+						$(".refresh a").addClass("layui-icon-loading");
+						bodyFrame.refresh(600);
+						setTimeout(function(){
+							$(".refresh a").addClass("layui-icon-refresh-1");
+							$(".refresh a").removeClass("layui-anim");
+							$(".refresh a").removeClass("layui-anim-rotate");
+							$(".refresh a").removeClass("layui-anim-loop"); 
+							$(".refresh a").removeClass("layui-icon-loading");
+						},600)
 					})
 
 					sideMenu.click(function(dom, data) {
