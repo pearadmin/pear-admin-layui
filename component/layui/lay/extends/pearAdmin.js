@@ -117,10 +117,19 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 
 					$("body").on("click", ".refresh", function() {
 
-                        $(".refresh").addClass("layui-anim");
-						$(".refresh").addClass("layui-anim-rotate");
-						$(".refresh").addClass("layui-anim-loop");
-						bodyTab.refresh(500);
+                        $(".refresh a").removeClass("layui-icon-refresh-1");
+                        $(".refresh a").addClass("layui-anim");
+                        $(".refresh a").addClass("layui-anim-rotate");
+                        $(".refresh a").addClass("layui-anim-loop"); 
+                        $(".refresh a").addClass("layui-icon-loading");
+                        bodyTab.refresh(600);
+                        setTimeout(function(){
+                        	$(".refresh a").addClass("layui-icon-refresh-1");
+                        	$(".refresh a").removeClass("layui-anim");
+                        	$(".refresh a").removeClass("layui-anim-rotate");
+                        	$(".refresh a").removeClass("layui-anim-loop"); 
+                        	$(".refresh a").removeClass("layui-icon-loading");
+                        },600)
 					})
 
 					sideMenu.click(function(dom, data) {
@@ -137,8 +146,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 					})
 
 				} else {
-
-					// 选 项 卡 初 始 API 文 档
+                    // 选 项 卡 初 始 API 文 档
 					bodyFrame = pearFrame.render({
 						elem: 'content',
 						title: '工作空间 / 首页',
