@@ -16,33 +16,17 @@
 			   display: inline-block;
 		   }
 		   
-		   .pear-frame .title{
-			   position: absolute;
-			   margin-top: 0px;
-			   margin-left: 12px;
-			   color: dimgray;
-			   display: inline-block;
-			   letter-spacing:2px;
-		   }
-		   
-		   .pear-frame .pear-frame-title{
-			   height: 40px;
-			   line-height: 40px;
-			   background-color: white;
-			   border: whitesmoke 1px solid;
-		   }
-		   
+		 
 		   .pear-frame .pear-frame-content{
 			   width: 100%;
-			   height: calc(100% - 45px)!important;
+			   height: 100%!important;
 		   }
 		   
 		   .pear-frame-loading {
 		   	position: absolute;
 		   	display: none;
 		   	width: 100%;
-		   	height: calc(100% - 42px);
-		   	top: 42px;
+		   	height: 100%;
 		   	z-index: 19;
 		   	background-color: #fff
 		   }

@@ -255,26 +255,26 @@ body::-webkit-scrollbar-corner {
 }
 
 /** 滚动条样式 */
-::-webkit-scrollbar {
+body::-webkit-scrollbar {
 	width: 4px;
 	height: 4px;
 }
 
-::-webkit-scrollbar-track {
+body::-webkit-scrollbar-track {
 	background: white;
 	border-radius: 2px;
 }
 
-::-webkit-scrollbar-thumb {
+body::-webkit-scrollbar-thumb {
 	background: #E6E6E6;
 	border-radius: 2px;
 }
 
-::-webkit-scrollbar-thumb:hover {
+body::-webkit-scrollbar-thumb:hover {
 	background: #E6E6E6;
 }
 
-::-webkit-scrollbar-corner {
+body::-webkit-scrollbar-corner {
 	background: #f6f6f6;
 }
 

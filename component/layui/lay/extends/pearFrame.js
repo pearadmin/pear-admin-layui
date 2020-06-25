@@ -78,8 +78,6 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	
 	function createFrameHTML(option){
 		
-		 var title = "<div class='pear-frame'><div class='pear-frame-title'><div class='dot'></div><div class='title'>"+option.title+"</div></div>"
-		 
 		 var iframe = "<iframe class='pear-frame-content' style='width:100%;height:100%;'  scrolling='auto' frameborder='0' src='"+option.url+"' ></iframe>"
 	
 	     var loading = '<div class="pear-frame-loading">'+
@@ -88,7 +86,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 			       '</div>'+
 		        '</div></div>'
 	
-	     $("#"+option.elem).html(title+iframe+loading);	
+	     $("#"+option.elem).html(iframe+loading);	
 	}
 	
 	exports(MOD_NAME,new pearFrame());
