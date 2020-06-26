@@ -48,6 +48,7 @@
 			jquery: "modules/jquery",
 			mobile: "modules/mobile",
 			dtree:"extends/dtree",
+			iconPicker:"extends/iconPicker",
 			pearCard:"extends/pearCard",
 			pearTab:"extends/pearTab",
 			pearMenu:"extends/pearMenu",

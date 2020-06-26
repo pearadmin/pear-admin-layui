@@ -240,6 +240,15 @@
 						"type": 1,
 						"openType": "_iframe",
 						"href": "view/common/other/area.html"
+					},
+					
+					{
+						"id": 243,
+						"title": "图标选择",
+						"icon": "layui-icon layui-icon-face-cry",
+						"type": 1,
+						"openType": "_iframe",
+						"href": "view/common/other/icon.html"
 					}
 				]
 			}
