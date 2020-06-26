@@ -48,16 +48,15 @@
 	background-color: #5FB878 !important;
 }
 
-.layui-laypage-limits,
-.layui-laypage-skip {
-	display: none !important;
-}
-
 .layui-table tr {
 	height: 34px !important;
 	line-height: 34px !important;
 }
-
+.layui-laypage-skip input{
+	
+	height: 26px!important;
+	line-height: 26px!important;
+}
 .layui-table-cell {
 	padding-top: 1px !important;
 }

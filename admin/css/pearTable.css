@@ -41,8 +41,10 @@
 			    padding-top: 9px;
 			}
 			
-			.layui-laypage-skip{
-				display: none!important;
+			.layui-laypage-skip input{
+				
+				height: 26px!important;
+				line-height: 26px!important;
 			}
 
             .layui-laypage-limits{
