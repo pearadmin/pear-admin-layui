@@ -1,3 +1,19 @@
+/**
+~   Copyright [就眠仪式] [Pear Admin Layui of copyright owner]
+~
+~   Licensed under the Apache License, Version 2.0 (the "License");
+~   you may not use this file except in compliance with the License.
+~   You may obtain a copy of the License at
+~
+~       http://www.apache.org/licenses/LICENSE-2.0
+~
+~   Unless required by applicable law or agreed to in writing, software
+~   distributed under the License is distributed on an "AS IS" BASIS,
+~   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+~   See the License for the specific language governing permissions and
+~   limitations under the License.
+~ 
+ */
 layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pearMenu', 'pearNotice', 'pearFrame'],
 	function(exports) {
 		"use strict";
@@ -18,18 +34,12 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 		var pearAdmin = new function() {
 
 			this.render = function(option) {
-
-				this.menuRender(option);
-
-				this.bodyRender(option);
-
-				this.keepLoad(option);
-
-				this.themeRender(option);
-
-				this.noticeRender(option);
-
-				this.permissionRender(option);
+                this.menuRender(option);
+                this.bodyRender(option);
+                this.keepLoad(option);
+                this.themeRender(option);
+                this.noticeRender(option);
+                this.permissionRender(option);
 			}
 
 			this.permissionRender = function(option) {
@@ -39,8 +49,6 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 			}
 
 			this.menuRender = function(option) {
-
-				/** 侧 边 菜 单 组 件 初 始 化 */
 				sideMenu = pearMenu.render({
 					elem: 'sideMenu', //依赖容器
 					async: true, //数据形式
@@ -58,7 +66,6 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 			}
 
 			this.noticeRender = function(option) {
-
 				var option = {
 					elem: 'headerNotice',
 					url: option.notice,
@@ -86,10 +93,8 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 
 
 			this.bodyRender = function(option) {
-
-				if (option.muiltTab) {
-
-					bodyTab = pearTab.render({
+               if (option.muiltTab) {
+                    bodyTab = pearTab.render({
 						elem: 'content',
 						roll: true,
 						tool: true,
@@ -105,18 +110,13 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 						}] //初始化数据
 					});
 
-					// 选 项 卡 切 换 API 文 档
 					bodyTab.click(function(id) {
 
-						// 选 项 卡 定 位
 						bodyTab.positionTab();
-
 						sideMenu.selectItem(id);
 					})
 
-
 					$("body").on("click", ".refresh", function() {
-
                         $(".refresh a").removeClass("layui-icon-refresh-1");
                         $(".refresh a").addClass("layui-anim");
                         $(".refresh a").addClass("layui-anim-rotate");
@@ -141,12 +141,10 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 							icon: data.menuIcon,
 							close: true
 						}, 300);
-
 						compatible();
 					})
 
 				} else {
-                    // 选 项 卡 初 始 API 文 档
 					bodyFrame = pearFrame.render({
 						elem: 'content',
 						title: '工作空间 / 首页',
@@ -172,24 +170,17 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 					})
 
 					sideMenu.click(function(dom, data) {
-
 						compatible();
 						bodyFrame.changePage(data.menuUrl, data.menuPath, true);
-
 					})
 				}
-
 			}
-
+			
 			this.keepLoad = function(option) {
-				// 关 闭 加 载 层
+
 				compatible();
-
 				setTimeout(function() {
-
-					$(".loader-main").fadeOut(option.done);
-
-					// 设 置 关 闭 时 间
+                     $(".loader-main").fadeOut(option.done);
 				}, option.keepLoad)
 			}
 
@@ -253,26 +244,20 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 
 				}
 
-
-				var theme = "<style>";
-
-				theme += '</style>';
-
-
+                var theme = "<style>";
+                theme += '</style>';
+                
 				$("iframe").contents().find("head").append(theme);
-
-				$("#pearone-bg-color").html(style);
+                $("#pearone-bg-color").html(style);
 			}
 
 
 			this.themeRender = function(option) {
 
 				var color = localStorage.getItem("theme-color");
-
 				var menu = localStorage.getItem("theme-menu");
 
 				this.colorSet(color);
-
 				this.menuSkin(menu);
 			}
 
@@ -306,27 +291,18 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 			}
 		})
 
-
-		/**
-		 * 全屏/退出全屏
-		 */
 		$("body").on("click", ".fullScreen", function() {
 			if ($(this).hasClass("layui-icon-screen-restore")) {
-
 				screenFun(2).then(function() {
 					$(".fullScreen").eq(0).removeClass("layui-icon-screen-restore");
 				});
-
 			} else {
-
 				screenFun(1).then(function() {
 					$(".fullScreen").eq(0).addClass("layui-icon-screen-restore");
 				});
-
 			}
 
 		});
-
 
 		function compatible() {
 			if ($(window).width() <= 768) {
@@ -343,11 +319,6 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 			}
 		}
 
-		/**
-		 * 全屏和退出全屏的方法
-		 * @param num 1代表全屏 2代表退出全屏
-		 * @returns {Promise}
-		 */
 		function screenFun(num) {
 			num = num || 1;
 			num = num * 1;
@@ -384,7 +355,6 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 		}
 
 
-		//监听背景色选择
 		$('body').on('click', '[data-select-bgcolor]', function() {
 			var theme = $(this).attr('data-select-bgcolor');
 
@@ -530,7 +500,6 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 				}
 			});
 		}
-
 
 		exports('pearAdmin', pearAdmin);
 	})

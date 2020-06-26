@@ -15,12 +15,10 @@
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
-
 .layui-nav-tree .layui-nav-child dd.layui-this, .layui-nav-tree .layui-nav-child dd.layui-this a, .layui-nav-tree .layui-this, .layui-nav-tree .layui-this>a, .layui-nav-tree .layui-this>a:hover{
 	
 	background-color: #5FB878;
 }
-
 .pear-nav-tree .toast{
 	font-size: 14px;
     margin: 5px;
@@ -171,8 +169,6 @@
 	border-bottom-color: dimgray!important;
 }
 
-
-
 .light-theme .pear-nav-tree .layui-nav-child{
 	padding-top: 0px;
 	padding-bottom: 0px;
@@ -195,9 +191,7 @@
 	
 }
 
-
 /** 下 拉 图 标 */
-
 .pear-nav-tree.arrow .layui-nav-more {
     font-family: layui-icon !important;
     font-size: 12px;
@@ -217,11 +211,9 @@
     transition: all .2s;
     -webkit-transition: all .2s;
 }
-
 .pear-nav-tree.arrow .layui-nav-child .layui-nav-more {
     top: 17px;
 }
-
 .pear-nav-tree.arrow .layui-nav-more:before {
     content: "\e61a";
 }
@@ -234,7 +226,6 @@
     width: 12px;
     text-align: center;
 }
-
 .pear-nav-tree.arrow .layui-nav-itemed > a > .layui-nav-more:before {
     content: '\e61a';
     background-color: transparent;

@@ -2,52 +2,42 @@
 	margin: 10px;
 	background-color: whitesmoke;
 }
-
 .layui-form-item {
 	margin-bottom: 0px !important;
 	margin-top: 5px !important;
 }
-
 .layui-input {
 	height: 34px !important;
 	line-height: 34px !important;
 	border-radius: 3px !important;
 }
-
 .layui-form-label {
 	width: 60px !important;
 	padding-left: 0px !important;
 }
-
 .layui-table-tool-panel {
 	margin-top: 10px !important;
 }
-
 .layui-table-tool {
 	background-color: white !important;
 	border-bottom: none !important;
 	padding-bottom: 10px !important;
 }
-
 .layui-table-header,
 .layui-table-header th {
 	background-color: white !important;
 }
-
 .layui-table-view {
 	border: none !important;
 }
-
 .layui-table-cell {
 	height: 34px !important;
 	line-height: 34px !important;
 }
-
 .layui-laypage .layui-laypage-curr .layui-laypage-em {
 	border-radius: 50px !important;
 	background-color: #5FB878 !important;
 }
-
 .layui-table tr {
 	height: 34px !important;
 	line-height: 34px !important;
