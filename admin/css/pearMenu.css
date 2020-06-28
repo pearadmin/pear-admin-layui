@@ -144,7 +144,6 @@
 
 /** 亮 样 式*/
 
-.dark-theme,
 .dark-theme .layui-nav-tree{
 	background-color: #28333E!important; 
 }
