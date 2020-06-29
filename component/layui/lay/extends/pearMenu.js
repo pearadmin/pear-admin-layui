@@ -226,7 +226,6 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 		$.each(option.data, function(i, item) {
 			// 创 建 每 一 个 菜 单 项
 
-
 			var content = '<li class="layui-nav-item" >';
 
 			if (i == option.defaultOpen) {
