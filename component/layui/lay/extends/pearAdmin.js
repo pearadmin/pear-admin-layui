@@ -34,16 +34,16 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 		var pearAdmin = new function() {
 
 			this.render = function(option) {
-                this.menuRender(option);
-                this.bodyRender(option);
-                this.keepLoad(option);
-                this.themeRender(option);
-                this.noticeRender(option);
-                this.permissionRender(option);
+				this.menuRender(option);
+				this.bodyRender(option);
+				this.keepLoad(option);
+				this.themeRender(option);
+				this.noticeRender(option);
+				this.permissionRender(option);
 			}
 
 			this.permissionRender = function(option) {
-                if (option.auth != false) {
+				if (option.auth != false) {
 					pearAuth.loadPermission(option.auth);
 				}
 			}
@@ -62,7 +62,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 					parseData: false, //请求后是否进行数据解析 函数
 					change: option.change
 				})
-                sideMenu.selectItem(option.select);
+				sideMenu.selectItem(option.select);
 			}
 
 			this.noticeRender = function(option) {
@@ -93,8 +93,8 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 
 
 			this.bodyRender = function(option) {
-               if (option.muiltTab) {
-                    bodyTab = pearTab.render({
+				if (option.muiltTab) {
+					bodyTab = pearTab.render({
 						elem: 'content',
 						roll: true,
 						tool: true,
@@ -117,19 +117,19 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 					})
 
 					$("body").on("click", ".refresh", function() {
-                        $(".refresh a").removeClass("layui-icon-refresh-1");
-                        $(".refresh a").addClass("layui-anim");
-                        $(".refresh a").addClass("layui-anim-rotate");
-                        $(".refresh a").addClass("layui-anim-loop"); 
-                        $(".refresh a").addClass("layui-icon-loading");
-                        bodyTab.refresh(600);
-                        setTimeout(function(){
-                        	$(".refresh a").addClass("layui-icon-refresh-1");
-                        	$(".refresh a").removeClass("layui-anim");
-                        	$(".refresh a").removeClass("layui-anim-rotate");
-                        	$(".refresh a").removeClass("layui-anim-loop"); 
-                        	$(".refresh a").removeClass("layui-icon-loading");
-                        },600)
+						$(".refresh a").removeClass("layui-icon-refresh-1");
+						$(".refresh a").addClass("layui-anim");
+						$(".refresh a").addClass("layui-anim-rotate");
+						$(".refresh a").addClass("layui-anim-loop");
+						$(".refresh a").addClass("layui-icon-loading");
+						bodyTab.refresh(600);
+						setTimeout(function() {
+							$(".refresh a").addClass("layui-icon-refresh-1");
+							$(".refresh a").removeClass("layui-anim");
+							$(".refresh a").removeClass("layui-anim-rotate");
+							$(".refresh a").removeClass("layui-anim-loop");
+							$(".refresh a").removeClass("layui-icon-loading");
+						}, 600)
 					})
 
 					sideMenu.click(function(dom, data) {
@@ -157,16 +157,16 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 						$(".refresh a").removeClass("layui-icon-refresh-1");
 						$(".refresh a").addClass("layui-anim");
 						$(".refresh a").addClass("layui-anim-rotate");
-						$(".refresh a").addClass("layui-anim-loop"); 
+						$(".refresh a").addClass("layui-anim-loop");
 						$(".refresh a").addClass("layui-icon-loading");
 						bodyFrame.refresh(600);
-						setTimeout(function(){
+						setTimeout(function() {
 							$(".refresh a").addClass("layui-icon-refresh-1");
 							$(".refresh a").removeClass("layui-anim");
 							$(".refresh a").removeClass("layui-anim-rotate");
-							$(".refresh a").removeClass("layui-anim-loop"); 
+							$(".refresh a").removeClass("layui-anim-loop");
 							$(".refresh a").removeClass("layui-icon-loading");
-						},600)
+						}, 600)
 					})
 
 					sideMenu.click(function(dom, data) {
@@ -175,12 +175,12 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 					})
 				}
 			}
-			
+
 			this.keepLoad = function(option) {
 
 				compatible();
 				setTimeout(function() {
-                     $(".loader-main").fadeOut(option.done);
+					$(".loader-main").fadeOut(option.done);
 				}, option.keepLoad)
 			}
 
@@ -244,11 +244,11 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 
 				}
 
-                var theme = "<style>";
-                theme += '</style>';
-                
+				var theme = "<style>";
+				theme += '</style>';
+
 				$("iframe").contents().find("head").append(theme);
-                $("#pearone-bg-color").html(style);
+				$("#pearone-bg-color").html(style);
 			}
 
 
@@ -383,9 +383,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 
 		$("body").on("click", ".setting", function() {
 
-			// 获取
 			var themeMenu = localStorage.getItem("theme-menu");
-
 			var themeColor = localStorage.getItem("theme-color");
 
 			var bgColorHtml = "";
@@ -440,6 +438,42 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 			html +=
 				"<div class='select-color'><div class='select-color-title'>主题色</div><div class='select-color-content'><span class='select-color-item ' style='background-color:#FF5722;'></span><span class='select-color-item layui-icon layui-icon-ok' style='background-color:#5FB878;'></span><span class='select-color-item'  style='background-color:#1E9FFF;'></span><span class='select-color-item' style='background-color:#FFB800;'></span><span class='select-color-item' style='background-color:darkgray;'></span></div></div>"
 
+            var muiltTab =
+            	'<div class="layui-form-item">' +
+            	'<div class="layui-input-inline">' +
+            	'<input type="checkbox" checked name="switch" lay-skin="switch">' +
+            	'</div>' +
+				'<label style="font-size:13.5px;" class="layui-form-label">多选项卡</label>' +
+            	'</div>';
+			
+			var showLogo =
+				'<div class="layui-form-item">' +
+				'<div class="layui-input-inline">' +
+				'<input type="checkbox" name="switch" checked lay-skin="switch">' +
+				'</div>' +
+				'<label style="font-size:13.5px;"  class="layui-form-label">菜单标题</label>' +
+				'</div>';
+				
+			
+			var menuType =
+				'<div class="layui-form-item">' +
+				'<div class="layui-input-inline">' +
+				'<input type="checkbox" name="switch" checked lay-skin="switch">' +
+				'</div>' +
+				'<label style="font-size:13.5px;" class="layui-form-label">系统菜单</label>' +
+				'</div>';
+
+			html +=
+			    '<div class="layui-form" style="padding-top:20px!important;">\n' +
+				'<div class="pearone-color">\n' +
+				'<div class="color-title">更多设置</div>\n' +
+				'<div class="color-content">\n' +
+				'<ul>\n' + muiltTab + showLogo + menuType  +'</ul>\n' +
+				'</div>\n' +
+				'</div></div>';
+
+			
+
 			html += '<div class="more-menu-list">' +
 				'<a class="more-menu-item" href="http://www.pearadmin.cn/doc/" target="_blank">' +
 				'<i class="layui-icon layui-icon-read" style="font-size: 19px;"></i> 开发文档' +
@@ -475,6 +509,8 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 				content: html,
 				success: function(layero, index) {
 
+                    form.render();
+                     
 					var color = localStorage.getItem("theme-color");
 
 					if (color != "null") {
