@@ -438,41 +438,41 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 			html +=
 				"<div class='select-color'><div class='select-color-title'>主题色</div><div class='select-color-content'><span class='select-color-item ' style='background-color:#FF5722;'></span><span class='select-color-item layui-icon layui-icon-ok' style='background-color:#5FB878;'></span><span class='select-color-item'  style='background-color:#1E9FFF;'></span><span class='select-color-item' style='background-color:#FFB800;'></span><span class='select-color-item' style='background-color:darkgray;'></span></div></div>"
 
-            var muiltTab =
-            	'<div class="layui-form-item">' +
-            	'<div class="layui-input-inline">' +
-            	'<input type="checkbox" checked name="switch" lay-skin="switch">' +
-            	'</div>' +
-				'<label style="font-size:13.5px;" class="layui-form-label">多选项卡</label>' +
-            	'</div>';
-			
-			var showLogo =
-				'<div class="layui-form-item">' +
-				'<div class="layui-input-inline">' +
-				'<input type="checkbox" name="switch" checked lay-skin="switch">' +
-				'</div>' +
-				'<label style="font-size:13.5px;"  class="layui-form-label">菜单标题</label>' +
-				'</div>';
-				
-			
-			var menuType =
-				'<div class="layui-form-item">' +
-				'<div class="layui-input-inline">' +
-				'<input type="checkbox" name="switch" checked lay-skin="switch">' +
-				'</div>' +
-				'<label style="font-size:13.5px;" class="layui-form-label">系统菜单</label>' +
-				'</div>';
+			// var muiltTab =
+			// 	'<div class="layui-form-item">' +
+			// 	'<div class="layui-input-inline">' +
+			// 	'<input type="checkbox" checked name="switch" lay-skin="switch">' +
+			// 	'</div>' +
+			// 	'<label style="font-size:13.5px;" class="layui-form-label">多选项卡</label>' +
+			// 	'</div>';
 
-			html +=
-			    '<div class="layui-form" style="padding-top:20px!important;">\n' +
-				'<div class="pearone-color">\n' +
-				'<div class="color-title">更多设置</div>\n' +
-				'<div class="color-content">\n' +
-				'<ul>\n' + muiltTab + showLogo + menuType  +'</ul>\n' +
-				'</div>\n' +
-				'</div></div>';
+			// var showLogo =
+			// 	'<div class="layui-form-item">' +
+			// 	'<div class="layui-input-inline">' +
+			// 	'<input type="checkbox" name="switch" checked lay-skin="switch">' +
+			// 	'</div>' +
+			// 	'<label style="font-size:13.5px;"  class="layui-form-label">菜单标题</label>' +
+			// 	'</div>';
 
-			
+
+			// var menuType =
+			// 	'<div class="layui-form-item">' +
+			// 	'<div class="layui-input-inline">' +
+			// 	'<input type="checkbox" name="switch" checked lay-skin="switch">' +
+			// 	'</div>' +
+			// 	'<label style="font-size:13.5px;" class="layui-form-label">系统菜单</label>' +
+			// 	'</div>';
+
+			// html +=
+			// 	'<div class="layui-form" style="padding-top:20px!important;">\n' +
+			// 	'<div class="pearone-color">\n' +
+			// 	'<div class="color-title">更多设置</div>\n' +
+			// 	'<div class="color-content">\n' +
+			// 	'<ul>\n' + muiltTab + showLogo + menuType + '</ul>\n' +
+			// 	'</div>\n' +
+			// 	'</div></div>';
+
+
 
 			html += '<div class="more-menu-list">' +
 				'<a class="more-menu-item" href="http://www.pearadmin.cn/doc/" target="_blank">' +
@@ -488,8 +488,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 				'<i class="layui-icon layui-icon-survey"></i> 交流社区' +
 				'</a>' +
 				'</div>';
-
-
+				
 			openRight(html);
 
 		})
@@ -509,8 +508,8 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 				content: html,
 				success: function(layero, index) {
 
-                    form.render();
-                     
+					form.render();
+
 					var color = localStorage.getItem("theme-color");
 
 					if (color != "null") {
