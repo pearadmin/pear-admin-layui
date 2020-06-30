@@ -41,12 +41,14 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 			}
 		}
 
-		if (option.control != false) {
+		if(option.data.length > 0){
+			if (option.control != false) {
 
-			createMenuAndControl(option);
+				createMenuAndControl(option);
 
-		} else {
-			createMenu(option);
+			} else {
+				createMenu(option);
+			}
 		}
 
 
@@ -234,12 +236,12 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 
 			var href = "javascript:;";
 			var target = "";
-			var calss = "site-demo-active"
+			var className = "site-demo-active"
 
 			if (item.openType == "_blank" && item.type == 1) {
 				href = item.href;
 				target = "target='_blank'";
-				calss = "";
+				className = "";
 			}
 
 			// 判 断 菜 单 类 型 0 是 不可跳转的目录 1 是 可 点 击 跳 转 的 菜 单
@@ -251,7 +253,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 			} else if (item.type == 1) {
 				
 				// 创 建 菜 单 结 构
-				content += '<a class="' + calss + '" menu-type="' + item.type + '" menu-url="' + item.href + '" menu-id="' +
+				content += '<a class="' + className + '" menu-type="' + item.type + '" menu-url="' + item.href + '" menu-id="' +
 					item.id +
 					'" menu-title="' + item.title + '"  href="' + href + '"  ' + target + '><i class="' + item.icon +
 					'"></i><span>' + item.title + '</span></a>';
@@ -318,13 +320,13 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 
 				var target = "";
 
-				var calss = "site-demo-active";
+				var className = "site-demo-active";
 
 				if (note.openType == "_blank" && note.type == 1) {
 
 					href = note.href;
 					target = "target='_blank'";
-					calss = "";
+					className = "";
 				}
 
 
@@ -336,7 +338,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 						'</span></a>';
 				} else if (note.type == 1) {
 					// 创 建 菜 单 结 构
-					content += '<a ' + target + ' class="' + calss + '" menu-type="' + note.type + '" menu-url="' + note.href +
+					content += '<a ' + target + ' class="' + className + '" menu-type="' + note.type + '" menu-url="' + note.href +
 						'" menu-id="' + note.id +
 						'" menu-title="' + note.title + '" href="' + href + '"><i class="' + note.icon +
 						'"></i><span>' + note.title + '</span></a>';
@@ -399,12 +401,12 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 
 				var target = "";
 
-				var calss = "site-demo-active";
+				var className = "site-demo-active";
 
 				if (note.openType == "_blank" && note.type == 1) {
 					href = note.href;
 					target = "target='_blank'";
-					calss = "";
+					className = "";
 				}
 
 				// 判 断 子 项 类 型
@@ -414,7 +416,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 						'"><i class="' + note.icon + '"></i><span>' + note.title + '</span></a>';
 				} else if (note.type == 1) {
 					// 创 建 菜 单 结 构
-					content += '<a ' + target + ' class="' + calss + '" menu-type="' + note.type + '" menu-url="' + note.href +
+					content += '<a ' + target + ' class="' + className + '" menu-type="' + note.type + '" menu-url="' + note.href +
 						'" menu-id="' + note.id + '" menu-title="' + note.title + '" menu-icon="' + note.icon + '" href="' + href +
 						'" ><i class="' + note.icon + '"></i><span>' + note.title + '</span></a>';
 				}
