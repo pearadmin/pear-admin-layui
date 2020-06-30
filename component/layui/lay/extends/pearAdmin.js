@@ -51,7 +51,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 			this.menuRender = function(option) {
 				sideMenu = pearMenu.render({
 					elem: 'sideMenu', //依赖容器
-					async: option.async, //数据形式
+					async: true, //数据形式
 					theme: option.theme,
 					height: '100%',
 					control: option.control ? 'control' : false, // control 
