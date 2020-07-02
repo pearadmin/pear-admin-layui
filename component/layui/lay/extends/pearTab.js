@@ -37,8 +37,6 @@ layui.define(['jquery', 'element'], function(exports) {
 
 		element.init();
 
-		closeEvent(option);
-
 		toolEvent(option);
 
 		$("#" + option.elem).width(opt.width);
@@ -46,6 +44,8 @@ layui.define(['jquery', 'element'], function(exports) {
 		$("#" + option.elem).css({
 			position: "relative"
 		});
+
+        closeEvent(option);
 
 		return new pearTab(option);
 	}
@@ -62,7 +62,6 @@ layui.define(['jquery', 'element'], function(exports) {
 
 		});
 	}
-
 
 	pearTab.prototype.positionTab = function() {
 		var $tabTitle = $('.layui-tab[lay-filter=' + this.option.elem + ']  .layui-tab-title');
@@ -371,21 +370,25 @@ layui.define(['jquery', 'element'], function(exports) {
 
 		//根据 elem id 来删除指定的 layui title li
 
+        console.log("进入");
+
 		var tabTitle = $(".layui-tab[lay-filter='" + elem + "']").find(".layui-tab-title");
 
 		// 删除指定 id 的 title
 
 		var removeTab = tabTitle.find("li[lay-id='" + id + "']");
 
-		// 查 找 下 方 是 否 存 在 li
-
 		var nextNode = removeTab.next("li");
 
-		if (nextNode.length) {
+        console.log(nextNode.length);
 
+		if (nextNode.length) {
+			
 			nextNode.addClass("layui-this");
 
 			var currId = nextNode.attr("lay-id");
+
+            console.log("下："+currId);
 
 			$("#" + elem + " [id='" + currId + "']").parent().addClass("layui-show");
 
@@ -397,16 +400,14 @@ layui.define(['jquery', 'element'], function(exports) {
 
 			var currId = prevNode.attr("lay-id");
 
+            console.log("上："+currId);
+
 			$("#" + elem + " [id='" + currId + "']").parent().addClass("layui-show");
 		}
 
 		removeTab.remove();
 
 		// 删除 content
-
-
-
-
 		var tabContent = $(".layui-tab[lay-filter='" + elem + "']").find("iframe[id='" + id + "']").parent();
 
 		tabContent.remove();
@@ -486,9 +487,7 @@ layui.define(['jquery', 'element'], function(exports) {
 					'" frameborder="no" border="0" marginwidth="0" marginheight="0" style="width: 100%;height: 100%;"></iframe></div>'
 
 			}
-
 			index++;
-
 		});
 
 		title += '</ul>';
@@ -499,7 +498,6 @@ layui.define(['jquery', 'element'], function(exports) {
 		control += '<dd id="closeThis"><a href="#">关 闭 当 前</a></dd>'
 		control += '<dd id="closeOther"><a href="#">关 闭 其 他</a></dd>'
 		control += '<dd id="closeAll"><a href="#">关 闭 全 部</a></dd>'
-
 		control += '</dl></li></ul></li></div>';
 
 		tab += title;
@@ -532,8 +530,8 @@ layui.define(['jquery', 'element'], function(exports) {
 	function closeEvent(option) {
 		$(".layui-tab[lay-filter='" + option.elem + "']").on("click", ".layui-tab-close", function() {
 
-			var layid = $(this).parent().attr("lay-id")
-			element.tabDelete(option.elem, layid);
+			var layid = $(this).parent().attr("lay-id");
+			tabDelete(option.elem, layid);
 		})
 	}
 
@@ -541,12 +539,8 @@ layui.define(['jquery', 'element'], function(exports) {
 
 		$("body .layui-tab[lay-filter='" + option.elem + "']").on("click", "#closeThis", function() {
 			var currentTab = $(".layui-tab[lay-filter='" + option.elem + "'] .layui-tab-title .layui-this");
-
 			if (currentTab.find("span").is(".able-close")) {
-
 				var currentId = currentTab.attr("lay-id");
-
-
 				tabDelete(option.elem, currentId);
 
 			}
@@ -570,12 +564,9 @@ layui.define(['jquery', 'element'], function(exports) {
 			var currentId = $(".layui-tab[lay-filter='" + option.elem + "'] .layui-tab-title .layui-this").attr("lay-id");
 			var tabtitle = $(".layui-tab[lay-filter='" + option.elem + "'] .layui-tab-title li");
 			$.each(tabtitle, function(i) {
-
 				if ($(this).find("span").is(".able-close")) {
 					tabDelete(option.elem, $(this).attr("lay-id"));
-
 				}
-
 			})
 		})
 	}
