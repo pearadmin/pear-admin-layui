@@ -518,8 +518,6 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 					top: top
 				});
 
-
-
 			}, function() {
 
 				$(this).children(".layui-nav-child").removeClass("layui-nav-hover");
