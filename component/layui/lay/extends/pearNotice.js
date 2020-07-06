@@ -56,9 +56,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 
 	function createHtml(option) {
 
-
-
-		var notice = '<li class="layui-nav-item" lay-unselect="">' +
+        var notice = '<li class="layui-nav-item" lay-unselect="">' +
 			'<a href="#" class="notice layui-icon layui-icon-notice"><span class="layui-badge-dot"></span></a>' +
 			'<div class="layui-nav-child layui-tab pear-notice" style="left: -200px;">';
 

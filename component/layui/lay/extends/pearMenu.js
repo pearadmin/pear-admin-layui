@@ -32,7 +32,6 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 			}
 		}
 
-
 		// 根 据 请 求 方 式 获 取 数 据
 		if (option.async) {
 			option.data = getData(option.url);
@@ -45,7 +44,6 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 			if (option.control != false) {
 
 				createMenuAndControl(option);
-
 			} else {
 				createMenu(option);
 			}
@@ -298,7 +296,6 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 
 			} else {
 
-
 				controlItem = '<li  pear-href="' + item.href + '" pear-title="' + item.title + '" pear-id="' + item.id +
 					'" class="layui-nav-item"><a href="#">' + item.title + '</a></li>';
 
@@ -427,8 +424,6 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 
 		} else {
 			content += '<div class="toast"> 无 内 容 </div>';
-
-			/* 暂 无 数 据&nbsp;&nbsp;&nbsp;&nbsp; */
 		}
 
 		content += '</dl>';
@@ -436,7 +431,6 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 	}
 
 	function downShow(option) {
-
 		$("body #" + option.elem).on("click", "a[menu-type='0']", function() {
 
 			if (!$("#" + option.elem).is(".pear-nav-mini")) {
@@ -463,8 +457,9 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 					});
 
 				} else {
+					
 					$(this).parent().addClass("layui-nav-itemed");
-
+					
 					ele.animate({
 						height: "0px"
 					}, 200, function() {
@@ -473,7 +468,6 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 						});
 						$(this).parent().removeClass("layui-nav-itemed");
 					});
-
 				}
 			}
 		})
@@ -515,8 +509,6 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 
 				$(this).children(".layui-nav-child").removeClass("layui-nav-hover");
 
-				//判断当前是dd,还是 layui-nav-item
-
 				$(this).children(".layui-nav-child").css({
 					left: '0px'
 				});
@@ -530,6 +522,5 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 			$("#" + option.elem + " dd").off('mouseenter').unbind('mouseleave');
 		}
 	}
-
 	exports(MOD_NAME, new pearMenu());
 })

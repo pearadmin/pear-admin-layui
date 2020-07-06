@@ -27,7 +27,6 @@ layui.define(['table', 'laypage','jquery', 'element'], function(exports) {
 				alert("跳转页面");
 			}
 		}
-
 		// 根 据 请 求 方 式 获 取 数 据
 		if (option.url != null) {
 			// 复制数据
@@ -35,7 +34,6 @@ layui.define(['table', 'laypage','jquery', 'element'], function(exports) {
 		}
 
 		// 根据结果进行相应结构的创建
-
 		var html = createComponent(option.data);
 
 		$(option.elem).html(html);
@@ -54,38 +52,26 @@ layui.define(['table', 'laypage','jquery', 'element'], function(exports) {
 	}
 
 	function createComponent(data) {
-
-
         var html = "<div class='pear-card'>"
-           
-		var content = createCards(data);
-
-		var page = "<div id='cardpage'></div>"
-
-		content = content + page;
-      
-	    html += content + "</div>"
-
-		return html;
+        var content = createCards(data);
+        var page = "<div id='cardpage'></div>"
+        content = content + page;
+        html += content + "</div>"
+        return html;
 	}
 
 
 	/** 创建指定数量的卡片 */
 	function createCards(data) {
 		
-		
 		var content = "<div class='layui-row layui-col-space30'>";
-
 		$.each(data, function(i, item) {
 
 			content += createCard(item);
 
 		})
-
 		content += "</div>"
-
 		return content;
-
 	}
 
 
