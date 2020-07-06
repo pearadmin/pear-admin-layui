@@ -253,8 +253,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 
 
 			this.themeRender = function(option) {
-
-				var color = localStorage.getItem("theme-color");
+                var color = localStorage.getItem("theme-color");
 				var menu = localStorage.getItem("theme-menu");
 
 				this.colorSet(color);
@@ -348,7 +347,6 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 					}
 					break;
 			}
-
 			return new Promise(function(res, rej) {
 				res("返回值");
 			});
@@ -357,26 +355,16 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 
 		$('body').on('click', '[data-select-bgcolor]', function() {
 			var theme = $(this).attr('data-select-bgcolor');
-
-			$('[data-select-bgcolor]').removeClass("layui-this");
-
-			$(this).addClass("layui-this");
-
-			localStorage.setItem("theme-menu", theme);
-
-			pearAdmin.menuSkin(theme);
+            $('[data-select-bgcolor]').removeClass("layui-this");
+            $(this).addClass("layui-this");
+            localStorage.setItem("theme-menu", theme);
+            pearAdmin.menuSkin(theme);
 		});
 
 		$('body').on('click', '.select-color-item', function() {
-
-			$(".select-color-item").removeClass("layui-icon")
-				.removeClass("layui-icon-ok");
-
+			$(".select-color-item").removeClass("layui-icon").removeClass("layui-icon-ok");
 			$(this).addClass("layui-icon").addClass("layui-icon-ok");
-
 			var color = $(".select-color-item.layui-icon-ok").css("background-color");
-
-
 			pearAdmin.colorSet(color);
 		});
 
@@ -475,10 +463,8 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 					form.render();
 
 					var color = localStorage.getItem("theme-color");
-
 					if (color != "null") {
-
-						$(".select-color-item").removeClass("layui-icon")
+                        $(".select-color-item").removeClass("layui-icon")
 							.removeClass("layui-icon-ok");
 
 						$(".select-color-item").each(function() {
