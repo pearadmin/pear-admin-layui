@@ -79,9 +79,6 @@ layui.define(['jquery', 'element'], function(exports) {
 		}, 200);
 	}
 
-
-
-
 	pearTab.prototype.addTab = function(opt) {
 
 		var title = '';
