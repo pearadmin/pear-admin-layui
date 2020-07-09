@@ -102,6 +102,9 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 						height: '100%',
 						index: 0,
 						tabMax: 20,
+						closeEvent: function(id){
+							sideMenu.selectItem(id);
+						},
 						data: [{
 							id: '0',
 							url: option.index,
@@ -111,7 +114,6 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 					});
 
 					bodyTab.click(function(id) {
-
 						bodyTab.positionTab();
 						sideMenu.selectItem(id);
 					})
@@ -183,8 +185,6 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 					$(".loader-main").fadeOut(option.done);
 				}, option.keepLoad)
 			}
-
-
 
 			this.colorSet = function(color) {
 
