@@ -409,6 +409,8 @@ layui.define(['jquery', 'element'], function(exports) {
 
 		tabContent.remove();
 
+		// 方便左侧菜单滚动到相应菜单项
+		$("#" + elem + " .layui-tab-title .layui-this").click();
 	}
 
 
