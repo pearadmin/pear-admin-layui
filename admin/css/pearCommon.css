@@ -107,8 +107,62 @@ body::-webkit-scrollbar-corner {
 	background: #f6f6f6;
 }
 
+.mainBox::-webkit-scrollbar {
+	width: 0px;
+	height: 0px;
+}
+
+.mainBox::-webkit-scrollbar {
+	width: 6px;
+	height: 6px;
+}
+
+.mainBox::-webkit-scrollbar-track {
+	background: white;
+	border-radius: 2px;
+}
+
+.mainBox::-webkit-scrollbar-thumb {
+	background: #E6E6E6;
+	border-radius: 2px;
+}
+
+.mainBox::-webkit-scrollbar-thumb:hover {
+	background: #E6E6E6;
+}
+.mainBox::-webkit-scrollbar-corner {
+	background: #f6f6f6;
+}
+
 .pear-btn i{
 	font-size: 13px;
+}
+
+.layui-table-body::-webkit-scrollbar {
+	width: 0px;
+	height: 0px;
+}
+
+.layui-table-body::-webkit-scrollbar {
+	width: 6px;
+	height: 6px;
+}
+.layui-table-body::-webkit-scrollbar-track {
+	background: white;
+	border-radius: 2px;
+}
+
+.layui-table-body::-webkit-scrollbar-thumb {
+	background: #E6E6E6;
+	border-radius: 2px;
+}
+
+.layui-table-body::-webkit-scrollbar-thumb:hover {
+	background: #E6E6E6;
+}
+
+.layui-table-body::-webkit-scrollbar-corner {
+	background: #f6f6f6;
 }
 
 
@@ -243,29 +297,7 @@ body::-webkit-scrollbar-corner {
 	font-size: 16px;
 }
 
-/** 滚动条样式 */
-body::-webkit-scrollbar {
-	width: 4px;
-	height: 4px;
-}
 
-body::-webkit-scrollbar-track {
-	background: white;
-	border-radius: 2px;
-}
-
-body::-webkit-scrollbar-thumb {
-	background: #E6E6E6;
-	border-radius: 2px;
-}
-
-body::-webkit-scrollbar-thumb:hover {
-	background: #E6E6E6;
-}
-
-body::-webkit-scrollbar-corner {
-	background: #f6f6f6;
-}
 
 
 .mainBox {
