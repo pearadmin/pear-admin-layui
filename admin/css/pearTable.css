@@ -58,3 +58,31 @@
 	border-radius: 2px;
 	color: dimgray;
 }
+
+.layui-table-body::-webkit-scrollbar {
+	width: 0px;
+	height: 0px;
+}
+
+.layui-table-body::-webkit-scrollbar {
+	width: 6px;
+	height: 6px;
+}
+
+.layui-table-body::-webkit-scrollbar-track {
+	background: white;
+	border-radius: 2px;
+}
+
+.layui-table-body::-webkit-scrollbar-thumb {
+	background: #E6E6E6;
+	border-radius: 2px;
+}
+
+.layui-table-body::-webkit-scrollbar-thumb:hover {
+	background: #E6E6E6;
+}
+
+.layui-table-body::-webkit-scrollbar-corner {
+	background: #f6f6f6;
+}
