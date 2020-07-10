@@ -59,8 +59,6 @@
 	color: dimgray;
 }
 
-
-
 .layui-table-body::-webkit-scrollbar {
 	width: 0px;
 	height: 0px;
@@ -70,6 +68,7 @@
 	width: 6px;
 	height: 6px;
 }
+
 .layui-table-body::-webkit-scrollbar-track {
 	background: white;
 	border-radius: 2px;

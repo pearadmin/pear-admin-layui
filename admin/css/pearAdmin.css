@@ -20,12 +20,15 @@
 .pear-admin .layui-side {
 	transition: all .3s;
 }
+
 .pear-admin .layui-logo .title {
 	font-size: 20px;
 }
+
 .layui-header .layui-nav-more {
 	display: none !important;
 }
+
 .pe-collaspe {
 	position: absolute;
 	width: 50px;
@@ -46,15 +49,18 @@
 	background-color: white !important;
 	color: black !important;
 }
+
 .light-theme .layui-side-scroll {
 	background-color: white !important;
 	color: black !important;
 }
+
 .light-theme .bottom-nav {
 	background-color: white !important;
 	box-shadow: none;
 	border-top: whitesmoke 1px solid;
 }
+
 .light-theme .bottom-nav * {
 	color: dimgray;
 }
@@ -66,14 +72,17 @@
 	background-color: white;
 	border-bottom: 1px solid whitesmoke;
 }
+
 .pear-admin .layui-header .layui-nav-img {
 	width: 30px;
 	height: 30px;
 }
+
 .pear-admin .layui-layout-control {
 	left: 120px;
 	position: absolute;
 }
+
 .pear-admin .layui-logo {
 	width: 220px;
 	height: 60px;
@@ -81,10 +90,12 @@
 	background-color: #28333E;
 
 }
+
 .pear-admin .layui-logo img {
 	width: 36px;
 	height: 36px;
 }
+
 .pear-admin .layui-logo .title {
 	font-size: 21px;
 	font-weight: 550;
@@ -93,38 +104,48 @@
 	top: 5px;
 	margin-left: 5px;
 }
+
 .pear-admin .layui-logo .logo {
 	display: none;
 }
+
 .pear-mini .layui-logo .title {
 	display: none;
 }
+
 .pear-mini .layui-logo .logo {
 	display: inline-block;
 }
+
+
 .pear-admin .layui-side {
 	top: 0px;
 	width: 220px;
 	box-shadow: 2px 0 6px rgba(0, 21, 41, .35);
 	z-index: 9999;
 }
+
 .pear-admin .layui-side-scroll::-webkit-scrollbar {
 	width: 0px;
 	height: 0px;
 }
+
 .pear-admin .layui-side-scroll {
 	height: calc(100% - 60px);
 	background-color: #28333E;
 
 }
+
 .pear-admin .layui-header .layui-nav .layui-nav-item>a {
 	color: black;
 	font-size: 15px;
 }
+
 .pear-admin .layui-body {
 	left: 220px;
 	bottom: 0px;
 }
+
 .pear-admin .layui-layout-left {
 	left: 0px;
 
