@@ -40,12 +40,20 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 				this.themeRender(option);
 				this.noticeRender(option);
 				this.permissionRender(option);
+				this.logoRender(option);
 			}
 
 			this.permissionRender = function(option) {
 				if (option.auth != false) {
 					pearAuth.loadPermission(option.auth);
 				}
+			}
+			
+		    this.logoRender = function(option){
+				
+				$(".layui-logo .logo").attr("src",option.logoImage);
+				
+				$(".layui-logo .title").html(option.logoTitle);
 			}
 
 			this.menuRender = function(option) {
@@ -248,7 +256,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 				theme += '</style>';
 
 				$("iframe").contents().find("head").append(theme);
-				$("#pearone-bg-color").html(style);
+				$("#pearadmin-bg-color").html(style);
 			}
 
 
