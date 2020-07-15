@@ -1,13 +1,13 @@
-layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pearFrame'],
+layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 	function(exports) {
 		"use strict";
 
 		var $ = layui.jquery,
 			form = layui.form,
 			element = layui.element,
-			pearTab = layui.pearTab,
-			pearMenu = layui.pearMenu,
-			pearFrame = layui.pearFrame;
+			pearTab = layui.tab,
+			pearMenu = layui.menu,
+			pearFrame = layui.frame;
 
 		var bodyFrame;
 		var sideMenu;
@@ -85,10 +85,12 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pear
 							icon: data.menuIcon,
 							close: true
 						}, 300);
+
 						compatible();
 					})
 
 				} else {
+
 					bodyFrame = pearFrame.render({
 						elem: 'content',
 						title: '工作空间 / 首页',
@@ -104,14 +106,21 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pear
 
 					sideMenu.click(function(dom, data) {
 						bodyFrame.changePage(data.menuUrl, data.menuPath, true);
+
+						compatible()
 					})
 				}
 			}
 
 			this.keepLoad = function(option) {
+				
+				compatible()
+
 				setTimeout(function() {
 					$(".loader-main").fadeOut(option.done);
 				}, option.keepLoad)
+
+
 			}
 		};
 
@@ -141,7 +150,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pear
 
 		});
 
-/* 		function compatible() {
+		function compatible() {
 			if ($(window).width() <= 768) {
 				sideMenu.collaspe();
 				if ($(".pear-admin").is(".pear-mini")) {
@@ -154,7 +163,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pear
 					$(".pear-admin").addClass("pear-mini");
 				}
 			}
-		} */
+		}
 
 		function screenFun(num) {
 			num = num || 1;
@@ -238,5 +247,5 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearTab', 'pearMenu', 'pear
 			});
 		}
 
-		exports('pearAdmin', pearAdmin);
+		exports('admin', pearAdmin);
 	})
