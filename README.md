@@ -37,7 +37,7 @@
 
 供相对完善的开发方案，只为成为更好的轮子，项目不定时更新，建议 Star watch 一份
 
-如果你需要无组件整合的基础框架，请前往 [Pear Admin Layui 基础版本](https://gitee.com/Jmysy/Pear-Admin-Layui/tree/basis/)
+如果你需要无组件整合 与 示例页面 的基础框架，请前往 [Pear Admin Layui 基础版本](https://gitee.com/Jmysy/Pear-Admin-Layui/tree/basis/)
 
 </p>
 
