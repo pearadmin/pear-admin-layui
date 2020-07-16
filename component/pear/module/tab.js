@@ -139,9 +139,7 @@ layui.define(['jquery', 'element'], function(exports) {
 
 				setTimeout(function() {
 
-					pearLoad.fadeOut(500, function() {
-						pearLoad.remove();
-					});
+					pearLoad.fadeOut(500);
 
 				}, time);
 
@@ -186,9 +184,7 @@ layui.define(['jquery', 'element'], function(exports) {
 
 					setTimeout(function() {
 
-						pearLoad.fadeOut(500, function() {
-							pearLoad.remove();
-						});
+						pearLoad.fadeOut(500);
 
 					}, time);
 
@@ -246,9 +242,7 @@ layui.define(['jquery', 'element'], function(exports) {
 
 				setTimeout(function() {
 
-					pearLoad.fadeOut(500, function() {
-						pearLoad.remove();
-					});
+					pearLoad.fadeOut(500);
 
 				}, time);
 
@@ -303,9 +297,7 @@ layui.define(['jquery', 'element'], function(exports) {
 
 					setTimeout(function() {
 
-						pearLoad.fadeOut(500, function() {
-							pearLoad.remove();
-						});
+						pearLoad.fadeOut(500);
 
 					}, time);
 
@@ -350,15 +342,18 @@ layui.define(['jquery', 'element'], function(exports) {
 			setTimeout(function() {
 
 				pearLoad.fadeOut(500, function() {
-					pearLoad.remove();
+					$(".layui-tab[lay-filter='" + this.option.elem + "'] .layui-tab-content .layui-show").find("iframe")[0].contentWindow
+						.location.reload(true);
 				});
 
 			}, time);
 
 			index++;
+		}else{
+			$(".layui-tab[lay-filter='" + this.option.elem + "'] .layui-tab-content .layui-show").find("iframe")[0].contentWindow
+				.location.reload(true);
 		}
-		$(".layui-tab[lay-filter='" + this.option.elem + "'] .layui-tab-content .layui-show").find("iframe")[0].contentWindow
-			.location.reload(true);
+		
 
 	}
 
