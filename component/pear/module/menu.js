@@ -40,7 +40,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 			}
 		}
 
-		if(option.data.length > 0){
+		if (option.data.length > 0) {
 			if (option.control != false) {
 
 				createMenuAndControl(option);
@@ -83,9 +83,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 			var domss = hash(doms);
 
 			if (domss.text() != '') {
-
-				data['menuPath'] = domss.find("span").text() + " / " + data['menuPath'];
-
+                data['menuPath'] = domss.find("span").text() + " / " + data['menuPath'];
 			}
 
 			var domsss = hash(domss);
@@ -95,7 +93,6 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 				data['menuPath'] = domsss.find("span").text() + " / " + data['menuPath'];
 
 			}
-
 			clickEvent(dom, data);
 		});
 
@@ -247,7 +244,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 					'" ' + target + '><i class="' + item.icon + '"></i><span>' + item.title +
 					'</span></a>';
 			} else if (item.type == 1) {
-				
+
 				// 创 建 菜 单 结 构
 				content += '<a class="' + className + '" menu-type="' + item.type + '" menu-url="' + item.href + '" menu-id="' +
 					item.id +
@@ -457,9 +454,9 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 					});
 
 				} else {
-					
+
 					$(this).parent().addClass("layui-nav-itemed");
-					
+
 					ele.animate({
 						height: "0px"
 					}, 200, function() {
@@ -489,7 +486,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 
 					var left = $(this).offset().left + 132;
 
-                    $(this).children(".layui-nav-child").offset({
+					$(this).children(".layui-nav-child").offset({
 						left: left
 					});
 
