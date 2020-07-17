@@ -13,8 +13,9 @@ layui.define(['jquery', 'element'], function(exports) {
 				dom: option.dom,
 				direction: option.direction,
 				distance: option.distance,
-				time:option.time,
-				maskClose:option.maskClose
+				time:option.time?option.time:0,
+				maskClose:option.maskClose,
+				callback:option.success
 			});
 			
 			_right.open();
