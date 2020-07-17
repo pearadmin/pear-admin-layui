@@ -10,8 +10,8 @@
 }
 
 .pear-admin .layui-header {
-	left: 220px;
-	width: calc(100% - 220px);
+	left: 230px;
+	width: calc(100% - 230px);
 	background-color: white;
 	border-bottom: 1px solid whitesmoke;
 }
@@ -27,8 +27,9 @@
 }
 
 .pear-admin .layui-logo {
-	width: 220px;
+	width: 230px;
 	height: 60px;
+	line-height: 60px;
 	position: relative;
 	background-color: #28333E;
 
@@ -54,7 +55,7 @@
 
 .pear-admin .layui-side {
 	top: 0px;
-	width: 220px;
+	width: 230px;
 	box-shadow: 2px 0 6px rgba(0, 21, 41, .35);
 	z-index: 9999;
 }
@@ -65,8 +66,9 @@
 }
 
 .pear-admin .layui-side-scroll {
-	height: calc(100% - 60px);
+	height: calc(100% - 60px)!important;
 	background-color: #28333E;
+	width: 230px;
 
 }
 
@@ -76,7 +78,7 @@
 }
 
 .pear-admin .layui-body {
-	left: 220px;
+	left: 230px;
 	bottom: 0px;
 }
 

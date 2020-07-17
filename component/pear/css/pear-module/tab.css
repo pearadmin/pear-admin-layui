@@ -64,6 +64,10 @@
 	display: inline-block;
 }
 
+.pear-tab .layui-tab-close{
+	font-size: 13px;
+}
+
 .pear-tab .layui-tab-control>li {
 	position: absolute;
 	top: 0px;

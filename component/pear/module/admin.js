@@ -72,8 +72,19 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 					})
 
 					$("body").on("click", ".refresh", function() {
-
-						bodyTab.refresh(600);
+						$(".refresh a").removeClass("layui-icon-refresh-1");
+						$(".refresh a").addClass("layui-anim");
+						$(".refresh a").addClass("layui-anim-rotate");
+						$(".refresh a").addClass("layui-anim-loop");
+						$(".refresh a").addClass("layui-icon-loading");
+						bodyTab.refresh(400);
+						setTimeout(function() {
+							$(".refresh a").addClass("layui-icon-refresh-1");
+							$(".refresh a").removeClass("layui-anim");
+							$(".refresh a").removeClass("layui-anim-rotate");
+							$(".refresh a").removeClass("layui-anim-loop");
+							$(".refresh a").removeClass("layui-icon-loading");
+						}, 600)
 					})
 
 					sideMenu.click(function(dom, data) {
@@ -100,27 +111,35 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 					});
 
 					$("body").on("click", ".refresh", function() {
-
-						bodyFrame.refresh(600);
+						$(".refresh a").removeClass("layui-icon-refresh-1");
+						$(".refresh a").addClass("layui-anim");
+						$(".refresh a").addClass("layui-anim-rotate");
+						$(".refresh a").addClass("layui-anim-loop");
+						$(".refresh a").addClass("layui-icon-loading");
+						bodyFrame.refresh(400);
+						setTimeout(function() {
+							$(".refresh a").addClass("layui-icon-refresh-1");
+							$(".refresh a").removeClass("layui-anim");
+							$(".refresh a").removeClass("layui-anim-rotate");
+							$(".refresh a").removeClass("layui-anim-loop");
+							$(".refresh a").removeClass("layui-icon-loading");
+						}, 600)
 					})
 
 					sideMenu.click(function(dom, data) {
 						bodyFrame.changePage(data.menuUrl, data.menuPath, true);
-
 						compatible()
 					})
 				}
 			}
 
 			this.keepLoad = function(option) {
-				
+
 				compatible()
 
 				setTimeout(function() {
 					$(".loader-main").fadeOut(option.done);
 				}, option.keepLoad)
-
-
 			}
 		};
 

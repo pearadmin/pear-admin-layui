@@ -83,7 +83,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 			var domss = hash(doms);
 
 			if (domss.text() != '') {
-                data['menuPath'] = domss.find("span").text() + " / " + data['menuPath'];
+				data['menuPath'] = domss.find("span").text() + " / " + data['menuPath'];
 			}
 
 			var domsss = hash(domss);
@@ -110,7 +110,6 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 
 		menu.removeClass("dark-theme");
 		menu.removeClass("light-theme");
-
 		menu.addClass(skin);
 	}
 
@@ -438,7 +437,6 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 				if ($(this).parent().is(".layui-nav-itemed")) {
 
 					if (option.accordion) {
-						// 手 风 琴 实 现
 						$(this).parent().parent().find(".layui-nav-itemed").removeClass("layui-nav-itemed");
 						$(this).parent().addClass("layui-nav-itemed");
 					}
@@ -480,7 +478,6 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 				$(this).children(".layui-nav-child").addClass("layui-nav-hover");
 
 				var top = $(this).offset().top + 5;
-
 
 				if (!$(this).is(".layui-nav-item")) {
 

@@ -46,7 +46,7 @@ layui.define(['jquery', 'element'], function(exports) {
 			position: "relative"
 		});
 
-        closeEvent(option);
+		closeEvent(option);
 
 		return new pearTab(option);
 	}
@@ -93,7 +93,6 @@ layui.define(['jquery', 'element'], function(exports) {
 
 			title += '<span class="pear-tab-active"></span><span class="disable-close">' + opt.title +
 				'</span><i class="layui-icon layui-unselect layui-tab-close">ဆ</i>'
-
 		}
 
 		element.tabAdd(this.option.elem, {
@@ -103,9 +102,7 @@ layui.define(['jquery', 'element'], function(exports) {
 			id: opt.id
 		});
 
-
 		element.tabChange(this.option.elem, opt.id);
-
 	}
 
 	var index = 0;
@@ -265,7 +262,10 @@ layui.define(['jquery', 'element'], function(exports) {
 
 			//查询当前选项卡数量
 			if ($(".layui-tab[lay-filter='" + this.option.elem + "'] .layui-tab-title li[lay-id]").length >= this.option.tabMax) {
-				layer.msg("最多打开" + this.option.tabMax + "个标签页",{icon:3,time:1000});
+				layer.msg("最多打开" + this.option.tabMax + "个标签页", {
+					icon: 3,
+					time: 1000
+				});
 				return false;
 			}
 
@@ -321,7 +321,6 @@ layui.define(['jquery', 'element'], function(exports) {
 	// 刷 新 指 定 的 选 项 卡
 	pearTab.prototype.refresh = function(time) {
 
-
 		// 刷 新 指 定 的 选 项 卡
 		if (time != false && time != 0) {
 
@@ -349,17 +348,13 @@ layui.define(['jquery', 'element'], function(exports) {
 			}, time);
 
 			index++;
-		}else{
+		} else {
 			$(".layui-tab[lay-filter='" + this.option.elem + "'] .layui-tab-content .layui-show").find("iframe")[0].contentWindow
 				.location.reload(true);
 		}
-		
-
 	}
-
-	// 重写 Tab Delete 删除 ， 源码存在 Bug 所以重写
-
-	function tabDelete(elem, id,callback) {
+	
+	function tabDelete(elem, id, callback) {
 
 		//根据 elem id 来删除指定的 layui title li
 
@@ -370,15 +365,15 @@ layui.define(['jquery', 'element'], function(exports) {
 		var removeTab = tabTitle.find("li[lay-id='" + id + "']");
 
 		var nextNode = removeTab.next("li");
-		
-		var currId ;
+
+		var currId;
 
 		if (nextNode.length) {
-			
+
 			nextNode.addClass("layui-this");
 
 			currId = nextNode.attr("lay-id");
-			
+
 			$("#" + elem + " [id='" + currId + "']").parent().addClass("layui-show");
 
 		} else {
@@ -390,9 +385,9 @@ layui.define(['jquery', 'element'], function(exports) {
 			currId = prevNode.attr("lay-id");
 
 			$("#" + elem + " [id='" + currId + "']").parent().addClass("layui-show");
-			
+
 		}
-		
+
 		callback(currId);
 
 		removeTab.remove();
@@ -521,7 +516,7 @@ layui.define(['jquery', 'element'], function(exports) {
 		$(".layui-tab[lay-filter='" + option.elem + "']").on("click", ".layui-tab-close", function() {
 
 			var layid = $(this).parent().attr("lay-id");
-			tabDelete(option.elem, layid,option.closeEvent);
+			tabDelete(option.elem, layid, option.closeEvent);
 		})
 	}
 
@@ -531,7 +526,7 @@ layui.define(['jquery', 'element'], function(exports) {
 			var currentTab = $(".layui-tab[lay-filter='" + option.elem + "'] .layui-tab-title .layui-this");
 			if (currentTab.find("span").is(".able-close")) {
 				var currentId = currentTab.attr("lay-id");
-				tabDelete(option.elem, currentId,option.closeEvent);
+				tabDelete(option.elem, currentId, option.closeEvent);
 			}
 
 		})
@@ -542,7 +537,7 @@ layui.define(['jquery', 'element'], function(exports) {
 			$.each(tabtitle, function(i) {
 				if ($(this).attr("lay-id") != currentId) {
 					if ($(this).find("span").is(".able-close")) {
-						tabDelete(option.elem, $(this).attr("lay-id"),option.closeEvent);
+						tabDelete(option.elem, $(this).attr("lay-id"), option.closeEvent);
 					}
 				}
 			})
@@ -554,7 +549,7 @@ layui.define(['jquery', 'element'], function(exports) {
 			var tabtitle = $(".layui-tab[lay-filter='" + option.elem + "'] .layui-tab-title li");
 			$.each(tabtitle, function(i) {
 				if ($(this).find("span").is(".able-close")) {
-					tabDelete(option.elem, $(this).attr("lay-id"),option.closeEvent);
+					tabDelete(option.elem, $(this).attr("lay-id"), option.closeEvent);
 				}
 			})
 		})

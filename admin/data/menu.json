@@ -10,7 +10,7 @@
 			"icon": "layui-icon layui-icon-console",
 			"type": 1,
 			"openType": "_iframe",
-			"href": "view/console/console1.html"
+			"href": "view/console/console.html"
 		}, {
 			"id": 13,
 			"title": "数据分析",
@@ -36,6 +36,14 @@
 			},
 			{
 				"id": 202,
+				"title": "表单",
+				"icon": "layui-icon layui-icon-face-cry",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/document/form.html"
+			},
+			{
+				"id": 203,
 				"title": "多选下拉",
 				"icon": "layui-icon layui-icon-face-cry",
 				"type": 1,
@@ -43,13 +51,47 @@
 				"href": "view/document/select.html"
 			},
 			{
-				"id": 203,
+				"id": 204,
 				"title": "抽屉组件",
 				"icon": "layui-icon layui-icon-face-cry",
 				"type": 1,
 				"openType": "_iframe",
 				"href": "view/document/drawer.html"
 			}
+		]
+	},
+	{
+		"id": "chart",
+		"title": "统计图表",
+		"icon": "layui-icon layui-icon-auz",
+		"type": 0,
+		"href": "",
+		"children": [{
+				"id": 501,
+				"title": "折线图",
+				"icon": "layui-icon layui-icon-face-smile",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/chart/line.html"
+			},
+			{
+				"id": 404,
+				"title": "404",
+				"icon": "layui-icon layui-icon-face-cry",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/error/404.html"
+			},
+
+			{
+				"id": 500,
+				"title": "500",
+				"icon": "layui-icon layui-icon-face-cry",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/error/500.html"
+			}
+
 		]
 	},
 	{
