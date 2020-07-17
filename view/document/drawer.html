@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link href="../../component/pear/css/pear.css" rel="stylesheet" />
+		<style>
+			.wrap {
+				display: none;
+			}
+		</style>
+	</head>
+	<body class="pear-container">
+		<div class="layui-card">
+			<div class="layui-card-header">抽屉</div>
+			<div class="layui-card-body">
+				<button class="drawer-top pear-btn pear-btn-primary">上</button>
+				<button class="drawer-bottom pear-btn pear-btn-success">下</button>
+				<button class="drawer-left pear-btn pear-btn-warming">左</button>
+				<button class="drawer-right pear-btn pear-btn-danger">右</button>
+			</div>
+		</div>
+
+		<div class="layui-card">
+			<div class="layui-card-header">更多</div>
+			<div class="layui-card-body">
+				<button class="drawer-open-mask pear-btn pear-btn-primary">开启遮盖层</button>
+				<button class="drawer-close-mask pear-btn pear-btn-primary">关闭遮盖层</button>
+			</div>
+
+		</div>
+
+		<div class="wrap">
+			<div class="layer-left">
+				<h3>左侧弹层内容...</h3>
+			</div>
+			<div class="layer-right">
+				<h3>右侧弹层内容...</h3>
+			</div>
+			<div class="layer-top">
+				<h3>上侧弹层内容...</h3>
+			</div>
+			<div class="layer-bottom">
+				<h3>下侧弹层内容...</h3>
+			</div>
+
+			<div class="layer-open-mask">
+				<h3>点击右侧灰色区域
+				</h3>
+			</div>
+			<div class="layer-close-mask">
+				<button id="btnClose" class="pear-btn pear-btn-primary" style="position: absolute; bottom: 10px;left: 10px;">关闭抽屉</button>
+			</div>
+		</div>
+
+	</body>
+	<script src="../../component/layui/layui.js"></script>
+	<script src="../../component/pear/pear.js"></script>
+	<script>
+		layui.use(['element', 'jquery', 'drawer', 'code'], function() {
+			var element = layui.element;
+			var $ = layui.jquery;
+			var drawer = layui.drawer;
+
+			$(".drawer-right").click(function() {
+				drawer.open({
+					direction: "right",
+					dom: ".layer-top",
+					distance: "30%"
+				});
+			})
+
+			$(".drawer-left").click(function() {
+
+				drawer.open({
+					direction: "left",
+					dom: ".layer-left",
+					distance: "30%"
+				});
+
+			})
+
+			$(".drawer-top").click(function() {
+				drawer.open({
+					direction: "top",
+					dom: ".layer-right",
+					distance: "30%"
+				});
+			})
+
+			$(".drawer-bottom").click(function() {
+				drawer.open({
+					direction: "bottom",
+					dom: ".layer-bottom",
+					distance: "30%"
+				});
+			})
+
+			$(".drawer-open-mask").click(function() {
+				drawer.open({
+					direction: "right",
+					dom: ".layer-open-mask",
+					distance: "30%",
+					maskClose: true
+				});
+			})
+
+			var dom;
+
+			$(".drawer-close-mask").click(function() {
+				dom = drawer.open({
+					direction: "right",
+					dom: ".layer-close-mask",
+					distance: "30%",
+					maskClose: false
+				});
+			})
+
+			$("#btnClose").click(function() {
+				dom.close();
+			})
+
+		})
+	</script>
+</html>

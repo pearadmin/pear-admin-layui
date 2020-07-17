@@ -15,5 +15,6 @@ layui.config({
 	echartsTheme: "echartsTheme",
 	hash: "hash",
 	document: "document",
-	select: "select"
+	select: "select",
+	drawer: "drawer"
 });

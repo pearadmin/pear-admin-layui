@@ -41,6 +41,14 @@
 				"type": 1,
 				"openType": "_iframe",
 				"href": "view/document/select.html"
+			},
+			{
+				"id": 203,
+				"title": "抽屉组件",
+				"icon": "layui-icon layui-icon-face-cry",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/document/drawer.html"
 			}
 		]
 	},
