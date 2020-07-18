@@ -16,5 +16,6 @@ layui.config({
 	hash: "hash",
 	document: "document",
 	select: "select",
-	drawer: "drawer"
+	drawer: "drawer",
+	notice: "notice"
 });

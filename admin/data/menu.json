@@ -65,6 +65,14 @@
 				"type": 1,
 				"openType": "_iframe",
 				"href": "view/document/hash.html"
+			},
+			{
+				"id": 206,
+				"title": "消息通知",
+				"icon": "layui-icon layui-icon-face-cry",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/document/notice.html"
 			}
 		]
 	},
