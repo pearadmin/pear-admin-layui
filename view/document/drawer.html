@@ -11,14 +11,78 @@
 		</style>
 	</head>
 	<body class="pear-container">
-		<div class="layui-card">
-			<div class="layui-card-header">抽屉</div>
-			<div class="layui-card-body">
-				<button class="drawer-top pear-btn pear-btn-primary">上</button>
-				<button class="drawer-bottom pear-btn pear-btn-success">下</button>
-				<button class="drawer-left pear-btn pear-btn-warming">左</button>
-				<button class="drawer-right pear-btn pear-btn-danger">右</button>
+		<div class="layui-row layui-col-space10">
+			<div class="layui-col-md12">
+				<div class="layui-card">
+					<div class="layui-card-header">开发环境</div>
+					<div class="layui-card-body">
+						Drawer 在 弹出层 UI 上带来不一样的体验.
+					</div>
+				</div>
 			</div>
+			<div class="layui-col-md12">
+				<div class="layui-collapse">
+					<div class="layui-colla-item">
+						<h2 class="layui-colla-title">显示代码</h2>
+						<div class="layui-colla-content">
+							<pre class="layui-code" lay-encode="true">
+								<script src="component/layui/layui.js"></script>
+								 并
+								<script src="component/pear/pear.js"></script>
+							</pre>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md12">
+				<div class="layui-card">
+					<div class="layui-card-header">抽屉</div>
+					<div class="layui-card-body">
+						<button class="drawer-top pear-btn pear-btn-primary">上</button>
+						<button class="drawer-bottom pear-btn pear-btn-success">下</button>
+						<button class="drawer-left pear-btn pear-btn-warming">左</button>
+						<button class="drawer-right pear-btn pear-btn-danger">右</button>
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md12">
+				<div class="layui-collapse">
+					<div class="layui-colla-item">
+						<h2 class="layui-colla-title">显示代码</h2>
+						<div class="layui-colla-content">
+							<pre class="layui-code" lay-encode="true">
+								layui.use(['element', 'jquery', 'drawer', 'layer','code'], function() {
+								    var drawer = layui.drawer;
+									
+								    drawer.open({
+								        direction: "right",
+								        dom: ".layer-open-mask",
+								        distance: "30%",
+								        maskClose: true
+								    });
+									
+								})
+							</pre>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md12">
+				<div class="layui-card">
+					<div class="layui-card-header">文档</div>
+					<div class="layui-card-body">
+						<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+							<legend>属性</legend>
+						</fieldset>
+							
+						<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+							<legend>方法</legend>
+						</fieldset>
+						
+					</div>
+				</div>
+			</div>
+
 		</div>
 		<div class="wrap">
 			<div class="layer-call-back">
@@ -45,11 +109,13 @@
 	<script src="../../component/layui/layui.js"></script>
 	<script src="../../component/pear/pear.js"></script>
 	<script>
-		layui.use(['element', 'jquery', 'drawer', 'layer'], function() {
+		layui.use(['element', 'jquery', 'drawer', 'layer', 'code'], function() {
 			var element = layui.element;
 			var $ = layui.jquery;
 			var drawer = layui.drawer;
 			var layer = layui.layer;
+
+			layui.code();
 
 			$(".drawer-right").click(function() {
 				drawer.open({
@@ -94,7 +160,7 @@
 					}
 				});
 			})
-	
+
 			var dom;
 
 			$("#btnClose").click(function() {
