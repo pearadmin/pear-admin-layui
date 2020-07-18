@@ -51,16 +51,14 @@
 						<h2 class="layui-colla-title">显示代码</h2>
 						<div class="layui-colla-content">
 							<pre class="layui-code" lay-encode="true">
-								layui.use(['element', 'jquery', 'drawer', 'layer','code'], function() {
-								    var drawer = layui.drawer;
-									
+								layui.use(['drawer'], function() {
+									var drawer = layui.drawer;
+								
 								    drawer.open({
 								        direction: "right",
-								        dom: ".layer-open-mask",
-								        distance: "30%",
-								        maskClose: true
+								        dom: ".layer-top",
+								        distance: "30%"
 								    });
-									
 								})
 							</pre>
 						</div>
@@ -69,39 +67,132 @@
 			</div>
 			<div class="layui-col-md12">
 				<div class="layui-card">
-					<div class="layui-card-header">文档</div>
+					<div class="layui-card-header">进阶</div>
 					<div class="layui-card-body">
-						<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-							<legend>属性</legend>
-						</fieldset>
-							
-						<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-							<legend>方法</legend>
-						</fieldset>
-						
+						<button class="drawer-close-mask pear-btn pear-btn-primary">关闭遮盖层</button>
 					</div>
 				</div>
 			</div>
-
+			<div class="layui-col-md12">
+				<div class="layui-collapse">
+					<div class="layui-colla-item">
+						<h2 class="layui-colla-title">显示代码</h2>
+						<div class="layui-colla-content">
+							<pre class="layui-code" lay-encode="true">
+								var dom;
+								
+								$(".drawer-close-mask").click(function() {
+								    dom = drawer.open({
+								        direction: "right",
+								        dom: ".layer-close-mask",
+								        distance: "30%",
+								        maskClose: false
+								    });
+								})
+								
+								$("#btnClose").click(function() {
+								    dom.close();
+								})
+								
+							</pre>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md12">
+				<div class="layui-card">
+					<div class="layui-card-header">扩展</div>
+					<div class="layui-card-body">
+						<button class="drawer-auto-close pear-btn pear-btn-success">自动关闭</button>
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md12">
+				<div class="layui-collapse">
+					<div class="layui-colla-item">
+						<h2 class="layui-colla-title">显示代码</h2>
+						<div class="layui-colla-content">
+							<pre class="layui-code" lay-encode="true">
+								layui.use(['drawer'], function() {
+									var drawer = layui.drawer;
+								
+								    $(".drawer-auto-close").click(function() {
+								        dom = drawer.open({
+								            direction: "right",
+								            dom: ".layer-auto-close",
+								            distance: "30%",
+								            maskClose: false,
+								            time: 1000
+								        });
+								    })
+								})
+							</pre>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md12">
+				<div class="layui-card">
+					<div class="layui-card-header">扩展</div>
+					<div class="layui-card-body">
+						<button class="drawer-call-back pear-btn pear-btn-success">回调函数</button>
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md12">
+				<div class="layui-collapse">
+					<div class="layui-colla-item">
+						<h2 class="layui-colla-title">显示代码</h2>
+						<div class="layui-colla-content">
+							<pre class="layui-code" lay-encode="true">
+								layui.use(['drawer'], function() {
+									var drawer = layui.drawer;
+								
+								    $(".drawer-auto-close").click(function() {
+								        dom = drawer.open({
+								            direction: "right",
+								            dom: ".layer-auto-close",
+								            distance: "30%",
+								            success:function(){
+								                layer.msg("触发回调函数")； 
+								            }
+								        });
+								    })
+								})
+							</pre>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div class="wrap">
-			<div class="layer-call-back">
+			<div class="layer-left">
 				<br />
-				<h3>关闭后产生回调函数...</h3>
+				<h3>左侧弹层内容...</h3>
+			</div>
+			<div class="layer-right">
+				<br />
+				<h3>右侧弹层内容...</h3>
+			</div>
+			<div class="layer-top">
+				<br />
+				<h3>上侧弹层内容...</h3>
+			</div>
+			<div class="layer-bottom">
+				<br />
+				<h3>下侧弹层内容...</h3>
 			</div>
 
 			<div class="layer-open-mask">
 				<br />
-				<h3> 开启遮盖层关闭 ,点击右侧灰色区域</h3>
+				<h3>点击右侧灰色区域</h3>
 			</div>
 			<div class="layer-close-mask">
-				<br />
-				<h3> 关闭遮盖层，通过 JS API 关闭抽屉</h3>
 				<button id="btnClose" class="pear-btn pear-btn-primary" style="position: absolute; bottom: 10px;left: 10px;">关闭抽屉</button>
 			</div>
 			<div class="layer-auto-close">
 				<br />
-				<h3>打开 2 秒 后自动关闭...</h3>
+				<h3>打开 2秒 后自动关闭...</h3>
 			</div>
 		</div>
 
@@ -120,26 +211,64 @@
 			$(".drawer-right").click(function() {
 				drawer.open({
 					direction: "right",
+					dom: ".layer-right",
+					distance: "30%"
+				});
+			})
+
+			$(".drawer-left").click(function() {
+
+				drawer.open({
+					direction: "left",
+					dom: ".layer-left",
+					distance: "30%"
+				});
+
+			})
+
+			$(".drawer-top").click(function() {
+				drawer.open({
+					direction: "top",
+					dom: ".layer-top",
+					distance: "30%"
+				});
+			})
+
+			$(".drawer-bottom").click(function() {
+				drawer.open({
+					direction: "bottom",
+					dom: ".layer-bottom",
+					distance: "30%"
+				});
+			})
+
+			$(".drawer-open-mask").click(function() {
+				drawer.open({
+					direction: "right",
 					dom: ".layer-open-mask",
 					distance: "30%",
 					maskClose: true
 				});
 			})
 
-			$(".drawer-left").click(function() {
+			var dom;
 
+			$(".drawer-close-mask").click(function() {
 				dom = drawer.open({
-					direction: "left",
+					direction: "right",
 					dom: ".layer-close-mask",
 					distance: "30%",
 					maskClose: false
 				});
-
 			})
 
-			$(".drawer-top").click(function() {
+			$("#btnClose").click(function() {
+				dom.close();
+			})
+
+			$(".drawer-auto-close").click(function() {
 				dom = drawer.open({
-					direction: "top",
+					direction: "right",
 					dom: ".layer-auto-close",
 					distance: "30%",
 					maskClose: false,
@@ -147,10 +276,10 @@
 				});
 			})
 
-			$(".drawer-bottom").click(function() {
+			$(".drawer-call-back").click(function() {
 				dom = drawer.open({
-					direction: "bottom",
-					dom: ".layer-call-back",
+					direction: "right",
+					dom: ".layer-right",
 					distance: "30%",
 					success: function() {
 						layer.msg("触发回调函数", {
@@ -159,12 +288,6 @@
 						});
 					}
 				});
-			})
-
-			var dom;
-
-			$("#btnClose").click(function() {
-				dom.close();
 			})
 
 		})
