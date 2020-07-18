@@ -220,7 +220,7 @@ select[xm-select] {
 
 .xm-select-parent dl dd.xm-select-this div i {
 	border: none;
-	color: #009688;
+	color: #67c23a;
 	font-size: 18px;
 }
 
@@ -294,7 +294,7 @@ select[xm-select] {
 .xm-select-parent .xm-select-title div.xm-select-label>span {
 	position: relative;
 	padding: 2px 5px;
-	background-color: #009688;
+	background-color: #67c23a;
 	border-radius: 2px;
 	color: #FFF;
 	display: inline-block;
@@ -332,7 +332,7 @@ select[xm-select] {
 
 .xm-form-selected .xm-select,
 .xm-form-selected .xm-select:hover {
-	border-color: #009688 !important
+	border-color: #67c23a !important
 }
 
 .xm-select--suffix+div {
@@ -400,7 +400,7 @@ div[xm-hg] .xm-select-label {
 
 /* 颜色相关 */
 div[xm-select-skin] .xm-select-title div.xm-select-label>span {
-	border: 1px solid #009688
+	border: 1px solid #67c23a
 }
 
 div[xm-select-skin] .xm-select-title div.xm-select-label>span i:hover {
@@ -435,109 +435,109 @@ div[xm-select-skin=default] dl dd.xm-select-this:not(.xm-dis-disabled) i {
 
 div[xm-select-skin=default].xm-form-selected .xm-select,
 div[xm-select-skin=default].xm-form-selected .xm-select:hover {
-	border-color: #C0C4CC !important
+	border-color: #C0C4CC!important
 }
 
 div[xm-select-skin=primary] .xm-select-title div.xm-select-label>span {
-	background-color: #009688;
+	background-color: #67c23a!important
 	color: #FFF;
-	border: 1px solid #009688
+	border: 1px solid #67c23a!important
 }
 
 div[xm-select-skin=primary] .xm-select-title div.xm-select-label>span i {
-	background-color: #009688;
+	background-color: #67c23a!important
 	color: #FFF
 }
 
 div[xm-select-skin=primary] dl dd:not(.xm-dis-disabled) i {
-	border-color: #009688
+	border-color: #67c23a!important
 }
 
 div[xm-select-skin=primary] dl dd.xm-select-this:not(.xm-dis-disabled) i {
-	color: #009688
+	color: #67c23a!important
 }
 
 div[xm-select-skin=primary].xm-form-selected .xm-select,
 div[xm-select-skin=primary].xm-form-selected .xm-select:hover {
-	border-color: #009688 !important
+	border-color: #67c23a!important
 }
 
 div[xm-select-skin=normal] .xm-select-title div.xm-select-label>span {
-	background-color: #1E9FFF;
+	background-color: #2D8CF0!important;
 	color: #FFF;
-	border: 1px solid #1E9FFF
+	border: 1px solid #2D8CF0!important;
 }
 
 div[xm-select-skin=normal] .xm-select-title div.xm-select-label>span i {
-	background-color: #1E9FFF;
+	background-color: #2D8CF0!important;
 	color: #FFF
 }
 
 div[xm-select-skin=normal] dl dd:not(.xm-dis-disabled) i {
-	border-color: #1E9FFF
+	border-color: #2D8CF0!important;
 }
 
 div[xm-select-skin=normal] dl dd.xm-select-this:not(.xm-dis-disabled) i {
-	color: #1E9FFF
+	color:#2D8CF0 !important;
 }
 
 div[xm-select-skin=normal].xm-form-selected .xm-select,
 div[xm-select-skin=normal].xm-form-selected .xm-select:hover {
-	border-color: #1E9FFF !important
+	border-color:#2D8CF0!important;
 }
 
 div[xm-select-skin=warm] .xm-select-title div.xm-select-label>span {
-	background-color: #FFB800;
+	background-color: #e6a23c!important;
 	color: #FFF;
-	border: 1px solid #FFB800
+	border: 1px solid #e6a23c!important;
 }
 
 div[xm-select-skin=warm] .xm-select-title div.xm-select-label>span i {
-	background-color: #FFB800;
+	background-color: #e6a23c!important;
 	color: #FFF
 }
 
 div[xm-select-skin=warm] dl dd:not(.xm-dis-disabled) i {
-	border-color: #FFB800
+	border-color:#e6a23c!important
 }
 
 div[xm-select-skin=warm] dl dd.xm-select-this:not(.xm-dis-disabled) i {
-	color: #FFB800
+	color:#e6a23c!important
 }
 
 div[xm-select-skin=warm].xm-form-selected .xm-select,
 div[xm-select-skin=warm].xm-form-selected .xm-select:hover {
-	border-color: #FFB800 !important
+	border-color: #e6a23c!important
 }
 
 div[xm-select-skin=danger] .xm-select-title div.xm-select-label>span {
-	background-color: #FF5722;
+	background-color: #f56c6c!important;
 	color: #FFF;
-	border: 1px solid #FF5722
+	border: 1px solid #f56c6c!important;
 }
 
 div[xm-select-skin=danger] .xm-select-title div.xm-select-label>span i {
-	background-color: #FF5722;
+	background-color:#f56c6c!important
 	color: #FFF
 }
 
 div[xm-select-skin=danger] dl dd:not(.xm-dis-disabled) i {
-	border-color: #FF5722
+	border-color: #f56c6c!important
 }
 
 div[xm-select-skin=danger] dl dd.xm-select-this:not(.xm-dis-disabled) i {
-	color: #FF5722
+	color: #f56c6c!important
 }
 
 div[xm-select-skin=danger].xm-form-selected .xm-select,
 div[xm-select-skin=danger].xm-form-selected .xm-select:hover {
-	border-color: #FF5722 !important
+	border-color: #f56c6c!important
 }
 
 
 /* 多选联动  */
 .xm-select-parent .layui-form-danger+.xm-select-title .xm-select {
-	border-color: #FF5722 !important;
+	border-color: #f56c6c!important
 }
 
 .xm-select-linkage li {
