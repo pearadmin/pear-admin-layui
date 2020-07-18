@@ -57,6 +57,14 @@
 				"type": 1,
 				"openType": "_iframe",
 				"href": "view/document/drawer.html"
+			},
+			{
+				"id": 205,
+				"title": "哈希加密",
+				"icon": "layui-icon layui-icon-face-cry",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/document/hash.html"
 			}
 		]
 	},
