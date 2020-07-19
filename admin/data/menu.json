@@ -97,6 +97,14 @@
 				"type": 1,
 				"openType": "_iframe",
 				"href": "view/document/popup.html"
+			},
+			{
+				"id": 210,
+				"title": "图标选择",
+				"icon": "layui-icon layui-icon-face-cry",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/document/iconPicker.html"
 			}
 		]
 	},

@@ -20,5 +20,6 @@ layui.config({
 	notice: "notice",
 	step:"step",
 	tag:"tag",
-	popup:"popup"
+	popup:"popup",
+	iconPicker:"iconPicker"
 });
