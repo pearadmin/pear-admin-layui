@@ -7,9 +7,27 @@
 		<link href="../../component/pear/css/pear.css" rel="stylesheet">
 	</head>
 	<body class="pear-container">
-		<div class="layui-row layui-col-space15">
+		<div class="layui-row layui-col-space10">
 			<div class="layui-col-md6">
 				<div class="layui-card">
+					<div class="layui-card-header">开发环境</div>
+					<div class="layui-card-body">
+						Pear 基于 From 的基础上扩展样式
+					</div>
+				</div>
+				<div class="layui-collapse">
+					<div class="layui-colla-item">
+						<h2 class="layui-colla-title">显示代码</h2>
+						<div class="layui-colla-content">
+							<pre class="layui-code" lay-encode="true">
+								<link rel="stylesheet" href="component/pear/css/pear.css" />
+								 或
+								<link rel="stylesheet" href="component/pear/css/pear-module/form.css" />
+							</pre>
+						</div>
+					</div>
+				</div>
+				<div class="layui-card" style="margin-top: 10px;">
 					<div class="layui-card-header">输入框</div>
 					<div class="layui-card-body layui-row layui-col-space10">
 						<div class="layui-col-md12">
@@ -37,7 +55,7 @@
 
 					</div>
 				</div>
-<div class="layui-card layui-form" lay-filter="component-form-element">
+				<div class="layui-card layui-form" lay-filter="component-form-element">
 					<div class="layui-card-header">下拉选择框</div>
 					<div class="layui-card-body layui-row layui-col-space10">
 						<div class="layui-col-md6">
@@ -225,8 +243,11 @@
 		<script src="../../component/layui/layui.js"></script>
 		<script src="../../component/pear/pear.js"></script>
 		<script>
-			layui.use(['form'], function() {
+			layui.use(['form','element','code'], function() {
 				var form = layui.form;
+				var element = layui.element;
+				
+				layui.code();
 
 			});
 		</script>

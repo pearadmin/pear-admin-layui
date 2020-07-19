@@ -81,6 +81,14 @@
 				"type": 1,
 				"openType": "_iframe",
 				"href": "view/document/step.html"
+			},
+			{
+				"id": 208,
+				"title": "标签",
+				"icon": "layui-icon layui-icon-face-cry",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/document/tag.html"
 			}
 		]
 	},
