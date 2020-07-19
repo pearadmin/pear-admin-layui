@@ -73,41 +73,15 @@
 				"type": 1,
 				"openType": "_iframe",
 				"href": "view/document/notice.html"
-			}
-		]
-	},
-	{
-		"id": "chart",
-		"title": "统计图表",
-		"icon": "layui-icon layui-icon-auz",
-		"type": 0,
-		"href": "",
-		"children": [{
-				"id": 501,
-				"title": "折线图",
-				"icon": "layui-icon layui-icon-face-smile",
-				"type": 1,
-				"openType": "_iframe",
-				"href": "view/chart/line.html"
 			},
 			{
-				"id": 404,
-				"title": "404",
+				"id": 207,
+				"title": "分布表单",
 				"icon": "layui-icon layui-icon-face-cry",
 				"type": 1,
 				"openType": "_iframe",
-				"href": "view/error/404.html"
-			},
-
-			{
-				"id": 500,
-				"title": "500",
-				"icon": "layui-icon layui-icon-face-cry",
-				"type": 1,
-				"openType": "_iframe",
-				"href": "view/error/500.html"
+				"href": "view/document/step.html"
 			}
-
 		]
 	},
 	{

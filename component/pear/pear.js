@@ -17,5 +17,6 @@ layui.config({
 	document: "document",
 	select: "select",
 	drawer: "drawer",
-	notice: "notice"
+	notice: "notice",
+	step:"step"
 });
