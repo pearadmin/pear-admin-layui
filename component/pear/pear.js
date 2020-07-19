@@ -19,5 +19,6 @@ layui.config({
 	drawer: "drawer",
 	notice: "notice",
 	step:"step",
-	tag:"tag"
+	tag:"tag",
+	popup:"popup"
 });

@@ -89,6 +89,14 @@
 				"type": 1,
 				"openType": "_iframe",
 				"href": "view/document/tag.html"
+			},
+			{
+				"id": 209,
+				"title": "弹出层",
+				"icon": "layui-icon layui-icon-face-cry",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/document/popup.html"
 			}
 		]
 	},
