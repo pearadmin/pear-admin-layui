@@ -8,7 +8,7 @@
     开 箱 即 用 的 前 后 端 解 决 方 案
   </h4> 
 
-  [预 览](http://jmysy.gitee.io/pear-admin-layui/)   |   [官 网](http://www.pearadmin.cn/)   |   [交 流](https://jq.qq.com/?_wv=1027&k=5OdSmve)
+  [预 览](http://jmysy.gitee.io/pear-admin-layui/)   |   [官 网](http://www.pearadmin.com/)   |   [交 流](https://jq.qq.com/?_wv=1027&k=5OdSmve)
 
 </div>
 
@@ -36,6 +36,8 @@
 的设计风格，持续完善的样式与组件的维护，基于异步Ajax的菜单构建，相对完善的多标签页，单标签页的共存，为使用者提
 
 供相对完善的开发方案，只为成为更好的轮子，项目不定时更新，建议 Star watch 一份
+
+如果你需要无组件整合 与 示例页面 的基础框架，请前往 [Pear Admin Layui 基础版本](https://gitee.com/Jmysy/Pear-Admin-Layui/tree/3.0.0.release/)
 
 </p>
 
