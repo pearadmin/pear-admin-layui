@@ -18,6 +18,13 @@
 			"type": 1,
 			"openType": "_iframe",
 			"href": "view/console/console2.html"
+		}, {
+			"id": 14,
+			"title": "百度一下",
+			"icon": "layui-icon layui-icon-console",
+			"type": 1,
+			"openType": "_blank",
+			"href": "http://www.baidu.com"
 		}]
 	},
 	{
@@ -105,6 +112,14 @@
 				"type": 1,
 				"openType": "_iframe",
 				"href": "view/document/iconPicker.html"
+			},
+			{
+				"id": 211,
+				"title": "数据表格",
+				"icon": "layui-icon layui-icon-face-cry",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/document/table.html"
 			}
 		]
 	},

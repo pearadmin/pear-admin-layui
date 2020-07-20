@@ -1,3 +1,10 @@
-.layui-input, .layui-textarea{
-	border-radius: 4px;
+.layui-form-item {
+	margin-bottom: 0px !important;
+	margin-top: 5px !important;
+}
+
+.layui-input {
+	height: 34px !important;
+	line-height: 34px !important;
+	border-radius: 3px !important;
 }
