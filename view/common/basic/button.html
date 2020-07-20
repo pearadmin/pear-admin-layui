@@ -3,22 +3,34 @@
 	<head>
 		<meta charset="utf-8">
 		<title></title>
-		<link rel="stylesheet" href="../../../component/layui/css/layui.css" />
-		<link rel="stylesheet" href="../../../admin/css/pearButton.css"/>
-		<style>
-			.pear-container {
-				margin: 10px;
-				background-color: whitesmoke;
-			}
-
-			.layui-card {
-				height: 200px;
-			}
-		</style>
+		<link rel="stylesheet" href="../../../component/pear/css/pear.css" />
 	</head>
 	<body class="pear-container">
-
 		<div class="layui-row layui-col-space10">
+			<div class="layui-col-md12">
+				<div class="layui-card">
+					<div class="layui-card-header">
+						开发环境
+					</div>
+					<div class="layui-card-body">
+						Pear Button 参考 Element UI 样式 ，提供 Button 服务
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md12">
+				<div class="layui-collapse">
+					<div class="layui-colla-item">
+						<h2 class="layui-colla-title">显示代码</h2>
+						<div class="layui-colla-content">
+							<pre class="layui-code" lay-encode="true">
+								<link rel="stylesheet" href="component/pear/css/pear.css" />
+								或
+								<link rel="stylesheet" href="component/pear/css/module/button.css" />
+							</pre>
+						</div>
+					</div>
+				</div>
+			</div>
 			<div class="layui-col-md12">
 				<div class="layui-card">
 					<div class="layui-card-header">
@@ -33,6 +45,22 @@
 						<button class="pear-btn pear-btn-primary"> Button-Primary</button>&nbsp;&nbsp;
 						<button class="pear-btn pear-btn-success"> Button-Success</button>&nbsp;&nbsp;
 						<button class="pear-btn pear-btn-danger"> Button-danger</button>&nbsp;&nbsp;
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md12">
+				<div class="layui-collapse">
+					<div class="layui-colla-item">
+						<h2 class="layui-colla-title">显示代码</h2>
+						<div class="layui-colla-content">
+							<pre class="layui-code" lay-encode="true">
+								<button class="pear-btn"> Default Button </button>
+								<button class="pear-btn" dashed> Dashed Button </button>
+								<button class="pear-btn pear-btn-primary"> Primary Button </button>							
+								<button class="pear-btn pear-btn-primary"> Button-Primary </button>
+								<button class="pear-btn pear-btn-success"> Button-Success </button>
+							</pre>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -55,6 +83,21 @@
 					</div>
 				</div>
 			</div>
+			<div class="layui-col-md12">
+				<div class="layui-collapse">
+					<div class="layui-colla-item">
+						<h2 class="layui-colla-title">显示代码</h2>
+						<div class="layui-colla-content">
+							<pre class="layui-code" lay-encode="true">
+								<button class="pear-btn pear-btn-primary pear-btn-lg"> Button-Lg </button>&nbsp;&nbsp;
+								<button class="pear-btn pear-btn-primary"> Button-Default </button>&nbsp;&nbsp;
+								<button class="pear-btn pear-btn-primary pear-btn-sm"> Button-Sm </button>&nbsp;&nbsp;
+								<button class="pear-btn pear-btn-primary pear-btn-xs"> Button-Xs </button>&nbsp;&nbsp;
+							</pre>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 
 		<div class="layui-row layui-col-space10">
@@ -72,9 +115,25 @@
 						<br>
 						<br>
 						<div class="pear-btn-group">
-							<button class="pear-btn"> Button-One</button>
-							<button class="pear-btn"> Button-Two</button>
-							<button class="pear-btn"> Button-Three</button>
+							<button class="pear-btn"> Button-One </button>
+							<button class="pear-btn"> Button-Two </button>
+							<button class="pear-btn"> Button-Three </button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md12">
+				<div class="layui-collapse">
+					<div class="layui-colla-item">
+						<h2 class="layui-colla-title">显示代码</h2>
+						<div class="layui-colla-content">
+							<pre class="layui-code" lay-encode="true">
+								<div class="pear-btn-group">
+								    <button class="pear-btn"> Button-One </button>
+								    <button class="pear-btn"> Button-Two </button>
+								    <button class="pear-btn"> Button-Three </button>
+								</div>
+							</pre>
 						</div>
 					</div>
 				</div>
@@ -96,6 +155,27 @@
 					</div>
 				</div>
 			</div>
+			<div class="layui-col-md12">
+				<div class="layui-collapse">
+					<div class="layui-colla-item">
+						<h2 class="layui-colla-title">显示代码</h2>
+						<div class="layui-colla-content">
+							<pre class="layui-code" lay-encode="true">
+								<button class="pear-btn pear-btn-primary" plain> Button-One </button>
+								<button class="pear-btn pear-btn-success" plain> Button-Two </button>
+								<button class="pear-btn pear-btn-danger" plain> Button-Three </button>
+							</pre>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
+		<script src="../../../component/layui/layui.js"></script>
+		<script>
+			layui.use(['element', 'code'], function() {
+				var element = layui.element;
+				layui.code();
+			})
+		</script>
 	</body>
 </html>
