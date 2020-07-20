@@ -62,6 +62,7 @@
 			pearStep:"extends/pearStep",
 			pearArea:"extends/pearArea",
 			tinymce:"extends/tinymce/tinymce",
+			drawer:"extends/drawer",
 			echarts:"extends/echarts",
 			echartsTheme:"extends/echartsTheme",
 			formSelects:'extends/formSelects-v4',

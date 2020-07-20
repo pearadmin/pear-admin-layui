@@ -1,0 +1,32 @@
+.pear-container{
+	margin: 10px;
+	background-color: whitesmoke;
+}
+
+body::-webkit-scrollbar {
+	width: 0px;
+	height: 0px;
+}
+
+body::-webkit-scrollbar {
+	width: 6px;
+	height: 6px;
+}
+
+body::-webkit-scrollbar-track {
+	background: white;
+	border-radius: 2px;
+}
+
+body::-webkit-scrollbar-thumb {
+	background: #E6E6E6;
+	border-radius: 2px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+	background: #E6E6E6;
+}
+
+body::-webkit-scrollbar-corner {
+	background: #f6f6f6;
+}
