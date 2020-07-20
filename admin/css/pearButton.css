@@ -18,7 +18,7 @@
 	border-radius: 4px;
 }
 
-.pear-btn i{
+.pear-btn i {
 	font-size: 13px;
 }
 
@@ -36,8 +36,6 @@
 .pear-btn-primary {
 	color: #fff !important
 }
-
-/**  */
 
 .pear-btn[dashed] {
 	border-style: dashed !important;
@@ -60,7 +58,7 @@
 	background-color: #67c23a !important
 }
 
-.pear-btn[round]{
+.pear-btn[round] {
 	border-radius: 50px;
 }
 
@@ -121,6 +119,13 @@
 
 }
 
+.pear-btn-md {
+	height: 34px;
+	line-height: 34px;
+	padding: 0 10px;
+	font-size: 12.5px;
+}
+
 .pear-btn-group .pear-btn:first-child {
 	border-top-left-radius: 4px !important;
 	border-bottom-left-radius: 4px !important;
@@ -140,6 +145,7 @@
 	border-top-right-radius: 50px !important;
 	border-bottom-right-radius: 50px !important;
 }
+
 /** Button Size*/
 .pear-btn-sm {
 	height: 30px;
