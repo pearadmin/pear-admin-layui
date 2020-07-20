@@ -276,11 +276,11 @@ layui.define(['table', 'jquery', 'element', 'form', 'pearAuth', 'pearTab', 'pear
 			}
 		};
 
-		$("body").on("click", ".pearson", function() {
+		$("body").on("click", ".navMenu", function() {
 			pearTab.addTabOnlyByElem("content", {
-				id: 111,
-				title: "个人信息",
-				url: "view/system/person.html",
+				id: $(this).attr("data-id"),
+				title: $(this).text(),
+				url: $(this).attr("data-url"),
 				close: true
 			})
 		})
