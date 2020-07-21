@@ -8,5 +8,93 @@
 	"data": "admin/data/menu.json",
 	"select": "0",
 	"logoTitle": "Pear Admin",
-	"logoImage": "admin/images/logo.png"
+	"logoImage": "admin/images/logo.png",
+	"theme": [{
+			"id": 1,
+			"menuBgColor": "black",
+			"menuActiveBgColor": "",
+			"menuTextColor": "",
+			"logoColor": "",
+			"logoBgColor": "black",
+			"headerColor": "",
+			"headerActiveColor": "black",
+			"headerBgColor": "white",
+			"headerTextColor": ""
+		},
+		{
+			"id": 2,
+			"menuBgColor": "black",
+			"menuActiveBgColor": "black",
+			"menuTextColor": "",
+			"logoColor": "red",
+			"logoBgColor": "black",
+			"headerColor": "",
+			"headerActiveColor": "red",
+			"headerBgColor": "white",
+			"headerTextColor": ""
+		},
+		{
+			"id": 3,
+			"menuBgColor": "black",
+			"menuActiveBgColor": "black",
+			"menuTextColor": "",
+			"logoColor": "red",
+			"logoBgColor": "black",
+			"headerColor": "",
+			"headerActiveColor": "red",
+			"headerBgColor": "white",
+			"headerTextColor": ""
+		},
+		{
+			"id": 4,
+			"menuBgColor": "black",
+			"menuActiveBgColor": "black",
+			"menuTextColor": "",
+			"logoColor": "red",
+			"logoBgColor": "black",
+			"headerColor": "",
+			"headerActiveColor": "red",
+			"headerBgColor": "white",
+			"headerTextColor": ""
+		},
+		{
+			"id": 5,
+			"menuBgColor": "black",
+			"menuActiveBgColor": "black",
+			"menuTextColor": "",
+			"logoColor": "red",
+			"logoBgColor": "black",
+			"headerColor": "",
+			"headerActiveColor": "red",
+			"headerBgColor": "white",
+			"headerTextColor": ""
+		},
+		{
+			"id": 6,
+			"menuBgColor": "black",
+			"menuActiveBgColor": "black",
+			"menuTextColor": "",
+			"logoColor": "red",
+			"logoBgColor": "black",
+			"headerColor": "",
+			"headerActiveColor": "red",
+			"headerBgColor": "white",
+			"headerTextColor": ""
+		}
+	],
+	"links":[{
+		"icon":"layui-icon layui-icon-home",
+		"title":"官方网站",
+		"href":"http://www.pearadmin.com"
+	},
+	{
+		"icon":"layui-icon layui-icon-read",
+		"title":"开发文档",
+		"href":"http://www.pearadmin.com"
+	},
+	{
+		"icon":"layui-icon layui-icon-note",
+		"title":"开源地址",
+		"href":"https://gitee.com/Jmysy/Pear-Admin-Layui"
+	}]
 }

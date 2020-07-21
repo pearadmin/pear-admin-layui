@@ -16,9 +16,9 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 		var pearAdmin = new function() {
 
 			this.render = function(option) {
-				
+
 				var option = getData();
-				
+
 				this.menuRender(option);
 				this.bodyRender(option);
 				this.keepLoad(option);
@@ -224,11 +224,15 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 
 		$("body").on("click", ".setting", function() {
 
-			openRight("");
+			openRight();
 
 		})
-
-		function openRight(html) {
+		
+		function openRight() {
+		    var themeHtml =	buildThemeHtml();
+			
+			var linkHtml = buildLinkHtml();
+			
 			layer.open({
 				type: 1,
 				offset: 'r',
@@ -240,7 +244,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 				anim: -1,
 				skin: 'layer-anim-right',
 				move: false,
-				content: html,
+				content: themeHtml + linkHtml,
 				success: function(layero, index) {
 
 					form.render();
@@ -256,21 +260,88 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 				}
 			});
 		}
-		
+
 		/** 同 步 请 求 获 取 数 据 */
 		function getData() {
-		
+
 			$.ajaxSettings.async = false;
 			var data = null;
-		
+
 			$.get("setting.json", function(result) {
 				data = result;
 			});
-		
+
 			$.ajaxSettings.async = true;
 			return data;
 		}
 		
+		$('body').on('click', '[data-select-bgcolor]', function() {
+			var theme = $(this).attr('data-select-bgcolor');
+			$('[data-select-bgcolor]').removeClass("layui-this");
+			$(this).addClass("layui-this");
+			setColor(getThemeById(theme));
+		});
+		
+		function getThemeById(id){
+			var theme;
+			$.each(getData().theme, function(i, value) {
+				if(value.id == id){
+					theme = value;
+				}
+			})
+			return theme;
+		}
+
+        function setColor(theme){
+			  
+			   console.log("传过来的主题"+JSON.stringify(theme));
+		
+				var theme = "<style>";
+			
+				theme += '</style>';
+			
+				$("#pearadmin-bg-color").html(style);
+				
+		}
+
+		function buildThemeHtml() {
+
+			var bgColorHtml = "";
+
+			$.each(getData().theme, function(i, value) {
+
+				bgColorHtml += '<li  data-select-bgcolor="'+value.id+'">' +
+					'<a href="javascript:;" data-skin="skin-blue" style="" class="clearfix full-opacity-hover">' +
+					'<div><span style="display:block; width: 20%; float: left; height: 12px; background: '+value.logoBgColor+';"></span><span style="display:block; width: 80%; float: left; height: 12px; background: '+value.headerBgColor+';"></span></div>' +
+					'<div><span style="display:block; width: 20%; float: left; height: 40px; background: '+value.menuBgColor+';"></span><span style="display:block; width: 80%; float: left; height: 40px; background: #f4f5f7;"></span></div>' +
+					'</a>' +
+					'</li>';
+			})
+
+			var html =
+				'<div class="pearone-color">\n' +
+				'<div class="color-title">整体风格</div>\n' +
+				'<div class="color-content">\n' +
+				'<ul>\n' + bgColorHtml + '</ul>\n' +
+				'</div>\n' +
+				'</div>';
+
+			return html;
+		}
+		
+		function buildLinkHtml(){
+			
+			var links = "";
+			
+			$.each(getData().links, function(i, value) {
+				
+				links += '<a class="more-menu-item" href="'+value.href+'" target="_blank">' +
+				'<i class="'+value.icon+'" style="font-size: 19px;"></i> '+value.title +
+				'</a>'
+			})
+			
+			return '<div class="more-menu-list">' + links + '</div>';
+		}
 
 		exports('admin', pearAdmin);
 	})
