@@ -21,5 +21,7 @@ layui.config({
 	step:"step",
 	tag:"tag",
 	popup:"popup",
-	iconPicker:"iconPicker"
+	iconPicker:"iconPicker",
+	treetable:"treetable",
+	dtree:"dtree"
 });
