@@ -38,14 +38,14 @@
 			"icon": "layui-icon layui-icon-console",
 			"type": 1,
 			"openType": "_iframe",
-			"href": "view/console/console.html"
+			"href": "view/console/conole.html"
 		}, {
 			"id": 302,
 			"title": "数据菜单",
 			"icon": "layui-icon layui-icon-console",
 			"type": 1,
 			"openType": "_iframe",
-			"href": "view/console/console2.html"
+			"href": "view/console/cosole2.html"
 		}, {
 			"id": 303,
 			"title": "主题配置",
