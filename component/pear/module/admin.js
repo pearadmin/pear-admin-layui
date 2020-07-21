@@ -16,6 +16,9 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 		var pearAdmin = new function() {
 
 			this.render = function(option) {
+				
+				var option = getData();
+				
 				this.menuRender(option);
 				this.bodyRender(option);
 				this.keepLoad(option);
@@ -32,7 +35,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 				sideMenu = pearMenu.render({
 					elem: 'sideMenu', //依赖容器
 					async: true, //数据形式
-					theme: option.theme,
+					theme: "dark-theme",
 					height: '100%',
 					control: option.control ? 'control' : false, // control 
 					defaultMenu: 1,
@@ -54,14 +57,14 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 						width: '100%',
 						height: '100%',
 						index: 0,
-						tabMax: 20,
+						tabMax: option.tabMax,
 						closeEvent: function(id) {
 							sideMenu.selectItem(id);
 						},
 						data: [{
 							id: '0',
 							url: option.index,
-							title: '首页',
+							title: option.indexTitle,
 							close: false
 						}] //初始化数据
 					});
@@ -253,6 +256,21 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 				}
 			});
 		}
+		
+		/** 同 步 请 求 获 取 数 据 */
+		function getData() {
+		
+			$.ajaxSettings.async = false;
+			var data = null;
+		
+			$.get("setting.json", function(result) {
+				data = result;
+			});
+		
+			$.ajaxSettings.async = true;
+			return data;
+		}
+		
 
 		exports('admin', pearAdmin);
 	})

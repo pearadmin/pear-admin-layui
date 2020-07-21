@@ -1,0 +1,12 @@
+{
+	"keepLoad": 2000,
+	"muiltTab": true,
+	"tabMax": 30,
+	"control": false,
+	"index": "view/console/console1.html",
+	"indexTitle": "首页",
+	"data": "admin/data/menu.json",
+	"select": "0",
+	"logoTitle": "Pear Admin",
+	"logoImage": "admin/images/logo.png"
+}
