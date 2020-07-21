@@ -121,6 +121,13 @@
 				"type": 1,
 				"openType": "_iframe",
 				"href": "view/document/treetable.html"
+			},{
+				"id": 2034,
+				"title": "文本编辑",
+				"icon": "layui-icon layui-icon-face-cry",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/document/tinymce.html"
 			}]
 		}, {
 			"id": 202,
