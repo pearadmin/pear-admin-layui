@@ -263,8 +263,9 @@ layui.define(['jquery', 'element'], function(exports) {
 			//查询当前选项卡数量
 			if ($(".layui-tab[lay-filter='" + this.option.elem + "'] .layui-tab-title li[lay-id]").length >= this.option.tabMax) {
 				layer.msg("最多打开" + this.option.tabMax + "个标签页", {
-					icon: 3,
-					time: 1000
+					icon: 2,
+					time: 1000,
+					shift : 6 //抖动效果
 				});
 				return false;
 			}

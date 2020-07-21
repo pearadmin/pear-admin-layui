@@ -10,7 +10,7 @@
 			"icon": "layui-icon layui-icon-console",
 			"type": 1,
 			"openType": "_iframe",
-			"href": "view/console/console.html"
+			"href": "view/console/console1.html"
 		}, {
 			"id": 13,
 			"title": "数据分析",
@@ -68,14 +68,14 @@
 			"type": 0,
 			"children": [{
 				"id": 2011,
-				"title": "按钮",
+				"title": "功能按钮",
 				"icon": "layui-icon layui-icon-face-smile",
 				"type": 1,
 				"openType": "_iframe",
 				"href": "view/document/button.html"
 			}, {
 				"id": 2014,
-				"title": "表单",
+				"title": "表单集合",
 				"icon": "layui-icon layui-icon-face-cry",
 				"type": 1,
 				"openType": "_iframe",
@@ -123,6 +123,13 @@
 				"href": "view/document/treetable.html"
 			},{
 				"id": 2034,
+				"title": "树状结构",
+				"icon": "layui-icon layui-icon-face-cry",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/document/dtree.html"
+			},{
+				"id": 2035,
 				"title": "文本编辑",
 				"icon": "layui-icon layui-icon-face-cry",
 				"type": 1,
@@ -176,6 +183,14 @@
 					"type": 1,
 					"openType": "_iframe",
 					"href": "view/document/iconPicker.html"
+				},
+				{
+					"id": 2043,
+					"title": "省市级联",
+					"icon": "layui-icon layui-icon-face-cry",
+					"type": 1,
+					"openType": "_iframe",
+					"href": "view/document/area.html"
 				}
 			]
 		}]
@@ -256,5 +271,20 @@
 			}
 
 		]
+	},
+	{
+		"id": "common",
+		"title": "常用页面",
+		"icon": "layui-icon layui-icon-auz",
+		"type": 0,
+		"href": "",
+		"children": [{
+				"id": 701,
+				"title": "登录页面",
+				"icon": "layui-icon layui-icon-face-smile",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "login.html"
+		}]
 	}
 ]

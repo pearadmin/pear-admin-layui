@@ -4,7 +4,15 @@
 }
 
 .layui-input {
-	height: 34px !important;
-	line-height: 34px !important;
+	height: 36px !important;
+	line-height: 36px !important;
 	border-radius: 3px !important;
+}
+
+.layui-form-label.layui-required:after {
+	content: "*";
+	color: red;
+	position: absolute;
+	top: 5px;
+	left: 15px;
 }

@@ -39,13 +39,6 @@
 						<div class="layui-col-md6">
 							<input type="password" name="title" hover placeholder="密码" autocomplete="off" class="layui-input">
 						</div>
-
-						<div class="layui-col-md6">
-							<input type="text" name="title" round placeholder="用户名" autocomplete="off" class="layui-input">
-						</div>
-						<div class="layui-col-md6">
-							<input type="password" name="title" round placeholder="密码" autocomplete="off" class="layui-input">
-						</div>
 						<div class="layui-col-md6">
 							<input type="text" name="title" success placeholder="成功" autocomplete="off" class="layui-input">
 						</div>
@@ -119,20 +112,14 @@
 							</select>
 						</div>
 					</div>
-				</div>
-				<div class="layui-card layui-form" lay-filter="component-form-element">
-					<div class="layui-card-header">复选框</div>
+				</div>	
+			</div>
+			<div class="layui-col-md6">
+				<div class="layui-card">
+					<div class="layui-card-header">文本域</div>
 					<div class="layui-card-body layui-row layui-col-space10">
 						<div class="layui-col-md12">
-							<input type="checkbox" name="" title="写作" checked>
-							<input type="checkbox" name="" title="发呆">
-							<input type="checkbox" name="" title="禁用" disabled>
-						</div>
-						<div class="layui-col-md12">
-							<input type="checkbox" name="" title="写作" lay-skin="primary" checked>
-							<input type="checkbox" name="" title="发呆" lay-skin="primary">
-							<input type="checkbox" name="" title="禁用" lay-skin="primary" disabled>
-							<input type="checkbox" name="" lay-skin="primary">
+							<textarea name="" placeholder="请输入" class="layui-textarea"></textarea>
 						</div>
 					</div>
 				</div>
@@ -140,10 +127,10 @@
 					<div class="layui-card-header">开关</div>
 					<div class="layui-card-body layui-row layui-col-space10">
 						<div class="layui-col-md12">
-							<input type="checkbox" name="xxx" lay-skin="switch">
-							<input type="checkbox" name="yyy" lay-skin="switch" lay-text="ON|OFF" checked>
-							<input type="checkbox" name="zzz" lay-skin="switch" lay-text="开启|关闭">
-							<input type="checkbox" name="aaa" lay-skin="switch" disabled>
+							<input type="checkbox" name="xxx" lay-skin="switch">&nbsp;&nbsp;
+							<input type="checkbox" name="yyy" lay-skin="switch" lay-text="ON|OFF" checked>&nbsp;&nbsp;
+							<input type="checkbox" name="zzz" lay-skin="switch" lay-text="开启|关闭">&nbsp;&nbsp;
+							<input type="checkbox" name="aaa" lay-skin="switch" disabled>&nbsp;&nbsp;
 						</div>
 					</div>
 				</div>
@@ -157,85 +144,15 @@
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="layui-col-md6">
-				<div class="layui-card">
-					<div class="layui-card-header">文本域</div>
+				<div class="layui-card layui-form" lay-filter="component-form-element">
+					<div class="layui-card-header">复选框</div>
 					<div class="layui-card-body layui-row layui-col-space10">
 						<div class="layui-col-md12">
-							<textarea name="" placeholder="请输入" class="layui-textarea"></textarea>
+							<input type="checkbox" name="" title="写作" lay-skin="primary" checked>
+							<input type="checkbox" name="" title="发呆" lay-skin="primary">
+							<input type="checkbox" name="" title="禁用" lay-skin="primary" disabled>
+							<input type="checkbox" name="" lay-skin="primary">
 						</div>
-					</div>
-				</div>
-				<div class="layui-card">
-					<div class="layui-card-header">响应式组合</div>
-					<div class="layui-card-body">
-						<form class="layui-form" action="" lay-filter="component-form-element">
-							<div class="layui-row layui-col-space10 layui-form-item">
-								<div class="layui-col-lg6">
-									<label class="layui-form-label">员工姓名：</label>
-									<div class="layui-input-block">
-										<input type="text" name="fullname" lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
-									</div>
-								</div>
-								<div class="layui-col-lg6">
-									<label class="layui-form-label">技术工种：</label>
-									<div class="layui-input-block">
-										<select name="type" lay-verify="required" lay-filter="aihao">
-											<option value=""></option>
-											<option value="0">前端工程师</option>
-											<option value="1">Node.js工程师</option>
-											<option value="2">PHP工程师</option>
-											<option value="3">Java工程师</option>
-											<option value="4">运维</option>
-											<option value="4">视觉设计师</option>
-										</select>
-									</div>
-								</div>
-							</div>
-							<div class="layui-form-item">
-								<label class="layui-form-label">兴趣爱好：</label>
-								<div class="layui-input-block">
-									<input type="checkbox" name="interest[write]" title="写作">
-									<input type="checkbox" name="interest[read]" title="阅读">
-									<input type="checkbox" name="interest[code]" title="代码" checked>
-									<input type="checkbox" name="interest[dreaming]" title="做梦">
-								</div>
-							</div>
-							<div class="layui-form-item">
-								<label class="layui-form-label">是否婚姻：</label>
-								<div class="layui-input-block">
-									<input type="checkbox" name="marriage" lay-skin="switch" lay-text="是|否">
-								</div>
-							</div>
-							<div class="layui-form-item">
-								<label class="layui-form-label">所属职称：</label>
-								<div class="layui-input-block">
-									<input type="radio" name="role" value="" title="经理">
-									<input type="radio" name="role" value="" title="主管">
-									<input type="radio" name="role" value="" title="码农" checked>
-									<input type="radio" name="role" value="" title="端水">
-								</div>
-							</div>
-							<div class="layui-form-item">
-								<label class="layui-form-label">其它信息：</label>
-								<div class="layui-input-block">
-									<textarea name="other" placeholder="" class="layui-textarea"></textarea>
-								</div>
-							</div>
-							<div class="layui-form-item">
-								<label class="layui-form-label"> </label>
-								<div class="layui-input-block">
-									<input type="checkbox" name="agreement" title="同意" lay-skin="primary" checked>
-								</div>
-							</div>
-							<div class="layui-form-item">
-								<div class="layui-input-block">
-									<button class="layui-btn" lay-submit lay-filter="component-form-element">立即提交</button>
-									<button type="reset" class="layui-btn layui-btn-primary">重置</button>
-								</div>
-							</div>
-						</form>
 					</div>
 				</div>
 			</div>

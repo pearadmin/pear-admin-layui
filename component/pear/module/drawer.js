@@ -8,7 +8,6 @@ layui.define(['jquery', 'element'], function(exports) {
 	var drawer = new function() {
 		
 		this.open = function(option) {
-
 			var _right = new mSlider({
 				dom: option.dom,
 				direction: option.direction,
@@ -17,7 +16,6 @@ layui.define(['jquery', 'element'], function(exports) {
 				maskClose:option.maskClose,
 				callback:option.success
 			});
-			
 			_right.open();
 			
 			return _right;

@@ -242,18 +242,6 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 
 					form.render();
 
-					var color = localStorage.getItem("theme-color");
-					if (color != "null") {
-						$(".select-color-item").removeClass("layui-icon")
-							.removeClass("layui-icon-ok");
-
-						$(".select-color-item").each(function() {
-							if ($(this).css("background-color") === color) {
-								$(this).addClass("layui-icon").addClass("layui-icon-ok");
-							}
-						});
-					}
-
 					$('#layui-layer-shade' + index).click(function() {
 						var $layero = $('#layui-layer' + index);
 						$layero.animate({
