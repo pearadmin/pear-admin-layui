@@ -331,6 +331,8 @@ layui.define(['jquery', 'element'], function(exports) {
 				'</div>' +
 				'</div>'
 
+            var elem =  this.option.elem;
+
 			$("#" + this.option.elem).find(".pear-tab").append(load);
 
 			var pearLoad = $("#" + this.option.elem).find("#pear-tab-loading" + index);
@@ -341,15 +343,17 @@ layui.define(['jquery', 'element'], function(exports) {
 
 			setTimeout(function() {
 
-				pearLoad.fadeOut(500, function() {
-					$(".layui-tab[lay-filter='" + this.option.elem + "'] .layui-tab-content .layui-show").find("iframe")[0].contentWindow
-						.location.reload(true);
-				});
+				pearLoad.fadeOut(500);
 
 			}, time);
+			
+			$(".layui-tab[lay-filter='" + elem + "'] .layui-tab-content .layui-show").find("iframe")[0].contentWindow
+				.location.reload(true);
 
 			index++;
+			
 		} else {
+			
 			$(".layui-tab[lay-filter='" + this.option.elem + "'] .layui-tab-content .layui-show").find("iframe")[0].contentWindow
 				.location.reload(true);
 		}

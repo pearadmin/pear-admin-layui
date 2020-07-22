@@ -191,6 +191,14 @@
 					"type": 1,
 					"openType": "_iframe",
 					"href": "view/document/area.html"
+				},
+				{
+					"id": 2044,
+					"title": "数字滚动",
+					"icon": "layui-icon layui-icon-face-cry",
+					"type": 1,
+					"openType": "_iframe",
+					"href": "view/document/count.html"
 				}
 			]
 		}]
