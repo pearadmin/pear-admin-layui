@@ -367,6 +367,12 @@ layui.define(['jquery', 'element'], function(exports) {
 
 		var nextNode = removeTab.next("li");
 
+        if(!removeTab.hasClass("layui-this")){
+			removeTab.remove();
+			var tabContent = $(".layui-tab[lay-filter='" + elem + "']").find("iframe[id='" + id + "']").parent();
+			return false;
+		}
+
 		var currId;
 
 		if (nextNode.length) {
