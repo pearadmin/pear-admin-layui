@@ -373,6 +373,16 @@ layui.define(['jquery', 'element'], function(exports) {
 		// 删除指定 id 的 title
 
 		var removeTab = tabTitle.find("li[lay-id='" + id + "']");
+		
+		if(!removeTab.hasClass("layui-this")){
+			removeTab.remove();
+			
+			// 删除 content
+			var tabContent = $(".layui-tab[lay-filter='" + elem + "']").find("iframe[id='" + id + "']").parent();
+			
+			return false;
+		}
+		
 
 		var nextNode = removeTab.next("li");
 		
