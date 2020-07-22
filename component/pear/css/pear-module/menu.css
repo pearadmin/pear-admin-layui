@@ -135,8 +135,52 @@
 }
 /** 亮 样 式*/
 
-.dark-theme .layui-nav-tree {
-	background-color: #28333E !important;
+/** 亮 样 式*/
+
+.dark-theme .layui-nav-tree{
+	background-color: #28333E!important; 
+}
+
+.light-theme{
+	background-color: white!important;
+}
+
+.light-theme .pear-nav-tree,
+.light-theme .pear-nav-tree .layui-nav-child{
+	background-color: white!important;
+}
+
+.light-theme .pear-nav-tree a,
+.light-theme .pear-nav-tree .layui-nav-more{
+	color: dimgray!important;
+	border-top-color: dimgray;
+}
+
+.light-theme .pear-nav-tree .layui-nav-itemed>a>.layui-nav-more{
+	border-top-color: white!important;
+	border-bottom-color: dimgray!important;
+}
+
+.light-theme .pear-nav-tree .layui-nav-child{
+	padding-top: 0px;
+	padding-bottom: 0px;
+}
+
+.light-theme .pear-nav-tree .layui-this a,
+.light-theme .pear-nav-tree .layui-this{
+	color: white!important;
+	background-color: #5FB878!important;
+	
+}
+
+.light-theme .pear-nav-tree .layui-this a:hover{
+	background-color: #5FB878!important;
+	
+}
+ 
+.light-theme .pear-nav-tree .layui-nav-bar{
+	display: none;
+	
 }
 
 /** 下 拉 图 标 */
