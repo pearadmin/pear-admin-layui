@@ -368,11 +368,10 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 			});
 		})
 
-
 		function getData() {
 			$.ajaxSettings.async = false;
 			var data = null;
-			$.getJSON("setting.json", function(result) {
+			$.getJSON("pear.config.json", function(result) {
 				data = result;
 			});
 			$.ajaxSettings.async = true;
