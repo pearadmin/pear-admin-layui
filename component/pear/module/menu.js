@@ -139,9 +139,10 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 
 		// 根 据 菜 单 Id 选 中 菜 单 项 目
 
-
-		$("#" + this.option.elem + " a[menu-id='" + pearId + "']").parents(".pear-nav-tree").find(".layui-nav-itemed").removeClass(
-			"layui-nav-itemed");
+		if (this.option.accordion == true) {
+			$("#" + this.option.elem + " a[menu-id='" + pearId + "']").parents(".pear-nav-tree").find(".layui-nav-itemed").removeClass(
+				"layui-nav-itemed");
+		}
 
 		$("#" + this.option.elem + " a[menu-id='" + pearId + "']").parents(".pear-nav-tree").find(".layui-this").removeClass(
 			"layui-this");

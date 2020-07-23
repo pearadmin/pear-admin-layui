@@ -5,12 +5,16 @@
 	"control": false,
 	"index": "view/console/console1.html",
 	"indexTitle": "首页",
+	"accordion": true,
 	"data": "admin/data/menu.json",
 	"select": "0",
 	"logoTitle": "Pear Admin",
 	"logoImage": "admin/images/logo.png",
-	"themeColor": "1",
-	"colors": [{
+	"defaultColor": "2",
+	"defaultMenu": "dark-theme",
+	"allowCustom": true,
+	"colors": [
+		{
 			"id": "1",
 			"color": "#FF5722"
 		},
@@ -29,7 +33,8 @@
 			"color": "darkgray"
 		}
 	],
-	"links": [{
+	"links": [
+		{
 			"icon": "layui-icon layui-icon-auz",
 			"title": "官方网站",
 			"href": "http://www.pearadmin.com"

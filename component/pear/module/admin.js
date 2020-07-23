@@ -41,7 +41,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 					control: option.control ? 'control' : false, // control 
 					defaultMenu: 1,
 					defaultOpen: 0, //默认打开菜单
-					accordion: true,
+					accordion: option.accordion,
 					url: option.data, //数据地址
 					parseData: false, //请求后是否进行数据解析 函数
 					change: option.change
@@ -147,10 +147,27 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 			}
 
 			this.themeRender = function(option) {
+			
+			    if(option.allowCustom == false){
+					$(".setting").remove();
+				}
 				var colorId = localStorage.getItem("theme-color");
 				var menu = localStorage.getItem("theme-menu");
+                var color = getColorById(colorId);
+              
+			    if(menu=="null"){
+					menu = option.defaultMenu;
+				}else{
+					
+					if(option.allowCustom == false){
+						menu = option.defaultMenu;
+					}
+				}
+			   
+			    localStorage.setItem("theme-color",color.id);
+				localStorage.setItem("theme-menu",menu);
 
-				this.colorSet(getColorById(colorId).color);
+				this.colorSet(color.color);
 				this.menuSkin(menu);
 			}
 
@@ -315,7 +332,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 				'<div><span style="display:block; width: 20%; float: left; height: 40px; background: white;"></span><span style="display:block; width: 80%; float: left; height: 40px; background: #f4f5f7;"></span></div>' +
 				'</a>' +
 				'</li>';
-            
+
 			bgColorHtml +=
 				'<li  data-select-bgcolor="night-theme" >' +
 				'<a href="javascript:;" data-skin="skin-blue" style="" class="clearfix full-opacity-hover">' +
@@ -350,7 +367,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 
 					var color = localStorage.getItem("theme-color");
 					var menu = localStorage.getItem("theme-menu");
-					
+
 					if (color != "null") {
 						$(".select-color-item").removeClass("layui-icon")
 							.removeClass("layui-icon-ok");
@@ -358,13 +375,13 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 						$("*[color-id='" + color + "']").addClass("layui-icon")
 							.addClass("layui-icon-ok");
 					}
-					
-					if (menu!="null"){
+
+					if (menu != "null") {
 						$("*[data-select-bgcolor]").removeClass("layui-this");
-						
-						$("[data-select-bgcolor='"+menu+"']").addClass("layui-this");
+
+						$("[data-select-bgcolor='" + menu + "']").addClass("layui-this");
 					}
-					
+
 					$('#layui-layer-shade' + index).click(function() {
 						var $layero = $('#layui-layer' + index);
 						$layero.animate({
@@ -383,7 +400,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 			$.ajaxSettings.async = false;
 			var data = null;
 
-			$.get("setting.json", function(result) {
+			$.getJSON("setting.json", function(result) {
 				data = result;
 			});
 
@@ -402,7 +419,6 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 		});
 
 		$('body').on('click', '.select-color-item', function() {
-
 			$(".select-color-item").removeClass("layui-icon").removeClass("layui-icon-ok");
 			$(this).addClass("layui-icon").addClass("layui-icon-ok");
 			var colorId = $(".select-color-item.layui-icon-ok").attr("color-id");
@@ -411,25 +427,30 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 			pearAdmin.colorSet(color.color);
 		});
 
-
-		function getThemeById(id) {
-			var theme;
-			$.each(getData().theme, function(i, value) {
-				if (value.id == id) {
-					theme = value;
-				}
-			})
-			return theme;
-		}
-
 		function getColorById(id) {
 			var color;
-			$.each(getData().colors, function(i, value) {
+			
+			var flag = false;
+			
+			var data = getData();
+			
+			$.each(data.colors, function(i, value) {
 
 				if (value.id == id) {
 					color = value;
+					flag = true;
 				}
 			})
+			
+			if(flag==false || data.allowCustom == false){
+				
+				$.each(data.colors, function(i, value) {
+				
+					if (value.id == data.defaultColor) {
+						color = value; 
+					}
+				})
+			}
 			return color;
 		}
 
@@ -452,13 +473,9 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 			var colors = "";
 
 			$.each(getData().colors, function(i, value) {
-
-				colors += "<span class='select-color-item' color-id='" + value.id + "' style='background-color:" + value.color +
-					";'></span>";
+				colors += "<span class='select-color-item' color-id='" + value.id + "' style='background-color:" + value.color + ";'></span>";
 			})
-
-			return "<div class='select-color'><div class='select-color-title'>主题色</div><div class='select-color-content'>" +
-				colors + "</div></div>"
+			return "<div class='select-color'><div class='select-color-title'>主题色</div><div class='select-color-content'>" + colors + "</div></div>"
 
 		}
 
