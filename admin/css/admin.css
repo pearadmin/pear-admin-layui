@@ -125,7 +125,6 @@
 .pear-admin .layui-header .layui-nav .layui-this:after {
 	display: none;
 }
-
 /** 新增兼容 */
 @media screen and (max-width:768px) {
 	.pear-mini .bottom-nav {
@@ -169,7 +168,6 @@
 		display: none;
 	}
 }
-
 @-webkit-keyframes am-horizontal-roll_show {
 	0% {
 		opacity: 1;
@@ -183,7 +181,6 @@
 		transform: translateX(0)
 	}
 }
-
 @keyframes am-horizontal-roll_show {
 	0% {
 		opacity: 1;
@@ -199,45 +196,29 @@
 		transform: translateX(0)
 	}
 }
-
 .layer-anim-right {
 	-webkit-animation: am-horizontal-roll_show .6s ease-out;
 	animation: am-horizontal-roll_show .6s ease-out;
 
 }
-
-
 /** 亮色侧边风格 */
 .light-theme .layui-logo {
 	background-color: white !important;
 	color: black !important;
 }
-
 .light-theme .layui-side-scroll {
 	background-color: white !important;
 	color: black !important;
 }
-.light-theme .layui-side{
-	box-shadow: none;
-	border-right: 1px whitesmoke solid;
-}
-
-
-
-
 /** 主 题 选 择 界 面 样 式 */
-
 .pearone-color .color-title {padding: 15px 0 0px 20px;margin-bottom: 4px;}
 .pearone-color .color-content {
 	padding: 15px 10px 0 20px;
-
 }
-
 .pearone-color .color-content ul {
 	list-style: none;
 	padding: 0px;
 }
-
 .pearone-color .color-content ul li {
 	position: relative;
 	display: inline-block;
@@ -251,7 +232,6 @@
 	font-size: 12px;
 	color: #666;
 }
-
 .pearone-color .color-content li.layui-this:after,
 .pearone-color .color-content li:hover:after {
 	width: 100%;
@@ -263,7 +243,6 @@
 	opacity: 1;
 	border-radius: 4px;
 }
-
 .pearone-color .color-content li:after {
 	content: '';
 	position: absolute;
@@ -277,21 +256,17 @@
 	-webkit-transition: all .3s;
 	opacity: 0;
 }
-
 .select-color {
 	margin-bottom: 30px;
 }
-
 .select-color .select-color-title {
 	padding: 15px 0 0px 20px;
 	margin-bottom: 4px;
 }
-
 .select-color .select-color-content {
 	padding: 20px 0 0px 0px;
 	margin-bottom: 4px;
 }
-
 .select-color .select-color-content .select-color-item {
 	background-color: gray;
 	width: 30px;

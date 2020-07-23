@@ -16,9 +16,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 		var pearAdmin = new function() {
 
 			this.render = function(option) {
-
 				var option = getData();
-
 				this.menuRender(option);
 				this.bodyRender(option);
 				this.keepLoad(option);
@@ -104,7 +102,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 					bodyFrame = pearFrame.render({
 						elem: 'content',
 						title: '工作空间 / 首页',
-						url: option.index,
+						url: option.tab.index.href,
 						width: '100%',
 						height: '100%'
 					});
@@ -163,7 +161,6 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 			this.menuSkin = function(theme) {
 				$(".pear-admin").removeClass("light-theme");
 				$(".pear-admin").removeClass("dark-theme");
-				$(".pear-admin").removeClass("night-theme");
 				$(".pear-admin").addClass(theme);
 			}
 
@@ -314,13 +311,6 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 				'</a>' +
 				'</li>';
 
-			bgColorHtml +=
-				'<li  data-select-bgcolor="night-theme" >' +
-				'<a href="javascript:;" data-skin="skin-blue" style="" class="clearfix full-opacity-hover">' +
-				'<div><span style="display:block; width: 20%; float: left; height: 12px; background: #28333E;"></span><span style="display:block; width: 80%; float: left; height: 12px; background: #28333E;"></span></div>' +
-				'<div><span style="display:block; width: 20%; float: left; height: 40px; background: #28333E;"></span><span style="display:block; width: 80%; float: left; height: 40px; background: #28333E;"></span></div>' +
-				'</a>' +
-				'</li>';
 			var html =
 				'<div class="pearone-color">\n' +
 				'<div class="color-title">整体风格</div>\n' +
