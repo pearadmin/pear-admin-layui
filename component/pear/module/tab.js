@@ -373,10 +373,9 @@ layui.define(['jquery', 'element'], function(exports) {
 
         if(!removeTab.hasClass("layui-this")){
 			
-			alert(id);
 			removeTab.remove();
 			var tabContent = $(".layui-tab[lay-filter='" + elem + "']").find("iframe[id='" + id + "']").parent();
-			
+			tabContent.remove();
 			return false;
 		}
 
