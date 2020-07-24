@@ -264,7 +264,7 @@
 				"icon": "layui-icon layui-icon-face-smile",
 				"type": 1,
 				"openType": "_iframe",
-				"href": "view/common/login.html"
+				"href": "login.html"
 		}]
 	}
 ]
