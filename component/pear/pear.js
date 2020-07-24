@@ -26,5 +26,6 @@ layui.config({
 	dtree:"dtree",
 	tinymce:"tinymce/tinymce",
 	area:"area",
-	count:"count"
+	count:"count",
+	topBar: "topBar"
 });

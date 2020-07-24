@@ -25,7 +25,6 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 			}
 
 			this.logoRender = function(option) {
-
 				$(".layui-logo .logo").attr("src", option.logo.image);
 				$(".layui-logo .title").html(option.logo.title);
 			}
@@ -64,7 +63,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 							url: option.tab.index.href,
 							title: option.tab.index.title,
 							close: false
-						}] //初始化数据
+						}]
 					});
 
 					bodyTab.click(function(id) {
@@ -89,6 +88,9 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 					})
 
 					sideMenu.click(function(dom, data) {
+						
+						console.log(data.menuUrl);
+						
 						bodyTab.addTabOnly({
 							id: data.menuId,
 							title: data.menuTitle,
@@ -122,6 +124,8 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 						}, 600)
 					})
 					sideMenu.click(function(dom, data) {
+						console.log(data.menuUrl);
+						
 						bodyFrame.changePage(data.menuUrl, data.menuPath, true);
 						compatible()
 					})

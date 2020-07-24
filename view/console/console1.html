@@ -48,7 +48,7 @@
 						<div class="layui-card-header">提交次数</div>
 						<div class="layui-card-body">
 							<div class="layui-row layui-col-space5">
-								<div class="layui-col-xs8 layui-col-md8 top-panel-number"  id="value2">
+								<div class="layui-col-xs8 layui-col-md8 top-panel-number" id="value2">
 									0
 								</div>
 								<div class="layui-col-xs4 layui-col-md4 top-panel-tips">
@@ -86,7 +86,7 @@
 						<div class="layui-card-header">下载数量</div>
 						<div class="layui-card-body">
 							<div class="layui-row layui-col-space5">
-								<div class="layui-col-xs8 layui-col-md8 top-panel-number"  id="value3">
+								<div class="layui-col-xs8 layui-col-md8 top-panel-number" id="value3">
 									0
 								</div>
 								<div class="layui-col-xs4 layui-col-md4  top-panel-tips">
@@ -116,7 +116,7 @@
 						<div class="layui-card-header">流量统计</div>
 						<div class="layui-card-body">
 							<div class="layui-row layui-col-space5">
-								<div class="layui-col-xs8 layui-col-md8 top-panel-number"  id="value4">
+								<div class="layui-col-xs8 layui-col-md8 top-panel-number" id="value4">
 									0
 								</div>
 								<div class="layui-col-xs4 layui-col-md4 top-panel-tips">
@@ -245,7 +245,7 @@
 		<script src="../../component/layui/layui.js"></script>
 		<script src="../../component/pear/pear.js"></script>
 		<script>
-			layui.use(['layer', 'echarts', 'element', 'count'], function() {
+			layui.use(['layer', 'echarts', 'element', 'count','topBar'], function() {
 				var $ = layui.jquery,
 					layer = layui.layer,
 					element = layui.element,
@@ -258,21 +258,21 @@
 					bit: 2,
 					regulator: 50
 				})
-				
+
 				count.up("value2", {
 					time: 4000,
 					num: 236.30,
 					bit: 2,
 					regulator: 50
 				})
-				
+
 				count.up("value3", {
 					time: 4000,
 					num: 634.43,
 					bit: 2,
 					regulator: 50
 				})
-				
+
 				count.up("value4", {
 					time: 4000,
 					bit: 2,
