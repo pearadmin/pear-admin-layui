@@ -1,7 +1,8 @@
 .pear-admin .layui-header,
 .pear-admin .layui-body,
 .pear-admin .layui-logo,
-.pear-admin .layui-side {
+.pear-admin .layui-side,
+.pear-admin .layui-header .layui-layout-left{
 	transition: all .3s;
 }
 

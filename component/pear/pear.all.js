@@ -16,5 +16,17 @@ layui.config({
 	hash: "hash",
 	document: "document",
 	select: "select",
-	drawer: "drawer"
+	drawer: "drawer",
+	notice: "notice",
+	step:"step",
+	tag:"tag",
+	popup:"popup",
+	iconPicker:"iconPicker",
+	treetable:"treetable",
+	dtree:"dtree",
+	tinymce:"tinymce/tinymce",
+	area:"area",
+	count:"count",
+	topBar: "topBar",
+	button: "button"
 });

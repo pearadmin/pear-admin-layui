@@ -1,5 +1,8 @@
 @import url("../../layui/css/layui.css");
 
+@import url("pear-tree/font/dtreefont.css");
+@import url("pear-module/iconPicker.css");
+@import url("pear-module/treetable.css");
 @import url("pear-module/select.css");
 @import url("pear-module/layout.css");
 @import url("pear-module/notice.css");
@@ -15,7 +18,4 @@
 @import url("pear-module/step.css");
 @import url("pear-module/tab.css");
 @import url("pear-module/tag.css");
-@import url("pear-module/iconPicker.css");
 @import url("pear-tree/dtree.css");
-@import url("pear-tree/font/dtreefont.css");
-@import url("pear-module/treetable.css");
