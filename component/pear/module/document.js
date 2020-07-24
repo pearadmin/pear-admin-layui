@@ -9,10 +9,5 @@ layui.define(['jquery', 'element'], function(exports) {
 		this.option = opt;
 	};
 
-
-	$("body").on("click", "*[loading]", function() {
-	
-	})
-
 	exports(MOD_NAME, new document());
 })

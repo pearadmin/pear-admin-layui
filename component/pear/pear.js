@@ -27,5 +27,6 @@ layui.config({
 	tinymce:"tinymce/tinymce",
 	area:"area",
 	count:"count",
-	topBar: "topBar"
+	topBar: "topBar",
+	button: "button"
 });

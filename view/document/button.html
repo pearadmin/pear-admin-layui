@@ -169,13 +169,108 @@
 					</div>
 				</div>
 			</div>
+			<div class="layui-col-md12">
+				<div class="layui-card">
+					<div class="layui-card-header">
+						Load 自动
+					</div>
+					<div class="layui-card-body">
+						<button class="pear-btn pear-btn-primary" load> 加载 600 ms </button>
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md12">
+				<div class="layui-collapse">
+					<div class="layui-colla-item">
+						<h2 class="layui-colla-title">显示代码</h2>
+						<div class="layui-colla-content">
+							<pre class="layui-code" lay-encode="true">
+								layui.use(["button"], function() {
+								    var button = layui.button;
+								    
+									button.load({
+								        elem:'[load]',
+								        time: 600,
+								        done: function(){
+									        popup.success("加载完成");
+								        }
+								    })
+								})
+							</pre>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md12">
+				<div class="layui-card">
+					<div class="layui-card-header">
+						Load 手动
+					</div>
+					<div class="layui-card-body">
+
+						<button class="pear-btn pear-btn-primary" loading> 开始 </button>
+
+						<button class="pear-btn pear-btn-danger" stop> 停止 </button>
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md12">
+				<div class="layui-collapse">
+					<div class="layui-colla-item">
+						<h2 class="layui-colla-title">显示代码</h2>
+						<div class="layui-colla-content">
+							<pre class="layui-code" lay-encode="true">
+								layui.use(["button"], function() {
+								    var button = layui.button;
+								    
+									var dom = button.load({
+								        elem:'[load]',
+								    })
+									
+								    dom.stop(function() {
+								        popup.failure("已停止");
+								    });
+								})
+							</pre>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<script src="../../component/layui/layui.js"></script>
 		<script src="../../component/pear/pear.js"></script>
 		<script>
-			layui.use(['element', 'code'], function() {
+			layui.use(['element', 'code', 'jquery', "button", "popup"], function() {
 				var element = layui.element;
+				var $ = layui.jquery;
+				var popup = layui.popup;
+				var button = layui.button;
+				
 				layui.code();
+				
+				$("[load]").click(function() {
+					button.load({
+						elem: '[load]',
+						time: 600,
+						done: function() {
+							popup.success("加载完成");
+						}
+					})
+				})
+
+				var dom;
+
+				$("[loading]").click(function() {
+					dom = button.load({
+						elem: '[loading]'
+					})
+				})
+
+				$("[stop]").click(function() {
+					dom.stop(function() {
+						popup.failure("已停止");
+					});
+				})
 			})
 		</script>
 	</body>
