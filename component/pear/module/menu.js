@@ -432,7 +432,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 			if (!$("#" + option.elem).is(".pear-nav-mini")) {
 				var superEle = $(this).parent();
 				var ele = $(this).next('.layui-nav-child');
-				var heights = ele.children("dd").length * 40;
+				var heights = ele.children("dd").length * 48;
 				
 				if ($(this).parent().is(".layui-nav-itemed")) {
 					if (option.accordion) {
@@ -460,8 +460,6 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 				}
 			}
 		})
-
-
 	}
 
 	/** 二 级 悬 浮 菜 单*/
