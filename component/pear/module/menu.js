@@ -429,33 +429,26 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 
 	function downShow(option) {
 		$("body #" + option.elem).on("click", "a[menu-type='0']", function() {
-
 			if (!$("#" + option.elem).is(".pear-nav-mini")) {
-
 				var superEle = $(this).parent();
 				var ele = $(this).next('.layui-nav-child');
-				var height = ele.height();
+				var heights = ele.children("dd").length * 40;
+				
 				if ($(this).parent().is(".layui-nav-itemed")) {
-
 					if (option.accordion) {
 						$(this).parent().parent().find(".layui-nav-itemed").removeClass("layui-nav-itemed");
 						$(this).parent().addClass("layui-nav-itemed");
 					}
-
 					ele.height(0);
-
 					ele.animate({
-						height: height + "px"
+						height: heights + "px"
 					}, 200, function() {
 						ele.css({
 							height: "auto"
 						});
 					});
-
 				} else {
-
 					$(this).parent().addClass("layui-nav-itemed");
-
 					ele.animate({
 						height: "0px"
 					}, 200, function() {
