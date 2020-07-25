@@ -14,7 +14,6 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 		var bodyTab;
 
 		var pearAdmin = new function() {
-
 			this.render = function(option) {
 				var option = getData();
 				this.menuRender(option);
@@ -23,12 +22,10 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 				this.logoRender(option);
 				this.themeRender(option);
 			}
-
 			this.logoRender = function(option) {
 				$(".layui-logo .logo").attr("src", option.logo.image);
 				$(".layui-logo .title").html(option.logo.title);
 			}
-
 			this.menuRender = function(option) {
 				sideMenu = pearMenu.render({
 					elem: 'sideMenu', //依赖容器
@@ -44,7 +41,6 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 				})
 				sideMenu.selectItem(option.menu.select);
 			}
-
 			this.bodyRender = function(option) {
 				if (option.tab.muiltTab) {
 					bodyTab = pearTab.render({
@@ -65,12 +61,10 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 							close: false
 						}]
 					});
-
 					bodyTab.click(function(id) {
 						bodyTab.positionTab();
 						sideMenu.selectItem(id);
 					})
-
 					$("body").on("click", ".refresh", function() {
 						$(".refresh a").removeClass("layui-icon-refresh-1");
 						$(".refresh a").addClass("layui-anim");
@@ -86,11 +80,10 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 							$(".refresh a").removeClass("layui-icon-loading");
 						}, 600)
 					})
-
 					sideMenu.click(function(dom, data) {
-						
+
 						console.log(data.menuUrl);
-						
+
 						bodyTab.addTabOnly({
 							id: data.menuId,
 							title: data.menuTitle,
@@ -125,49 +118,44 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 					})
 					sideMenu.click(function(dom, data) {
 						console.log(data.menuUrl);
-						
+
 						bodyFrame.changePage(data.menuUrl, data.menuPath, true);
 						compatible()
 					})
 				}
 			}
-
 			this.keepLoad = function(option) {
 				compatible()
 				setTimeout(function() {
 					$(".loader-main").fadeOut(option.done);
 				}, option.other.keepLoad)
 			}
-
 			this.themeRender = function(option) {
-			
-			    if(option.theme.allowCustom == false){
+
+				if (option.theme.allowCustom == false) {
 					$(".setting").remove();
 				}
 				var colorId = localStorage.getItem("theme-color");
 				var menu = localStorage.getItem("theme-menu");
-                var color = getColorById(colorId);
-              
-			    if(menu=="null"){
+				var color = getColorById(colorId);
+				if (menu == "null") {
 					menu = option.theme.defaultMenu;
-				}else{
-					
-					if(option.theme.allowCustom == false){
+				} else {
+
+					if (option.theme.allowCustom == false) {
 						menu = option.theme.defaultMenu;
 					}
 				}
-			    localStorage.setItem("theme-color",color.id);
-				localStorage.setItem("theme-menu",menu);
+				localStorage.setItem("theme-color", color.id);
+				localStorage.setItem("theme-menu", menu);
 				this.colorSet(color.color);
 				this.menuSkin(menu);
 			}
-
 			this.menuSkin = function(theme) {
 				$(".pear-admin").removeClass("light-theme");
 				$(".pear-admin").removeClass("dark-theme");
 				$(".pear-admin").addClass(theme);
 			}
-
 			this.colorSet = function(color) {
 
 				var style = '';
@@ -386,7 +374,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 			var color = getColorById(colorId);
 			pearAdmin.colorSet(color.color);
 		});
-		
+
 		function getColorById(id) {
 			var color;
 			var flag = false;
@@ -397,10 +385,10 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 					flag = true;
 				}
 			})
-			if(flag==false || data.theme.allowCustom == false){
+			if (flag == false || data.theme.allowCustom == false) {
 				$.each(data.colors, function(i, value) {
 					if (value.id == data.theme.defaultColor) {
-						color = value; 
+						color = value;
 					}
 				})
 			}
@@ -420,9 +408,11 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 		function buildColorHtml() {
 			var colors = "";
 			$.each(getData().colors, function(i, value) {
-				colors += "<span class='select-color-item' color-id='" + value.id + "' style='background-color:" + value.color + ";'></span>";
+				colors += "<span class='select-color-item' color-id='" + value.id + "' style='background-color:" + value.color +
+					";'></span>";
 			})
-			return "<div class='select-color'><div class='select-color-title'>主题色</div><div class='select-color-content'>" + colors + "</div></div>"
+			return "<div class='select-color'><div class='select-color-title'>主题色</div><div class='select-color-content'>" +
+				colors + "</div></div>"
 		}
 		exports('admin', pearAdmin);
 	})
