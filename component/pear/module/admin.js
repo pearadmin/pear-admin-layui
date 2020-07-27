@@ -117,8 +117,6 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 						}, 600)
 					})
 					sideMenu.click(function(dom, data) {
-						console.log(data.menuUrl);
-
 						bodyFrame.changePage(data.menuUrl, data.menuPath, true);
 						compatible()
 					})
@@ -236,6 +234,22 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 			}
 
 		});
+		
+		$("body").on("click",'[menu-id]',function(){
+			
+			if(getData().tab.muiltTab){
+				bodyTab.addTabOnly({
+					id: $(this).attr("menu-id"),
+					title: $(this).attr("menu-title"),
+					url: $(this).attr("menu-url"),
+					icon: "",
+					close: true
+				}, 300);
+				
+			}else{
+				bodyFrame.changePage($(this).attr("menu-url"), "", true);
+			}
+		})
 
 		function compatible() {
 			if ($(window).width() <= 768) {
