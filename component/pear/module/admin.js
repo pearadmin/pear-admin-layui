@@ -235,19 +235,19 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 
 		});
 		
-		$("body").on("click",'[menu-id]',function(){
+		$("body").on("click",'[user-menu-id]',function(){
 			
 			if(getData().tab.muiltTab){
 				bodyTab.addTabOnly({
-					id: $(this).attr("menu-id"),
-					title: $(this).attr("menu-title"),
-					url: $(this).attr("menu-url"),
+					id: $(this).attr("user-menu-id"),
+					title: $(this).attr("user-menu-title"),
+					url: $(this).attr("user-menu-url"),
 					icon: "",
 					close: true
 				}, 300);
 				
 			}else{
-				bodyFrame.changePage($(this).attr("menu-url"), "", true);
+				bodyFrame.changePage($(this).attr("user-menu-url"), "", true);
 			}
 		})
 
