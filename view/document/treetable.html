@@ -56,6 +56,14 @@
         <i class="layui-icon layui-icon-delete"></i>
         删除
     </button>
+	<button class="pear-btn pear-btn-success pear-btn-md" lay-event="expandAll">
+	    <i class="layui-icon layui-icon-spread-left"></i>
+	    展开
+	</button>
+	<button class="pear-btn pear-btn-success pear-btn-md" lay-event="foldAll">
+	    <i class="layui-icon layui-icon-shrink-right"></i>
+	    折叠
+	</button>
 </script>
 
 <script type="text/html" id="power-bar">
@@ -129,7 +137,6 @@
             }
         })
 
-
         table.on('toolbar(power-table)', function(obj){
             if(obj.event === 'add'){
                 window.add();
@@ -137,7 +144,11 @@
                 window.refresh();
             } else if(obj.event === 'batchRemove'){
                 window.batchRemove(obj);
-            }
+            } else if(obj.event === 'expandAll'){
+				 treetable.expandAll("#power-table");
+			} else if(obj.event === 'foldAll'){
+				 treetable.foldAll("#power-table");
+			}
         });
 
         window.add = function(){
