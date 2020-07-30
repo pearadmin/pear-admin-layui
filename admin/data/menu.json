@@ -53,6 +53,13 @@
 				"openType": "_iframe",
 				"href": "view/document/form.html"
 			}, {
+				"id": 2010,
+				"title": "字体图标",
+				"icon": "layui-icon layui-icon-face-cry",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/document/icon.html"
+			}, {
 				"id": 2012,
 				"title": "多选下拉",
 				"icon": "layui-icon layui-icon-face-cry",
