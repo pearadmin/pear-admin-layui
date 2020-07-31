@@ -11,6 +11,7 @@
 	},
 	"tab": {
 		"muiltTab": true,
+		"keepState": false,
 		"tabMax": 30,
 		"index": {
 			"id": "0",

@@ -62,6 +62,10 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 						}]
 					});
 					bodyTab.click(function(id) {
+						// 选 项 卡 切 换 刷 新
+						if(!option.tab.keepState){
+						   bodyTab.refresh(200);
+						}
 						bodyTab.positionTab();
 						sideMenu.selectItem(id);
 					})
