@@ -14,6 +14,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 		var bodyTab;
 
 		var pearAdmin = new function() {
+			
 			this.render = function(option) {
 				var option = getData();
 				this.menuRender(option);
@@ -22,10 +23,12 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 				this.logoRender(option);
 				this.themeRender(option);
 			}
+			
 			this.logoRender = function(option) {
 				$(".layui-logo .logo").attr("src", option.logo.image);
 				$(".layui-logo .title").html(option.logo.title);
 			}
+			
 			this.menuRender = function(option) {
 				sideMenu = pearMenu.render({
 					elem: 'sideMenu', //依赖容器
@@ -41,6 +44,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 				})
 				sideMenu.selectItem(option.menu.select);
 			}
+			
 			this.bodyRender = function(option) {
 				if (option.tab.muiltTab) {
 					bodyTab = pearTab.render({
@@ -126,12 +130,14 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 					})
 				}
 			}
+			
 			this.keepLoad = function(option) {
 				compatible()
 				setTimeout(function() {
 					$(".loader-main").fadeOut(option.done);
 				}, option.other.keepLoad)
 			}
+			
 			this.themeRender = function(option) {
 
 				if (option.theme.allowCustom == false) {
@@ -153,11 +159,13 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 				this.colorSet(color.color);
 				this.menuSkin(menu);
 			}
+			
 			this.menuSkin = function(theme) {
 				$(".pear-admin").removeClass("light-theme");
 				$(".pear-admin").removeClass("dark-theme");
 				$(".pear-admin").addClass(theme);
 			}
+			
 			this.colorSet = function(color) {
 
 				var style = '';
@@ -328,6 +336,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 				'<ul>\n' + bgColorHtml + '</ul>\n' +
 				'</div>\n' +
 				'</div>';
+				
 			layer.open({
 				type: 1,
 				offset: 'r',
@@ -377,6 +386,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 			$.ajaxSettings.async = true;
 			return data;
 		}
+		
 		$('body').on('click', '[data-select-bgcolor]', function() {
 			var theme = $(this).attr('data-select-bgcolor');
 			$('[data-select-bgcolor]').removeClass("layui-this");
@@ -384,6 +394,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 			localStorage.setItem("theme-menu", theme);
 			pearAdmin.menuSkin(theme);
 		});
+		
 		$('body').on('click', '.select-color-item', function() {
 			$(".select-color-item").removeClass("layui-icon").removeClass("layui-icon-ok");
 			$(this).addClass("layui-icon").addClass("layui-icon-ok");
@@ -434,3 +445,4 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 		}
 		exports('admin', pearAdmin);
 	})
+	

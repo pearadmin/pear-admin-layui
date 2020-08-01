@@ -27,9 +27,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 			change: opt.change ? opt.change : function() {
 				console.log("切换")
 			},
-			done: opt.done ? opt.done : function() {
-				console.log("菜单渲染成功");
-			}
+			done: opt.done ? opt.done : function() {}
 		}
 
 		// 根 据 请 求 方 式 获 取 数 据
