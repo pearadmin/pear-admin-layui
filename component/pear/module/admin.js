@@ -371,7 +371,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 		function getData() {
 			$.ajaxSettings.async = false;
 			var data = null;
-			$.getJSON("pear.config.json", function(result) {
+			$.getJSON("pear.config.json?fresh=" + Math.random(), function(result) {
 				data = result;
 			});
 			$.ajaxSettings.async = true;
