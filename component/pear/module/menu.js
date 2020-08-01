@@ -202,7 +202,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 		$.ajaxSettings.async = false;
 		var data = null;
 
-		$.get(url, function(result) {
+		$.get(url+"?fresh=" + Math.random(), function(result) {
 			data = result;
 		});
 
