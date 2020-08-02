@@ -248,7 +248,6 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 		});
 		
 		$("body").on("click",'[user-menu-id]',function(){
-			
 			if(getData().tab.muiltTab){
 				bodyTab.addTabOnly({
 					id: $(this).attr("user-menu-id"),
@@ -362,7 +361,6 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 					}
 					if (menu != "null") {
 						$("*[data-select-bgcolor]").removeClass("layui-this");
-
 						$("[data-select-bgcolor='" + menu + "']").addClass("layui-this");
 					}
 					$('#layui-layer-shade' + index).click(function() {
