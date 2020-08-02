@@ -68,7 +68,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 					bodyTab.click(function(id) {
 						// 选 项 卡 切 换 刷 新
 						if(!option.tab.keepState){
-						   bodyTab.refresh(200);
+						   bodyTab.refresh(false);
 						}
 						bodyTab.positionTab();
 						sideMenu.selectItem(id);
@@ -89,8 +89,6 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 						}, 600)
 					})
 					sideMenu.click(function(dom, data) {
-
-						console.log(data.menuUrl);
 
 						bodyTab.addTabOnly({
 							id: data.menuId,
@@ -244,7 +242,6 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 					$(".fullScreen").eq(0).addClass("layui-icon-screen-restore");
 				});
 			}
-
 		});
 		
 		$("body").on("click",'[user-menu-id]',function(){
@@ -256,7 +253,6 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 					icon: "",
 					close: true
 				}, 300);
-				
 			}else{
 				bodyFrame.changePage($(this).attr("user-menu-url"), "", true);
 			}
@@ -309,7 +305,6 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 				res("返回值");
 			});
 		}
-
 
 		$("body").on("click", ".setting", function() {
 			var bgColorHtml =

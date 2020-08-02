@@ -340,18 +340,18 @@ layui.define(['jquery', 'element'], function(exports) {
 			pearLoad.css({
 				display: "block"
 			});
+			
+			index++;
 
 			setTimeout(function() {
-
-				pearLoad.fadeOut(500);
-
+				pearLoad.fadeOut(500,function(){
+					pearLoad.remove();
+				});       
 			}, time);
 			
 			$(".layui-tab[lay-filter='" + elem + "'] .layui-tab-content .layui-show").find("iframe")[0].contentWindow
 				.location.reload(true);
-
-			index++;
-			
+				
 		} else {
 			
 			$(".layui-tab[lay-filter='" + this.option.elem + "'] .layui-tab-content .layui-show").find("iframe")[0].contentWindow
