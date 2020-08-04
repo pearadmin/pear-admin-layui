@@ -45,8 +45,8 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 				sideMenu.selectItem(param.menu.select);
 			}
 			
-			this.bodyRender = function(option) {
-				if (option.tab.muiltTab) {
+			this.bodyRender = function(param) {
+				if (param.tab.muiltTab) {
 					bodyTab = pearTab.render({
 						elem: 'content',
 						roll: true,
@@ -54,20 +54,20 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 						width: '100%',
 						height: '100%',
 						index: 0,
-						tabMax: option.tab.tabMax,
+						tabMax: param.tab.tabMax,
 						closeEvent: function(id) {
 							sideMenu.selectItem(id);
 						},
 						data: [{
-							id: option.tab.index.id,
-							url: option.tab.index.href,
-							title: option.tab.index.title,
+							id: param.tab.index.id,
+							url: param.tab.index.href,
+							title: param.tab.index.title,
 							close: false
 						}]
 					});
 					bodyTab.click(function(id) {
 						// 选 项 卡 切 换 刷 新
-						if(!option.tab.keepState){
+						if(!param.tab.keepState){
 						   bodyTab.refresh(false);
 						}
 						bodyTab.positionTab();
@@ -89,7 +89,6 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 						}, 600)
 					})
 					sideMenu.click(function(dom, data) {
-
 						bodyTab.addTabOnly({
 							id: data.menuId,
 							title: data.menuTitle,
