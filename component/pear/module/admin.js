@@ -15,34 +15,34 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 
 		var pearAdmin = new function() {
 			
-			this.render = function(option) {
-				var option = getData();
-				this.menuRender(option);
-				this.bodyRender(option);
-				this.keepLoad(option);
-				this.logoRender(option);
-				this.themeRender(option);
+			this.render = function() {
+				var param = getData();
+				this.keepLoad(param);
+				this.logoRender(param);
+				this.menuRender(param);
+				this.bodyRender(param);
+				this.themeRender(param);
 			}
 			
-			this.logoRender = function(option) {
-				$(".layui-logo .logo").attr("src", option.logo.image);
-				$(".layui-logo .title").html(option.logo.title);
+			this.logoRender = function(param) {
+				$(".layui-logo .logo").attr("src", param.logo.image);
+				$(".layui-logo .title").html(param.logo.title);
 			}
 			
-			this.menuRender = function(option) {
+			this.menuRender = function(param) {
 				sideMenu = pearMenu.render({
-					elem: 'sideMenu', //依赖容器
-					async: true, //数据形式
+					elem: 'sideMenu',
+					async: true,
 					theme: "dark-theme",
 					height: '100%',
-					control: option.menu.control ? 'control' : false, // control 
+					control: param.menu.control ? 'control' : false, // control 
 					defaultMenu: 1,
-					defaultOpen: 0, //默认打开菜单
-					accordion: option.menu.accordion,
-					url: option.menu.data, //数据地址
+					defaultOpen: 0,
+					accordion: param.menu.accordion,
+					url: param.menu.data,
 					parseData: false
 				})
-				sideMenu.selectItem(option.menu.select);
+				sideMenu.selectItem(param.menu.select);
 			}
 			
 			this.bodyRender = function(option) {
@@ -129,15 +129,14 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 				}
 			}
 			
-			this.keepLoad = function(option) {
+			this.keepLoad = function(param) {
 				compatible()
 				setTimeout(function() {
-					$(".loader-main").fadeOut(option.done);
-				}, option.other.keepLoad)
+					$(".loader-main").fadeOut(200);
+				}, param.other.keepLoad)
 			}
 			
 			this.themeRender = function(option) {
-
 				if (option.theme.allowCustom == false) {
 					$(".setting").remove();
 				}
