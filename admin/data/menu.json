@@ -178,6 +178,14 @@
 					"type": 1,
 					"openType": "_iframe",
 					"href": "view/document/count.html"
+				},
+				{
+					"id": 2045,
+					"title": "顶部返回",
+					"icon": "layui-icon layui-icon-face-cry",
+					"type": 1,
+					"openType": "_iframe",
+					"href": "view/document/topBar.html"
 				}
 			]
 		}]

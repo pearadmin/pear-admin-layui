@@ -66,7 +66,6 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 						}]
 					});
 					bodyTab.click(function(id) {
-						// 选 项 卡 切 换 刷 新
 						if(!param.tab.keepState){
 						   bodyTab.refresh(false);
 						}
@@ -163,9 +162,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 			}
 			
 			this.colorSet = function(color) {
-
 				var style = '';
-
 				// 自 定 义 菜 单 配 色
 				style +=
 					'.light-theme .pear-nav-tree .layui-this a:hover,.light-theme .pear-nav-tree .layui-this,.light-theme .pear-nav-tree .layui-this a,.pear-nav-tree .layui-this a,.pear-nav-tree .layui-this{background-color: ' +

@@ -17,38 +17,23 @@ layui.define(['jquery', 'element', 'util'], function(exports) {
 			time: opt.time ? opt.time : false,
 			done: opt.done ? opt.done : function(){}
 		}
-
 		var load = $(option.elem).text();
-
 		$(option.elem).html("<i class='layui-anim layui-anim-rotate layui-icon layui-anim-loop layui-icon-loading'/>");
-
 		var buttons = $(option.elem);
-
 		if (option.time == "") {
-
-
 		} else {
-
 			setTimeout(function() {
-
 				buttons.html(load);
-				
 				option.done();
-
 			}, option.time);
 		}
-		
 		option.text = load;
-		
 		return new button(option);
 	}
 	
 	button.prototype.stop = function(success) {
-		
 		$(this.option.elem).html(this.option.text);
-	
 		success();
-		
 	} 
 
 	exports(MOD_NAME, new button());
