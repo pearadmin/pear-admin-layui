@@ -44,17 +44,17 @@
 		}
 	],
 	"links": [{
-			"icon": "layui-icon layui-icon-auz",
+			"icon": "layui-icon layui-icon-website",
 			"title": "官方网站",
 			"href": "http://www.pearadmin.com"
 		},
 		{
-			"icon": "layui-icon layui-icon-auz",
+			"icon": "layui-icon layui-icon-read",
 			"title": "开发文档",
 			"href": "http://www.pearadmin.com"
 		},
 		{
-			"icon": "layui-icon layui-icon-auz",
+			"icon": "layui-icon layui-icon-fonts-code",
 			"title": "开源地址",
 			"href": "https://gitee.com/Jmysy/Pear-Admin-Layui"
 		}
