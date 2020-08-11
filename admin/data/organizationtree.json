@@ -5,41 +5,41 @@
 	},
 	"data": [{
 		"id": "0",
-		"title": "部门目录",
+		"title": "济南总部",
 		"last": false,
 		"parentId": "9527",
 		"children": [{
 				"id": "001",
-				"title": "湖南省",
+				"title": "杭州市",
 				"last": false,
 				"parentId": "0",
 				"children": [{
 						"id": "001001",
-						"title": "长沙市",
+						"title": "软件部",
 						"last": true,
 						"parentId": "001"
 					},
 					{
 						"id": "001002",
-						"title": "株洲市",
+						"title": "销售部",
 						"last": true,
 						"parentId": "001"
 					},
 					{
 						"id": "001003",
-						"title": "湘潭市",
+						"title": "财务部",
 						"last": true,
 						"parentId": "001"
 					},
 					{
 						"id": "001004",
-						"title": "衡阳市",
+						"title": "人事部",
 						"last": true,
 						"parentId": "001"
 					},
 					{
 						"id": "001005",
-						"title": "郴州市",
+						"title": "行政部",
 						"last": true,
 						"parentId": "001"
 					}
