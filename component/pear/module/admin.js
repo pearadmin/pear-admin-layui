@@ -101,7 +101,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 					bodyFrame = pearFrame.render({
 						elem: 'content',
 						title: '工作空间 / 首页',
-						url: option.tab.index.href,
+						url: param.tab.index.href,
 						width: '100%',
 						height: '100%'
 					});
