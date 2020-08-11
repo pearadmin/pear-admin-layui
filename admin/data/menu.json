@@ -280,6 +280,13 @@
 				"type": 1,
 				"openType": "_iframe",
 				"href": "login.html"
+		},{
+				"id": 702,
+				"title": "空白页面",
+				"icon": "layui-icon layui-icon-face-smile",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/system/space.html"
 		}]
 	}
 ]
