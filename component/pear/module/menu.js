@@ -213,11 +213,14 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 
 	function createMenuAndControl(option) {
 
-		var control = '<ul class="layui-nav pear-nav-control">';
+		var control = '<ul class="layui-nav  pear-nav-control pc layui-hide-xs">';
+		
+		var controlPe = '<ul class="layui-nav pear-nav-control layui-hide-sm">';
 		// 声 明 头 部
 		var menu = '<div class="layui-side-scroll ' + option.theme + '">'
 		// 开 启 同 步 操 作
 		var index = 0;
+		var controlItemPe = '<dl class="layui-nav-child">';
 		$.each(option.data, function(i, item) {
 			var menuItem = '';
 			var controlItem = '';
@@ -226,11 +229,19 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 					'" class="layui-this layui-nav-item"><a href="#">' + item.title + '</a></li>';
 				menuItem = '<ul  pear-id="' + item.id + '" lay-filter="' + option.elem +
 					'" class="layui-nav arrow layui-nav-tree pear-nav-tree">';
+			    // 兼容移动端
+			    controlPe += '<li class="layui-nav-item"><a class="pe-title" href="javascript:;" >'+ item.title +'</a>';
+				
+				controlItemPe += '<dd  pear-href="' + item.href + '" pear-title="' + item.title + '" pear-id="' + item.id +'"><a href="javascript:void(0);">'+ item.title +'</a></dd>';
+				
 			} else {
 				controlItem = '<li  pear-href="' + item.href + '" pear-title="' + item.title + '" pear-id="' + item.id +
 					'" class="layui-nav-item"><a href="#">' + item.title + '</a></li>';
 				menuItem = '<ul style="display:none" pear-id="' + item.id + '" lay-filter="' + option.elem +
 					'" class="layui-nav arrow layui-nav-tree pear-nav-tree">';
+					
+				controlItemPe += '<dd pear-href="' + item.href + '" pear-title="' + item.title + '" pear-id="' + item.id +'"><a href="javascript:void(0);">'+ item.title +'</a></dd>';
+					
 			}
 			index++;
 			$.each(item.children, function(i, note) {
@@ -263,18 +274,22 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 			})
 			menu += menuItem + '</ul>';
 			control += controlItem;
+
 		})
-
-
+		controlItemPe += "</li></dl></ul>"
+		controlPe += controlItemPe;
 		$("#" + option.control).html(control);
+		$("#" + option.control).append(controlPe);
 		$("#" + option.elem).html(menu);
-		$("#" + option.control + " .pear-nav-control").on("click", "li", function() {
+		$("#" + option.control + " .pear-nav-control").on("click", "[pear-id]", function() {
 			$("#" + option.elem).find(".pear-nav-tree").css({
 				display: 'none'
 			});
 			$("#" + option.elem).find(".pear-nav-tree[pear-id='" + $(this).attr("pear-id") + "']").css({
 				display: 'block'
 			});
+			$("#" + option.control).find(".pe-title").html($(this).attr("pear-title"));
+			$("#" + option.control).find("")
 			option.change($(this).attr("pear-id"), $(this).attr("pear-title"), $(this).attr("pear-href"))
 		})
 	}

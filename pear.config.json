@@ -6,11 +6,11 @@
 	"menu": {
 		"data": "admin/data/menu.json",
 		"accordion": true,
-		"control": false,
+		"control": true,
 		"select": "0"
 	},
 	"tab": {
-		"muiltTab": true,
+		"muiltTab": false,
 		"keepState": true,
 		"tabMax": 30,
 		"index": {

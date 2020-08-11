@@ -79,25 +79,21 @@
 	display: none !important;
 }
 
-.pear-nav-control a {
+.pear-nav-control.pc a {
 	font-weight: 500;
 	font-size: 14px;
 }
 
-.pear-nav-control .layui-nav-bar {
+.pear-nav-control.pc .layui-nav-bar {
 	top: 0px !important;
 }
 
-.pear-nav-control .layui-this * {
-	color: #51A351 !important;
+.pear-nav-control.pc .layui-this * {
+	color: #5FB878!important;
 	font-weight: 600;
-	font-size: 15px;
 }
-
-.pear-nav-control a:hover {
-	font-weight: 600;
-	color: #51A351 !important;
-	font-size: 15px;
+.pear-nav-control.pc .layui-nav-bar{
+	display: none!important;
 }
 
 /** 隐 藏 后 子 级 悬 浮 菜 单 */

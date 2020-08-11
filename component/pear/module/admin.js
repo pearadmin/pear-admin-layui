@@ -36,11 +36,13 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 					theme: "dark-theme",
 					height: '100%',
 					control: param.menu.control ? 'control' : false, // control 
-					defaultMenu: 1,
-					defaultOpen: 0,
+					defaultMenu: 0,
 					accordion: param.menu.accordion,
 					url: param.menu.data,
-					parseData: false
+					parseData: false,
+					change:function(){
+						compatible();
+					}
 				})
 				sideMenu.selectItem(param.menu.select);
 			}
