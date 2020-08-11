@@ -211,6 +211,9 @@
 	background-color: white !important;
 	color: black !important;
 }
+.light-theme .layui-side{
+	box-shadow: 2px 0 8px 0 rgba(29,35,41,.05)!important;
+}
 /** 主 题 选 择 界 面 样 式 */
 .pearone-color .color-title {padding: 15px 0 0px 20px;margin-bottom: 4px;}
 .pearone-color .color-content {
