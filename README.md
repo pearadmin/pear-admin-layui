@@ -1,6 +1,6 @@
 
 <div align="center">
-<img src="admin/images/logo.png" width="90px"/>
+<img src="admin/images/logo.png" width="90px" style="margin-top:30px;"/>
   <h1 align="center">
     Pear Admin Layui
   </h1>
