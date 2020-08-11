@@ -61,6 +61,14 @@
 	position: absolute;
 }
 
+.custom-tab .layui-tab-title {
+	border-bottom-width: 0px;
+	border-bottom-style: none;
+}
+
+.custom-tab .layui-tab-title li {
+	margin-left: 10px;
+}
 .list .list-item {
 	height: 32px;
 	line-height: 32px;
@@ -69,15 +77,6 @@
 	padding-left: 15px;
 	border-radius: 4px;
 	margin-top: 5.2px;
-}
-
-.custom-tab .layui-tab-title {
-	border-bottom-width: 0px;
-	border-bottom-style: none;
-}
-
-.custom-tab .layui-tab-title li {
-	margin-left: 10px;
 }
 
 .list .list-item:hover {
