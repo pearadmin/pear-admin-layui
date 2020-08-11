@@ -16,11 +16,11 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 		var pearAdmin = new function() {
 			this.render = function() {
 				readConfig().then(function(param){
-					pearAdmin.keepLoad(param);
 					pearAdmin.logoRender(param);
 					pearAdmin.menuRender(param);
 					pearAdmin.bodyRender(param);
 					pearAdmin.themeRender(param);
+					pearAdmin.keepLoad(param);
 				}) 
 			}
 			
