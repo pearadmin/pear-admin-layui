@@ -51,28 +51,28 @@ QQ 群: 682110771
 
 #### 项目演示
 
-![](README_files/1.jpg)
+![](readme/1.jpg)
 
 
-![](README_files/2.jpg)
+![](readme/2.jpg)
 
 
-![](README_files/3.jpg)
+![](readme/3.jpg)
 
 
-![](README_files/4.jpg)
+![](readme/4.jpg)
 
 
-![](README_files/5.jpg)
+![](readme/5.jpg)
 
 
-![](README_files/6.jpg)
+![](readme/6.jpg)
 
 
-![](README_files/7.jpg)
+![](readme/7.jpg)
 
 
-![](README_files/8.jpg)
+![](readme/8.jpg)
 
 ### 基于 Pear Admin Layui 的项目应用
 
