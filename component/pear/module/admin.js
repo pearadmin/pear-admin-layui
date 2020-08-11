@@ -14,14 +14,14 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 		var bodyTab;
 
 		var pearAdmin = new function() {
-			
 			this.render = function() {
-				var param = getData();
-				this.keepLoad(param);
-				this.logoRender(param);
-				this.menuRender(param);
-				this.bodyRender(param);
-				this.themeRender(param);
+				readConfig().then(function(param){
+					pearAdmin.keepLoad(param);
+					pearAdmin.logoRender(param);
+					pearAdmin.menuRender(param);
+					pearAdmin.bodyRender(param);
+					pearAdmin.themeRender(param);
+				}) 
 			}
 			
 			this.logoRender = function(param) {
@@ -253,53 +253,6 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 			}
 		})
 
-		function compatible() {
-			if ($(window).width() <= 768) {
-				sideMenu.collaspe();
-				if ($(".pear-admin").is(".pear-mini")) {
-					$(".layui-icon-spread-left").addClass("layui-icon-shrink-right")
-					$(".layui-icon-spread-left").removeClass("layui-icon-spread-left")
-					$(".pear-admin").removeClass("pear-mini");
-				} else {
-					$(".layui-icon-shrink-right").addClass("layui-icon-spread-left")
-					$(".layui-icon-shrink-right").removeClass("layui-icon-shrink-right")
-					$(".pear-admin").addClass("pear-mini");
-				}
-			}
-		}
-
-		function screenFun(num) {
-			num = num || 1;
-			num = num * 1;
-			var docElm = document.documentElement;
-			switch (num) {
-				case 1:
-					if (docElm.requestFullscreen) {
-						docElm.requestFullscreen();
-					} else if (docElm.mozRequestFullScreen) {
-						docElm.mozRequestFullScreen();
-					} else if (docElm.webkitRequestFullScreen) {
-						docElm.webkitRequestFullScreen();
-					} else if (docElm.msRequestFullscreen) {
-						docElm.msRequestFullscreen();
-					}
-					break;
-				case 2:
-					if (document.exitFullscreen) {
-						document.exitFullscreen();
-					} else if (document.mozCancelFullScreen) {
-						document.mozCancelFullScreen();
-					} else if (document.webkitCancelFullScreen) {
-						document.webkitCancelFullScreen();
-					} else if (document.msExitFullscreen) {
-						document.msExitFullscreen();
-					}
-					break;
-			}
-			return new Promise(function(res, rej) {
-				res("返回值");
-			});
-		}
 
 		$("body").on("click", ".setting", function() {
 			var bgColorHtml =
@@ -364,16 +317,6 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 				}
 			});
 		})
-
-		function getData() {
-			$.ajaxSettings.async = false;
-			var data = null;
-			$.getJSON("pear.config.json?fresh=" + Math.random(), function(result) {
-				data = result;
-			});
-			$.ajaxSettings.async = true;
-			return data;
-		}
 		
 		$('body').on('click', '[data-select-bgcolor]', function() {
 			var theme = $(this).attr('data-select-bgcolor');
@@ -391,6 +334,24 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 			var color = getColorById(colorId);
 			pearAdmin.colorSet(color.color);
 		});
+		
+		function getData() {
+			$.ajaxSettings.async = false;
+			var data = null;
+			$.getJSON("pear.config.json?fresh=" + Math.random(), function(result) {
+				data = result;
+			});
+			$.ajaxSettings.async = true;
+			return data;
+		}
+		
+		function readConfig(){
+		    var defer = $.Deferred();
+			$.getJSON("pear.config.json?fresh=" + Math.random(), function(result) {
+				 defer.resolve(result)
+			});
+		    return defer.promise();
+		}
 
 		function getColorById(id) {
 			var color;
@@ -431,6 +392,55 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 			return "<div class='select-color'><div class='select-color-title'>主题色</div><div class='select-color-content'>" +
 				colors + "</div></div>"
 		}
+		
+		function compatible() {
+			if ($(window).width() <= 768) {
+				sideMenu.collaspe();
+				if ($(".pear-admin").is(".pear-mini")) {
+					$(".layui-icon-spread-left").addClass("layui-icon-shrink-right")
+					$(".layui-icon-spread-left").removeClass("layui-icon-spread-left")
+					$(".pear-admin").removeClass("pear-mini");
+				} else {
+					$(".layui-icon-shrink-right").addClass("layui-icon-spread-left")
+					$(".layui-icon-shrink-right").removeClass("layui-icon-shrink-right")
+					$(".pear-admin").addClass("pear-mini");
+				}
+			}
+		}
+		
+		function screenFun(num) {
+			num = num || 1;
+			num = num * 1;
+			var docElm = document.documentElement;
+			switch (num) {
+				case 1:
+					if (docElm.requestFullscreen) {
+						docElm.requestFullscreen();
+					} else if (docElm.mozRequestFullScreen) {
+						docElm.mozRequestFullScreen();
+					} else if (docElm.webkitRequestFullScreen) {
+						docElm.webkitRequestFullScreen();
+					} else if (docElm.msRequestFullscreen) {
+						docElm.msRequestFullscreen();
+					}
+					break;
+				case 2:
+					if (document.exitFullscreen) {
+						document.exitFullscreen();
+					} else if (document.mozCancelFullScreen) {
+						document.mozCancelFullScreen();
+					} else if (document.webkitCancelFullScreen) {
+						document.webkitCancelFullScreen();
+					} else if (document.msExitFullscreen) {
+						document.msExitFullscreen();
+					}
+					break;
+			}
+			return new Promise(function(res, rej) {
+				res("返回值");
+			});
+		}
+		
 		exports('admin', pearAdmin);
 	})
 	
