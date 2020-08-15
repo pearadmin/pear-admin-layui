@@ -209,9 +209,9 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 				if ($("iframe").contents().find("#customTheme").length > 0) {
 					$("iframe").contents().find("#customTheme").remove();
 				}
-				var theme = "<style>";
+				/* var theme = "<style>";
 				theme += '</style>';
-				$("iframe").contents().find("head").append(theme);
+				$("iframe").contents().find("head").append(theme); */
 				$("#pearadmin-bg-color").html(style);
 			}
 		};
