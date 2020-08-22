@@ -46,17 +46,13 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 				createMenu(option);
 			}
 		}
-
 		element.init();
-
 		downShow(option);
-
 		option.done();
 		return new pearMenu(option);
 	}
 
 	pearMenu.prototype.click = function(clickEvent) {
-
 		var _this = this;
 		$("#" + _this.option.elem + " .site-demo-active").parent().click(function() {
 			var dom = $(this).children(".site-demo-active");
@@ -67,9 +63,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 				menuIcon: dom.attr("menu-icon"),
 				menuUrl: dom.attr("menu-url")
 			};
-
 			var doms = hash(dom);
-
 			if (doms.text() != '') {
 				data['menuPath'] = doms.find("span").text() + " / " + data['menuPath'];
 			}
@@ -89,14 +83,12 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 		return dom.parent().parent().prev();
 	}
 
-
 	pearMenu.prototype.skin = function(skin) {
 		var menu = $(".pear-nav-tree[lay-filter='" + this.option.elem + "']").parent();
 		menu.removeClass("dark-theme");
 		menu.removeClass("light-theme");
 		menu.addClass(skin);
 	}
-
 
 	pearMenu.prototype.selectItem = function(pearId) {
 
@@ -114,15 +106,12 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 			$("#" + this.option.control).find(".layui-this").removeClass("layui-this");
 			$("#" + this.option.control).find("[pear-id='" + controlId + "']").addClass("layui-this");
 		}
-
 		if (this.option.accordion == true) {
 			$("#" + this.option.elem + " a[menu-id='" + pearId + "']").parents(".pear-nav-tree").find(".layui-nav-itemed").removeClass(
 				"layui-nav-itemed");
 		}
-
 		$("#" + this.option.elem + " a[menu-id='" + pearId + "']").parents(".pear-nav-tree").find(".layui-this").removeClass(
 			"layui-this");
-
 		if (!$("#" + this.option.elem).is(".pear-nav-mini")) {
 			$("#" + this.option.elem + " a[menu-id='" + pearId + "']").parents(".layui-nav-item").addClass("layui-nav-itemed");
 			$("#" + this.option.elem + " a[menu-id='" + pearId + "']").parents("dd").addClass("layui-nav-itemed");
@@ -131,14 +120,10 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 		$("#" + this.option.elem + " a[menu-id='" + pearId + "']").parent().addClass("layui-this");
 	}
 
-
 	var activeMenus;
-
 	pearMenu.prototype.collaspe = function(time) {
-
 		var elem = this.option.elem;
 		var config = this.option;
-
 		if ($("#" + this.option.elem).is(".pear-nav-mini")) {
 			$.each(activeMenus, function(i, item) {
 				$("#" + elem + " a[menu-id='" + $(this).attr("menu-id") + "']").parent().addClass("layui-nav-itemed");
@@ -212,9 +197,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 	}
 
 	function createMenuAndControl(option) {
-
 		var control = '<ul class="layui-nav  pear-nav-control pc layui-hide-xs">';
-		
 		var controlPe = '<ul class="layui-nav pear-nav-control layui-hide-sm">';
 		// 声 明 头 部
 		var menu = '<div class="layui-side-scroll ' + option.theme + '">'
@@ -231,9 +214,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 					'" class="layui-nav arrow layui-nav-tree pear-nav-tree">';
 			    // 兼容移动端
 			    controlPe += '<li class="layui-nav-item"><a class="pe-title" href="javascript:;" >'+ item.title +'</a>';
-				
 				controlItemPe += '<dd  pear-href="' + item.href + '" pear-title="' + item.title + '" pear-id="' + item.id +'"><a href="javascript:void(0);">'+ item.title +'</a></dd>';
-				
 			} else {
 				controlItem = '<li  pear-href="' + item.href + '" pear-title="' + item.title + '" pear-id="' + item.id +
 					'" class="layui-nav-item"><a href="#">' + item.title + '</a></li>';
@@ -379,39 +360,27 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 	function isHoverMenu(b, option) {
 		if (b) {
 			$("#" + option.elem + ".pear-nav-mini .layui-nav-item,#" + option.elem + ".pear-nav-mini dd").hover(function() {
-
 				$(this).children(".layui-nav-child").addClass("layui-nav-hover");
-
 				var top = $(this).offset().top + 5;
-
 				if (!$(this).is(".layui-nav-item")) {
-
 					var left = $(this).offset().left + 132;
-
 					$(this).children(".layui-nav-child").offset({
 						left: left
 					});
-
 				} else {
 					var left = $(this).offset().left + 62;
-
 					$(this).children(".layui-nav-child").offset({
 						left: left
 					});
-
 				}
 				$(this).children(".layui-nav-child").offset({
 					top: top
 				});
-
 			}, function() {
-
 				$(this).children(".layui-nav-child").removeClass("layui-nav-hover");
-
 				$(this).children(".layui-nav-child").css({
 					left: '0px'
 				});
-
 				$(this).children(".layui-nav-child").css({
 					top: '0px'
 				});
