@@ -191,6 +191,30 @@
 		}]
 	},
 	{
+		"id": "result",
+		"title": "结果页面",
+		"icon": "layui-icon layui-icon-auz",
+		"type": 0,
+		"href": "",
+		"children": [{
+				"id": "success",
+				"title": "成功",
+				"icon": "layui-icon layui-icon-face-smile",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/result/success.html"
+			},
+			{
+				"id": "failure",
+				"title": "失败",
+				"icon": "layui-icon layui-icon-face-cry",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/result/error.html"
+			}
+		]
+	},
+	{
 		"id": "error",
 		"title": "错误页面",
 		"icon": "layui-icon layui-icon-auz",
