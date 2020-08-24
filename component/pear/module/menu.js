@@ -361,7 +361,19 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 		if (b) {
 			$("#" + option.elem + ".pear-nav-mini .layui-nav-item,#" + option.elem + ".pear-nav-mini dd").hover(function() {
 				$(this).children(".layui-nav-child").addClass("layui-nav-hover");
+				
 				var top = $(this).offset().top + 5;
+				var y = window.document.body.clientHeight;
+				
+				var height = $(window).height();
+				
+				var topLength = $(this).offset().top;
+				
+				var thisHeight = $(this).children(".layui-nav-child").height();
+				
+				if((thisHeight+topLength)>height){
+				      topLength = height-thisHeight-10;	
+				}
 				if (!$(this).is(".layui-nav-item")) {
 					var left = $(this).offset().left + 132;
 					$(this).children(".layui-nav-child").offset({
@@ -374,7 +386,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 					});
 				}
 				$(this).children(".layui-nav-child").offset({
-					top: top
+					top: topLength
 				});
 			}, function() {
 				$(this).children(".layui-nav-child").removeClass("layui-nav-hover");
