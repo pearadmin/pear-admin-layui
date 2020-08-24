@@ -375,7 +375,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 				      topLength = height-thisHeight-10;	
 				}
 				if (!$(this).is(".layui-nav-item")) {
-					var left = $(this).offset().left + 132;
+					var left = $(this).offset().left + $(this).width()+2;
 					$(this).children(".layui-nav-child").offset({
 						left: left
 					});
