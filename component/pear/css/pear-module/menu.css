@@ -109,23 +109,18 @@
 	padding-bottom: 4px !important;
 	box-shadow: 0px 0px 3px lightgray;
 }
-
 .pear-nav-tree .layui-nav-hover a span {
 	display: inline-block !important;
 }
-
 .pear-nav-tree .layui-nav-hover a i {
 	display: none;
 }
-
 .pear-nav-tree .layui-nav-child dd a span {
 	margin-left: 30px !important;
 }
-
 .pear-nav-tree .layui-nav-child dd a i {
 	display: none;
 }
-
 .pear-nav-tree .layui-nav-hover dd a span {
 	margin-left: 0px !important;
 }
