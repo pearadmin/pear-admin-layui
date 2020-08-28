@@ -76,15 +76,15 @@ QQ 群: 682110771
 
 ![](readme/8.jpg)
 
-### 基于 Pear Admin Layui 的项目应用
-
-Pear-Admin-Boot : [开源地址](https://gitee.com/Jmysy/Pear-Admin-Boot) :+1: 
-
 ### 优秀开源推荐
 
-SpringBoot 后台管理系统：[SpringBoot_v2](http://gitee.com/bdj/SpringBoot_v2)
+后台管理系统  [pear admin boot](https://gitee.com/Jmysy/Pear-Admin-Boot)
 
-SpringBoot 开源组件库: [Api Boot](https://apiboot.minbox.io)
+后台管理系统：[springboot v2](http://gitee.com/bdj/SpringBoot_v2)
+
+积木组件库: [api boot](https://apiboot.minbox.io)
+
+顺序消息管道 [message pipe](https://gitee.com/minbox-projects/message-pipe)
 
 本框架为开源框架，Apache 开源协议，支持商用，学习
 
