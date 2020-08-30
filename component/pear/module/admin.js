@@ -14,10 +14,10 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 		var bodyTab;
 
 		var pearAdmin = new function() {
-			this.render = function() {
+			this.render = function(option) {
 				readConfig().then(function(param){
 					pearAdmin.logoRender(param);
-					pearAdmin.menuRender(param);
+					pearAdmin.menuRender(param,option);
 					pearAdmin.bodyRender(param);
 					pearAdmin.themeRender(param);
 					pearAdmin.keepLoad(param);
@@ -29,7 +29,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 				$(".layui-logo .title").html(param.logo.title);
 			}
 			
-			this.menuRender = function(param) {
+			this.menuRender = function(param,option) {
 				sideMenu = pearMenu.render({
 					elem: 'sideMenu',
 					async: true,
@@ -38,7 +38,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 					control: param.menu.control ? 'control' : false, // control 
 					defaultMenu: 0,
 					accordion: param.menu.accordion,
-					url: param.menu.data,
+					url: param.menu.data+"?currentUser="+option.currentUser,
 					parseData: false,
 					change:function(){
 						compatible();
