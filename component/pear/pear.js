@@ -28,5 +28,6 @@ layui.config({
 	area:"area",
 	count:"count",
 	topBar: "topBar",
-	button: "button"
+	button: "button",
+	design: "design"
 });
