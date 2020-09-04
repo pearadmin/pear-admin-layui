@@ -20,8 +20,8 @@
 		}
 	},
 	"theme": {
-		"defaultColor": "2",
-		"defaultMenu": "dark-theme",
+		"defaultColor": "3",
+		"defaultMenu": "light-theme",
 		"allowCustom": true
 	},
 	"colors": [{

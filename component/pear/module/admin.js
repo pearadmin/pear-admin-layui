@@ -142,11 +142,12 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 				}
 				var colorId = localStorage.getItem("theme-color");
 				var menu = localStorage.getItem("theme-menu");
+				console.log("主题标识:"+colorId);
+				console.log("菜单主题:"+menu);
 				var color = getColorById(colorId);
 				if (menu == "null") {
 					menu = option.theme.defaultMenu;
 				} else {
-
 					if (option.theme.allowCustom == false) {
 						menu = option.theme.defaultMenu;
 					}
@@ -209,9 +210,6 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 				if ($("iframe").contents().find("#customTheme").length > 0) {
 					$("iframe").contents().find("#customTheme").remove();
 				}
-				/* var theme = "<style>";
-				theme += '</style>';
-				$("iframe").contents().find("head").append(theme); */
 				$("#pearadmin-bg-color").html(style);
 			}
 		};
