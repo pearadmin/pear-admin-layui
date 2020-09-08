@@ -10,7 +10,8 @@
     开 箱 即 用 的 前 后 端 解 决 方 案
   </h4> 
 
-  [预 览](http://layui.pearadmin.com)   |   [官 网](http://www.pearadmin.com/)   |   [交 流](https://jq.qq.com/?_wv=1027&k=5OdSmve)
+  [预 览](http://layui.pearadmin.com)   |   [官 网](http://www.pearadmin.com/)   |   [群聊](https://jq.qq.com/?_wv=1027&k=5OdSmve)   |   [社区](http://fly.pearadmin.com/posts)
+
 
 </div>
 
