@@ -29,5 +29,6 @@ layui.config({
 	count:"count",
 	topBar: "topBar",
 	button: "button",
-	design: "design"
+	design: "design",
+	dropdown: "dropdown"
 });
