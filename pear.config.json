@@ -57,6 +57,11 @@
 			"icon": "layui-icon layui-icon-fonts-code",
 			"title": "开源地址",
 			"href": "https://gitee.com/Jmysy/Pear-Admin-Layui"
+		},
+		{
+			"icon": "layui-icon layui-icon-fonts-code",
+			"title": "问答社区",
+			"href": "http://http://forum.pearadmin.com/"
 		}
 	],
 	"other": {
