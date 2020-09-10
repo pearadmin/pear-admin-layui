@@ -74,7 +74,6 @@ layui.define(['jquery', 'element'], function(exports) {
 				autoLeft += $(this).outerWidth();
 			}
 		});
-
 		$tabTitle.animate({
 			scrollLeft: autoLeft - $tabTitle.width() / 3
 		}, 200);
@@ -125,24 +124,16 @@ layui.define(['jquery', 'element'], function(exports) {
 					'<span></span><span></span><span></span><span></span>' +
 					'</div>' +
 					'</div>'
-
 				$("#" + elem).find(".pear-tab").append(load);
-
 				var pearLoad = $("#" + elem).find("#pear-tab-loading" + index);
-
 				pearLoad.css({
 					display: "block"
 				});
-
 				setTimeout(function() {
-
 					pearLoad.fadeOut(500);
-
 				}, time);
-
 				index++;
 			}
-
 			element.tabAdd(elem, {
 				title: title,
 				content: '<iframe id="' + opt.id + '" data-frameid="' + opt.id + '" scrolling="auto" frameborder="0" src="' +
@@ -150,21 +141,15 @@ layui.define(['jquery', 'element'], function(exports) {
 				id: opt.id
 			});
 		} else {
-
 			var isData = false;
-
 			$.each($(".layui-tab[lay-filter='" + elem + "'] .layui-tab-title li[lay-id]"), function() {
-
 				if ($(this).attr("lay-id") == opt.id) {
-
 					isData = true;
 				}
 			})
 
 			if (isData == false) {
-
 				if (time != false && time != 0) {
-
 					var load = '<div id="pear-tab-loading' + index + '" class="pear-tab-loading">' +
 						'<div class="ball-loader">' +
 						'<span></span><span></span><span></span><span></span>' +
@@ -172,30 +157,21 @@ layui.define(['jquery', 'element'], function(exports) {
 						'</div>'
 
 					$("#" + elem).find(".pear-tab").append(load);
-
 					var pearLoad = $("#" + elem).find("#pear-tab-loading" + index);
-
 					pearLoad.css({
 						display: "block"
 					});
-
 					setTimeout(function() {
-
 						pearLoad.fadeOut(500);
-
 					}, time);
-
 					index++;
 				}
-
 				element.tabAdd(elem, {
 					title: title,
 					content: '<iframe id="' + opt.id + '" data-frameid="' + opt.id + '" scrolling="auto" frameborder="0" src="' +
 						opt.url + '" style="width:100%;height:100%;"></iframe>',
 					id: opt.id
 				});
-
-
 			}
 		}
 		element.tabChange(elem, opt.id);
@@ -230,32 +206,22 @@ layui.define(['jquery', 'element'], function(exports) {
 					'</div>'
 
 				$("#" + this.option.elem).find(".pear-tab").append(load);
-
 				var pearLoad = $("#" + this.option.elem).find("#pear-tab-loading" + index);
-
 				pearLoad.css({
 					display: "block"
 				});
 
 				setTimeout(function() {
-
 					pearLoad.fadeOut(500);
-
 				}, time);
-
 				index++;
 			}
-
-
 			element.tabAdd(this.option.elem, {
 				title: title,
 				content: '<iframe id="' + opt.id + '" data-frameid="' + opt.id + '" scrolling="auto" frameborder="0" src="' +
 					opt.url + '" style="width:100%;height:100%;"></iframe>',
 				id: opt.id
 			});
-
-
-
 		} else {
 
 			var isData = false;
@@ -269,7 +235,6 @@ layui.define(['jquery', 'element'], function(exports) {
 				});
 				return false;
 			}
-
 
 			$.each($(".layui-tab[lay-filter='" + this.option.elem + "'] .layui-tab-title li[lay-id]"), function() {
 
@@ -289,19 +254,14 @@ layui.define(['jquery', 'element'], function(exports) {
 						'</div>'
 
 					$("#" + this.option.elem).find(".pear-tab").append(load);
-
 					var pearLoad = $("#" + this.option.elem).find("#pear-tab-loading" + index);
-
 					pearLoad.css({
 						display: "block"
 					});
 
 					setTimeout(function() {
-
 						pearLoad.fadeOut(500);
-
 					}, time);
-
 					index++;
 				}
 
@@ -311,8 +271,6 @@ layui.define(['jquery', 'element'], function(exports) {
 						opt.url + '" style="width:100%;height:100%;"></iframe>',
 					id: opt.id
 				});
-
-
 			}
 		}
 		element.tabChange(this.option.elem, opt.id);
@@ -332,28 +290,20 @@ layui.define(['jquery', 'element'], function(exports) {
 				'</div>'
 
             var elem =  this.option.elem;
-
 			$("#" + this.option.elem).find(".pear-tab").append(load);
-
 			var pearLoad = $("#" + this.option.elem).find("#pear-tab-loading" + index);
-
 			pearLoad.css({
 				display: "block"
 			});
-			
 			index++;
-
 			setTimeout(function() {
 				pearLoad.fadeOut(500,function(){
 					pearLoad.remove();
 				});       
 			}, time);
-			
 			$(".layui-tab[lay-filter='" + elem + "'] .layui-tab-content .layui-show").find("iframe")[0].contentWindow
 				.location.reload(true);
-				
 		} else {
-			
 			$(".layui-tab[lay-filter='" + this.option.elem + "'] .layui-tab-content .layui-show").find("iframe")[0].contentWindow
 				.location.reload(true);
 		}
