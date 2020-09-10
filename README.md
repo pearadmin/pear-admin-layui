@@ -52,6 +52,12 @@ GitHub 开源地址 ：https://github.com/Jmysy/Pear-Admin-Layui
 
 QQ 群: 682110771
 
+#### 开源共建
+
+1. 欢迎提交 [pull request](https://gitee.com/Jmysy/Pear-Admin-Layui/pulls)，注意对应提交对应 `master` 分支
+
+2. 欢迎提交 [issue](https://gitee.com/Jmysy/Pear-Admin-Layui/issues)，请写清楚遇到问题的原因、开发环境、复显步骤。
+
 #### 项目演示
 
 ![](readme/1.jpg)
