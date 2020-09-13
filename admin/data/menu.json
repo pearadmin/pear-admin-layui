@@ -298,19 +298,33 @@
 		"type": 0,
 		"href": "",
 		"children": [{
-				"id": 701,
-				"title": "登录页面",
-				"icon": "layui-icon layui-icon-face-smile",
-				"type": 1,
-				"openType": "_iframe",
-				"href": "login.html"
+			"id": 701,
+			"title": "登录页面",
+			"icon": "layui-icon layui-icon-face-smile",
+			"type": 1,
+			"openType": "_iframe",
+			"href": "login.html"
 		},{
-				"id": 702,
-				"title": "空白页面",
-				"icon": "layui-icon layui-icon-face-smile",
-				"type": 1,
-				"openType": "_iframe",
-				"href": "view/system/space.html"
+			"id": 702,
+			"title": "空白页面",
+			"icon": "layui-icon layui-icon-face-smile",
+			"type": 1,
+			"openType": "_iframe",
+			"href": "view/system/space.html"
+		},{
+			"id": 703,
+			"title": "基本详情",
+			"icon": "layui-icon layui-icon-face-smile",
+			"type": 1,
+			"openType": "_iframe",
+			"href": "view/document/basicDetail.html"
+		},{
+			"id": 704,
+			"title": "高级详情",
+			"icon": "layui-icon layui-icon-face-smile",
+			"type": 1,
+			"openType": "_iframe",
+			"href": "view/document/SeniorDetail.html"
 		}]
 	},
 	{

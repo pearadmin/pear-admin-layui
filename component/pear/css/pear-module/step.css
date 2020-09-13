@@ -12,6 +12,7 @@
     line-height: 35px;
     position: relative;
     font-size: 15px;
+    vertical-align: top;
 }
 
 .step-item-tail {
@@ -71,6 +72,10 @@
 }
 
 .step-item-main-desc {
+    color: #aaaaaa;
+}
+
+.step-item-main-time {
     color: #aaaaaa;
 }
 
