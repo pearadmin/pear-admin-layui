@@ -33,13 +33,17 @@ layui.define(['layer', 'carousel'], function (exports) {
             // 标题和描述
             var title = stepItems[i].title;
             var desc = stepItems[i].desc;
-            if (title || desc) {
+            var time = stepItems[i].time;
+            if (title || desc || time) {
                 stepDiv += '<div class="step-item-main">';
                 if (title) {
                     stepDiv += '<div class="step-item-main-title">' + title + '</div>';
                 }
                 if (desc) {
                     stepDiv += '<div class="step-item-main-desc">' + desc + '</div>';
+                }
+                if (time) {
+                    stepDiv += '<div class="step-item-main-time">' + time + '</div>';
                 }
                 stepDiv += '</div>';
             }
@@ -57,9 +61,9 @@ layui.define(['layer', 'carousel'], function (exports) {
     var pearStep = {
         // 渲染步骤条
         render: function (param) {
-            param.indicator = 'none';  // 不显示指示器
-            param.arrow = 'always';  // 始终显示箭头
-            param.autoplay = false;  // 关闭自动播放
+            param.indicator = 'none'; // 不显示指示器
+            param.arrow = 'always'; // 始终显示箭头
+            param.autoplay = false; // 关闭自动播放
             if (!param.stepWidth) {
                 param.stepWidth = '400px';
             }
