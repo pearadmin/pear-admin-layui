@@ -287,6 +287,14 @@
 				"type": 1,
 				"openType": "_iframe",
 				"href": "view/system/deptment.html"
+			},
+			{
+				"id": 605,
+				"title": "行为日志",
+				"icon": "layui-icon layui-icon-face-cry",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/system/logging.html"
 			}
 
 		]
