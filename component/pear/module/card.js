@@ -52,7 +52,7 @@ layui.define(['table', 'laypage','jquery', 'element'], function(exports) {
 	}
 
 	function createComponent(data) {
-        var html = "<div class='pear-card'>"
+        var html = "<div class='pear-card-component'>"
         var content = createCards(data);
         var page = "<div id='cardpage'></div>"
         content = content + page;
