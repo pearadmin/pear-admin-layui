@@ -14,7 +14,6 @@ layui.config({
 	echarts: "echarts",
 	echartsTheme: "echartsTheme",
 	hash: "hash",
-	document: "document",
 	select: "select",
 	drawer: "drawer",
 	notice: "notice",
@@ -30,5 +29,6 @@ layui.config({
 	topBar: "topBar",
 	button: "button",
 	design: "design",
-	dropdown: "dropdown"
+	dropdown: "dropdown",
+	card: "card"
 });

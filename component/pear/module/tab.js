@@ -362,7 +362,6 @@ layui.define(['jquery', 'element'], function(exports) {
 
 	}
 
-
 	function createTab(option) {
 
 		var type = "";
@@ -440,9 +439,6 @@ layui.define(['jquery', 'element'], function(exports) {
 
 		title += '</ul>';
 		content += '</div>';
-
-		// 处 理 工 具 栏 
-
 		control += '<dd id="closeThis"><a href="#">关 闭 当 前</a></dd>'
 		control += '<dd id="closeOther"><a href="#">关 闭 其 他</a></dd>'
 		control += '<dd id="closeAll"><a href="#">关 闭 全 部</a></dd>'
@@ -507,7 +503,6 @@ layui.define(['jquery', 'element'], function(exports) {
 		})
 
 		$("body .layui-tab[lay-filter='" + option.elem + "']").on("click", "#closeAll", function() {
-
 			var currentId = $(".layui-tab[lay-filter='" + option.elem + "'] .layui-tab-title .layui-this").attr("lay-id");
 			var tabtitle = $(".layui-tab[lay-filter='" + option.elem + "'] .layui-tab-title li");
 			$.each(tabtitle, function(i) {
