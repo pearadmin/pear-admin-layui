@@ -8,7 +8,7 @@ layui.define(['layer', 'jquery', 'element'], function(exports) {
 
 	var popup = new function() {
 
-		this.success = function(msg) {
+			this.success = function(msg) {
 				layer.msg(msg, {
 					icon: 1,
 					time: 1000
