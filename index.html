@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-		<title>Pear Admin Layui</title> 
+		<title>Pear Admin Layui</title>
 		<!-- 依 赖 样 式 -->
 		<link rel="stylesheet" href="component/pear/css/pear.css" />
 		<link rel="stylesheet" href="admin/css/load.css" />
@@ -28,7 +28,7 @@
 					<li class="layui-nav-item layui-hide-xs"><a href="http://www.pearadmin.com" class="layui-icon layui-icon-website"></a></li>
 					<li class="layui-nav-item">
 						<!-- 头 像 -->
-						<a href="javascript:;" >
+						<a href="javascript:;">
 							<img src="admin/images/avatar.jpg" class="layui-nav-img">
 							就眠仪式
 						</a>
@@ -45,7 +45,7 @@
 			<div class="layui-side layui-bg-black">
 				<!-- 顶 部 图 标 -->
 				<div class="layui-logo">
-					<img  class="logo"></img>
+					<img class="logo"></img>
 					<span class="title"></span>
 				</div>
 				<!-- 侧 边 菜 单 -->
@@ -70,7 +70,9 @@
 			layui.use(['admin'], function() {
 				var admin = layui.admin;
 
-				admin.render({currentUser:"admin"});
+				admin.render({
+					currentUser: "admin"
+				});
 			})
 		</script>
 	</body>
