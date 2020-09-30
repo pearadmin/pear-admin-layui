@@ -7,7 +7,6 @@ layui.define(['jquery', 'element','util'], function(exports) {
 		element = layui.element;
 	
 	var topBar = new function() {
-		
 		util.fixbar({});
 	}
 	exports(MOD_NAME,topBar);

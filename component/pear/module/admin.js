@@ -136,8 +136,8 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 			this.keepLoad = function(param) {
 				compatible()
 				setTimeout(function() {
-					$(".loader-main").fadeOut(200);
-				}, param.other.keepLoad)
+					$(".loader-main").fadeOut(400);
+				}, 2500)
 			}
 
 			this.themeRender = function(option) {
