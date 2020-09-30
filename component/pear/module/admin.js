@@ -137,7 +137,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 				compatible()
 				setTimeout(function() {
 					$(".loader-main").fadeOut(400);
-				}, 2500)
+				}, 2000)
 			}
 
 			this.themeRender = function(option) {
