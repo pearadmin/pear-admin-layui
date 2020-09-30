@@ -25,58 +25,56 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 			theme: opt.theme,
 			data: opt.data ? opt.data : [],
 			change: opt.change ? opt.change : function() {
-				console.log("切换")
 			},
 			done: opt.done ? opt.done : function() {}
 		}
 
-		// 根 据 请 求 方 式 获 取 数 据
 		if (option.async) {
-			option.data = getData(option.url);
-			if (option.parseData != false) {
-				option.parseData(option.data);
-			}
+			getData(option.url).then(function(data){
+				option.data = data;
+				if (option.parseData != false) {
+					option.parseData(option.data);
+				}
+				if (option.data.length > 0) {
+					if (option.control != false) {
+						createMenuAndControl(option);
+					} else {
+						createMenu(option);
+					}
+				}
+				element.init();
+				downShow(option);
+				option.done();
+			});
 		}
-
-		if (option.data.length > 0) {
-			if (option.control != false) {
-
-				createMenuAndControl(option);
-			} else {
-				createMenu(option);
-			}
-		}
-		element.init();
-		downShow(option);
-		option.done();
-		return new pearMenu(option);
+		return new pearMenu(opt);
 	}
 
 	pearMenu.prototype.click = function(clickEvent) {
 		var _this = this;
-		$("#" + _this.option.elem + " .site-demo-active").parent().click(function() {
-			var dom = $(this).children(".site-demo-active");
-			var data = {
-				menuId: dom.attr("menu-id"),
-				menuTitle: dom.attr("menu-title"),
-				menuPath: dom.attr("menu-title"),
-				menuIcon: dom.attr("menu-icon"),
-				menuUrl: dom.attr("menu-url")
-			};
-			var doms = hash(dom);
-			if (doms.text() != '') {
-				data['menuPath'] = doms.find("span").text() + " / " + data['menuPath'];
-			}
-			var domss = hash(doms);
-			if (domss.text() != '') {
-				data['menuPath'] = domss.find("span").text() + " / " + data['menuPath'];
-			}
-			var domsss = hash(domss);
-			if (domsss.text() != '') {
-				data['menuPath'] = domsss.find("span").text() + " / " + data['menuPath'];
-			}
-			clickEvent(dom, data);
-		});
+		$("body").on("click","#" + _this.option.elem + " .site-demo-active",function(){
+				var dom = $(this);
+				var data = {
+					menuId: dom.attr("menu-id"),
+					menuTitle: dom.attr("menu-title"),
+					menuPath: dom.attr("menu-title"),
+					menuIcon: dom.attr("menu-icon"),
+					menuUrl: dom.attr("menu-url")
+				};
+				var doms = hash(dom);
+				if (doms.text() != '') {
+					data['menuPath'] = doms.find("span").text() + " / " + data['menuPath'];
+				}
+				var domss = hash(doms);
+				if (domss.text() != '') {
+					data['menuPath'] = domss.find("span").text() + " / " + data['menuPath'];
+				}
+				var domsss = hash(domss);
+				if (domsss.text() != '') {
+					data['menuPath'] = domsss.find("span").text() + " / " + data['menuPath'];
+				}
+				clickEvent(dom, data);
+		})
 	}
 
 	function hash(dom) {
@@ -91,7 +89,6 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 	}
 
 	pearMenu.prototype.selectItem = function(pearId) {
-
 		if (this.option.control != false) {
 			$("#" + this.option.elem + " a[menu-id='" + pearId + "']").parents(".layui-side-scroll ").find("ul").css({
 				display: "none"
@@ -144,19 +141,15 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 
 		}
 	}
-
-	/** 同 步 请 求 获 取 数 据 */
-	function getData(url) {
-		$.ajaxSettings.async = false;
-		var data = null;
-		$.get(url+"&fresh=" + Math.random(), function(result) {
-			data = result;
+	
+	function getData(url){
+	    var defer = $.Deferred();
+		$.get(url+"?fresh=" + Math.random(), function(result) {
+			 defer.resolve(result)
 		});
-		$.ajaxSettings.async = true;
-		return data;
+	    return defer.promise();
 	}
-
-
+	
 	function createMenu(option) {
 		var menuHtml = '<ul lay-filter="' + option.elem +
 			'" class="layui-nav arrow   pear-menu layui-nav-tree pear-nav-tree">'

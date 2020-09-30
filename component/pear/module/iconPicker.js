@@ -1,9 +1,3 @@
-/**
- * Layui图标选择器
- * @author wujiawei0926@yeah.net
- * @version 1.1
- */
-
 layui.define(['laypage', 'form'], function (exports) {
     "use strict";
 
@@ -17,9 +11,6 @@ layui.define(['laypage', 'form'], function (exports) {
         BODY = 'body',
         TIPS = '请选择图标';
 
-    /**
-     * 渲染组件
-     */
     IconPicker.prototype.render = function(options){
         var opts = options,
             // DOM选择器

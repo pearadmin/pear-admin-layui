@@ -7,14 +7,14 @@
 		"data": "admin/data/menu.json",
 		"accordion": true,
 		"control": false,
-		"select": "0"
+		"select": "10"
 	},
 	"tab": {
 		"muiltTab": true,
 		"keepState": true,
 		"tabMax": 30,
 		"index": {
-			"id": "0",
+			"id": "10",
 			"href": "view/console/console1.html",
 			"title": "首页"
 		}
