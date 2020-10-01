@@ -16,7 +16,9 @@
 </div>
 
 <p align="center">
-    <img src="https://www.travis-ci.org/hengboy/api-boot.svg?branch=master" alt="build">
+    <a href="#">
+        <img src="https://img.shields.io/badge/Pear Admin Layui-3.1.0+-green.svg" alt="Pear Admin Layui Version">
+    </a>
     <a href="#">
         <img src="https://img.shields.io/badge/JQuery-2.0+-green.svg" alt="Jquery Version">
     </a>
