@@ -83,7 +83,7 @@ QQ 群: 682110771
 
 ![](readme/8.jpg)
 
-### 优秀开源推荐
+### 开源推荐
 
 后台管理系统  [pear admin boot](https://gitee.com/Jmysy/Pear-Admin-Boot)
 
