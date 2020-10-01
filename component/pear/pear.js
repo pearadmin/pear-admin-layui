@@ -30,5 +30,6 @@ layui.config({
 	button: "button",
 	design: "design",
 	dropdown: "dropdown",
-	card: "card"
+	card: "card",
+	loading: "loading"
 });

@@ -141,6 +141,13 @@
 				"type": 1,
 				"openType": "_iframe",
 				"href": "view/document/notice.html"
+			},{
+				"id": 2024,
+				"title": "加载组件",
+				"icon": "layui-icon layui-icon-face-cry",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/document/loading.html"
 			}, {
 				"id": 2023,
 				"title": "弹出层",
