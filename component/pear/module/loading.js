@@ -8,40 +8,32 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
     var pearOper = new function () {
         
 		this.blockRemove = function(dom,time){
-			
 			Notiflix.Block.Remove(dom, time);
 		}
-		
 		
 		this.block = function(option){
 			
 			if(option.type==1){
-				
 				Notiflix.Block.Standard(
 				option.elem
 				,option.msg);
-				
 			}
-			
 			else if(option.type==2){
 				Notiflix.Block.Hourglass(
 				option.elem
 				,option.msg);
 			}
 			else if(option.type==3){
-			
-			Notiflix.Block.Circle(
+				Notiflix.Block.Circle(
 				option.elem
 				,option.msg);
 			}
-			
 			else if(option.type==4){
 				
 				Notiflix.Block.Arrows(
 				option.elem
 				,option.msg);
 			}
-			
 			else if(option.type==5){
 				
 				
@@ -51,75 +43,53 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 			}
 			
 			else if(option.type==6){
-				
 				Notiflix.Block.Pulse(
 				option.elem
 				,option.msg);
 			}
 		}
 		
-		
-		
 		this.report = function(option){
-			
-		
 			if(option.type=="success"){
-				
 				Notiflix.Report.Success(
 				    option.title,
 				    option.message,'确认');	
-				
 			}else if(option.type=="failure"){
-				
 				Notiflix.Report.Failure(
 				    option.title,
 				    option.message,'确认');	
-				
 			}else if(option.type=="warning"){
-				
 				Notiflix.Report.Warning(
 				    option.title,
 				    option.message,'确认');	
-				
 			}else if(option.type=="info"){
-				
 				Notiflix.Report.Info(
 				    option.title,
 				    option.message,'确认');	
-					
 			}
 		}
 		
-		
 		this.notice = function(option){
-			
 			Notiflix.Notify.Init({
 				position:option.position?"right-top":option.position,
 				});
-			
-			
 			if(option.type=="success"){
 				
 				Notiflix.Notify.Success(option.title);
-				
 			}else if(option.type=="failure"){
 				
 				Notiflix.Notify.Failure(option.title);
-				
 			}else if(option.type=="warning"){
 				
-				Notiflix.Notify.Warning(option.title);
-				
+				Notiflix.Notify.Warning(option.title);	
 			}else if(option.type=="info"){
 				
-				Notiflix.Notify.Info(option.title);
-					
+				Notiflix.Notify.Info(option.title);	
 			}
 		}
 		
 		
 		this.confirm = function(option){
-			
 			Notiflix.Confirm.Show(
 			option.title,
 			option.message,
@@ -128,59 +98,37 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 			option.success,
 			option.cancle
 			);
-			
 		}
 		
 		this.drawer = function(position,dom,distance){
-			
 			var _right = new mSlider({
 			    dom: dom,
 			    direction: position,
 				distance:distance
 			});
-		 
 		    _right.open();
-			
 		}
 		
 		
 		this.loadRemove = function(time){
-			
 			Notiflix.Loading.Remove(time);
-		
 		}
 		
 		this.Load = function(type,message){
-			
 			if(type==1){
-				
 				Notiflix.Loading.Standard(message);
-				
 			}else if(type==2){
-				
 				Notiflix.Loading.Hourglass(message);
-			
 			}else if(type==3){
-				
 				Notiflix.Loading.Circle(message);
-				
 			}else if(type==4){
-				
 				Notiflix.Loading.Dots(message);
-			
 			}else if(type==5){
-			
 				Notiflix.Loading.Pulse(message);
-			
 			}
-			
 		}
 		
-		
-	
-		
 		this.msg = function(option){
-			
 			if(option.type=="success"){
 						   
 						   layer.msg(option.title,{icon:1,time:option.time},option.callback);
@@ -198,10 +146,6 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 						   layer.msg(option.title,{icon:4,time:option.time},option.callback);
 			}
 		}
-		
-		
-		
-		
     };
 	
 	// Notiflix: Notify Default Settings on
