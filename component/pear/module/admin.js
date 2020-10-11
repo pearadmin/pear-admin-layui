@@ -15,15 +15,14 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 		var config;
 
 		var pearAdmin = new function() {
-			this.render = function() {
-				readConfig().then(function(param){
-					config = param;
-					pearAdmin.logoRender(param);
-					pearAdmin.menuRender(param);
-					pearAdmin.bodyRender(param);
-					pearAdmin.themeRender(param);
-					pearAdmin.keepLoad(param);
-				}) 
+			this.render = function(initConfig) {
+				if (initConfig != undefined) {
+					applyConfig(initConfig);
+				} else {
+					readConfig().then(function(param) {
+						applyConfig(param);
+					});
+				}
 			}
 			
 			this.logoRender = function(param) {
@@ -226,7 +225,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 				$(".layui-icon-shrink-right").removeClass("layui-icon-shrink-right")
 				$(".pear-admin").addClass("pear-mini");
 			}
-		})
+		});
 
 		$("body").on("click", ".fullScreen", function() {
 			if ($(this).hasClass("layui-icon-screen-restore")) {
@@ -252,8 +251,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 			}else{
 				bodyFrame.changePage($(this).attr("user-menu-url"), "", true);
 			}
-		})
-
+		});
 
 		$("body").on("click", ".setting", function() {
 			var bgColorHtml =
@@ -318,7 +316,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 					})
 				}
 			});
-		})
+		});
 		
 		$('body').on('click', '[data-select-bgcolor]', function() {
 			var theme = $(this).attr('data-select-bgcolor');
@@ -343,6 +341,15 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 				 defer.resolve(result)
 			});
 		    return defer.promise();
+		}
+
+		function applyConfig(param){
+			config = param;
+			pearAdmin.logoRender(param);
+			pearAdmin.menuRender(param);
+			pearAdmin.bodyRender(param);
+			pearAdmin.themeRender(param);
+			pearAdmin.keepLoad(param);
 		}
 
 		function getColorById(id) {
