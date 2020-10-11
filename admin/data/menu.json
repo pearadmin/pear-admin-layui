@@ -334,6 +334,27 @@
 			"openType": "_iframe",
 			"href": "view/system/space.html"
 		}]
+	},{
+		"id": "echarts",
+		"title": "数据图表",
+		"icon": "layui-icon layui-icon-chart",
+		"type": 0,
+		"href": "",
+		"children": [{
+			"id": 12121,
+			"title": "折线图",
+			"icon": "layui-icon layui-icon-face-smile",
+			"type": 1,
+			"openType": "_iframe",
+			"href": "view/echarts/line.html"
+		},{
+			"id": 121212,
+			"title": "柱状图",
+			"icon": "layui-icon layui-icon-face-smile",
+			"type": 1,
+			"openType": "_iframe",
+			"href": "view/echarts/column.html"
+		}]
 	},
 	{
 		"id": "code",
