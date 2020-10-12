@@ -43,10 +43,10 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 					parseData: false,
 					change:function(){
 						compatible();
-					},done(){
-						sideMenu.selectItem(param.menu.select);
-					}
-				})
+					},
+					done:function(){}
+				});
+				sideMenu.selectItem(param.menu.select);
 			}
 			
 			this.bodyRender = function(param) {
