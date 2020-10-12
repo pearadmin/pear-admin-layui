@@ -24,29 +24,19 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 			height: opt.height,
 			theme: opt.theme,
 			data: opt.data ? opt.data : [],
-			change: opt.change ? opt.change : function() {
-			},
+			change: opt.change ? opt.change : function() {},
 			done: opt.done ? opt.done : function() {}
 		}
 
 		if (option.async) {
 			getData(option.url).then(function(data){
 				option.data = data;
-				if (option.parseData != false) {
-					option.parseData(option.data);
-				}
-				if (option.data.length > 0) {
-					if (option.control != false) {
-						createMenuAndControl(option);
-					} else {
-						createMenu(option);
-					}
-				}
-				element.init();
-				downShow(option);
-				option.done();
+				renderMenu(option);
 			});
+		} else {
+			renderMenu(option);
 		}
+
 		return new pearMenu(opt);
 	}
 
@@ -150,6 +140,22 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 	    return defer.promise();
 	}
 	
+	function renderMenu(option){
+		if (option.parseData != false) {
+			option.parseData(option.data);
+		}
+		if (option.data.length > 0) {
+			if (option.control != false) {
+				createMenuAndControl(option);
+			} else {
+				createMenu(option);
+			}
+		}
+		element.init();
+		downShow(option);
+		option.done();
+	}
+
 	function createMenu(option) {
 		var menuHtml = '<ul lay-filter="' + option.elem +
 			'" class="layui-nav arrow   pear-menu layui-nav-tree pear-nav-tree">'
