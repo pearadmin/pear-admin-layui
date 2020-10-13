@@ -1,18 +1,8 @@
 {
-	"createTime": null,
-	"createBy": null,
-	"updateTime": null,
-	"updateBy": null,
-	"remark": null,
 	"code": 0,
 	"msg": "...",
 	"count": 3,
 	"data": [{
-		"createTime": null,
-		"createBy": null,
-		"updateTime": null,
-		"updateBy": null,
-		"remark": null,
 		"userId": "1",
 		"username": "admin",
 		"password": "$2a$10$1K7E1.IYCrsoZVCb6utOo.5jENtfOzhdKWhc49t2lk.UQd7Oam4FG",
@@ -27,11 +17,6 @@
 		"login": "1",
 		"roleIds": null
 	}, {
-		"createTime": null,
-		"createBy": null,
-		"updateTime": null,
-		"updateBy": null,
-		"remark": null,
 		"userId": "442488661347536896",
 		"username": "854085467",
 		"password": null,
@@ -46,11 +31,6 @@
 		"login": "1",
 		"roleIds": null
 	}, {
-		"createTime": null,
-		"createBy": null,
-		"updateTime": null,
-		"updateBy": null,
-		"remark": null,
 		"userId": "442492965651353600",
 		"username": "970796069",
 		"password": null,
@@ -65,11 +45,6 @@
 		"login": "1",
 		"roleIds": null
 	},{
-		"createTime": null,
-		"createBy": null,
-		"updateTime": null,
-		"updateBy": null,
-		"remark": null,
 		"userId": "1",
 		"username": "admin",
 		"password": "$2a$10$1K7E1.IYCrsoZVCb6utOo.5jENtfOzhdKWhc49t2lk.UQd7Oam4FG",
@@ -84,11 +59,6 @@
 		"login": "1",
 		"roleIds": null
 	}, {
-		"createTime": null,
-		"createBy": null,
-		"updateTime": null,
-		"updateBy": null,
-		"remark": null,
 		"userId": "442488661347536896",
 		"username": "854085467",
 		"password": null,
@@ -103,11 +73,6 @@
 		"login": "1",
 		"roleIds": null
 	}, {
-		"createTime": null,
-		"createBy": null,
-		"updateTime": null,
-		"updateBy": null,
-		"remark": null,
 		"userId": "442492965651353600",
 		"username": "970796069",
 		"password": null,
@@ -122,11 +87,6 @@
 		"login": "1",
 		"roleIds": null
 	},{
-		"createTime": null,
-		"createBy": null,
-		"updateTime": null,
-		"updateBy": null,
-		"remark": null,
 		"userId": "1",
 		"username": "admin",
 		"password": "$2a$10$1K7E1.IYCrsoZVCb6utOo.5jENtfOzhdKWhc49t2lk.UQd7Oam4FG",
@@ -141,11 +101,6 @@
 		"login": "1",
 		"roleIds": null
 	}, {
-		"createTime": null,
-		"createBy": null,
-		"updateTime": null,
-		"updateBy": null,
-		"remark": null,
 		"userId": "442488661347536896",
 		"username": "854085467",
 		"password": null,

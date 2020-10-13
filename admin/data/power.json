@@ -1,18 +1,8 @@
 {
-	"createTime": null,
-	"createBy": null,
-	"updateTime": null,
-	"updateBy": null,
-	"remark": null,
 	"code": 0,
 	"msg": "...",
 	"count": null,
 	"data": [{
-		"createTime": null,
-		"createBy": null,
-		"updateTime": null,
-		"updateBy": null,
-		"remark": null,
 		"powerId": "1",
 		"powerName": "系统管理",
 		"powerType": "0",
@@ -24,11 +14,6 @@
 		"sort": 1,
 		"checkArr": "0"
 	}, {
-		"createTime": null,
-		"createBy": null,
-		"updateTime": null,
-		"updateBy": null,
-		"remark": null,
 		"powerId": "2",
 		"powerName": "用户管理",
 		"powerType": "1",
@@ -40,11 +25,6 @@
 		"sort": null,
 		"checkArr": "0"
 	}, {
-		"createTime": null,
-		"createBy": null,
-		"updateTime": null,
-		"updateBy": null,
-		"remark": null,
 		"powerId": "3",
 		"powerName": "角色管理",
 		"powerType": "1",
@@ -56,11 +36,6 @@
 		"sort": null,
 		"checkArr": "0"
 	}, {
-		"createTime": null,
-		"createBy": null,
-		"updateTime": null,
-		"updateBy": null,
-		"remark": null,
 		"powerId": "4",
 		"powerName": "权限管理",
 		"powerType": "1",
@@ -72,11 +47,6 @@
 		"sort": null,
 		"checkArr": "0"
 	}, {
-		"createTime": null,
-		"createBy": null,
-		"updateTime": null,
-		"updateBy": null,
-		"remark": null,
 		"powerId": "442359447487123456",
 		"powerName": "角色列表",
 		"powerType": "2",
@@ -88,11 +58,6 @@
 		"sort": 1,
 		"checkArr": "0"
 	}, {
-		"createTime": null,
-		"createBy": null,
-		"updateTime": null,
-		"updateBy": null,
-		"remark": null,
 		"powerId": "442417411065516032",
 		"powerName": "敏捷开发",
 		"powerType": "0",
@@ -104,11 +69,6 @@
 		"sort": 2,
 		"checkArr": "0"
 	}, {
-		"createTime": null,
-		"createBy": null,
-		"updateTime": null,
-		"updateBy": null,
-		"remark": null,
 		"powerId": "442418188639145984",
 		"powerName": "模板管理",
 		"powerType": "1",
@@ -120,11 +80,6 @@
 		"sort": null,
 		"checkArr": "0"
 	}, {
-		"createTime": null,
-		"createBy": null,
-		"updateTime": null,
-		"updateBy": null,
-		"remark": null,
 		"powerId": "442520236248403968",
 		"powerName": "数据监控",
 		"powerType": "1",
@@ -136,11 +91,6 @@
 		"sort": 1,
 		"checkArr": "0"
 	}, {
-		"createTime": null,
-		"createBy": null,
-		"updateTime": null,
-		"updateBy": null,
-		"remark": null,
 		"powerId": "442650387514789888",
 		"powerName": "定时任务",
 		"powerType": "0",
@@ -152,11 +102,6 @@
 		"sort": 5,
 		"checkArr": "0"
 	}, {
-		"createTime": null,
-		"createBy": null,
-		"updateTime": null,
-		"updateBy": null,
-		"remark": null,
 		"powerId": "442650770626711552",
 		"powerName": "任务管理",
 		"powerType": "1",
@@ -168,11 +113,6 @@
 		"sort": 1,
 		"checkArr": "0"
 	}, {
-		"createTime": null,
-		"createBy": null,
-		"updateTime": null,
-		"updateBy": null,
-		"remark": null,
 		"powerId": "442651158935375872",
 		"powerName": "任务日志",
 		"powerType": "1",
@@ -184,11 +124,6 @@
 		"sort": 2,
 		"checkArr": "0"
 	}, {
-		"createTime": null,
-		"createBy": null,
-		"updateTime": null,
-		"updateBy": null,
-		"remark": null,
 		"powerId": "442722702474743808",
 		"powerName": "数据字典",
 		"powerType": "1",
@@ -200,11 +135,6 @@
 		"sort": 1,
 		"checkArr": "0"
 	}, {
-		"createTime": null,
-		"createBy": null,
-		"updateTime": null,
-		"updateBy": null,
-		"remark": null,
 		"powerId": "5",
 		"powerName": "工作流程",
 		"powerType": "0",
@@ -216,11 +146,6 @@
 		"sort": 3,
 		"checkArr": "0"
 	}, {
-		"createTime": null,
-		"createBy": null,
-		"updateTime": null,
-		"updateBy": null,
-		"remark": null,
 		"powerId": "6",
 		"powerName": "模型管理",
 		"powerType": "1",
@@ -232,11 +157,6 @@
 		"sort": null,
 		"checkArr": "0"
 	}, {
-		"createTime": null,
-		"createBy": null,
-		"updateTime": null,
-		"updateBy": null,
-		"remark": null,
 		"powerId": "694203021537574912",
 		"powerName": "系统监控",
 		"powerType": "0",
@@ -248,11 +168,6 @@
 		"sort": 4,
 		"checkArr": "0"
 	}, {
-		"createTime": null,
-		"createBy": null,
-		"updateTime": null,
-		"updateBy": null,
-		"remark": null,
 		"powerId": "694203311615639552",
 		"powerName": "接口文档",
 		"powerType": "1",
