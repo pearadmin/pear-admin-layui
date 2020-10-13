@@ -13,7 +13,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 		//默认配置值
 		var option = {
 			elem: opt.elem,
-			async: opt.async ? opt.async : false,
+			async: opt.async,
 			parseData: opt.parseData,
 			url: opt.url,
 			defaultOpen: opt.defaultOpen,
