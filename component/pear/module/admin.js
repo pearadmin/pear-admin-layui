@@ -33,7 +33,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 			this.menuRender = function(param) {
 				sideMenu = pearMenu.render({
 					elem: 'sideMenu',
-					async: true,
+					async: param.menu.async != undefined ? param.menu.async : true,
 					theme: "dark-theme",
 					height: '100%',
 					control: param.menu.control ? 'control' : false, // control 
