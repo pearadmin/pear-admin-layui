@@ -93,21 +93,21 @@
 				"type": 1,
 				"openType": "_iframe",
 				"href": "view/document/step.html"
-			},{
+			}, {
 				"id": 2033,
 				"title": "树形表格",
 				"icon": "layui-icon layui-icon-face-cry",
 				"type": 1,
 				"openType": "_iframe",
 				"href": "view/document/treetable.html"
-			},{
+			}, {
 				"id": 2034,
 				"title": "树状结构",
 				"icon": "layui-icon layui-icon-face-cry",
 				"type": 1,
 				"openType": "_iframe",
 				"href": "view/document/dtree.html"
-			},{
+			}, {
 				"id": 2035,
 				"title": "文本编辑",
 				"icon": "layui-icon layui-icon-face-cry",
@@ -141,7 +141,7 @@
 				"type": 1,
 				"openType": "_iframe",
 				"href": "view/document/notice.html"
-			},{
+			}, {
 				"id": 2024,
 				"title": "加载组件",
 				"icon": "layui-icon layui-icon-face-cry",
@@ -293,7 +293,7 @@
 				"openType": "_iframe",
 				"href": "view/system/power.html"
 			},
-			
+
 			{
 				"id": 604,
 				"title": "部门管理",
@@ -309,6 +309,13 @@
 				"type": 1,
 				"openType": "_iframe",
 				"href": "view/system/logging.html"
+			}, {
+				"id": 606,
+				"title": "数据字典",
+				"icon": "layui-icon layui-icon-face-cry",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/system/dict.html"
 			}
 
 		]
@@ -326,7 +333,7 @@
 			"type": 1,
 			"openType": "_iframe",
 			"href": "login.html"
-		},{
+		}, {
 			"id": 702,
 			"title": "空白页面",
 			"icon": "layui-icon layui-icon-face-smile",
@@ -334,7 +341,7 @@
 			"openType": "_iframe",
 			"href": "view/system/space.html"
 		}]
-	},{
+	}, {
 		"id": "echarts",
 		"title": "数据图表",
 		"icon": "layui-icon layui-icon-chart",
@@ -347,7 +354,7 @@
 			"type": 1,
 			"openType": "_iframe",
 			"href": "view/echarts/line.html"
-		},{
+		}, {
 			"id": 121212,
 			"title": "柱状图",
 			"icon": "layui-icon layui-icon-face-smile",
@@ -363,12 +370,12 @@
 		"type": 0,
 		"href": "",
 		"children": [{
-				"id": 801,
-				"title": "表单构建",
-				"icon": "layui-icon layui-icon-util",
-				"type": 1,
-				"openType": "_iframe",
-				"href": "component/code/index.html"
+			"id": 801,
+			"title": "表单构建",
+			"icon": "layui-icon layui-icon-util",
+			"type": 1,
+			"openType": "_iframe",
+			"href": "component/code/index.html"
 		}]
 	}
 ]
