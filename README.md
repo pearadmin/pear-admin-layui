@@ -95,17 +95,19 @@ QQ 群: 682110771
 ![](readme/11.jpg)
 
 
+#### 其他版本
+
+Spring Boot 单体项目 [Pear Admin Fast](https://gitee.com/Jmysy/Pear-Admin-Fast)
+
+Spring Boot 聚合项目 [Pear Admin Boot](https://gitee.com/Jmysy/Pear-Admin-Boot)
+
+
+
 ### 开源推荐
 
-后台管理系统  [pear admin boot](https://gitee.com/Jmysy/Pear-Admin-Boot)
+Spring Boot 权限系统：[springboot v2](http://gitee.com/bdj/SpringBoot_v2)
 
-后台管理系统：[springboot v2](http://gitee.com/bdj/SpringBoot_v2)
-
-积木组件库: [api boot](https://apiboot.minbox.io)
-
-顺序消息管道 [message pipe](https://gitee.com/minbox-projects/message-pipe)
-
-本框架为开源框架，Apache 开源协议，支持商用，学习
+Spring Boot 开发组件: [api boot](https://apiboot.minbox.io)
 
 
 
