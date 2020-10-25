@@ -208,9 +208,9 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 
 				style += '.pear-social-entrance {background-color:' + color + '!important}';
 				style += '.pear-admin .pe-collaspe {background-color:' + color + '!important}';
-				if ($("iframe").contents().find("#customTheme").length > 0) {
+				/* if ($("iframe").contents().find("#customTheme").length > 0) {
 					$("iframe").contents().find("#customTheme").remove();
-				}
+				} */
 				$("#pearadmin-bg-color").html(style);
 			}
 		};
