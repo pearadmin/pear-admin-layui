@@ -35,13 +35,10 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 				,option.msg);
 			}
 			else if(option.type==5){
-				
-				
 				Notiflix.Block.Dots(
 				option.elem
 				,option.msg);
 			}
-			
 			else if(option.type==6){
 				Notiflix.Block.Pulse(
 				option.elem
@@ -88,7 +85,6 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 			}
 		}
 		
-		
 		this.confirm = function(option){
 			Notiflix.Confirm.Show(
 			option.title,
@@ -108,7 +104,6 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 			});
 		    _right.open();
 		}
-		
 		
 		this.loadRemove = function(time){
 			Notiflix.Loading.Remove(time);

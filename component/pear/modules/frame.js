@@ -20,7 +20,6 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 			done:opt.done ? opt.done: function(){ console.log("菜单渲染成功");}
 		}
 		
-		
 	    createFrameHTML(option);
 	   
 	    $("#"+option.elem).width(option.width);

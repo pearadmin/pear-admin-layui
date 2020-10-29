@@ -1,14 +1,20 @@
 layui.define(['jquery', 'element'], function(exports) {
 	"use strict";
 
+	/**
+	 * Drawer component
+	 * */
 	var MOD_NAME = 'drawer',
 		$ = layui.jquery,
 		element = layui.element;
 	
 	var drawer = new function() {
 		
+		/**
+		 * open drawer
+		 * */
 		this.open = function(option) {
-			var _right = new mSlider({
+			var obj = new mSlider({
 				dom: option.dom,
 				direction: option.direction,
 				distance: option.distance,
@@ -16,15 +22,17 @@ layui.define(['jquery', 'element'], function(exports) {
 				maskClose:option.maskClose,
 				callback:option.success
 			});
-			_right.open();
-			
-			return _right;
+			obj.open();
+			return obj;
 		}
 		
 	}
 	exports(MOD_NAME,drawer);
 });
 
+/**
+ * 源码
+ * */
 (function(b, c) {
 	function a(d) {
 		this.opts = {

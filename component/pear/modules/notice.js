@@ -34,8 +34,6 @@
 
 			return toastr;
 
-			////////////////
-
 			function error(message, title, optionsOverride) {
 				return notify({
 					type: toastType.error,

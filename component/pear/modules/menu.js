@@ -10,7 +10,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 	};
 
 	pearMenu.prototype.render = function(opt) {
-		//默认配置值
+
 		var option = {
 			elem: opt.elem,
 			async: opt.async,
@@ -103,7 +103,6 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 			$("#" + this.option.elem + " a[menu-id='" + pearId + "']").parents(".layui-nav-item").addClass("layui-nav-itemed");
 			$("#" + this.option.elem + " a[menu-id='" + pearId + "']").parents("dd").addClass("layui-nav-itemed");
 		}
-
 		$("#" + this.option.elem + " a[menu-id='" + pearId + "']").parent().addClass("layui-this");
 	}
 
@@ -128,7 +127,6 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 				width: "60px"
 			}, 400);
 			isHoverMenu(true, config);
-
 		}
 	}
 	

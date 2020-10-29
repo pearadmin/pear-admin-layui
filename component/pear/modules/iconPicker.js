@@ -236,11 +236,9 @@ layui.define(['laypage', 'form'], function (exports) {
                         '</div>';
                 }
 
-
                 $('#' + ICON_BODY).find('.layui-anim').find('.' + LIST_BOX).html('').append(listHtml).append(pageHtml);
                 return a;
             },
-            // 阻止Layui的一些默认事件
             preventEvent: function() {
                 var item = '#' + ICON_BODY + ' .layui-anim';
                 a.event('click', item, function (e) {
@@ -248,7 +246,6 @@ layui.define(['laypage', 'form'], function (exports) {
                 });
                 return a;
             },
-            // 分页
             page: function () {
                 var icon = '#' + PAGE_ID + ' .layui-iconpicker-page-operate .layui-icon';
 

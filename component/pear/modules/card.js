@@ -38,7 +38,7 @@ layui.define(['table', 'laypage','jquery', 'element'], function(exports) {
 
 		$(option.elem).html(html);
 		
-		// 初始化分页组件
+		  // 初始化分页组件
 		  laypage.render({
 		    elem: 'cardpage'
 		    ,count: 100
