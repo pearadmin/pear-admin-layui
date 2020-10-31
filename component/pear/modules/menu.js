@@ -34,7 +34,10 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 				renderMenu(option);
 			});
 		} else {
-			renderMenu(option);
+			//renderMenu中需要调用done事件，done事件中需要menu对象，但是此时还未返回menu对象，做个延时提前返回对象
+			window.setTimeout(function() {
+				renderMenu(option);
+			}, 500);
 		}
 
 		return new pearMenu(opt);
