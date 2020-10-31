@@ -40,6 +40,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 					defaultMenu: 0,
 					accordion: param.menu.accordion,
 					url: param.menu.data,
+					data: param.menu.data,//async为false时，传入菜单数组
 					parseData: false,
 					change: function() {
 						compatible();
