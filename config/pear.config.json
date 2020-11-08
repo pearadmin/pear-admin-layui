@@ -7,7 +7,8 @@
 		"data": "admin/data/menu.json",
 		"accordion": true,
 		"control": false,
-		"select": "10"
+		"select": "10",
+		"async": true
 	},
 	"tab": {
 		"muiltTab": true,

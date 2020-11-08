@@ -13,16 +13,35 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 		var sideMenu;
 		var bodyTab;
 		var config;
+		
 
 		var pearAdmin = new function() {
+			
+			var configPath = '';
+			
+			this.setConfigPath = function(path){
+				
+				configPath = path;
+			}
+			
+
 			this.render = function(initConfig) {
 				if (initConfig != undefined) {
 					applyConfig(initConfig);
 				} else {
-					readConfig().then(function(param) {
+					pearAdmin.readConfig().then(function(param) {
 						applyConfig(param);
 					});
 				}
+			}
+
+			this.readConfig = function() {
+				var defer = $.Deferred();
+				var configUrl = (configPath == '' ? "pear.config.json" : configPath) + "?fresh=" + Math.random();
+				$.getJSON(configUrl, function(result) {
+					defer.resolve(result)
+				});
+				return defer.promise();
 			}
 
 			this.logoRender = function(param) {
@@ -40,7 +59,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 					defaultMenu: 0,
 					accordion: param.menu.accordion,
 					url: param.menu.data,
-					data: param.menu.data,//async为false时，传入菜单数组
+					data: param.menu.data, //async为false时，传入菜单数组
 					parseData: false,
 					change: function() {
 						compatible();
@@ -206,7 +225,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 
 				style += '.layui-nav .layui-nav-child dd.layui-this a, .layui-nav-child dd.layui-this{background-color:' + color +
 					'!important}';
-					
+
 				style += ".pear-nav-control.pc .layui-this *{color:" + color + "!important}";
 
 				style += '.pear-social-entrance {background-color:' + color + '!important}';
@@ -338,14 +357,6 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 			var color = getColorById(colorId);
 			pearAdmin.colorSet(color.color);
 		});
-
-		function readConfig() {
-			var defer = $.Deferred();
-			$.getJSON("pear.config.json?fresh=" + Math.random(), function(result) {
-				defer.resolve(result)
-			});
-			return defer.promise();
-		}
 
 		function applyConfig(param) {
 			config = param;
