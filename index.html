@@ -74,7 +74,10 @@
 		<script>
 			layui.use(['admin'], function() {
 				var admin = layui.admin;
+				
+				// 重新设置配置文件读取路径，默认为同级目录下的 pear.config.json
 				admin.setConfigPath("config/pear.config.json");
+				// 进行框架初始化
 				admin.render();
 			})
 		</script>
