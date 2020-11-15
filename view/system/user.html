@@ -94,10 +94,11 @@
 		<script src="../../component/layui/layui.js"></script>
 		<script src="../../component/pear/pear.js"></script>
 		<script>
-			layui.use(['table', 'form', 'jquery'], function() {
+			layui.use(['table', 'form', 'jquery','common'], function() {
 				let table = layui.table;
 				let form = layui.form;
 				let $ = layui.jquery;
+				let common = layui.common;
 
 				let MODULE_PATH = "operate/";
 
@@ -249,19 +250,17 @@
 				}
 
 				window.batchRemove = function(obj) {
-					let data = table.checkStatus(obj.config.id).data;
-					if (data.length === 0) {
+					
+					var checkIds = common.checkField(obj,'userId');
+					
+					if (checkIds === "") {
 						layer.msg("未选中数据", {
 							icon: 3,
 							time: 1000
 						});
 						return false;
 					}
-					let ids = "";
-					for (let i = 0; i < data.length; i++) {
-						ids += data[i].userId + ",";
-					}
-					ids = ids.substr(0, ids.length - 1);
+					
 					layer.confirm('确定要删除这些用户', {
 						icon: 3,
 						title: '提示'
