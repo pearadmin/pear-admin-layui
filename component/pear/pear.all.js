@@ -37,5 +37,6 @@ layui.config({
 	design: "design",	// 布局设计器
 	dropdown: "dropdown",	// 通用下拉组件
 	card: "card",	// 卡片组件
-	loading: "loading" // 加载组件
+	loading: "loading", // 加载组件,
+	cropper:"cropper"//裁剪组件
 });
