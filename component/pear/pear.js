@@ -37,5 +37,6 @@ layui.config({
 	design: "design",
 	dropdown: "dropdown",
 	card: "card",
-	loading: "loading"
+	loading: "loading",
+	cropper:"cropper"
 });

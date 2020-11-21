@@ -32,7 +32,7 @@
 					<li class="layui-nav-item">
 						<!-- 头 像 -->
 						<a href="javascript:;">
-							<img src="admin/images/avatar.jpg" class="layui-nav-img">
+							<img src="" class="layui-nav-img">
 							就眠仪式
 						</a>
 						<!-- 功 能 菜 单 -->
@@ -72,9 +72,29 @@
 		<script src="component/pear/pear.js"></script>
 		<!-- 框 架 初 始 化 -->
 		<script>
-			layui.use(['admin'], function() {
-				var admin = layui.admin;
+			layui.use(['admin','jquery'], function() {
+				var admin = layui.admin,
+					$ = layui.jquery;
 				
+				//本地环境因相对路径差异，特意转base64处理，实际结合后台使用时，可随意发挥
+				function getBase64Image(img) {
+					var canvas = document.createElement("canvas");
+					canvas.width = img.width;
+					canvas.height = img.height;
+					var ctx = canvas.getContext("2d");
+					ctx.drawImage(img, 0, 0, img.width, img.height);
+					var ext = img.src.substring(img.src.lastIndexOf(".")+1).toLowerCase();
+					var dataURL = canvas.toDataURL("image/"+ext);
+					return dataURL;
+				}
+
+				var image = new Image();
+				image.src = "admin/images/avatar.jpg";
+				image.onload = function(){
+					var base64 = getBase64Image(image);
+					$(".layui-nav-img").attr("src", base64);
+				}
+
 				// 重新设置配置文件读取路径，默认为同级目录下的 pear.config.json
 				admin.setConfigPath("config/pear.config.json");
 				// 进行框架初始化
