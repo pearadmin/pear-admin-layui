@@ -76,6 +76,7 @@
 				var admin = layui.admin,
 					$ = layui.jquery;
 				
+				//本地环境因相对路径差异，特意转base64处理，实际结合后台使用时，可随意发挥
 				function getBase64Image(img) {
 					var canvas = document.createElement("canvas");
 					canvas.width = img.width;
