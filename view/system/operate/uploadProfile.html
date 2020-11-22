@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>头像上传</title>
     <link rel="stylesheet" href="../../../component/pear/css/pear.css" />
 </head>
 <body class="pear-container">
@@ -20,12 +20,10 @@
     <div class="layui-row">
         <div class="layui-form-item">
             <div class="layui-input-inline layui-btn-container" style="width: auto;vertical-align:top;">
-                <button class="pear-btn pear-btn-primary layui-icon layui-icon-left" cropper-event="rotate" data-option="-15" title="左旋15°"></button>
-                <button class="pear-btn pear-btn-primary layui-icon layui-icon-right" cropper-event="rotate" data-option="15" title="右旋15°"></button>
-                <button class="pear-btn pear-btn-danger layui-icon layui-icon-refresh" cropper-event="reset" title="重置"></button>
-                <label for="uploadPicture" class="pear-btn pear-btn-primary" title="选择图片">
-                    <span class="layui-icon layui-icon-upload"></span>
-                </label>
+                <button class="pear-btn pear-btn-sm pear-btn-primary layui-icon layui-icon-left" cropper-event="rotate" data-option="-15" title="左旋15°"></button>
+                <button class="pear-btn pear-btn-sm pear-btn-primary layui-icon layui-icon-right" cropper-event="rotate" data-option="15" title="右旋15°"></button>
+                <button class="pear-btn pear-btn-sm pear-btn-danger layui-icon layui-icon-refresh" cropper-event="reset" title="重置"></button>
+                <label for="uploadPicture" class="pear-btn pear-btn-sm pear-btn-primary layui-icon layui-icon-upload" title="选择图片"></label>
                 <input class="layui-upload-file" id="uploadPicture" type="file" value="选择图片">
             </div>
             <div class="layui-form-mid layui-word-aux">建议:图片的尺寸宽高比为1:1,大小在5m以内。</div>
@@ -61,7 +59,8 @@
                     formData.append('file', blob, fileName);
                     formData.append('fileName', fileName);
                     formData.append('fileToken', timeStamp);
-                    // $.ajax({
+                    
+					// $.ajax({
                     //     method: "post",
                     //     url: "", //用于文件上传的服务器端请求地址
                     //     data: formData,
