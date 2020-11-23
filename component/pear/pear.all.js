@@ -24,19 +24,20 @@ layui.config({
 	drawer: "drawer",	// 抽屉弹层组件
 	notice: "notice",	// 消息提示组件
 	step:"step",		// 分布表单组件
-	tag:"tag",			// 标签主键
-	popup:"popup",		// 通用弹层
-	iconPicker:"iconPicker", // 图标选择组件
-	treetable:"treetable",	// 树形表格组件
-	dtree:"dtree",			// 树型组件
-	tinymce:"tinymce/tinymce", // 文本编辑器
-	area:"area",	// 区域选择
-	count:"count",	// 数字滚动
-	topBar: "topBar",	// 返回顶部组件
-	button: "button",	// 按钮组件
-	design: "design",	// 布局设计器
-	dropdown: "dropdown",	// 通用下拉组件
-	card: "card",	// 卡片组件
-	loading: "loading", // 加载组件,
-	cropper:"cropper"//裁剪组件
+	tag:"tag",
+	popup:"popup",
+	iconPicker:"iconPicker",
+	treetable:"treetable",
+	dtree:"dtree",
+	tinymce:"tinymce/tinymce",
+	area:"area",
+	count:"count",
+	topBar: "topBar",
+	button: "button",
+	design: "design",
+	dropdown: "dropdown",
+	card: "card",
+	loading: "loading",
+	cropper:"cropper",
+	convert:"convert"
 });

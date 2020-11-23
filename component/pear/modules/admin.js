@@ -15,41 +15,41 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 		let config;
 		const body = $('body');
 
-		const pearAdmin = new function () {
+		const pearAdmin = new function() {
 
 			let configPath = '';
 
-			this.setConfigPath = function (path) {
+			this.setConfigPath = function(path) {
 
 				configPath = path;
 			}
 
 
-			this.render = function (initConfig) {
+			this.render = function(initConfig) {
 				if (initConfig !== undefined) {
 					applyConfig(initConfig);
 				} else {
-					pearAdmin.readConfig().then(function (param) {
+					pearAdmin.readConfig().then(function(param) {
 						applyConfig(param);
 					});
 				}
 			}
 
-			this.readConfig = function () {
+			this.readConfig = function() {
 				const defer = $.Deferred();
 				const configUrl = (configPath === '' ? "pear.config.json" : configPath) + "?fresh=" + Math.random();
-				$.getJSON(configUrl, function (result) {
+				$.getJSON(configUrl, function(result) {
 					defer.resolve(result)
 				});
 				return defer.promise();
 			}
 
-			this.logoRender = function (param) {
+			this.logoRender = function(param) {
 				$(".layui-logo .logo").attr("src", param.logo.image);
 				$(".layui-logo .title").html(param.logo.title);
 			}
 
-			this.menuRender = function (param) {
+			this.menuRender = function(param) {
 				sideMenu = pearMenu.render({
 					elem: 'sideMenu',
 					async: param.menu.async !== undefined ? param.menu.async : true,
@@ -61,17 +61,17 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 					url: param.menu.data,
 					data: param.menu.data, //async为false时，传入菜单数组
 					parseData: false,
-					change: function () {
+					change: function() {
 						compatible();
 					},
-					done: function () {
+					done: function() {
 						sideMenu.selectItem(param.menu.select);
 					}
 				});
 			}
 
-			this.bodyRender = function (param) {
-				body.on("click", ".refresh", function () {
+			this.bodyRender = function(param) {
+				body.on("click", ".refresh", function() {
 					const refreshA = $(".refresh a");
 					refreshA.removeClass("layui-icon-refresh-1");
 					refreshA.addClass("layui-anim");
@@ -79,7 +79,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 					refreshA.addClass("layui-anim-loop");
 					refreshA.addClass("layui-icon-loading");
 					bodyTab.refresh(400);
-					setTimeout(function () {
+					setTimeout(function() {
 						refreshA.addClass("layui-icon-refresh-1");
 						refreshA.removeClass("layui-anim");
 						refreshA.removeClass("layui-anim-rotate");
@@ -96,7 +96,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 						height: '100%',
 						index: 0,
 						tabMax: param.tab.tabMax,
-						closeEvent: function (id) {
+						closeEvent: function(id) {
 							sideMenu.selectItem(id);
 						},
 						data: [{
@@ -106,7 +106,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 							close: false
 						}]
 					});
-					bodyTab.click(function (id) {
+					bodyTab.click(function(id) {
 						if (!param.tab.keepState) {
 							bodyTab.refresh(false);
 						}
@@ -114,7 +114,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 						sideMenu.selectItem(id);
 					})
 
-					sideMenu.click(function (dom, data) {
+					sideMenu.click(function(dom, data) {
 						bodyTab.addTabOnly({
 							id: data.menuId,
 							title: data.menuTitle,
@@ -133,21 +133,21 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 						height: '100%'
 					});
 
-					sideMenu.click(function (dom, data) {
+					sideMenu.click(function(dom, data) {
 						bodyFrame.changePage(data.menuUrl, data.menuPath, true);
 						compatible()
 					})
 				}
 			}
 
-			this.keepLoad = function (param) {
+			this.keepLoad = function(param) {
 				compatible()
-				setTimeout(function () {
+				setTimeout(function() {
 					$(".loader-main").fadeOut(200);
 				}, param.other.keepLoad)
 			}
 
-			this.themeRender = function (option) {
+			this.themeRender = function(option) {
 				if (option.theme.allowCustom === false) {
 					$(".setting").remove();
 				}
@@ -167,14 +167,14 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 				this.menuSkin(menu);
 			}
 
-			this.menuSkin = function (theme) {
+			this.menuSkin = function(theme) {
 				const pearAdmin = $(".pear-admin");
 				pearAdmin.removeClass("light-theme");
 				pearAdmin.removeClass("dark-theme");
 				pearAdmin.addClass(theme);
 			}
 
-			this.colorSet = function (color) {
+			this.colorSet = function(color) {
 				let style = '';
 				// 自 定 义 菜 单 配 色
 				style +=
@@ -226,7 +226,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 			}
 		};
 
-		function abc(){
+		function collaspe() {
 			sideMenu.collaspe();
 			const admin = $(".pear-admin");
 			const left = $(".layui-icon-spread-left")
@@ -243,7 +243,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 		}
 
 		body.on("click", ".collaspe,.pear-cover", function() {
-			abc()
+			collaspe()
 		});
 
 		body.on("click", ".fullScreen", function() {
@@ -404,7 +404,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 
 		function compatible() {
 			if ($(window).width() <= 768) {
-				abc()
+				collaspe()
 			}
 		}
 
