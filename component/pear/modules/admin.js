@@ -2,75 +2,91 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 	function(exports) {
 		"use strict";
 
-		var $ = layui.jquery,
+		const $ = layui.jquery,
 			form = layui.form,
 			element = layui.element,
 			pearTab = layui.tab,
 			pearMenu = layui.menu,
 			pearFrame = layui.frame;
 
-		var bodyFrame;
-		var sideMenu;
-		var bodyTab;
-		var config;
-		
+		let bodyFrame;
+		let sideMenu;
+		let bodyTab;
+		let config;
+		const body = $('body');
 
-		var pearAdmin = new function() {
-			
-			var configPath = '';
-			
-			this.setConfigPath = function(path){
-				
+		const pearAdmin = new function () {
+
+			let configPath = '';
+
+			this.setConfigPath = function (path) {
+
 				configPath = path;
 			}
-			
 
-			this.render = function(initConfig) {
-				if (initConfig != undefined) {
+
+			this.render = function (initConfig) {
+				if (initConfig !== undefined) {
 					applyConfig(initConfig);
 				} else {
-					pearAdmin.readConfig().then(function(param) {
+					pearAdmin.readConfig().then(function (param) {
 						applyConfig(param);
 					});
 				}
 			}
 
-			this.readConfig = function() {
-				var defer = $.Deferred();
-				var configUrl = (configPath == '' ? "pear.config.json" : configPath) + "?fresh=" + Math.random();
-				$.getJSON(configUrl, function(result) {
+			this.readConfig = function () {
+				const defer = $.Deferred();
+				const configUrl = (configPath === '' ? "pear.config.json" : configPath) + "?fresh=" + Math.random();
+				$.getJSON(configUrl, function (result) {
 					defer.resolve(result)
 				});
 				return defer.promise();
 			}
 
-			this.logoRender = function(param) {
+			this.logoRender = function (param) {
 				$(".layui-logo .logo").attr("src", param.logo.image);
 				$(".layui-logo .title").html(param.logo.title);
 			}
 
-			this.menuRender = function(param) {
+			this.menuRender = function (param) {
 				sideMenu = pearMenu.render({
 					elem: 'sideMenu',
-					async: param.menu.async != undefined ? param.menu.async : true,
+					async: param.menu.async !== undefined ? param.menu.async : true,
 					theme: "dark-theme",
 					height: '100%',
-					control: param.menu.control ? 'control' : false, // control 
+					control: param.menu.control ? 'control' : false, // control
 					defaultMenu: 0,
 					accordion: param.menu.accordion,
 					url: param.menu.data,
 					data: param.menu.data, //async为false时，传入菜单数组
 					parseData: false,
-					change: function() {
+					change: function () {
 						compatible();
 					},
-					done: function() {
+					done: function () {
 						sideMenu.selectItem(param.menu.select);
 					}
 				});
 			}
 
-			this.bodyRender = function(param) {
+			this.bodyRender = function (param) {
+				body.on("click", ".refresh", function () {
+					const refreshA = $(".refresh a");
+					refreshA.removeClass("layui-icon-refresh-1");
+					refreshA.addClass("layui-anim");
+					refreshA.addClass("layui-anim-rotate");
+					refreshA.addClass("layui-anim-loop");
+					refreshA.addClass("layui-icon-loading");
+					bodyTab.refresh(400);
+					setTimeout(function () {
+						refreshA.addClass("layui-icon-refresh-1");
+						refreshA.removeClass("layui-anim");
+						refreshA.removeClass("layui-anim-rotate");
+						refreshA.removeClass("layui-anim-loop");
+						refreshA.removeClass("layui-icon-loading");
+					}, 600)
+				})
 				if (param.tab.muiltTab) {
 					bodyTab = pearTab.render({
 						elem: 'content',
@@ -80,7 +96,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 						height: '100%',
 						index: 0,
 						tabMax: param.tab.tabMax,
-						closeEvent: function(id) {
+						closeEvent: function (id) {
 							sideMenu.selectItem(id);
 						},
 						data: [{
@@ -90,29 +106,15 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 							close: false
 						}]
 					});
-					bodyTab.click(function(id) {
+					bodyTab.click(function (id) {
 						if (!param.tab.keepState) {
 							bodyTab.refresh(false);
 						}
 						bodyTab.positionTab();
 						sideMenu.selectItem(id);
 					})
-					$("body").on("click", ".refresh", function() {
-						$(".refresh a").removeClass("layui-icon-refresh-1");
-						$(".refresh a").addClass("layui-anim");
-						$(".refresh a").addClass("layui-anim-rotate");
-						$(".refresh a").addClass("layui-anim-loop");
-						$(".refresh a").addClass("layui-icon-loading");
-						bodyTab.refresh(400);
-						setTimeout(function() {
-							$(".refresh a").addClass("layui-icon-refresh-1");
-							$(".refresh a").removeClass("layui-anim");
-							$(".refresh a").removeClass("layui-anim-rotate");
-							$(".refresh a").removeClass("layui-anim-loop");
-							$(".refresh a").removeClass("layui-icon-loading");
-						}, 600)
-					})
-					sideMenu.click(function(dom, data) {
+
+					sideMenu.click(function (dom, data) {
 						bodyTab.addTabOnly({
 							id: data.menuId,
 							title: data.menuTitle,
@@ -130,46 +132,32 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 						width: '100%',
 						height: '100%'
 					});
-					$("body").on("click", ".refresh", function() {
-						$(".refresh a").removeClass("layui-icon-refresh-1");
-						$(".refresh a").addClass("layui-anim");
-						$(".refresh a").addClass("layui-anim-rotate");
-						$(".refresh a").addClass("layui-anim-loop");
-						$(".refresh a").addClass("layui-icon-loading");
-						bodyFrame.refresh(400);
-						setTimeout(function() {
-							$(".refresh a").addClass("layui-icon-refresh-1");
-							$(".refresh a").removeClass("layui-anim");
-							$(".refresh a").removeClass("layui-anim-rotate");
-							$(".refresh a").removeClass("layui-anim-loop");
-							$(".refresh a").removeClass("layui-icon-loading");
-						}, 600)
-					})
-					sideMenu.click(function(dom, data) {
+
+					sideMenu.click(function (dom, data) {
 						bodyFrame.changePage(data.menuUrl, data.menuPath, true);
 						compatible()
 					})
 				}
 			}
 
-			this.keepLoad = function(param) {
+			this.keepLoad = function (param) {
 				compatible()
-				setTimeout(function() {
+				setTimeout(function () {
 					$(".loader-main").fadeOut(200);
 				}, param.other.keepLoad)
 			}
 
-			this.themeRender = function(option) {
-				if (option.theme.allowCustom == false) {
+			this.themeRender = function (option) {
+				if (option.theme.allowCustom === false) {
 					$(".setting").remove();
 				}
-				var colorId = localStorage.getItem("theme-color");
-				var menu = localStorage.getItem("theme-menu");
-				var color = getColorById(colorId);
-				if (menu == "null") {
+				const colorId = localStorage.getItem("theme-color");
+				let menu = localStorage.getItem("theme-menu");
+				const color = getColorById(colorId);
+				if (menu === "null") {
 					menu = option.theme.defaultMenu;
 				} else {
-					if (option.theme.allowCustom == false) {
+					if (option.theme.allowCustom === false) {
 						menu = option.theme.defaultMenu;
 					}
 				}
@@ -179,14 +167,15 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 				this.menuSkin(menu);
 			}
 
-			this.menuSkin = function(theme) {
-				$(".pear-admin").removeClass("light-theme");
-				$(".pear-admin").removeClass("dark-theme");
-				$(".pear-admin").addClass(theme);
+			this.menuSkin = function (theme) {
+				const pearAdmin = $(".pear-admin");
+				pearAdmin.removeClass("light-theme");
+				pearAdmin.removeClass("dark-theme");
+				pearAdmin.addClass(theme);
 			}
 
-			this.colorSet = function(color) {
-				var style = '';
+			this.colorSet = function (color) {
+				let style = '';
 				// 自 定 义 菜 单 配 色
 				style +=
 					'.light-theme .pear-nav-tree .layui-this a:hover,.light-theme .pear-nav-tree .layui-this,.light-theme .pear-nav-tree .layui-this a,.pear-nav-tree .layui-this a,.pear-nav-tree .layui-this{background-color: ' +
@@ -237,20 +226,27 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 			}
 		};
 
-		$("body").on("click", ".collaspe,.pear-cover", function() {
+		function abc(){
 			sideMenu.collaspe();
-			if ($(".pear-admin").is(".pear-mini")) {
-				$(".layui-icon-spread-left").addClass("layui-icon-shrink-right")
-				$(".layui-icon-spread-left").removeClass("layui-icon-spread-left")
-				$(".pear-admin").removeClass("pear-mini");
+			const admin = $(".pear-admin");
+			const left = $(".layui-icon-spread-left")
+			const right = $(".layui-icon-shrink-right")
+			if (admin.is(".pear-mini")) {
+				left.addClass("layui-icon-shrink-right")
+				left.removeClass("layui-icon-spread-left")
+				admin.removeClass("pear-mini");
 			} else {
-				$(".layui-icon-shrink-right").addClass("layui-icon-spread-left")
-				$(".layui-icon-shrink-right").removeClass("layui-icon-shrink-right")
-				$(".pear-admin").addClass("pear-mini");
+				right.addClass("layui-icon-spread-left")
+				right.removeClass("layui-icon-shrink-right")
+				admin.addClass("pear-mini");
 			}
+		}
+
+		body.on("click", ".collaspe,.pear-cover", function() {
+			abc()
 		});
 
-		$("body").on("click", ".fullScreen", function() {
+		body.on("click", ".fullScreen", function() {
 			if ($(this).hasClass("layui-icon-screen-restore")) {
 				screenFun(2).then(function() {
 					$(".fullScreen").eq(0).removeClass("layui-icon-screen-restore");
@@ -262,7 +258,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 			}
 		});
 
-		$("body").on("click", '[user-menu-id]', function() {
+		body.on("click", '[user-menu-id]', function() {
 			if (config.tab.muiltTab) {
 				bodyTab.addTabOnly({
 					id: $(this).attr("user-menu-id"),
@@ -276,8 +272,8 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 			}
 		});
 
-		$("body").on("click", ".setting", function() {
-			var bgColorHtml =
+		body.on("click", ".setting", function() {
+			let bgColorHtml =
 				'<li class="layui-this" data-select-bgcolor="dark-theme" >' +
 				'<a href="javascript:;" data-skin="skin-blue" style="" class="clearfix full-opacity-hover">' +
 				'<div><span style="display:block; width: 20%; float: left; height: 12px; background: #28333E;"></span><span style="display:block; width: 80%; float: left; height: 12px; background: white;"></span></div>' +
@@ -293,7 +289,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 				'</a>' +
 				'</li>';
 
-			var html =
+			const html =
 				'<div class="pearone-color">\n' +
 				'<div class="color-title">整体风格</div>\n' +
 				'<div class="color-content">\n' +
@@ -316,21 +312,21 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 				success: function(layero, index) {
 					form.render();
 
-					var color = localStorage.getItem("theme-color");
-					var menu = localStorage.getItem("theme-menu");
+					const color = localStorage.getItem("theme-color");
+					const menu = localStorage.getItem("theme-menu");
 
-					if (color != "null") {
+					if (color !== "null") {
 						$(".select-color-item").removeClass("layui-icon")
 							.removeClass("layui-icon-ok");
 						$("*[color-id='" + color + "']").addClass("layui-icon")
 							.addClass("layui-icon-ok");
 					}
-					if (menu != "null") {
+					if (menu !== "null") {
 						$("*[data-select-bgcolor]").removeClass("layui-this");
 						$("[data-select-bgcolor='" + menu + "']").addClass("layui-this");
 					}
 					$('#layui-layer-shade' + index).click(function() {
-						var $layero = $('#layui-layer' + index);
+						const $layero = $('#layui-layer' + index);
 						$layero.animate({
 							left: $layero.offset().left + $layero.width()
 						}, 200, function() {
@@ -341,20 +337,20 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 			});
 		});
 
-		$('body').on('click', '[data-select-bgcolor]', function() {
-			var theme = $(this).attr('data-select-bgcolor');
+		body.on('click', '[data-select-bgcolor]', function() {
+			const theme = $(this).attr('data-select-bgcolor');
 			$('[data-select-bgcolor]').removeClass("layui-this");
 			$(this).addClass("layui-this");
 			localStorage.setItem("theme-menu", theme);
 			pearAdmin.menuSkin(theme);
 		});
 
-		$('body').on('click', '.select-color-item', function() {
+		body.on('click', '.select-color-item', function() {
 			$(".select-color-item").removeClass("layui-icon").removeClass("layui-icon-ok");
 			$(this).addClass("layui-icon").addClass("layui-icon-ok");
-			var colorId = $(".select-color-item.layui-icon-ok").attr("color-id");
+			const colorId = $(".select-color-item.layui-icon-ok").attr("color-id");
 			localStorage.setItem("theme-color", colorId);
-			var color = getColorById(colorId);
+			const color = getColorById(colorId);
 			pearAdmin.colorSet(color.color);
 		});
 
@@ -368,17 +364,17 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 		}
 
 		function getColorById(id) {
-			var color;
-			var flag = false;
+			let color;
+			let flag = false;
 			$.each(config.colors, function(i, value) {
-				if (value.id == id) {
+				if (value.id === id) {
 					color = value;
 					flag = true;
 				}
 			})
-			if (flag == false || config.theme.allowCustom == false) {
+			if (flag === false || config.theme.allowCustom === false) {
 				$.each(config.colors, function(i, value) {
-					if (value.id == config.theme.defaultColor) {
+					if (value.id === config.theme.defaultColor) {
 						color = value;
 					}
 				})
@@ -387,7 +383,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 		}
 
 		function buildLinkHtml() {
-			var links = "";
+			let links = "";
 			$.each(config.links, function(i, value) {
 				links += '<a class="more-menu-item" href="' + value.href + '" target="_blank">' +
 					'<i class="' + value.icon + '" style="font-size: 19px;"></i> ' + value.title +
@@ -397,7 +393,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 		}
 
 		function buildColorHtml() {
-			var colors = "";
+			let colors = "";
 			$.each(config.colors, function(i, value) {
 				colors += "<span class='select-color-item' color-id='" + value.id + "' style='background-color:" + value.color +
 					";'></span>";
@@ -408,23 +404,14 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 
 		function compatible() {
 			if ($(window).width() <= 768) {
-				sideMenu.collaspe();
-				if ($(".pear-admin").is(".pear-mini")) {
-					$(".layui-icon-spread-left").addClass("layui-icon-shrink-right")
-					$(".layui-icon-spread-left").removeClass("layui-icon-spread-left")
-					$(".pear-admin").removeClass("pear-mini");
-				} else {
-					$(".layui-icon-shrink-right").addClass("layui-icon-spread-left")
-					$(".layui-icon-shrink-right").removeClass("layui-icon-shrink-right")
-					$(".pear-admin").addClass("pear-mini");
-				}
+				abc()
 			}
 		}
 
 		function screenFun(num) {
 			num = num || 1;
 			num = num * 1;
-			var docElm = document.documentElement;
+			const docElm = document.documentElement;
 			switch (num) {
 				case 1:
 					if (docElm.requestFullscreen) {
