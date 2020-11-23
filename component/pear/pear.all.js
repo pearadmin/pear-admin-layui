@@ -39,5 +39,6 @@ layui.config({
 	card: "card",
 	loading: "loading",
 	cropper:"cropper",
-	convert:"convert"
+	convert:"convert",
+	context:"context"
 });
