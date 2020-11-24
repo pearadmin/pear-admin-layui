@@ -14,7 +14,7 @@ layui.define(['jquery', 'element'], function(exports) {
 			localStorage.setItem(key,value);
 		}
 
-		this.get = function(){
+		this.get = function(key){
 			return localStorage.getItem(key);
 		}
 	}
