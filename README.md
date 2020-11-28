@@ -23,7 +23,7 @@
         <img src="https://img.shields.io/badge/JQuery-2.0+-green.svg" alt="Jquery Version">
     </a>
       <a href="#">
-        <img src="https://img.shields.io/badge/Layui-2.5.6+-green.svg" alt="Layui Version">
+        <img src="https://img.shields.io/badge/Layui-2.5.7+-green.svg" alt="Layui Version">
     </a>
 </p>
 <br>
