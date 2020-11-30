@@ -312,13 +312,10 @@ layui.define(['jquery', 'element'], function(exports) {
 	function tabDelete(elem, id, callback) {
 
 		//根据 elem id 来删除指定的 layui title li
-
 		var tabTitle = $(".layui-tab[lay-filter='" + elem + "']").find(".layui-tab-title");
 
 		// 删除指定 id 的 title
-
 		var removeTab = tabTitle.find("li[lay-id='" + id + "']");
-
 		var nextNode = removeTab.next("li");
 
         if(!removeTab.hasClass("layui-this")){
@@ -334,37 +331,29 @@ layui.define(['jquery', 'element'], function(exports) {
 		if (nextNode.length) {
 
 			nextNode.addClass("layui-this");
-
 			currId = nextNode.attr("lay-id");
-
 			$("#" + elem + " [id='" + currId + "']").parent().addClass("layui-show");
 
 		} else {
 
 			var prevNode = removeTab.prev("li");
-
 			prevNode.addClass("layui-this");
-
 			currId = prevNode.attr("lay-id");
-
 			$("#" + elem + " [id='" + currId + "']").parent().addClass("layui-show");
 
 		}
-
 		callback(currId);
-
 		removeTab.remove();
-
 		// 删除 content
 		var tabContent = $(".layui-tab[lay-filter='" + elem + "']").find("iframe[id='" + id + "']").parent();
-
 		tabContent.remove();
-
 	}
 
 	function createTab(option) {
 
 		var type = "";
+		
+		var types = option.type+" ";
 
 		if (option.roll == true) {
 
@@ -379,7 +368,7 @@ layui.define(['jquery', 'element'], function(exports) {
 			type = "layui-tab-rollTool";
 		}
 
-		var tab = '<div class="pear-tab ' + type + ' layui-tab" lay-filter="' + option.elem + '" lay-allowClose="true">';
+		var tab = '<div class="pear-tab ' + types + type + ' layui-tab" lay-filter="' + option.elem + '" lay-allowClose="true">';
 
 		var title = '<ul class="layui-tab-title">';
 

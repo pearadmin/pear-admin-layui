@@ -40,8 +40,8 @@
 .pear-tab .layui-tab-title .pear-tab-active {
 	display: inline-block;
 	background-color: lightgray;
-	width: 9px;
-	height: 9px;
+	width: 8px;
+	height: 8px;
 	border-radius: 30px;
 	margin-right: 12px;
 }
@@ -181,6 +181,7 @@
 	-webkit-animation: close 1s;
 	animation-fill-mode: forwards;
 }
+
 
 .ball-loader {
 	position: absolute;

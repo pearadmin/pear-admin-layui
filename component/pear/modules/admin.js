@@ -163,6 +163,7 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 				}
 				localStorage.setItem("theme-color", color.id);
 				localStorage.setItem("theme-menu", menu);
+				localStorage.setItem("theme-color-context",color.color);
 				this.colorSet(color.color);
 				this.menuSkin(menu);
 			}
