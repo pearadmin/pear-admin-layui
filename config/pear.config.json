@@ -6,7 +6,7 @@
 	"menu": {
 		"data": "admin/data/menu.json",
 		"accordion": true,
-		"control": true,
+		"control": false,
 		"select": "10",
 		"async": true
 	},

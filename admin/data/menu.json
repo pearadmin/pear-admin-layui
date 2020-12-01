@@ -157,12 +157,12 @@
 				"href": "view/document/popup.html"
 			}]
 		},{
-			"id": 601,
+			"id": 60331,
 			"title": "高级组件",
 			"icon": "layui-icon layui-icon-console",
 			"type": 0,
 			"children": [{
-				"id": 6011,
+				"id": 60131,
 				"title": "多选项卡",
 				"icon": "layui-icon layui-icon-face-cry",
 				"type": 1,
