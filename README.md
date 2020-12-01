@@ -48,7 +48,7 @@
 
 #### 开源地址
 
-Gitee 开源地址 : https://gitee.com/Jmysy/Pear-Admin-Layui
+Gitee 开源地址 : https://gitee.com/pear-admin/Pear-Admin-Layui
 
 GitHub 开源地址 ：https://github.com/Jmysy/Pear-Admin-Layui
 
