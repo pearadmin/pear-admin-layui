@@ -3,7 +3,7 @@
 }
 
 .input-new-tag input {
-	height: 100%;
+	height: 100%!important;
 	border: none;
 	padding-left: 0px;
 }
