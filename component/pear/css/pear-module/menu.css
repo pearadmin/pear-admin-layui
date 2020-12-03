@@ -83,13 +83,19 @@
 	font-size: 14px;
 }
 
+.pear-nav-control.pc li{
+	display: inline-block;
+}
+
 .pear-nav-control.pc .layui-nav-bar {
 	top: 0px !important;
 }
 
 .pear-nav-control.pc .layui-this * {
-	color: #5FB878!important;
-	font-weight: 600;
+	background-color: whitesmoke;
+}
+.pear-nav-control.pc *{
+	color: darkslategray!important;
 }
 .pear-nav-control.pc .layui-nav-bar{
 	display: none!important;
