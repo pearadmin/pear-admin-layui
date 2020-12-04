@@ -1,9 +1,6 @@
 layui.define(['jquery', 'element'], function(exports) {
 	"use strict";
 
-	/**
-	 * 上下文，全局配置存储
-	 * */
 	var MOD_NAME = 'context',
 		$ = layui.jquery,
 		element = layui.element;
