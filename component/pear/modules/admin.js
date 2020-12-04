@@ -20,10 +20,8 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 			let configPath = '';
 
 			this.setConfigPath = function(path) {
-
 				configPath = path;
 			}
-
 
 			this.render = function(initConfig) {
 				if (initConfig !== undefined) {
