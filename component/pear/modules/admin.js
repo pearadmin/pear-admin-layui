@@ -1,10 +1,11 @@
-layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
+layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame'],
 	function(exports) {
 		"use strict";
 
 		const $ = layui.jquery,
 			form = layui.form,
 			element = layui.element,
+			yaml = layui.yaml,
 			pearTab = layui.tab,
 			pearMenu = layui.menu,
 			pearFrame = layui.frame;
@@ -27,19 +28,13 @@ layui.define(['table', 'jquery', 'element', 'form', 'tab', 'menu', 'frame'],
 				if (initConfig !== undefined) {
 					applyConfig(initConfig);
 				} else {
-					pearAdmin.readConfig().then(function(param) {
-						applyConfig(param);
-					});
+					applyConfig(pearAdmin.readConfig());
 				}
 			}
 
 			this.readConfig = function() {
-				const defer = $.Deferred();
-				const configUrl = (configPath === '' ? "pear.config.json" : configPath) + "?fresh=" + Math.random();
-				$.getJSON(configUrl, function(result) {
-					defer.resolve(result)
-				});
-				return defer.promise();
+				const configUrl = configPath === '' ? "pear.config.yml" : configPath;
+				return yaml.load(configUrl);
 			}
 
 			this.logoRender = function(param) {

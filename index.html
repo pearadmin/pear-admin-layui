@@ -78,7 +78,7 @@
 		<script>
 			layui.use(['admin','jquery',"convert"], function() {
 				var admin = layui.admin,
-					$ = layui.jquery;
+					$ = layui.jquery,
 					convert = layui.convert;
 				
 				var image = new Image();
@@ -86,9 +86,9 @@
 				image.onload = function(){
 					$(".layui-nav-img").attr("src", convert.imageToBase64(image));
 				}
-
+			
 				// 重新设置配置文件读取路径，默认为同级目录下的 pear.config.json
-				admin.setConfigPath("config/pear.config.json");
+				admin.setConfigPath("config/pear.config.yml");
 				
 				// 进行框架初始化
 				admin.render();
