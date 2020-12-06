@@ -40,6 +40,7 @@ layui.config({
 	loading: "loading",		// 加载组件
 	cropper:"cropper",		// 裁剪组件
 	convert:"convert",		// 数据转换
-	context:"context",		// 上下文组件
-	yaml:"yaml"
+	yaml:"yaml",			// yaml 解析组件
+	context: "context",		// 上下文组件
+	http: "http"			// ajax请求组件
 });
