@@ -52,7 +52,7 @@ Gitee 开源地址 : https://gitee.com/pear-admin/Pear-Admin-Layui
 
 GitHub 开源地址 ：https://github.com/Jmysy/Pear-Admin-Layui
 
-QQ 群: 682110771
+QQ 群:  682110771
 
 #### 开源共建
 
