@@ -35,8 +35,6 @@ textarea::-webkit-input-placeholder {
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-
-
 .layui-form-select dl::-webkit-scrollbar {
 	width: 0px;
 	height: 0px;
