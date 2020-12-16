@@ -383,13 +383,16 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 					top: topLength
 				});
 			}, function() {
-				$(this).children(".layui-nav-child").removeClass("layui-nav-hover");
-				$(this).children(".layui-nav-child").css({
-					left: '0px'
-				});
-				$(this).children(".layui-nav-child").css({
-					top: '0px'
-				});
+				var that = $(this);
+				setTimeout(function() {
+					that.children(".layui-nav-child").removeClass("layui-nav-hover");
+					that.children(".layui-nav-child").css({
+						left: '0px'
+					});
+					that.children(".layui-nav-child").css({
+						top: '0px'
+					});
+				}, 10);
 			})
 		} else {
 			$("#" + option.elem + " .layui-nav-item").off('mouseenter').unbind('mouseleave');
