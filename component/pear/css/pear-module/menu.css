@@ -100,8 +100,7 @@
 .pear-nav-control.pc .layui-nav-bar{
 	display: none!important;
 }
-
-.pear-nav-control .layui-nav-child{
+.layui-nav-child{
 	border: 1px solid whitesmoke;
 	border-radius: 6px;
 	width: 150px;
