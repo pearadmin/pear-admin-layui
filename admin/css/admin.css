@@ -17,13 +17,23 @@
 	border-bottom: 1px solid whitesmoke;
 }
 
+/**适应移动端小型设备调整begin*/
+	.pear-admin .layui-header .layui-nav {
+		padding: 0px;
+	}
+
+		.pear-admin .layui-header .layui-nav .layui-nav-item a {
+			padding: 0 10px;
+		}
+	/*end*/
+
 .pear-admin .layui-header .layui-nav-img {
 	width: 30px;
 	height: 30px;
 }
 
 .pear-admin .layui-layout-control {
-	left: 120px;
+	left: 80px;
 	position: absolute;
 }
 
