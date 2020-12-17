@@ -358,41 +358,42 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 	/** 二 级 悬 浮 菜 单*/
 	function isHoverMenu(b, option) {
 		if (b) {
-			$("#" + option.elem + ".pear-nav-mini .layui-nav-item,#" + option.elem + ".pear-nav-mini dd").hover(function() {
-				$(this).children(".layui-nav-child").addClass("layui-nav-hover");
-				var top = $(this).offset().top + 5;
-				var y = window.document.body.clientHeight;
+			$("#" + option.elem + ".pear-nav-mini .layui-nav-item,#" + option.elem + ".pear-nav-mini dd").hover(function(e) {
+				e.stopPropagation();
+				var _this = $(this);
+				_this.siblings().find(".layui-nav-child")
+					.removeClass("layui-nav-hover").css({
+						left: 0,
+						top: 0
+					});
+				_this.children(".layui-nav-child").addClass("layui-nav-hover");
+				_this.closest('.layui-nav-item').data('time') && clearTimeout(_this.closest('.layui-nav-item').data('time'));
 				var height = $(window).height();
-				var topLength = $(this).offset().top;
-				var thisHeight = $(this).children(".layui-nav-child").height();
+				var topLength = _this.offset().top;
+				var thisHeight = _this.children(".layui-nav-child").height();
 				if ((thisHeight + topLength) > height) {
 					topLength = height - thisHeight - 10;
 				}
-				if (!$(this).is(".layui-nav-item")) {
-					var left = $(this).offset().left + $(this).width() + 3;
-					$(this).children(".layui-nav-child").offset({
-						left: left
-					});
-				} else {
-					var left = $(this).offset().left + 63;
-					$(this).children(".layui-nav-child").offset({
-						left: left
-					});
+				var left = _this.offset().left + 60;
+				if (!_this.hasClass("layui-nav-item")) {
+					left = _this.offset().left + _this.width();
 				}
-				$(this).children(".layui-nav-child").offset({
-					top: topLength
+				_this.children(".layui-nav-child").offset({
+					top: topLength,
+					left: left + 3
 				});
-			}, function() {
-				var that = $(this);
-				setTimeout(function() {
-					that.children(".layui-nav-child").removeClass("layui-nav-hover");
-					that.children(".layui-nav-child").css({
-						left: '0px'
-					});
-					that.children(".layui-nav-child").css({
-						top: '0px'
-					});
-				}, 10);
+			}, function(e) {
+				e.stopPropagation();
+				var _this = $(this);
+				_this.closest('.layui-nav-item').data('time', setTimeout(function() {
+					_this.closest('.layui-nav-item')
+						.find(".layui-nav-child")
+						.removeClass("layui-nav-hover")
+						.css({
+							left: 0,
+							top: 0
+						});
+				}, 50));
 			})
 		} else {
 			$("#" + option.elem + " .layui-nav-item").off('mouseenter').unbind('mouseleave');

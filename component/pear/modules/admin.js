@@ -290,7 +290,7 @@ layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame
 			layer.open({
 				type: 1,
 				offset: 'r',
-				area: screen() < 2 ? ['93%', '100%'] : ['340px', '100%'],
+				area: ['340px', '100%'],
 				title: false,
 				shade: 0.1,
 				closeBtn: 0,
@@ -429,20 +429,6 @@ layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame
 			return new Promise(function(res, rej) {
 				res("返回值");
 			});
-		}
-
-		//获取当前窗口的宽度
-		function screen() {
-			var width = $(window).width();
-			if (width > 1200) {
-				return 3;   //大屏幕
-			} else if (width > 992) {
-				return 2;   //中屏幕
-			} else if (width > 768) {
-				return 1;   //小屏幕
-			} else {
-				return 0;   //超小屏幕
-			}
 		}
 
 		exports('admin', pearAdmin);
