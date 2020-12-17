@@ -263,6 +263,7 @@ layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame
 		});
 
 		body.on("click", ".setting", function() {
+			
 			let bgColorHtml =
 				'<li class="layui-this" data-select-bgcolor="dark-theme" >' +
 				'<a href="javascript:;" data-skin="skin-blue" style="" class="clearfix full-opacity-hover">' +
@@ -298,7 +299,7 @@ layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame
 				anim: -1,
 				skin: 'layer-anim-right',
 				move: false,
-				content: html + buildColorHtml() + buildLinkHtml(),
+				content: html + buildColorHtml() + buildLinkHtml() + bottomTool(),
 				success: function(layero, index) {
 					form.render();
 
@@ -323,9 +324,23 @@ layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame
 							layer.close(index);
 						});
 					})
+					
+					$('#closeTheme').click(function() {
+						const $layero = $('#layui-layer' + index);
+						$layero.animate({
+							left: $layero.offset().left + $layero.width()
+						}, 200, function() {
+							layer.close(index);
+						});
+					})
 				}
 			});
 		});
+
+		function bottomTool(){
+			
+			return "<button id='closeTheme' style='position: absolute;bottom: 20px;left: 20px;' class='pear-btn'>关闭</button>"
+		}
 
 		body.on('click', '[data-select-bgcolor]', function() {
 			const theme = $(this).attr('data-select-bgcolor');

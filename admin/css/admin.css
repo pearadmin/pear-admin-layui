@@ -155,6 +155,18 @@
 	color: white !important;
 }
 
+@media screen and (min-width: 768px){
+	.layui-hide-sm {
+		display: inline-block!important;
+	}
+}
+
+@media screen and (min-width: 769px){
+	.layui-hide-sm {
+		display: none!important;
+	}
+}
+
 /** 新增兼容 */
 @media screen and (max-width:768px) {
 	.collaspe {
@@ -163,7 +175,7 @@
 	.pear-collasped-pe {
 		display: inline-block !important;
 	}
-
+	
 	.pear-mini .bottom-nav {
 		display: none;
 	}
