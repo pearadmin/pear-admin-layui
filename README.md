@@ -112,9 +112,10 @@ QQ 群:  682110771
 
 ### 开源推荐
 
-Spring Boot 权限系统：[springboot v2](http://gitee.com/bdj/SpringBoot_v2)
+[api boot](https://apiboot.minbox.io)
 
-Spring Boot 开发组件: [api boot](https://apiboot.minbox.io)
+[springboot v2](http://gitee.com/bdj/SpringBoot_v2)
+
 
 
 
