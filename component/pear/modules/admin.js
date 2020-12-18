@@ -108,6 +108,7 @@ layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame
 					})
 
 					sideMenu.click(function(dom, data) {
+						
 						bodyTab.addTabOnly({
 							id: data.menuId,
 							title: data.menuTitle,

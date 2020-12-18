@@ -20,7 +20,7 @@ menu:
 ## 视图内容配置
 tab: 
   ## 是否开启多选项卡
-  muiltTab: false
+  muiltTab: true
   ## 切换选项卡时，是否刷新页面状态
   keepState: true
   ## 最大可打开的选项卡数量
