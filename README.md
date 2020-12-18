@@ -97,9 +97,9 @@ QQ 群:  682110771
 
 #### 其他版本
 
-[Pear Admin Fast](https://gitee.com/Jmysy/Pear-Admin-Fast)
-
 [Pear Admin Boot](https://gitee.com/Jmysy/Pear-Admin-Boot)
+
+[Pear Admin Fast](https://gitee.com/Jmysy/Pear-Admin-Fast)
 
 [Pear Admin Think](https://gitee.com/pear-admin/Pear-Admin-Think)
 
