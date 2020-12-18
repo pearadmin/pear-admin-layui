@@ -10,6 +10,12 @@
 	font-size: 20px;
 }
 
+.pear-admin .layui-layout-right .layui-nav-child{
+	border: 1px solid whitesmoke;
+	border-radius: 6px;
+	width: 150px;
+}
+
 .pear-admin .layui-header {
 	left: 230px;
 	width: calc(100% - 230px);

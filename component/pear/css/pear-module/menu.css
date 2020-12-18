@@ -100,11 +100,6 @@
 .pear-nav-control.pc .layui-nav-bar{
 	display: none!important;
 }
-.layui-nav-child{
-	border: 1px solid whitesmoke;
-	border-radius: 6px;
-	width: 150px;
-}
 
 /** 隐 藏 后 子 级 悬 浮 菜 单 */
 .pear-nav-tree .layui-nav-hover {
