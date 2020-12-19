@@ -32,7 +32,7 @@
 					<li class="layui-nav-item">
 						<!-- 头 像 -->
 						<a href="javascript:;">
-							<img src="" class="layui-nav-img">
+							<img src="admin/images/avatar.jpg" class="layui-nav-img">
 							就眠仪式
 						</a>
 						<!-- 功 能 菜 单 -->
@@ -78,21 +78,15 @@
 		<script src="component/pear/pear.js"></script>
 		<!-- 框 架 初 始 化 -->
 		<script>
-			layui.use(['admin','jquery',"convert"], function() {
-				var admin = layui.admin,
-					$ = layui.jquery,
-					convert = layui.convert;
+			layui.use(['admin'], function() {
+				var admin = layui.admin;
 				
-				var image = new Image();
-				image.src = "admin/images/avatar.jpg";
-				image.onload = function(){
-					$(".layui-nav-img").attr("src", convert.imageToBase64(image));
-				}
-			
-				// 重新设置配置文件读取路径，默认为同级目录下的 pear.config.json
+				// 框架初始化时会读取 根目录下 pear.config.yml 文件作为初始化配置
+				
+				// 你可以通过 admin.setConfigPath 方法修改配置文件位置
+				
 				admin.setConfigPath("config/pear.config.yml");
-				
-				// Admin 框架初始化
+	
 				admin.render();
 			})
 		</script>
