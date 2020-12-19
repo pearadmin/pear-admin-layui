@@ -97,17 +97,25 @@ QQ 群:  682110771
 
 #### 其他版本
 
-Spring Boot 单体项目 [Pear Admin Fast](https://gitee.com/Jmysy/Pear-Admin-Fast)
+[Pear Admin Boot](https://gitee.com/Jmysy/Pear-Admin-Boot)
 
-Spring Boot 聚合项目 [Pear Admin Boot](https://gitee.com/Jmysy/Pear-Admin-Boot)
+[Pear Admin Fast](https://gitee.com/Jmysy/Pear-Admin-Fast)
 
+[Pear Admin Think](https://gitee.com/pear-admin/Pear-Admin-Think)
+
+[Pear Admin Abp](https://gitee.com/pear-admin/pear-admin-abp)
+
+[Pear Admin Ant](https://gitee.com/pear-admin/pear-admin-ant)
+
+[Pear Admin Fruion](https://gitee.com/pear-admin/pear-admin-furion)
 
 
 ### 开源推荐
 
-Spring Boot 权限系统：[springboot v2](http://gitee.com/bdj/SpringBoot_v2)
+[api boot](https://apiboot.minbox.io)
 
-Spring Boot 开发组件: [api boot](https://apiboot.minbox.io)
+[springboot v2](http://gitee.com/bdj/SpringBoot_v2)
+
 
 
 
