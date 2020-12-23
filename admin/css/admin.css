@@ -182,6 +182,14 @@
 		display: inline-block !important;
 	}
 	
+	.layui-layout-control{
+		left: 45px!important;
+	}
+	.layui-layout-left{
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+	
 	.pear-mini .bottom-nav {
 		display: none;
 	}

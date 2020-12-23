@@ -78,8 +78,16 @@
 		<script src="component/pear/pear.js"></script>
 		<!-- 框 架 初 始 化 -->
 		<script>
-			layui.use(['admin'], function() {
+			layui.use(['admin','jquery','convert'], function() {
 				var admin = layui.admin;
+				var $ = layui.jquery;
+				var convert = layui.convert;
+				
+				var image = new Image();
+				image.src = "admin/images/avatar.jpg";
+				image.onload = function(){
+						$(".layui-nav-img").attr("src", convert.imageToBase64(image));
+				}
 				
 				// 框架初始化时会读取 根目录下 pear.config.yml 文件作为初始化配置
 				
