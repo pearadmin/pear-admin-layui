@@ -53,13 +53,14 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	}
 	
 	function createFrameHTML(option){
+		 var header = "<div class='pear-frame-title'><div class='dot'></div><div class='title'>"+option.title+"</div></div>"
 		 var iframe = "<iframe class='pear-frame-content' style='width:100%;height:100%;'  scrolling='auto' frameborder='0' src='"+option.url+"' ></iframe>";
 	     var loading = '<div class="pear-frame-loading">'+
 			       '<div class="ball-loader">'+
 				      '<span></span><span></span><span></span><span></span>'+
 			       '</div>'+
 		        '</div></div>';
-	     $("#"+option.elem).html(iframe+loading);	
+	     $("#"+option.elem).html("<div class='pear-frame'>"+header+iframe+loading+"</div>");	
 	}
 	exports(MOD_NAME,new pearFrame());
 })
