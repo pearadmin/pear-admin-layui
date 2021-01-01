@@ -341,7 +341,7 @@
 	left: 50%;
 	width: 1px;
 	height: 0;
-	border: 1px solid #F2F2F2;
+	border: 2px solid #F2F2F2;
 	transition: all .3s;
 	-webkit-transition: all .3s;
 	opacity: 0;

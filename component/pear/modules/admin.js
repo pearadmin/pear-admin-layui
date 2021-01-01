@@ -18,10 +18,16 @@ layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame
 
 		const pearAdmin = new function() {
 
-			let configPath = '';
+			// 默认配置
+			let configType = 'yml';
+			let configPath = 'pear.config.yml';
 
 			this.setConfigPath = function(path) {
 				configPath = path;
+			}
+			
+			this.setConfigType = function(type) {
+				configType = type;
 			}
 
 			this.render = function(initConfig) {
@@ -33,8 +39,23 @@ layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame
 			}
 
 			this.readConfig = function() {
-				const configUrl = configPath === '' ? "pear.config.yml" : configPath;
-				return yaml.load(configUrl);
+				if(configType === "yml"){
+					return yaml.load(configPath);
+				}
+				else
+				{
+					let data;
+					$.ajax({
+						url:configPath,
+						type:'get',
+						dataType:'json',
+						async: false,
+						success:function(result){
+							data = result;
+						}
+					})
+					return data;
+				}
 			}
 
 			this.logoRender = function(param) {
@@ -205,7 +226,7 @@ layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame
 				// 自 定 义 样 式 选 择 边 框 配 色
 				style +=
 					'.pearone-color .color-content li.layui-this:after, .pearone-color .color-content li:hover:after {border: ' +
-					color + ' 2px solid!important;}';
+					color + ' 3px solid!important;}';
 
 				style += '.layui-nav .layui-nav-child dd.layui-this a, .layui-nav-child dd.layui-this{background-color:' + color +
 					'!important}';

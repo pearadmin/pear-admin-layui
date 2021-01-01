@@ -7,11 +7,11 @@ window.rootPath = (function(src) {
 })();
 
 /**
- * 扩展包集成
+ * 核心依赖
  * */
 layui.config({
 	base: rootPath + "modules/",
-	version: true
+	version: "3.3.9.Release"
 }).extend({
 	admin: "admin", 	// 框架布局组件
 	menu: "menu",		// 数据菜单组件
