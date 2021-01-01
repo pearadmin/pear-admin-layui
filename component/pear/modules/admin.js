@@ -191,6 +191,7 @@ layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame
 			}
 
 			this.colorSet = function(color) {
+				
 				let style = '';
 				// 自 定 义 菜 单 配 色
 				style +=
