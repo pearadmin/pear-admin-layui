@@ -41,15 +41,13 @@ theme:
 ## 供选择的主题色配置列表
 colors: 
 - id: "1"
-  color: "#FF5722"
+  color: "#63b3ed"
 - id: "2"
   color: "#5FB878"
 - id: "3"
-  color: "#1E9FFF"
+  color: "#f6ad55"
 - id: "4"
-  color: "#FFB800"
-- id: "5"
-  color: "darkgray"
+  color: "#f56c6c"
 ## 主题面板的链接列表配置
 links: 
 - icon: "layui-icon layui-icon-website"
