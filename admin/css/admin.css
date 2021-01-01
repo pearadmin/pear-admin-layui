@@ -142,6 +142,10 @@
 	display: none;
 }
 
+.pear-admin .layui-header .layui-nav-more{
+	display: none;
+}
+
 .pear-collasped-pe {
 	display: none;
 	width: 50px;

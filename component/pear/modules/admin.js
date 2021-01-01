@@ -233,7 +233,9 @@ layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame
 					
 				style += '.pear-social-entrance {background-color:' + color + '!important}';
 				style += '.pear-admin .pe-collaspe {background-color:' + color + '!important}';
-	
+				if(config.other.autoHead){
+					style += '.pear-admin .layui-header{background-color:' + color + '!important;}.pear-admin .layui-header .layui-nav .layui-nav-item>a{color:white!important;}';
+				}
 				$("#pearadmin-bg-color").html(style);
 			}
 		};
