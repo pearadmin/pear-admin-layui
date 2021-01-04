@@ -107,7 +107,7 @@ QQ 群:  682110771
 
 [Pear Admin Ant](https://gitee.com/pear-admin/pear-admin-ant)
 
-[Pear Admin Fruion](https://gitee.com/pear-admin/pear-admin-furion)
+[Pear Admin Furion](https://gitee.com/pear-admin/pear-admin-furion)
 
 
 ### 开源推荐
