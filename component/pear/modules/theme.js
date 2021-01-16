@@ -3,36 +3,25 @@ layui.define(["jquery","layer"], function (exports) {
 	    $ = layui.jquery;
 
 	var theme = {};
-	theme.config = {
-		allowCustom : false,
-		defaultColor : {},
-		autoHead : false
-	};
+	theme.autoHead = false;
 
-	theme.changeTheme = function (target,themeConfig) {
-		if(themeConfig == undefined){
-			themeConfig = this.config;
-		}
+	theme.changeTheme = function (target, autoHead) {
+		this.autoHead = autoHead;
 		
-		this.themeRender(themeConfig);
+		const color = localStorage.getItem("theme-color-context");
+		this.colorSet(color);
 
 		if (target.frames.length == 0) return;
 
 		for (var i = 0; i < target.frames.length; i++) {
 			try {
 				if(target.frames[i].layui == undefined) continue;
-				target.frames[i].layui.theme.changeTheme(target.frames[i], themeConfig);
-			} 
+				target.frames[i].layui.theme.changeTheme(target.frames[i], autoHead);
+			}
 			catch (error) {
 				console.log(error);
 			}
 		}
-	}
-
-	theme.themeRender = function (themeConfig) {
-		this.config = themeConfig;
-		const color = localStorage.getItem("theme-color-context");
-		this.colorSet(color);
 	}
 
 	theme.colorSet = function(color) {
@@ -79,7 +68,7 @@ layui.define(["jquery","layer"], function (exports) {
 			
 		style += '.pear-social-entrance {background-color:' + color + '!important}';
 		style += '.pear-admin .pe-collaspe {background-color:' + color + '!important}';
-		if(this.config.autoHead){
+		if(this.autoHead){
 			style += '.pear-admin .layui-header{background-color:' + color + '!important;}.pear-admin .layui-header .layui-nav .layui-nav-item>a{color:white!important;}';
 		}
 
