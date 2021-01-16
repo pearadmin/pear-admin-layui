@@ -42,5 +42,9 @@ layui.config({
 	convert:"convert",		// 数据转换
 	yaml:"yaml",			// yaml 解析组件
 	context: "context",		// 上下文组件
-	http: "http"			// ajax请求组件
+	http: "http",			// ajax请求组件
+	theme: "theme"			// 主题转换
+}).use(['layer', 'theme'], function () {
+	var pearTheme = layui.theme;
+	pearTheme.changeAll();
 });

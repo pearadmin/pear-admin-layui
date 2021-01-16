@@ -1,4 +1,4 @@
-layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame'],
+layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame', 'theme'],
 	function(exports) {
 		"use strict";
 
@@ -8,7 +8,8 @@ layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame
 			yaml = layui.yaml,
 			pearTab = layui.tab,
 			pearMenu = layui.menu,
-			pearFrame = layui.frame;
+			pearFrame = layui.frame,
+			pearTheme = layui.theme;
 
 		let bodyFrame;
 		let sideMenu;
@@ -167,8 +168,16 @@ layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame
 					$(".setting").remove();
 				}
 				const colorId = localStorage.getItem("theme-color");
+				const currentColor = getColorById(colorId);
+				localStorage.setItem("theme-color", currentColor.id);
+				localStorage.setItem("theme-color-context", currentColor.color);
+				var themeConfig = {
+					allowCustom: option.theme.allowCustom,
+					defaultColor: option.theme.defaultColor,
+					autoHead: option.other.autoHead,
+				}
+				pearTheme.changeTheme(window, themeConfig);
 				let menu = localStorage.getItem("theme-menu");
-				const color = getColorById(colorId);
 				if (menu === "null") {
 					menu = option.theme.defaultMenu;
 				} else {
@@ -176,10 +185,7 @@ layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame
 						menu = option.theme.defaultMenu;
 					}
 				}
-				localStorage.setItem("theme-color", color.id);
 				localStorage.setItem("theme-menu", menu);
-				localStorage.setItem("theme-color-context",color.color);
-				this.colorSet(color.color);
 				this.menuSkin(menu);
 			}
 
@@ -188,56 +194,6 @@ layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame
 				pearAdmin.removeClass("light-theme");
 				pearAdmin.removeClass("dark-theme");
 				pearAdmin.addClass(theme);
-			}
-
-			this.colorSet = function(color) {
-				
-				let style = '';
-				// 自 定 义 菜 单 配 色
-				style +=
-					'.light-theme .pear-nav-tree .layui-this a:hover,.light-theme .pear-nav-tree .layui-this,.light-theme .pear-nav-tree .layui-this a,.pear-nav-tree .layui-this a,.pear-nav-tree .layui-this{background-color: ' +
-					color + '!important;}';
-
-				// 自定义 Logo 标题演示
-				style +=
-					'.pear-admin .layui-logo .title{color:' +
-					color + '!important;}';
-
-				// 自 定 义 标 签 配 色
-				style += '.pear-frame-title .dot,.pear-tab .layui-this .pear-tab-active{background-color: ' + color +
-					'!important;}';
-
-				// 自 定 义 快 捷 菜 单
-				style += '.bottom-nav li a:hover{background-color:' +
-					color + '!important;}';
-
-				// 自 定 义 顶 部 配 色
-				style += '.pear-admin .layui-header .layui-nav .layui-nav-bar{background-color: ' + color + '!important;}'
-
-				// 自 定 义 加 载 配 色
-				style += '.ball-loader>span,.signal-loader>span {background-color: ' + color + '!important;}';
-
-				// 自 定 义 顶 部 配 色
-				style += '.layui-header .layui-nav-child .layui-this a{background-color:' + color +
-					'!important;color:white!important;}';
-
-				// 自 定 义 加 载 配 色
-				style += '#preloader{background-color:' + color + '!important;}';
-
-				// 自 定 义 样 式 选 择 边 框 配 色
-				style +=
-					'.pearone-color .color-content li.layui-this:after, .pearone-color .color-content li:hover:after {border: ' +
-					color + ' 3px solid!important;}';
-
-				style += '.layui-nav .layui-nav-child dd.layui-this a, .layui-nav-child dd.layui-this{background-color:' + color +
-					'!important}';
-					
-				style += '.pear-social-entrance {background-color:' + color + '!important}';
-				style += '.pear-admin .pe-collaspe {background-color:' + color + '!important}';
-				if(config.other.autoHead){
-					style += '.pear-admin .layui-header{background-color:' + color + '!important;}.pear-admin .layui-header .layui-nav .layui-nav-item>a{color:white!important;}';
-				}
-				$("#pearadmin-bg-color").html(style);
 			}
 		};
 
@@ -378,9 +334,10 @@ layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame
 			$(".select-color-item").removeClass("layui-icon").removeClass("layui-icon-ok");
 			$(this).addClass("layui-icon").addClass("layui-icon-ok");
 			const colorId = $(".select-color-item.layui-icon-ok").attr("color-id");
-			localStorage.setItem("theme-color", colorId);
-			const color = getColorById(colorId);
-			pearAdmin.colorSet(color.color);
+			const currentColor = getColorById(colorId);
+			localStorage.setItem("theme-color", currentColor.id);
+			localStorage.setItem("theme-color-context", currentColor.color);
+			pearTheme.changeTheme(window);
 		});
 
 		function applyConfig(param) {
