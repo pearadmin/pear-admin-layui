@@ -175,6 +175,13 @@
 				"type": 1,
 				"openType": "_iframe",
 				"href": "view/document/tab.html"
+			},{
+				"id": 60132,
+				"title": "数据菜单",
+				"icon": "layui-icon layui-icon-face-cry",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/document/menu.html"
 			}]
 		}, {
 			"id": 204,

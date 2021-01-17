@@ -40,13 +40,13 @@ layui.define(["jquery","layer"], function (exports) {
 		if(this.autoHead){
 			style += '.pear-admin .layui-header{background-color:' + color + '!important;}.pear-admin .layui-header .layui-nav .layui-nav-item>a{color:white!important;}';
 		}
-		style += '.pear-btn.pear-btn-primary {background-color:' + color + '!important}';
-		style += '.layui-input:focus,.layui-textarea:focus {border-color: '+ color +'!important;box-shadow: 0 0 0 3px rgba(95, 184, 120, 0.2)!important;}'
+		style += '.pear-btn-primary {background-color:' + color + '!important}';
+		style += '.layui-input:focus,.layui-textarea:focus {border-color: '+ color +'!important;}'
 		style += '.layui-form-checked[lay-skin=primary] i {border-color: '+ color +'!important;background-color: ' + color + ';}'
 		style += '.layui-form-onswitch { border-color: ' + color + '; background-color: '+color+';}'
 		style += '.layui-form-radio>i:hover, .layui-form-radioed>i {color: ' + color + ';}'
 		style += '.layui-laypage .layui-laypage-curr .layui-laypage-em{background-color:'+ color +'!important}'
-		style += '.layui-tab-brief>.layui-tab-more li.layui-this:after, .layui-tab-brief>.layui-tab-title .layui-this:after{border-bottom: 2px solid '+color+'!important}'
+		style += '.layui-tab-brief>.layui-tab-more li.layui-this:after, .layui-tab-brief>.layui-tab-title .layui-this:after{border-bottom: 3px solid '+color+'!important}'
 		style += '.layui-tab-brief>.layui-tab-title .layui-this{color:'+color+'!important}'
 		style += '.layui-progress-bar{background-color:'+color+'}';
 		style += '.layui-elem-quote{border-left: 5px solid '+ color +'}';
@@ -55,6 +55,12 @@ layui.define(["jquery","layer"], function (exports) {
 		style += '.pear-text{color:' + color + '!important}';
 		style += '.pear-collasped-pe{background-color:'+color+'!important}'
 		style += '.layui-form-select dl dd.layui-this{background-color:'+color+'}'
+		style += '.tag-item-normal{background:'+color+'!important}';
+		style += '.step-item-head.step-item-head-active{background-color:'+color+'}'
+		style += '.step-item-head{border: 3px solid '+color+';}'
+		style += '.step-item-tail i{background-color:'+color+'}'
+		style += '.step-item-head{color:' + color + '}'
+		
 		var colorPane = $("#pear-admin-color");
 		if(colorPane.length>0){
 			colorPane.html(style);

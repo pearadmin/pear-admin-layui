@@ -12,19 +12,6 @@ textarea::-webkit-input-placeholder {
 .layui-input:focus,
 .layui-textarea:focus {
   border-color: #5FB878!important;
-  box-shadow: 0 0 0 3px rgba(95, 184, 120, 0.2)!important;
-}
-
-.layui-input[success],
-.layui-textarea[success] {
-  border-color: #5FB878!important;
-  box-shadow: 0 0 0 3px rgba(95, 184, 120, 0.2)!important;
-}
-
-.layui-input[failure],
-.layui-textarea[failure] {
-  border-color: #f56c6c !important;
-  box-shadow: 0 0 0 3px rgba(245,108,108, 0.2)!important;
 }
 
 .layui-input,
