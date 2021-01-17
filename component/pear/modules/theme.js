@@ -77,9 +77,5 @@ layui.define(["jquery","layer"], function (exports) {
 		$("#pearadmin-bg-color").html(style);
 	}
 
-	theme.changeAll = function () {
-		console.log("change theme123");
-	}
-
 	exports(MOD_NAME, theme);
 });

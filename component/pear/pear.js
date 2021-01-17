@@ -46,5 +46,5 @@ layui.config({
 	theme: "theme"			// 主题转换
 }).use(['layer', 'theme'], function () {
 	var pearTheme = layui.theme;
-	pearTheme.changeAll();
+	pearTheme.changeTheme(window, false);
 });
