@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" href="../../component/pear/css/pear.css"/>
+	</head>
+	<body class="pear-container">
+		<div class="layui-card">
+			<div class="layui-card-header"></div>
+			<div class="layui-card-body">
+				<button class="pear-btn pear-btn-primary">Button</button>
+			</div>
+		</div>
+		<div class="layui-card">
+			<div class="layui-card-header"></div>
+			<div class="layui-card-body">
+				<div class="layui-row layui-col-space10">
+					<div class="layui-col-md12">
+						<input type="text" name="title" placeholder="请输入标题" autocomplete="off" class="layui-input">
+					</div>
+					<div class="layui-col-md6">
+						<input type="text" name="title" hover placeholder="用户名" autocomplete="off" class="layui-input">
+					</div>
+					<div class="layui-col-md6">
+						<input type="text" name="title" hover placeholder="密码" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="layui-card layui-form" lay-filter="component-form-element">
+			<div class="layui-card-header">复选框</div>
+			<div class="layui-card-body layui-row layui-col-space10">
+				<div class="layui-col-md12">
+					<input type="checkbox" name="" title="写作" lay-skin="primary" checked>
+					<input type="checkbox" name="" title="发呆" lay-skin="primary">
+					<input type="checkbox" name="" title="禁用" lay-skin="primary" disabled>
+					<input type="checkbox" name="" lay-skin="primary">
+				</div>
+			</div>
+		</div>
+	</body>
+	<script src="../../component/layui/layui.js"></script>
+	<script src="../../component/pear/pear.js"></script>
+	<script>
+		layui.use('form',function(){
+			
+		})
+	</script>
+</html>

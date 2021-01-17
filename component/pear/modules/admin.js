@@ -171,7 +171,7 @@ layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame
 				const currentColor = getColorById(colorId);
 				localStorage.setItem("theme-color", currentColor.id);
 				localStorage.setItem("theme-color-context", currentColor.color);
-				pearTheme.changeTheme(window, option.theme.autoHead);
+				pearTheme.changeTheme(window, option.other.autoHead);
 				let menu = localStorage.getItem("theme-menu");
 				if (menu === "null") {
 					menu = option.theme.defaultMenu;
@@ -332,7 +332,7 @@ layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame
 			const currentColor = getColorById(colorId);
 			localStorage.setItem("theme-color", currentColor.id);
 			localStorage.setItem("theme-color-context", currentColor.color);
-			pearTheme.changeTheme(window, config.theme.autoHead);
+			pearTheme.changeTheme(window, config.other.autoHead);
 		});
 
 		function applyConfig(param) {

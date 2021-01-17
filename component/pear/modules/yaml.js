@@ -6,11 +6,9 @@ layui.define(['jquery', 'element'], function(exports) {
 		element = layui.element;
 
 	var yaml = new function() {
-		
 		this.parse = function(str){
 			return YAML.parse(yamlString);
 		}
-
 		this.load = function(path){
 			return YAML.load(path);
 		}
