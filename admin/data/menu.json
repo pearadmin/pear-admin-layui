@@ -328,7 +328,7 @@
 				"icon": "layui-icon layui-icon-face-cry",
 				"type": 1,
 				"openType": "_iframe",
-				"href": "view/system/logging.html"
+				"href": "view/system/log.html"
 			}, {
 				"id": 606,
 				"title": "数据字典",
