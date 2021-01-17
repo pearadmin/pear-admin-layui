@@ -54,6 +54,7 @@ layui.define(["jquery","layer"], function (exports) {
 		style += '.layui-laydate .layui-this{background-color:'+color+'!important}';
 		style += '.pear-text{color:' + color + '!important}';
 		style += '.pear-collasped-pe{background-color:'+color+'!important}'
+		style += '.layui-form-select dl dd.layui-this{background-color:'+color+'}'
 		var colorPane = $("#pear-admin-color");
 		if(colorPane.length>0){
 			colorPane.html(style);
