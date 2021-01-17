@@ -35,6 +35,9 @@
 				<div class="layui-card">
 					<div class="layui-card-header">实例</div>
 					<div class="layui-card-body">
+						<button id="collaspe" class="pear-btn pear-btn-primary">隐藏</button>
+						<br/>
+						<br/>
 						<div id="sideMenu"></div>
 					</div>
 				</div>
@@ -47,25 +50,24 @@
 							<pre class="layui-code" lay-encode="true">
 								
 								var sideMenu = menu.render({
-									elem: 'sideMenu',
-									async: true,
-									theme: "dark-theme",
-									height: '300px',
-									control: false, 
-									defaultMenu: 0,
-									accordion: true,
-									url: "../../admin/data/menu.json",
-									parseData: false,
-									done: function() {
-										layer.msg("加载完成")
-									}
+								    elem: 'sideMenu',
+								    async: true,
+								    theme: "dark-theme",
+								    height: '300px',
+								    control: false, 
+								    defaultMenu: 0,
+								    accordion: true,
+								    url: "../../admin/data/menu.json",
+								    parseData: false,
+								    done: function() {
+								        layer.msg("加载完成")
+								    }
 								});
 								
 								sideMenu.click(function(dom, data) {
+								    
 									layer.msg("菜单点击 : " + JSON.stringify(data));
 								})
-								
-								
 						</pre>
 						</div>
 					</div>
@@ -87,14 +89,14 @@
 			layui.code();
 	
 		 	var sideMenu = menu.render({
-				elem: 'sideMenu',
+			    elem: 'sideMenu',
 				async: true,
 				theme: "dark-theme",
 				height: '300px',
 				control: false, 
 				defaultMenu: 0,
 				accordion: true,
-				url: "../../admin/data/menu.json",
+				url: "../../admin/data/dataMenu.json",
 				parseData: false,
 				done: function() {
 					layer.msg("加载完成")
@@ -103,6 +105,10 @@
 			
 			sideMenu.click(function(dom, data) {
 				layer.msg("菜单点击 : " + JSON.stringify(data));
+			})
+			
+			$("#collaspe").click(function(){
+				sideMenu.collaspe();
 			})
 		});
 	</script>
