@@ -49,8 +49,11 @@ layui.define(["jquery","layer"], function (exports) {
 		style += '.layui-tab-brief>.layui-tab-more li.layui-this:after, .layui-tab-brief>.layui-tab-title .layui-this:after{border-bottom: 2px solid '+color+'!important}'
 		style += '.layui-tab-brief>.layui-tab-title .layui-this{color:'+color+'!important}'
 		style += '.layui-progress-bar{background-color:'+color+'}';
-		style += '.layui-elem-quote{border-left: 5px solid '+ color +';}'
-		style += '.layui-timeline-axis{color:' + color + '}'
+		style += '.layui-elem-quote{border-left: 5px solid '+ color +'}';
+		style += '.layui-timeline-axis{color:' + color + '}';
+		style += '.layui-laydate .layui-this{background-color:'+color+'!important}';
+		style += '.pear-text{color:' + color + '!important}';
+		style += '.pear-collasped-pe{background-color:'+color+'!important}'
 		var colorPane = $("#pear-admin-color");
 		if(colorPane.length>0){
 			colorPane.html(style);

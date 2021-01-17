@@ -10,6 +10,7 @@
 			<div class="layui-card-header">按钮</div>
 			<div class="layui-card-body">
 				<button class="pear-btn pear-btn-primary">Button</button>
+				<button class="pear-btn pear-btn-primary">Button</button>
 			</div>
 		</div>
 		<div class="layui-card">
@@ -141,7 +142,7 @@
 		</div>
 		<div class="layui-card">
 			<div class="layui-card-header">辅助元素</div>
-			<div class="layui-card-body">		 
+			<div class="layui-card-body">
 				<blockquote class="layui-elem-quote">快乐的时候不敢尽兴，频繁警戒自己保持清醒.</blockquote>
 				<blockquote class="layui-elem-quote">路上没有灯火的时候，就点亮自己的头颅.</blockquote>
 			</div>
@@ -150,32 +151,38 @@
 			<div class="layui-card-header"></div>
 			<div class="layui-card-body">
 				<ul class="layui-timeline">
-				  <li class="layui-timeline-item">
-				    <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
-				    <div class="layui-timeline-content layui-text">
-				      <h3 class="layui-timeline-title">8月18日</h3>
-				      <p>
-				        layui 2.0 的一切准备工作似乎都已到位。发布之弦，一触即发。
-				      </p>
-				    </div>
-				  </li>
-				  <li class="layui-timeline-item">
-				    <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
-				    <div class="layui-timeline-content layui-text">
-				      <h3 class="layui-timeline-title">8月16日</h3>
-				      <p>杜甫的思想核心是儒家的仁政思想，他有“<em>致君尧舜上，再使风俗淳</em>”的宏伟抱负。个人最爱的名篇有：</p>
-				    </div>
-				  </li>
-				  <li class="layui-timeline-item">
-				    <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
-				    <div class="layui-timeline-content layui-text">
-				      <h3 class="layui-timeline-title">8月15日</h3>
-				      <p>
-				        中国人民抗日战争胜利72周年
-				      </p>
-				    </div>
-				  </li>
+					<li class="layui-timeline-item">
+						<i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+						<div class="layui-timeline-content layui-text">
+							<h3 class="layui-timeline-title">8月18日</h3>
+							<p>
+								layui 2.0 的一切准备工作似乎都已到位。发布之弦，一触即发。
+							</p>
+						</div>
+					</li>
+					<li class="layui-timeline-item">
+						<i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+						<div class="layui-timeline-content layui-text">
+							<h3 class="layui-timeline-title">8月16日</h3>
+							<p>杜甫的思想核心是儒家的仁政思想，他有“<em>致君尧舜上，再使风俗淳</em>”的宏伟抱负。个人最爱的名篇有：</p>
+						</div>
+					</li>
+					<li class="layui-timeline-item">
+						<i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+						<div class="layui-timeline-content layui-text">
+							<h3 class="layui-timeline-title">8月15日</h3>
+							<p>
+								中国人民抗日战争胜利72周年
+							</p>
+						</div>
+					</li>
 				</ul>
+			</div>
+		</div>
+		<div class="layui-card">
+			<div class="layui-card-header">日期选择</div>
+			<div class="layui-card-body">
+				<input type="text" class="layui-input" id="test2">
 			</div>
 		</div>
 	</body>
@@ -265,6 +272,15 @@
 				elem: 'test1' //注意，这里的 test1 是 ID，不用加 # 号
 					,
 				count: 50 //数据总数，从服务端得到
+			});
+		});
+	</script>
+	<script>
+		layui.use('laydate', function() {
+			var laydate = layui.laydate;
+
+			laydate.render({
+				elem: '#test2' //指定元素
 			});
 		});
 	</script>

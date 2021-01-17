@@ -41,7 +41,7 @@ theme:
 ## 供选择的主题色配置列表
 colors: 
 - id: "1"
-  color: "#63b3ed"
+  color: "#2d8cf0"
 - id: "2"
   color: "#5FB878"
 - id: "3"
