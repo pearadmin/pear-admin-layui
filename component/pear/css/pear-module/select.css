@@ -220,7 +220,7 @@ select[xm-select] {
 
 .xm-select-parent dl dd.xm-select-this div i {
 	border: none;
-	color: #67c23a;
+	color: #5FB878;
 	font-size: 18px;
 }
 
@@ -294,7 +294,7 @@ select[xm-select] {
 .xm-select-parent .xm-select-title div.xm-select-label>span {
 	position: relative;
 	padding: 2px 5px;
-	background-color: #67c23a;
+	background-color: #5FB878;
 	border-radius: 2px;
 	color: #FFF;
 	display: inline-block;
