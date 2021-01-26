@@ -109,6 +109,7 @@ layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame
 						tool: true,
 						width: '100%',
 						height: '100%',
+						session: param.tab.session,
 						index: 0,
 						tabMax: param.tab.tabMax,
 						closeEvent: function(id) {
@@ -119,7 +120,13 @@ layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame
 							url: param.tab.index.href,
 							title: param.tab.index.title,
 							close: false
-						}]
+						}],
+						success: function(id){
+							setTimeout(function(){
+								sideMenu.selectItem(id);
+								bodyTab.positionTab();
+							},500)
+						}
 					});
 					bodyTab.click(function(id) {
 						if (!param.tab.keepState) {

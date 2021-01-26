@@ -23,17 +23,14 @@
 				tab = layui.tab;
 				
 				$(".add").click(function(){
-					
 					// ADD 添加方法
-					parent.layui.tab.addTabOnlyByElem('content',{id:'demo',title:'Demo',url:'../system/space.html',close: true})
+					parent.layui.tab.addTabOnlyByElem('contents',{id:'demo',title:'Demo',url:'../system/space.html',close: true})
 				})
 				
 				$(".del").click(function(){
-					
-					parent.layui.tab.delCurrentTabByElem('content',function(id){
+					parent.layui.tab.delCurrentTabByElem('contents',function(id){
 						layer.msg("已删除 '"+id+"' 标签页")
 					});
-					
 				})
 				
 		})

@@ -23,6 +23,8 @@ tab:
   muiltTab: true
   ## 切换选项卡时，是否刷新页面状态
   keepState: true
+  ## 是否开启 Tab 记忆
+  session: true
   ## 最大可打开的选项卡数量
   tabMax: "30"
   ## 默认选项卡数据
