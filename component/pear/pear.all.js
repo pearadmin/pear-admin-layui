@@ -11,7 +11,7 @@ window.rootPath = (function(src) {
  * */
 layui.config({
 	base: rootPath + "modules/",
-	version: "3.4.3.Release"
+	version: "3.5.5.Release"
 }).extend({
 	admin: "admin", 	// 框架布局组件
 	menu: "menu",		// 数据菜单组件
