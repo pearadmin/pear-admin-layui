@@ -122,10 +122,12 @@ layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame
 							close: false
 						}],
 						success: function(id){
-							setTimeout(function(){
-								sideMenu.selectItem(id);
-								bodyTab.positionTab();
-							},500)
+							if(param.tab.session){
+								setTimeout(function(){
+									sideMenu.selectItem(id);
+									bodyTab.positionTab();
+								},500)
+							}
 						}
 					});
 					bodyTab.click(function(id) {
