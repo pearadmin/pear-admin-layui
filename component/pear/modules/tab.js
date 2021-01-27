@@ -336,6 +336,13 @@ layui.define(['jquery', 'element'], function(exports) {
 			removeTab.remove();
 			var tabContent = $(".layui-tab[lay-filter='" + elem + "']").find("iframe[id='" + id + "']").parent();
 			tabContent.remove();
+			
+			tabData = JSON.parse(sessionStorage.getItem(elem+"-pear-tab-data"));
+			tabDataCurrent = sessionStorage.getItem(elem+"-pear-tab-data-current");
+			tabData = tabData.filter(function(item){
+				return item.id!=id;
+			})
+			sessionStorage.setItem(elem+"-pear-tab-data",JSON.stringify(tabData));
 			return false;
 		}
 
@@ -358,6 +365,7 @@ layui.define(['jquery', 'element'], function(exports) {
 		})
 		sessionStorage.setItem(elem+"-pear-tab-data",JSON.stringify(tabData));
 		sessionStorage.setItem(elem+"-pear-tab-data-current",currId);	
+		
 		removeTab.remove();
 		// 删除 content
 		var tabContent = $(".layui-tab[lay-filter='" + elem + "']").find("iframe[id='" + id + "']").parent();
@@ -460,6 +468,8 @@ layui.define(['jquery', 'element'], function(exports) {
 			if (currentTab.find("span").is(".able-close")) {
 				var currentId = currentTab.attr("lay-id");
 				tabDelete(option.elem, currentId, option.closeEvent,option);
+			}else{
+				layer.msg("当前页面不允许关闭",{icon:3,time:800})
 			}
 
 		})
