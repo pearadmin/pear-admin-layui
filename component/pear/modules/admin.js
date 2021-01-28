@@ -148,6 +148,7 @@ layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame
 							close: true
 						}, 300);
 						compatible();
+						
 					})
 				} else {
 					bodyFrame = pearFrame.render({
