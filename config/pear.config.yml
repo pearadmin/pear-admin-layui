@@ -10,7 +10,7 @@ menu:
   ## 菜单数据来源
   data: "admin/data/menu.json"
   ## 是否同时只打开一个菜单目录
-  accordion: false
+  accordion: true
   ## 是否开启多系统菜单模式
   control: false
   ## 默认选中的菜单项
@@ -24,7 +24,7 @@ tab:
   ## 切换选项卡时，是否刷新页面状态
   keepState: true
   ## 是否开启 Tab 记忆
-  session: false
+  session: true
   ## 最大可打开的选项卡数量
   tabMax: "30"
   ## 默认选项卡数据
