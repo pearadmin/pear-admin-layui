@@ -61,6 +61,35 @@
 				</div>
 			</div>
 			<div class="layui-col-md12">
+				<div class="layui-card">
+					<div class="layui-card-header">
+						基本使用
+					</div>
+					<div class="layui-card-body">
+						<div class="layui-form">
+							<div class="layui-form-item" id="area-picker-copy">
+								<div class="layui-form-label">网点地址</div>
+								<div class="layui-input-inline" style="width: 200px;">
+									<select name="province" class="province-selector" data-value="广东省" lay-filter="province-1">
+										<option value="">请选择省</option>
+									</select>
+								</div>
+								<div class="layui-input-inline" style="width: 200px;">
+									<select name="city" class="city-selector" data-value="深圳市" lay-filter="city-1">
+										<option value="">请选择市</option>
+									</select>
+								</div>
+								<div class="layui-input-inline" style="width: 200px;">
+									<select name="county" class="county-selector" data-value="龙岗区" lay-filter="county-1">
+										<option value="">请选择区</option>
+									</select>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md12">
 				<div class="layui-collapse">
 					<div class="layui-colla-item">
 						<h2 class="layui-colla-title">显示代码</h2>
@@ -94,6 +123,14 @@
 
 				area.render({
 					elem: '#area-picker',
+					change: function(res) {
+						//选择结果
+						console.log(res);
+					}
+				});
+				
+				area.render({
+					elem: '#area-picker-copy',
 					change: function(res) {
 						//选择结果
 						console.log(res);

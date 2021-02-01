@@ -471,7 +471,6 @@ layui.define(['jquery', 'element'], function(exports) {
 			}else{
 				layer.msg("当前页面不允许关闭",{icon:3,time:800})
 			}
-
 		})
 
 		$("body .layui-tab[lay-filter='" + option.elem + "']").on("click", "#closeOther", function() {
