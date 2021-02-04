@@ -7,9 +7,9 @@ layui.define(['jquery', 'element'], function(exports) {
 	var MOD_NAME = 'drawer',
 		$ = layui.jquery,
 		element = layui.element;
-	
+
 	var drawer = new function() {
-		
+
 		/**
 		 * open drawer
 		 * */
@@ -18,16 +18,16 @@ layui.define(['jquery', 'element'], function(exports) {
 				dom: option.dom,
 				direction: option.direction,
 				distance: option.distance,
-				time:option.time?option.time:0,
-				maskClose:option.maskClose,
-				callback:option.success
+				time: option.time ? option.time : 0,
+				maskClose: option.maskClose,
+				callback: option.success
 			});
 			obj.open();
 			return obj;
 		}
-		
+
 	}
-	exports(MOD_NAME,drawer);
+	exports(MOD_NAME, drawer);
 });
 
 /**
@@ -121,7 +121,7 @@ layui.define(['jquery', 'element'], function(exports) {
 			g.wrap.style.left = "0";
 			g.wrap.style.width = "100%";
 			g.wrap.style.height = "100%";
-			g.wrap.style.zIndex = 99999999999;
+			g.wrap.style.zIndex = 9999999;
 			g.inner.style.position = "absolute";
 			g.inner.style.top = g.top;
 			g.inner.style.bottom = g.bottom;
@@ -133,14 +133,12 @@ layui.define(['jquery', 'element'], function(exports) {
 			g.inner.style.transform = "translate3d(" + g.translate + ")";
 			g.inner.style.webkitTransition = "all .2s ease-out";
 			g.inner.style.transition = "all .2s ease-out";
-			g.inner.style.zIndex = 100000000000;
+			g.inner.style.zIndex = 10000000;
 			g.mask.style.width = "100%";
 			g.mask.style.height = "100%";
-			g.mask.style.opacity = "0";
+			g.mask.style.opacity = "0.1";
 			g.mask.style.backgroundColor = "black";
-			g.mask.style.zIndex = "99999999998";
-			g.mask.style.webkitTransition = "all .2s ease-out";
-			g.mask.style.transition = "all .2s ease-out";
+			g.mask.style.zIndex = "9999998";
 			g.mask.style.webkitBackfaceVisibility = "hidden";
 			g.events()
 		},
@@ -151,7 +149,7 @@ layui.define(['jquery', 'element'], function(exports) {
 			setTimeout(function() {
 				d.inner.style.transform = "translate3d(0,0,0)";
 				d.inner.style.webkitTransform = "translate3d(0,0,0)";
-				d.mask.style.opacity = 0.5
+				d.mask.style.opacity = 0.1
 			}, 30);
 			if (d.opts.time) {
 				d.timer = setTimeout(function() {
