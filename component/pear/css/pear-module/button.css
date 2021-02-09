@@ -4,9 +4,6 @@
 	line-height: 38px;
 	white-space: nowrap;
 	cursor: pointer;
-	background-color: #fff;
-	border: 1px solid #dcdfe6;
-	color: #606266;
 	text-align: center;
 	box-sizing: border-box;
 	outline: none;
@@ -15,11 +12,17 @@
 	padding: 0 18px;
 	height: 38px;
 	font-size: 14px;
+	color: #2f495e;
+	background-color: #edf2f7;
 	border-radius: 4px;
+	border: none;
+	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
 }
+
 .pear-btn i {
 	font-size: 13px;
 }
+
 .pear-btn:hover {
 	opacity: .8;
 	filter: alpha(opacity=80);
@@ -27,28 +30,31 @@
 	border-color: #c6e2ff;
 	background-color: #ECF5FF;
 }
+
 .pear-btn-danger,
 .pear-btn-warming,
 .pear-btn-success,
 .pear-btn-primary {
 	color: #fff !important
 }
-.pear-btn[dashed] {
-	border-style: dashed !important;
-}
 /** Button 主题 */
 .pear-btn-primary {
 	background-color: #2D8CF0 !important;
+	border: #2D8CF0;
 }
 .pear-btn-danger {
-	background-color: #f56c6c !important
+	background-color: #f56c6c !important;
+	border: #f56c6c;
 }
 .pear-btn-warming {
-	background-color: #f6ad55 !important
+	background-color: #f6ad55 !important;
+	border: #f6ad55;
 }
 .pear-btn-success {
-	background-color: #5FB878 !important
+	background-color: #5FB878 !important;
+	border: #5FB878;
 }
+
 .pear-btn[round] {
 	border-radius: 50px;
 }
@@ -102,30 +108,37 @@
 	display: inline-block;
 	vertical-align: middle;
 }
+
 .pear-btn-group .pear-btn {
 	float: left;
 	position: relative;
 	border-radius: 0px;
-
+	margin-left: 1px;
+	margin-right: 1px;
 }
+
 .pear-btn-md {
 	height: 34px;
 	line-height: 34px;
 	padding: 0 10px;
 	font-size: 12.5px;
 }
+
 .pear-btn-group .pear-btn:first-child {
 	border-top-left-radius: 4px !important;
 	border-bottom-left-radius: 4px !important;
 }
+
 .pear-btn-group .pear-btn:last-child {
 	border-top-right-radius: 4px !important;
 	border-bottom-right-radius: 4px !important;
 }
+
 .pear-btn-group .pear-btn[round]:first-child {
 	border-top-left-radius: 50px !important;
 	border-bottom-left-radius: 50px !important;
 }
+
 .pear-btn-group .pear-btn[round]:last-child {
 	border-top-right-radius: 50px !important;
 	border-bottom-right-radius: 50px !important;
@@ -138,12 +151,21 @@
 	padding: 0 10px;
 	font-size: 12px;
 }
+
 .pear-btn-xs {
 	height: 28px;
 	line-height: 28px;
 	padding: 0 8px;
 	font-size: 12px;
 }
+
+.pear-btn-md {
+	height: 34px;
+	line-height: 34px;
+	padding: 0 10px;
+	font-size: 12.5px;
+}
+
 .pear-btn-lg {
 	height: 44px;
 	line-height: 44px;
