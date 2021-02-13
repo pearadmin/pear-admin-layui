@@ -52,7 +52,7 @@
 								  
 								    popup.success("成功消息")
 								    popup.failure("失败消息")
-								    popup.warming("警告消息")
+								    popup.warning("警告消息")
 								})
 							</pre>
 						</div>
@@ -80,7 +80,7 @@
 								  
 								    popup.success("成功消息",callback)
 								    popup.failure("失败消息",callback)
-								    popup.warming("警告消息",callback)
+								    popup.warning("警告消息",callback)
 								})
 							</pre>
 						</div>
@@ -105,7 +105,7 @@
 				popup.failure("失败消息")
 			})
 			$(".warming").click(function() {
-				popup.warming("警告消息")
+				popup.warning("警告消息")
 			})
 			$(".success-callback").click(function() {
 				popup.success("成功消息", function() {
@@ -118,7 +118,7 @@
 				})
 			})
 			$(".warming-callback").click(function() {
-				popup.warming("警告消息", function() {
+				popup.warning("警告消息", function() {
 					layer.msg("回调函数")
 				})
 			})
