@@ -39,6 +39,21 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	     }
 	}
 	
+	pearFrame.prototype.changePageByElement = function(elem,url,title,loading){
+		if(loading){
+			var loading = $("#"+elem).find(".pear-frame-loading");	
+			loading.css({display:'block'});
+		}
+		$("#"+elem+" iframe").attr("src",url);
+	    $("#"+elem+" .title").html(title);
+	     if(loading){
+	     	var loading = $("#"+elem).find(".pear-frame-loading");
+			setTimeout(function(){
+				loading.css({display:'none'});
+			},800)	
+	     }
+	}
+	
 	pearFrame.prototype.refresh = function (time) {
 		if(time!=false){
 			var loading = $("#"+this.option.elem).find(".pear-frame-loading");

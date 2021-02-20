@@ -233,6 +233,36 @@
 					</div>
 				</div>
 			</div>
+			<div class="layui-col-md12">
+				<div class="layui-card">
+					<div class="layui-card-header">
+						Load 手动
+					</div>
+					<div class="layui-card-body">
+			
+						<button class="pear-btn pear-btn-primary" to> 本页跳转 </button>
+			
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md12">
+				<div class="layui-collapse">
+					<div class="layui-colla-item">
+						<h2 class="layui-colla-title">显示代码</h2>
+						<div class="layui-colla-content">
+							<pre class="layui-code" lay-encode="true">
+								layui.use(["jquery"], function() {
+								    var $ = layui.jquery;
+								    
+									$("[to]").click(function(){
+										top.layui.frame.changePageByElement("content","http://www.baidu.com","百度一下",true)
+									})
+								})
+							</pre>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<script src="../../component/layui/layui.js"></script>
 		<script src="../../component/pear/pear.js"></script>
@@ -267,6 +297,10 @@
 					dom.stop(function() {
 						popup.failure("已停止");
 					});
+				})
+				
+				$("[to]").click(function(){
+					top.layui.frame.changePageByElement("content","http://www.baidu.com","百度一下",true)
 				})
 			})
 		</script>

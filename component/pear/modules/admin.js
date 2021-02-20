@@ -1,4 +1,4 @@
-layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame', 'theme'],
+layui.define(['table', 'jquery', 'element', 'yaml', 'form', 'tab', 'menu', 'frame', 'theme'],
 	function(exports) {
 		"use strict";
 
@@ -26,7 +26,7 @@ layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame
 			this.setConfigPath = function(path) {
 				configPath = path;
 			}
-			
+
 			this.setConfigType = function(type) {
 				configType = type;
 			}
@@ -40,18 +40,16 @@ layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame
 			}
 
 			this.readConfig = function() {
-				if(configType === "yml"){
+				if (configType === "yml") {
 					return yaml.load(configPath);
-				}
-				else
-				{
+				} else {
 					let data;
 					$.ajax({
-						url:configPath,
-						type:'get',
-						dataType:'json',
+						url: configPath,
+						type: 'get',
+						dataType: 'json',
 						async: false,
-						success:function(result){
+						success: function(result) {
 							data = result;
 						}
 					})
@@ -93,7 +91,8 @@ layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame
 					refreshA.addClass("layui-anim-rotate");
 					refreshA.addClass("layui-anim-loop");
 					refreshA.addClass("layui-icon-loading");
-					bodyTab.refresh(400);
+					if (param.tab.muiltTab) bodyTab.refresh(400);
+					else bodyFrame.refresh(400);
 					setTimeout(function() {
 						refreshA.addClass("layui-icon-refresh-1");
 						refreshA.removeClass("layui-anim");
@@ -121,12 +120,12 @@ layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame
 							title: param.tab.index.title,
 							close: false
 						}],
-						success: function(id){
-							if(param.tab.session){
-								setTimeout(function(){
+						success: function(id) {
+							if (param.tab.session) {
+								setTimeout(function() {
 									sideMenu.selectItem(id);
 									bodyTab.positionTab();
-								},500)
+								}, 500)
 							}
 						}
 					});
@@ -139,7 +138,7 @@ layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame
 					})
 
 					sideMenu.click(function(dom, data) {
-						
+
 						bodyTab.addTabOnly({
 							id: data.menuId,
 							title: data.menuTitle,
@@ -148,7 +147,7 @@ layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame
 							close: true
 						}, 300);
 						compatible();
-						
+
 					})
 				} else {
 					bodyFrame = pearFrame.render({
@@ -249,7 +248,7 @@ layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame
 		});
 
 		body.on("click", ".setting", function() {
-			
+
 			let bgColorHtml =
 				'<li class="layui-this" data-select-bgcolor="dark-theme" >' +
 				'<a href="javascript:;" data-skin="skin-blue" style="" class="clearfix full-opacity-hover">' +
@@ -310,7 +309,7 @@ layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame
 							layer.close(index);
 						});
 					})
-					
+
 					$('#closeTheme').click(function() {
 						const $layero = $('#layui-layer' + index);
 						$layero.animate({
@@ -323,7 +322,7 @@ layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame
 			});
 		});
 
-		function bottomTool(){
+		function bottomTool() {
 			return "<button id='closeTheme' style='position: absolute;bottom: 20px;left: 20px;' class='pear-btn'>关闭</button>"
 		}
 
