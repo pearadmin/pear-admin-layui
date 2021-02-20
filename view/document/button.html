@@ -236,12 +236,10 @@
 			<div class="layui-col-md12">
 				<div class="layui-card">
 					<div class="layui-card-header">
-						Load 手动
+						本页跳转
 					</div>
 					<div class="layui-card-body">
-			
 						<button class="pear-btn pear-btn-primary" to> 本页跳转 </button>
-			
 					</div>
 				</div>
 			</div>
@@ -254,9 +252,9 @@
 								layui.use(["jquery"], function() {
 								    var $ = layui.jquery;
 								    
-									$("[to]").click(function(){
-										top.layui.frame.changePageByElement("content","http://www.baidu.com","百度一下",true)
-									})
+								    $("[to]").click(function(){
+								        top.layui.frame.changePageByElement("content","http://www.baidu.com","百度一下",true)
+								    })
 								})
 							</pre>
 						</div>
