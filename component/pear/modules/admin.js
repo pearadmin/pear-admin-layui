@@ -93,7 +93,8 @@ layui.define(['table', 'jquery', 'element', 'yaml','form', 'tab', 'menu', 'frame
 					refreshA.addClass("layui-anim-rotate");
 					refreshA.addClass("layui-anim-loop");
 					refreshA.addClass("layui-icon-loading");
-					bodyTab.refresh(400);
+					if (param.tab.muiltTab) bodyTab.refresh(400);
+					else bodyFrame.refresh(400);
 					setTimeout(function() {
 						refreshA.addClass("layui-icon-refresh-1");
 						refreshA.removeClass("layui-anim");
