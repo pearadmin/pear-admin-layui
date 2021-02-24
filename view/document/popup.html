@@ -95,11 +95,12 @@
 		layui.use(['popup', 'jquery', 'layer', 'code'], function() {
 			var popup = layui.popup;
 			var $ = layui.jquery;
+			var layer = layui.layer;
 
 			layui.code();
 
 			$(".success").click(function() {
-				popup.success("成功消息")
+				layer.msg("我的世界",{time:0,icon:1})
 			})
 			$(".failure").click(function() {
 				popup.failure("失败消息")
