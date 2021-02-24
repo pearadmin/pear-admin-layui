@@ -92,15 +92,14 @@
 	<script src="../../component/layui/layui.js"></script>
 	<script src="../../component/pear/pear.js"></script>
 	<script>
-		layui.use(['popup', 'jquery', 'layer', 'code'], function() {
+		layui.use(['popup', 'jquery', 'code'], function() {
 			var popup = layui.popup;
 			var $ = layui.jquery;
-			var layer = layui.layer;
 
 			layui.code();
 
 			$(".success").click(function() {
-				layer.msg("我的世界",{time:0,icon:1})
+				popup.success("成功消息")
 			})
 			$(".failure").click(function() {
 				popup.failure("失败消息")
