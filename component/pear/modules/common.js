@@ -30,6 +30,17 @@ layui.define(['jquery', 'element','table'], function(exports) {
 		}
 		
 		/**
+		 * 当前是否为与移动端
+		 * */
+		this.isModile = function(){
+			if ($(window).width() <= 768) {
+				return true;
+			}
+			return false;
+		}
+		
+		
+		/**
 		 * 提交 json 数据
 		 * @param data 提交数据
 		 * @param href 提交接口
