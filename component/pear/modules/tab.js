@@ -76,7 +76,6 @@ layui.define(['jquery', 'element'], function(exports) {
 				"closeOther'>关闭其他</li><li class='item' id='" + option.elem + "closeAll'>关闭所有</li></ul>"
 
 			// 初始化
-
 			layer.open({
 				type: 1,
 				title: false,

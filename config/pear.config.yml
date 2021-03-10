@@ -62,7 +62,7 @@ links:
   href: "http://www.pearadmin.com/doc/"
 - icon: "layui-icon layui-icon-fonts-code"
   title: "开源地址"
-  href: "https://gitee.com/pear-admin/Pear-Admin-Layui"
+  href: "https://gitee.com/pear-admin/Pear-Admin-Layui/"
 - icon: "layui-icon layui-icon-survey"
   title: "问答社区"
   href: "http://forum.pearadmin.com/"
