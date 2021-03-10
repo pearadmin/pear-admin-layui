@@ -34,7 +34,7 @@
 						<!-- 功 能 菜 单 -->
 						<dl class="layui-nav-child">
 							<dd><a user-menu-url="view/system/person.html" user-menu-id="5555" user-menu-title="基本资料">基本资料</a></dd>
-							<dd><a href="login.html">注销登录</a></dd>
+							<dd><a href="javascript:void(0);" class="logout">注销登录</a></dd>
 						</dl>
 					</li>
 					<!-- 主 题 配 置 -->
@@ -88,6 +88,15 @@
 				admin.setConfigType("yml");
 				admin.setConfigPath("config/pear.config.yml");
 				admin.render();
+				
+				// 登出逻辑 
+				admin.logout(function(){
+					
+					// 注销逻辑 返回 true / false
+					location.href = "login.html";
+					
+					return true;
+				})
 			})
 		</script>
 	</body>

@@ -16,6 +16,9 @@ layui.define(['table', 'jquery', 'element', 'yaml', 'form', 'tab', 'menu', 'fram
 		let sideMenu;
 		let bodyTab;
 		let config;
+		let logout = function(){
+			location.href = "login.html";
+		}
 		
 		const body = $('body');
 
@@ -210,6 +213,11 @@ layui.define(['table', 'jquery', 'element', 'yaml', 'form', 'tab', 'menu', 'fram
 				pearAdmin.removeClass("dark-theme");
 				pearAdmin.addClass(theme);
 			}
+			
+			this.logout = function(callback){
+				
+				logout = callback;
+			}
 		};
 
 		function collaspe() {
@@ -227,9 +235,19 @@ layui.define(['table', 'jquery', 'element', 'yaml', 'form', 'tab', 'menu', 'fram
 				admin.addClass("pear-mini");
 			}
 		}
+		
+		body.on("click",".logout",function(){
+			// 回调
+			var result = logout();
+			
+			if(result){
+				// 清空缓存
+				bodyTab.clear();
+			}
+		})
 
 		body.on("click", ".collaspe,.pear-cover", function() {
-			collaspe()
+			collaspe();
 		});
 
 		body.on("click", ".fullScreen", function() {

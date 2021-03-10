@@ -91,6 +91,11 @@ layui.define(['jquery', 'element'], function(exports) {
 			scrollLeft: autoLeft - $tabTitle.width() / 3
 		}, 200);
 	}
+	
+	pearTab.prototype.clear = function(){
+		sessionStorage.removeItem(this.option.elem+"-pear-tab-data");
+		sessionStorage.removeItem(this.option.elem+"-pear-tab-data-current");
+	}
 
 	pearTab.prototype.addTab = function(opt) {
 		var title = '';
