@@ -1,4 +1,4 @@
-layui.define(['table', 'jquery', 'element', 'yaml', 'form', 'tab', 'menu', 'frame', 'theme'],
+layui.define(['table', 'jquery', 'element', 'yaml', 'form', 'tab', 'menu', 'frame', 'theme','convert'],
 	function(exports) {
 		"use strict";
 
@@ -7,6 +7,7 @@ layui.define(['table', 'jquery', 'element', 'yaml', 'form', 'tab', 'menu', 'fram
 			element = layui.element,
 			yaml = layui.yaml,
 			pearTab = layui.tab,
+			convert = layui.convert,
 			pearMenu = layui.menu,
 			pearFrame = layui.frame,
 			pearTheme = layui.theme;
@@ -15,6 +16,7 @@ layui.define(['table', 'jquery', 'element', 'yaml', 'form', 'tab', 'menu', 'fram
 		let sideMenu;
 		let bodyTab;
 		let config;
+		
 		const body = $('body');
 
 		const pearAdmin = new function() {
@@ -29,6 +31,15 @@ layui.define(['table', 'jquery', 'element', 'yaml', 'form', 'tab', 'menu', 'fram
 
 			this.setConfigType = function(type) {
 				configType = type;
+			}
+			
+			this.setAvatar = function(url,username){
+				var image = new Image();
+				image.src = "admin/images/avatar.jpg";
+				image.onload = function(){
+					$(".layui-nav-img").attr("src", convert.imageToBase64(image));
+				}
+				$(".layui-nav-img").parent().append(username);		
 			}
 
 			this.render = function(initConfig) {
@@ -138,10 +149,6 @@ layui.define(['table', 'jquery', 'element', 'yaml', 'form', 'tab', 'menu', 'fram
 					})
 
 					sideMenu.click(function(dom, data) {
-						
-						console.log("点击项:"+JSON.stringify(dom))
-						console.log("元数据:"+JSON.stringify(data));
-						
 						bodyTab.addTabOnly({
 							id: data.menuId,
 							title: data.menuTitle,
@@ -149,6 +156,7 @@ layui.define(['table', 'jquery', 'element', 'yaml', 'form', 'tab', 'menu', 'fram
 							icon: data.menuIcon,
 							close: true
 						}, 300);
+						
 						compatible();
 
 					})
@@ -162,10 +170,6 @@ layui.define(['table', 'jquery', 'element', 'yaml', 'form', 'tab', 'menu', 'fram
 					});
 
 					sideMenu.click(function(dom, data) {
-						
-						console.log("点击项:"+dom)
-						console.log("元数据:"+data);
-						
 						bodyFrame.changePage(data.menuUrl, data.menuPath, true);
 						compatible()
 					})

@@ -19,7 +19,7 @@
 				<!-- 顶 部 左 侧 功 能 -->
 				<ul class="layui-nav layui-layout-left">
 					<li class="collaspe layui-nav-item"><a href="#" class="layui-icon layui-icon-shrink-right"></a></li>
-					<li class="refresh layui-nav-item"><a href="#" class="layui-icon layui-icon-refresh-1" loading=600></a></li>
+					<li class="refresh layui-nav-item"><a href="#" class="layui-icon layui-icon-refresh-1" loading = 600></a></li>
 				</ul>
 				<!-- 顶 部 右 侧 菜 单 -->
 				<div id="control" class="layui-layout-control"></div>
@@ -30,7 +30,6 @@
 						<!-- 头 像 -->
 						<a href="javascript:;">
 							<img src="admin/images/avatar.jpg" class="layui-nav-img">
-							就眠仪式
 						</a>
 						<!-- 功 能 菜 单 -->
 						<dl class="layui-nav-child">
@@ -44,14 +43,14 @@
 			</div>
 			<!-- 侧 边 区 域 -->
 			<div class="layui-side layui-bg-black">
-				<!-- 顶 部 图 标 -->
+				<!-- 菜 单 顶 部 -->
 				<div class="layui-logo">
-					<!-- 图 表 -->
+					<!-- 图 标 -->
 					<img class="logo"></img>
 					<!-- 标 题 -->
 					<span class="title"></span>
 				</div>
-				<!-- 侧 边 菜 单 -->
+				<!-- 菜 单 内 容 -->
 				<div class="layui-side-scroll">
 					<div id="sideMenu"></div>
 				</div>
@@ -79,13 +78,11 @@
 				var admin = layui.admin;
 				var $ = layui.jquery;
 				var convert = layui.convert;
+		
+				// 初始化顶部用户信息
+				admin.setAvatar("admin/images/avatar.jpg","就眠仪式");
 				
-				var image = new Image();
-				image.src = "admin/images/avatar.jpg";
-				image.onload = function(){
-					$(".layui-nav-img").attr("src", convert.imageToBase64(image));
-				}
-				// 框架初始化时会读取 根目录下 pear.config.yml 文件作为初始化配置
+				// 根目录下 pear.config.yml 文件为初始化配置
 				// 你可以通过 admin.setConfigPath 方法修改配置文件位置
 				// 你可以通过 admin.setConfigType 方法修改配置文件类型
 				admin.setConfigType("yml");

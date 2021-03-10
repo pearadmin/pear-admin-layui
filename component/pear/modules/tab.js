@@ -112,6 +112,7 @@ layui.define(['jquery', 'element'], function(exports) {
 		sessionStorage.setItem(this.option.elem+"-pear-tab-data-current",opt.id);
 		element.tabChange(this.option.elem, opt.id);
 	}
+	
 	var index = 0;
 
 	// 根据过滤 filter 标识, 删除执行选项卡
