@@ -68,11 +68,11 @@ GitHub 开源地址 ：https://github.com/PearAdmin/pear-admin-layui
 
 | 预览  | 界面 |
 |---------------------|---------------------|
-| ![](README_files/1.jpg)  | ![](README_files/2.jpg)  |
-| ![](README_files/3.jpg)|  ![](README_files/4.jpg)   |
-| ![](README_files/5.jpg)|  ![](README_files/6.jpg)   |
-| ![](README_files/7.jpg)|  ![](README_files/8.jpg)   |
-| ![](README_files/9.jpg)|  ![](README_files/10.jpg)  |
-|![](README_files/11.jpg)| ![](README_files/12.jpg)   |
-|![](README_files/13.jpg)| ![](README_files/14.jpg)   |
-|![](README_files/15.jpg)| ![](README_files/16.jpg)   |
+| ![](readmes/1.jpg)  | ![](readmes/2.jpg)  |
+| ![](readmes/3.jpg)|  ![](readmes/4.jpg)   |
+| ![](readmes/5.jpg)|  ![](readmes/6.jpg)   |
+| ![](readmes/7.jpg)|  ![](readmes/8.jpg)   |
+| ![](readmes/9.jpg)|  ![](readmes/10.jpg)  |
+|![](readmes/11.jpg)| ![](readmes/12.jpg)   |
+|![](readmes/13.jpg)| ![](readmes/14.jpg)   |
+|![](readmes/15.jpg)| ![](readmes/16.jpg)   |
