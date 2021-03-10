@@ -76,10 +76,11 @@
 		<script src="component/pear/pear.js"></script>
 		<!-- 框 架 初 始 化 -->
 		<script>
-			layui.use(['admin','jquery','convert'], function() {
+			layui.use(['admin','jquery','convert','popup'], function() {
 				var admin = layui.admin;
 				var $ = layui.jquery;
 				var convert = layui.convert;
+				var popup = layui.popup;
 		
 				// 初始化顶部用户信息
 				admin.setAvatar("admin/images/avatar.jpg","就眠仪式");
@@ -93,10 +94,12 @@
 				
 				// 登出逻辑 
 				admin.logout(function(){
+				
+					popup.success("注销成功",function(){
+						location.href = "login.html";
+					})
 					
 					// 注销逻辑 返回 true / false
-					location.href = "login.html";
-					
 					return true;
 				})
 			})
