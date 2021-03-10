@@ -12,6 +12,26 @@
 	height: 100%;
 }
 
+.pear-tab-menu{
+	box-shadow: 0 2px 8px #f0f1f2!important;
+	border: 1px solid whitesmoke!important;
+	border-radius: 4px!important;
+}
+
+.pear-tab-menu .item{
+	height: 20px;
+	padding-left: 18px;
+	padding-top: 7px;
+	padding-bottom: 7px;
+	color: #333;
+	font-size: 13.5px;
+	line-height: 20px;
+}
+.pear-tab-menu .item:hover{
+	background: #36b368;
+	color: white;
+}
+
 .pear-tab .layui-tab-content {
 	padding: 0px;
 }

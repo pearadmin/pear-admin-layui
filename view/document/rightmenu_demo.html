@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>选项卡插件测试</title>
+    <link rel="stylesheet" href="assets/layui/css/layui.css" media="all">
+
+		<link rel="stylesheet" href="../../component/pear/css/pear.css" />
+   
+
+
+</head>
+<body>
+<h1>选项卡1</h1>
+<div id="nav1">
+    <!-- 顶部切换卡 -->
+    <!--ul的id要和lay-filter一致-->
+    <div class="layui-tab" lay-filter="main_tab1">
+        <ul id="main_tab1" class="layui-tab-title">
+            <li lay-id="0" class="layui-this">网站设置</li>
+            <li lay-id="1">用户管理</li>
+            <li lay-id="2">权限分配</li>
+            <li lay-id="3">商品管理</li>
+            <li lay-id="4">订单管理</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">这是 网站设置 内容</div>
+            <div class="layui-tab-item">这是 用户管理 内容</div>
+            <div class="layui-tab-item">这是 权限分配 内容</div>
+            <div class="layui-tab-item">这是 商品管理 内容</div>
+            <div class="layui-tab-item">这是 订单管理 内容</div>
+        </div>
+    </div>
+</div>
+
+
+<h1>选项卡2</h1>
+<div id="nav2">
+    <!-- 顶部切换卡 -->
+    <div class="layui-tab" lay-filter="main_tab2">
+        <ul id="main_tab2" class="layui-tab-title">
+            <li lay-id="11" class="layui-this">权限管理</li>
+            <li lay-id="12">机构管理</li>
+            <li lay-id="21">字典管理</li>
+            <li lay-id="31">用户管理</li>
+            <li lay-id="41">物流管理</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">这是 权限管理 内容</div>
+            <div class="layui-tab-item">这是 机构管理 内容</div>
+            <div class="layui-tab-item">这是 字典管理 内容</div>
+            <div class="layui-tab-item">这是 用户管理 内容</div>
+            <div class="layui-tab-item">这是 物流管理 内容</div>
+        </div>
+    </div>
+</div>
+	<script src="../../component/layui/layui.js"></script>
+	<script src="../../component/pear/pear.js"></script>
+<script>
+layui.use(['tabrightmenu'], function () {
+    let element = layui.element;
+    let rightmenu_ = layui.tabrightmenu;
+
+    // 默认方式渲染全部：关闭当前（closethis）、关闭所有（closeall）、关闭其它（closeothers）、关闭左侧所有（closeleft）、关闭右侧所有（closeright）、刷新当前页（refresh）
+    rightmenu_.render({
+        container: '#nav1',
+        filter: 'main_tab1',
+    });
+
+    // 默认渲染部分弹出项
+    rightmenu_.render({
+        container: '#nav2',
+        filter: 'main_tab2',
+        // navArr：对象数组，每个对象包含dataType、title、method属性
+        navArr: [
+            //自定义菜单项，此时dataType属性表示自定义事件
+            {title: "测试", eventName: 'test'},
+            {title: "测试2", eventName: 'test2'},
+        ],
+        // 注册自定义事件
+        registMethod: {'test': testMethod, 'test2': test2Method}
+    })
+
+    function testMethod(id, title, currentNavGroup, dom) {
+        changeCurrentTabContent(currentNavGroup, "[测试]触发,触发的ID：" + id + "，标题：" + title);
+    }
+
+    function test2Method(id, title, currentNavGroup, dom) {
+        changeCurrentTabContent(currentNavGroup, "[测试2]触发,触发的ID：" + id + "，标题：" + title);
+    }
+
+    function changeCurrentTabContent(currentNavGroup, content) {
+        $(currentNavGroup + " div[class='layui-tab-item layui-show']").html(content);
+
+    }
+});
+</script>
+
+</body>
+</html>

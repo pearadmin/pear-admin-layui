@@ -243,7 +243,7 @@ layui.define(['table', 'jquery', 'element', 'yaml', 'form', 'tab', 'menu', 'fram
 				bodyTab.clear();
 			}
 		})
-
+		
 		body.on("click", ".collaspe,.pear-cover", function() {
 			collaspe();
 		});
