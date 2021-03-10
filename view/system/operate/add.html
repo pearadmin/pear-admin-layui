@@ -77,7 +77,6 @@ layui.use(['form','jquery'],function(){
         });
         roleIds = roleIds.substr(0,roleIds.length-1);
         data.field.roleIds = roleIds;
-
         $.ajax({
             url:'/system/user/save',
             data:JSON.stringify(data.field),

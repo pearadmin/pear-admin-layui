@@ -36,8 +36,8 @@
 			</div>
 		</div>
 
-	<script type="text/html" id="user-toolbar">
-		<button class="pear-btn pear-btn-primary pear-btn-md" lay-event="add">
+		<script type="text/html" id="user-toolbar">
+			<button class="pear-btn pear-btn-primary pear-btn-md" lay-event="add">
 			<i class="layui-icon layui-icon-add-1"></i>
 			新增
 		</button>
@@ -47,14 +47,14 @@
 		</button>
 	</script>
 
-	<script type="text/html" id="user-bar">
-		<button class="pear-btn pear-btn-primary pear-btn-sm" lay-event="edit"><i class="layui-icon layui-icon-edit"></i></button>
+		<script type="text/html" id="user-bar">
+			<button class="pear-btn pear-btn-primary pear-btn-sm" lay-event="edit"><i class="layui-icon layui-icon-edit"></i></button>
 		<button class="pear-btn pear-btn-danger pear-btn-sm" lay-event="remove"><i class="layui-icon layui-icon-delete"></i></button>
 		<button class="pear-btn pear-btn-sm" id="more{{d.userId}}"><i class="layui-icon layui-icon-triangle-d"></i></button>
 	</script>
 
-	<script type="text/html" id="user-enable">
-		<input type="checkbox" name="enable" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="user-enable" checked = "{{ d.enable == 0 ? 'true' : 'false' }}">
+		<script type="text/html" id="user-enable">
+			<input type="checkbox" name="enable" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="user-enable" checked = "{{ d.enable == 0 ? 'true' : 'false' }}">
 	</script>
 
 	<script type="text/html" id="user-sex">
@@ -84,15 +84,14 @@
 			[{txt: "查看详情", event: "reopen"}]
 		]
 	</script>
-	
-	
+
 	<div style="display: none;">
 		<div class="layer-top">
 			<br />
 			<h3>上侧弹层内容...</h3>
 		</div>
 	</div>
-	
+
 		<script src="../../component/layui/layui.js"></script>
 		<script src="../../component/pear/pear.js"></script>
 		<script>
