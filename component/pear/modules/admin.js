@@ -457,6 +457,5 @@ layui.define(['table', 'jquery', 'element', 'yaml', 'form', 'tab', 'menu', 'fram
 				res("返回值");
 			});
 		}
-
 		exports('admin', pearAdmin);
 	})
