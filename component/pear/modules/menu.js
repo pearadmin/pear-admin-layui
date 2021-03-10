@@ -16,6 +16,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 			async: opt.async,
 			parseData: opt.parseData,
 			url: opt.url,
+			method: opt.method ? opt.method : "GET",
 			defaultOpen: opt.defaultOpen,
 			defaultSelect: opt.defaultSelect,
 			control: opt.control,
@@ -28,10 +29,17 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 			done: opt.done ? opt.done : function() {}
 		}
 		if (option.async) {
-			getData(option.url).then(function(data) {
-				option.data = data;
-				renderMenu(option);
-			});
+			if (option.method === "GET") {
+				getData(option.url).then(function(data) {
+					option.data = data;
+					renderMenu(option);
+				});
+			} else {
+				postData(option.url).then(function(data) {
+					option.data = data;
+					renderMenu(option);
+				});
+			}
 		} else {
 			//renderMenu中需要调用done事件，done事件中需要menu对象，但是此时还未返回menu对象，做个延时提前返回对象
 			window.setTimeout(function() {
@@ -66,11 +74,11 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 				data['menuPath'] = domsss.find("span").text() + " / " + data['menuPath'];
 			}
 			if ($("#" + _this.option.elem).is(".pear-nav-mini")) {
-					if(_this.option.accordion){
-						activeMenus = $(this).parent().parent().parent().children("a");
-					}else{
-						activeMenus.push($(this).parent().parent().parent().children("a"));
-					}
+				if (_this.option.accordion) {
+					activeMenus = $(this).parent().parent().parent().children("a");
+				} else {
+					activeMenus.push($(this).parent().parent().parent().children("a"));
+				}
 			}
 			clickEvent(dom, data);
 		})
@@ -142,6 +150,14 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 	function getData(url) {
 		var defer = $.Deferred();
 		$.get(url + "?fresh=" + Math.random(), function(result) {
+			defer.resolve(result)
+		});
+		return defer.promise();
+	}
+
+	function postData(url) {
+		var defer = $.Deferred();
+		$.post(url + "?fresh=" + Math.random(), function(result) {
 			defer.resolve(result)
 		});
 		return defer.promise();

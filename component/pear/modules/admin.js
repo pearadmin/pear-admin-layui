@@ -80,6 +80,7 @@ layui.define(['table', 'jquery', 'element', 'yaml', 'form', 'tab', 'menu', 'fram
 					async: param.menu.async !== undefined ? param.menu.async : true,
 					theme: "dark-theme",
 					height: '100%',
+					method: param.menu.method,
 					control: param.menu.control ? 'control' : false, // control
 					defaultMenu: 0,
 					accordion: param.menu.accordion,
