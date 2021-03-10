@@ -138,7 +138,10 @@ layui.define(['table', 'jquery', 'element', 'yaml', 'form', 'tab', 'menu', 'fram
 					})
 
 					sideMenu.click(function(dom, data) {
-
+						
+						console.log("点击项:"+JSON.stringify(dom))
+						console.log("元数据:"+JSON.stringify(data));
+						
 						bodyTab.addTabOnly({
 							id: data.menuId,
 							title: data.menuTitle,
@@ -159,6 +162,10 @@ layui.define(['table', 'jquery', 'element', 'yaml', 'form', 'tab', 'menu', 'fram
 					});
 
 					sideMenu.click(function(dom, data) {
+						
+						console.log("点击项:"+dom)
+						console.log("元数据:"+data);
+						
 						bodyFrame.changePage(data.menuUrl, data.menuPath, true);
 						compatible()
 					})

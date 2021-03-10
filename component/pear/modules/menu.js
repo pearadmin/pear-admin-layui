@@ -50,7 +50,8 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 				menuTitle: dom.attr("menu-title"),
 				menuPath: dom.attr("menu-title"),
 				menuIcon: dom.attr("menu-icon"),
-				menuUrl: dom.attr("menu-url")
+				menuUrl: dom.attr("menu-url"),
+				openType: dom.attr("open-type")
 			};
 			var doms = hash(dom);
 			if (doms.text() != '') {
