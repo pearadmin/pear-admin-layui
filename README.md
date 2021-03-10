@@ -17,7 +17,7 @@
 
 <p align="center">
     <a href="#">
-        <img src="https://img.shields.io/badge/Pear Admin Layui-3.1.0+-green.svg" alt="Pear Admin Layui Version">
+        <img src="https://img.shields.io/badge/Pear Admin Layui-3.6.5+-green.svg" alt="Pear Admin Layui Version">
     </a>
     <a href="#">
         <img src="https://img.shields.io/badge/JQuery-2.0+-green.svg" alt="Jquery Version">
@@ -42,80 +42,37 @@
 
 供相对完善的开发方案，只为成为更好的轮子，项目不定时更新，建议 Star watch 一份
 
-如果你需要无组件整合 与 示例页面 的基础框架，请前往 [Pear Admin Layui 基础版本](https://gitee.com/pear-admin/Pear-Admin-Layui/tree/pear-admin-template)
-
 </p>
 
 #### 开源地址
+
+<p style="padding:10px;"  width="90%">
 
 Gitee 开源地址 : https://gitee.com/pear-admin/Pear-Admin-Layui
 
 GitHub 开源地址 ：https://github.com/PearAdmin/pear-admin-layui
 
-QQ 群:  682110771
+</p>
 
 #### 开源共建
+
+<p style="padding:10px;"  width="90%">
 
 1. 欢迎提交 [pull request](https://gitee.com/Jmysy/Pear-Admin-Layui/pulls)，注意对应提交对应 `master` 分支
 
 2. 欢迎提交 [issue](https://gitee.com/Jmysy/Pear-Admin-Layui/issues)，请写清楚遇到问题的原因、开发环境、复显步骤。
 
-#### 项目演示
+</p>
 
-![](readme/1.jpg)
+#### 预览项目
 
-
-![](readme/2.jpg)
-
-
-![](readme/3.jpg)
-
-
-![](readme/4.jpg)
-
-
-![](readme/5.jpg)
-
-
-![](readme/6.jpg)
-
-
-![](readme/7.jpg)
-
-
-![](readme/8.jpg)
-
-
-![](readme/9.jpg)
-
-
-![](readme/10.jpg)
-
-
-![](readme/11.jpg)
-
-
-#### 其他版本
-
-[Pear Admin Boot](https://gitee.com/pear-admin/Pear-Admin-Boot)
-
-[Pear Admin Fast](https://gitee.com/pear-admin/Pear-Admin-Fast)
-
-[Pear Admin Think](https://gitee.com/pear-admin/Pear-Admin-Think)
-
-[Pear Admin Abp](https://gitee.com/pear-admin/pear-admin-abp)
-
-[Pear Admin Ant](https://gitee.com/pear-admin/pear-admin-ant)
-
-[Pear Admin Furion](https://gitee.com/pear-admin/pear-admin-furion)
-
-
-### 开源推荐
-
-[api boot](https://apiboot.minbox.io)
-
-[springboot v2](http://gitee.com/bdj/SpringBoot_v2)
-
-
-
-
+| 预览  | 界面 |
+|---------------------|---------------------|
+| ![](README_files/1.jpg)  | ![](README_files/2.jpg)  |
+| ![](README_files/3.jpg)|  ![](README_files/4.jpg)   |
+| ![](README_files/5.jpg)|  ![](README_files/6.jpg)   |
+| ![](README_files/7.jpg)|  ![](README_files/8.jpg)   |
+| ![](README_files/9.jpg)|  ![](README_files/10.jpg)  |
+|![](README_files/11.jpg)| ![](README_files/12.jpg)   |
+|![](README_files/13.jpg)| ![](README_files/14.jpg)   |
+|![](README_files/15.jpg)| ![](README_files/16.jpg)   |
