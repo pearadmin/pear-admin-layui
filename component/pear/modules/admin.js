@@ -16,9 +16,7 @@ layui.define(['table', 'jquery', 'element', 'yaml', 'form', 'tab', 'menu', 'fram
 		let sideMenu;
 		let bodyTab;
 		let config;
-		let logout = function(){
-			location.href = "login.html";
-		}
+		let logout = function(){};
 		
 		const body = $('body');
 
