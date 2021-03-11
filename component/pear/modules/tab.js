@@ -45,6 +45,8 @@ layui.define(['jquery', 'element'], function(exports) {
 			}
 		}
 
+
+			var lastIndex;
 		var tab = createTab(option);
 		$("#" + option.elem).html(tab);
 		$(".layui-tab[lay-filter='" + option.elem + "'] .layui-tab-prev").click(function() {
@@ -73,7 +75,7 @@ layui.define(['jquery', 'element'], function(exports) {
 			var currentId = $(this).attr("lay-id");
 
 			var menu = "<ul><li class='item' id='" + option.elem + "closeThis'>关闭当前</li><li class='item' id='" + option.elem +
-				"closeOther'>关闭其他</li><li class='item' id='" + option.elem + "closeAll'>关闭所有</li></ul>"
+				"closeOther'>关闭其他</li><li class='item' id='" + option.elem + "closeAll'>关闭所有</li></ul>";
 
 			// 初始化
 			layer.open({
@@ -87,8 +89,9 @@ layui.define(['jquery', 'element'], function(exports) {
 				offset: [top, left],
 				content: menu, //iframe的url,
 				success: function(layero, index) {
+					layer.close(lastIndex);
+					lastIndex = index;
 					menuEvent(option,index);
-					console.log("初始化")
 					var timer;
 					$(layero).on('mouseout', function() {
 						timer = setTimeout(function() {
@@ -99,6 +102,12 @@ layui.define(['jquery', 'element'], function(exports) {
 					$(layero).on('mouseover', function() {
 						clearTimeout(timer);
 					});
+					
+					// 清除 item 右击
+					$(layero).on('contextmenu',function(){
+						return false;
+					})
+					
 				}
 			});
 			return false;

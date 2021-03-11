@@ -1,4 +1,4 @@
-layui.define(['table', 'jquery', 'element', 'yaml', 'form', 'tab', 'menu', 'frame', 'theme','convert'],
+layui.define(['table', 'jquery', 'element', 'yaml', 'form', 'tab', 'menu', 'frame', 'theme', 'convert'],
 	function(exports) {
 		"use strict";
 
@@ -16,8 +16,8 @@ layui.define(['table', 'jquery', 'element', 'yaml', 'form', 'tab', 'menu', 'fram
 		let sideMenu;
 		let bodyTab;
 		let config;
-		let logout = function(){};
-		
+		let logout = function() {};
+
 		const body = $('body');
 
 		const pearAdmin = new function() {
@@ -33,14 +33,14 @@ layui.define(['table', 'jquery', 'element', 'yaml', 'form', 'tab', 'menu', 'fram
 			this.setConfigType = function(type) {
 				configType = type;
 			}
-			
-			this.setAvatar = function(url,username){
+
+			this.setAvatar = function(url, username) {
 				var image = new Image();
 				image.src = "admin/images/avatar.jpg";
-				image.onload = function(){
+				image.onload = function() {
 					$(".layui-nav-img").attr("src", convert.imageToBase64(image));
 				}
-				$(".layui-nav-img").parent().append(username);		
+				$(".layui-nav-img").parent().append(username);
 			}
 
 			this.render = function(initConfig) {
@@ -158,7 +158,7 @@ layui.define(['table', 'jquery', 'element', 'yaml', 'form', 'tab', 'menu', 'fram
 							icon: data.menuIcon,
 							close: true
 						}, 300);
-						
+
 						compatible();
 
 					})
@@ -212,9 +212,9 @@ layui.define(['table', 'jquery', 'element', 'yaml', 'form', 'tab', 'menu', 'fram
 				pearAdmin.removeClass("dark-theme");
 				pearAdmin.addClass(theme);
 			}
-			
-			this.logout = function(callback){
-				
+
+			this.logout = function(callback) {
+
 				logout = callback;
 			}
 		};
@@ -234,17 +234,17 @@ layui.define(['table', 'jquery', 'element', 'yaml', 'form', 'tab', 'menu', 'fram
 				admin.addClass("pear-mini");
 			}
 		}
-		
-		body.on("click",".logout",function(){
+
+		body.on("click", ".logout", function() {
 			// 回调
 			var result = logout();
-			
-			if(result){
+
+			if (result) {
 				// 清空缓存
 				bodyTab.clear();
 			}
 		})
-		
+
 		body.on("click", ".collaspe,.pear-cover", function() {
 			collaspe();
 		});
@@ -458,5 +458,6 @@ layui.define(['table', 'jquery', 'element', 'yaml', 'form', 'tab', 'menu', 'fram
 				res("返回值");
 			});
 		}
+
 		exports('admin', pearAdmin);
 	})
