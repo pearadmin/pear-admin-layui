@@ -67,6 +67,7 @@ layui.define(["jquery","layer"], function (exports) {
 		style += 'div[xm-select-skin=normal].xm-form-selected .xm-select, div[xm-select-skin=normal].xm-form-selected .xm-select:hover{border-color:'+color+'!important}'
 		style += '.layui-layer-btn a:first-child{border-color:'+color+';background-color:'+color+'!important}';
 		style += '.layui-form-checkbox[lay-skin=primary]:hover i{border-color:'+color+'!important}'
+		style += '.pear-tab-menu .item:hover{background-color:'+color+'!important}'
 		var colorPane = $("#pear-admin-color");
 		if(colorPane.length>0){
 			colorPane.html(style);
