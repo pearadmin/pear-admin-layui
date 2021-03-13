@@ -6,6 +6,8 @@
 @import url("pear-module/iconPicker.css");
 @import url("pear-module/treetable.css");
 @import url("pear-module/dropdown.css");
+@import url("pear-module/message.css");
+@import url("pear-module/cropper.css");
 @import url("pear-module/loading.css");
 @import url("pear-module/topBar.css");
 @import url("pear-module/select.css");
@@ -25,4 +27,3 @@
 @import url("pear-module/card.css");
 @import url("pear-module/tab.css");
 @import url("pear-module/tag.css");
-@import url("pear-module/cropper.css");

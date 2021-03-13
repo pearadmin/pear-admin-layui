@@ -1,4 +1,4 @@
-layui.define(['table', 'jquery', 'element', 'yaml', 'form', 'tab', 'menu', 'frame', 'theme', 'convert'],
+layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'menu', 'frame', 'theme', 'convert'],
 	function(exports) {
 		"use strict";
 
@@ -10,13 +10,15 @@ layui.define(['table', 'jquery', 'element', 'yaml', 'form', 'tab', 'menu', 'fram
 			convert = layui.convert,
 			pearMenu = layui.menu,
 			pearFrame = layui.frame,
-			pearTheme = layui.theme;
+			pearTheme = layui.theme,
+			message = layui.message;
 
 		let bodyFrame;
 		let sideMenu;
 		let bodyTab;
 		let config;
 		let logout = function() {};
+		let msgInstance;
 
 		const body = $('body');
 
@@ -67,6 +69,15 @@ layui.define(['table', 'jquery', 'element', 'yaml', 'form', 'tab', 'menu', 'fram
 					})
 					return data;
 				}
+			}
+
+			this.messageRender = function(option) {
+				var option = {
+					elem: '.message',
+					url: option.header.message,
+					height: '250px'
+				};
+				msgInstance = message.render(option);
 			}
 
 			this.logoRender = function(param) {
@@ -214,10 +225,35 @@ layui.define(['table', 'jquery', 'element', 'yaml', 'form', 'tab', 'menu', 'fram
 			}
 
 			this.logout = function(callback) {
-
 				logout = callback;
 			}
+			
+			this.message = function(callback) {
+				if(callback!=null){
+					msgInstance.click(callback);
+				}else{
+					msgInstance.click(messageTip);
+				}
+			}
 		};
+
+		var messageTip = function(id, title, context, form) {
+			layer.open({
+				type: 1,
+				title: '消息', //标题
+				area: ['390px', '330px'], //宽高
+				shade: 0.4, //遮罩透明度
+				content: "<div style='background-color:whitesmoke;'><div class='layui-card'><div class='layui-card-body'>来源 : &nbsp; " +
+					form + "</div><div class='layui-card-header' >标题 : &nbsp; " + title +
+					"</div><div class='layui-card-body' >内容 : &nbsp; " + context + "</div></div></div>", //支持获取DOM元素
+				btn: ['确认'], //按钮组
+				scrollbar: false, //屏蔽浏览器滚动条
+				yes: function(index) { //layer.msg('yes');    //点击确定回调
+					layer.close(index);
+					showToast();
+				}
+			});
+		}
 
 		function collaspe() {
 			sideMenu.collaspe();
@@ -379,6 +415,9 @@ layui.define(['table', 'jquery', 'element', 'yaml', 'form', 'tab', 'menu', 'fram
 			pearAdmin.bodyRender(param);
 			pearAdmin.themeRender(param);
 			pearAdmin.keepLoad(param);
+			if(param.header.message!=false){
+			pearAdmin.messageRender(param);
+			}
 		}
 
 		function getColorById(id) {

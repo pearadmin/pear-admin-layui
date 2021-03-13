@@ -74,3 +74,6 @@ other:
   keepLoad: "1200"
   ## 布局顶部主题
   autoHead: false
+header:
+  ## 站内消息，数据来源，通过 false 设置关闭
+  message: "admin/data/message.json"

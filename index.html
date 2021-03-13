@@ -26,6 +26,7 @@
 				<ul class="layui-nav layui-layout-right">
 					<li class="layui-nav-item layui-hide-xs"><a href="#" class="fullScreen layui-icon layui-icon-screen-full"></a></li>
 					<li class="layui-nav-item layui-hide-xs"><a href="http://www.pearadmin.com" class="layui-icon layui-icon-website"></a></li>
+					<li class="layui-nav-item layui-hide-xs message"></li>
 					<li class="layui-nav-item">
 						<!-- 头 像 -->
 						<a href="javascript:;">
@@ -102,6 +103,13 @@
 					// 注销逻辑 返回 true / false
 					return true;
 				})
+				
+				// 初始化消息回调
+				admin.message();
+				
+				// 重写消息回调 [消息列表点击事件]
+				// admin.message(function(id, title, context, form) {});
+				
 			})
 		</script>
 	</body>
