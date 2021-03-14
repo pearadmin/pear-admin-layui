@@ -58,15 +58,15 @@ GitHub 开源地址 ：https://github.com/PearAdmin/pear-admin-layui
 
 <p style="padding:10px;"  width="90%">
 
-1. 欢迎提交 [pull request](https://gitee.com/Jmysy/Pear-Admin-Layui/pulls)，注意对应提交对应 `master` 分支
+1. 欢迎提交 [pull request](https://gitee.com/pear-admin/Pear-Admin-Layui/pulls)，注意对应提交对应 `master` 分支
 
-2. 欢迎提交 [issue](https://gitee.com/Jmysy/Pear-Admin-Layui/issues)，请写清楚遇到问题的原因、开发环境、复显步骤。
+2. 欢迎提交 [issue](https://gitee.com/pear-admin/Pear-Admin-Layui/issues)，请写清楚遇到问题的原因、开发环境、复显步骤。
 
 </p>
 
 #### 预览项目
 
-| 预览  | 界面 |
+|  |  |
 |---------------------|---------------------|
 | ![](readmes/1.jpg)  | ![](readmes/2.jpg)  |
 | ![](readmes/3.jpg)|  ![](readmes/4.jpg)   |
