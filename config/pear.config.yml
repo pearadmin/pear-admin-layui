@@ -22,7 +22,7 @@ menu:
 ## 视图内容配置
 tab: 
   ## 是否开启多选项卡
-  muiltTab: true
+  muiltTab: false
   ## 切换选项卡时，是否刷新页面状态
   keepState: true
   ## 是否开启 Tab 记忆

@@ -235,6 +235,16 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 					msgInstance.click(messageTip);
 				}
 			}
+			
+			this.jump = function(id,title,url){
+				if (config.tab.muiltTab) {
+					bodyTab.addTabOnly({id: id,title: title,url: url,icon: null,close: true},
+					300);
+				} else {
+					sideMenu.selectItem(id);
+					bodyFrame.changePage(url, title, true);
+				}
+			}
 		};
 
 		var messageTip = function(id, title, context, form) {
