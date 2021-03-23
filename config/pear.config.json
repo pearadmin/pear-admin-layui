@@ -62,5 +62,8 @@
 	"other": {
 		"keepLoad": 1200,
 		"autoHead": false
+	},
+	"header":{
+		"message": "admin/data/message.json"
 	}
 }
