@@ -106,9 +106,10 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 				display: "block"
 			});
 			var controlId = $("#" + this.option.elem + " a[menu-id='" + pearId + "']").parents("ul").attr("pear-id");
-
-			$("#" + this.option.control).find(".layui-this").removeClass("layui-this");
-			$("#" + this.option.control).find("[pear-id='" + controlId + "']").addClass("layui-this");
+			if (controlId != undefined) {
+				$("#" + this.option.control).find(".layui-this").removeClass("layui-this");
+				$("#" + this.option.control).find("[pear-id='" + controlId + "']").addClass("layui-this");
+			}
 		}
 		if (this.option.accordion == true) {
 			$("#" + this.option.elem + " a[menu-id='" + pearId + "']").parents(".pear-nav-tree").find(".layui-nav-itemed").removeClass(
@@ -229,7 +230,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 		$.each(option.data, function(i, item) {
 			var menuItem = '';
 			var controlItem = '';
-			if (index === option.defaultMenu) {
+			if (i === option.defaultMenu) {
 				controlItem = '<li pear-href="' + item.href + '" pear-title="' + item.title + '" pear-id="' + item.id +
 					'" class="layui-this layui-nav-item"><a href="#">' + item.title + '</a></li>';
 				menuItem = '<ul  pear-id="' + item.id + '" lay-filter="' + option.elem +
