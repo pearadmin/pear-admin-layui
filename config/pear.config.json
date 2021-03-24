@@ -6,6 +6,7 @@
 	"menu": {
 		"data": "admin/data/menu.json",
 		"accordion": true,
+		"method": "GET",
 		"control": false,
 		"select": "0"
 	},
@@ -63,7 +64,7 @@
 		"keepLoad": 1200,
 		"autoHead": false
 	},
-	"header":{
+	"header": {
 		"message": "admin/data/message.json"
 	}
 }
