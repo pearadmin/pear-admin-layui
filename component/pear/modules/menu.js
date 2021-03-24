@@ -62,16 +62,25 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 				openType: dom.attr("open-type")
 			};
 			var doms = hash(dom);
-			if (doms.text() != '') {
-				data['menuPath'] = doms.find("span").text() + " / " + data['menuPath'];
+			if (doms != null) {
+				if (doms.text() != '') {
+					data['menuPath'] = doms.find("span").text() + " / " + data['menuPath'];
+				}
 			}
-			var domss = hash(doms);
-			if (domss.text() != '') {
-				data['menuPath'] = domss.find("span").text() + " / " + data['menuPath'];
+			if (doms != null) {
+				var domss = hash(doms);
+				if(domss!=null){
+				if (domss.text() != '') {
+					data['menuPath'] = domss.find("span").text() + " / " + data['menuPath'];
+				}}
 			}
-			var domsss = hash(domss);
-			if (domsss.text() != '') {
-				data['menuPath'] = domsss.find("span").text() + " / " + data['menuPath'];
+			if (domss != null) {
+
+				var domsss = hash(domss);
+				if(domsss!=null){
+				if (domsss.text() != '') {
+					data['menuPath'] = domsss.find("span").text() + " / " + data['menuPath'];
+				}}
 			}
 			if ($("#" + _this.option.elem).is(".pear-nav-mini")) {
 				if (_this.option.accordion) {
@@ -85,7 +94,11 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 	}
 
 	function hash(dom) {
-		return dom.parent().parent().prev();
+		var d = dom.parent().parent().prev();
+		if (d.prop("tagName") === "UL") {
+			return null;
+		}
+		return d;
 	}
 
 	pearMenu.prototype.skin = function(skin) {
