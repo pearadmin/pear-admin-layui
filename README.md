@@ -73,6 +73,6 @@ GitHub 开源地址 ：https://github.com/PearAdmin/pear-admin-layui
 | ![输入图片说明](https://images.gitee.com/uploads/images/2021/0331/222007_334b5411_4835367.png "屏幕截图.png")| ![输入图片说明](https://images.gitee.com/uploads/images/2021/0331/222020_ed5e67ac_4835367.png "屏幕截图.png")  |
 | ![输入图片说明](https://images.gitee.com/uploads/images/2021/0331/222105_9a1036c6_4835367.png "屏幕截图.png")|  ![输入图片说明](https://images.gitee.com/uploads/images/2021/0331/222116_50936543_4835367.png "屏幕截图.png")   |
 | ![输入图片说明](https://images.gitee.com/uploads/images/2021/0331/222150_6251bb30_4835367.png "屏幕截图.png")|  ![输入图片说明](https://images.gitee.com/uploads/images/2021/0331/222206_777ccf74_4835367.png "屏幕截图.png")  |
-|![](readmes/11.jpg)| ![](readmes/12.jpg)   |
-|![](readmes/13.jpg)| ![](readmes/14.jpg)   |
+|![输入图片说明](https://images.gitee.com/uploads/images/2021/0331/222315_712d2942_4835367.png "屏幕截图.png")|![输入图片说明](https://images.gitee.com/uploads/images/2021/0331/222345_2629d03c_4835367.png "屏幕截图.png")   |
+|![输入图片说明](https://images.gitee.com/uploads/images/2021/0331/222410_e83792fa_4835367.png "屏幕截图.png")| ![输入图片说明](https://images.gitee.com/uploads/images/2021/0331/222431_5b884442_4835367.png "屏幕截图.png")   |
 |![](readmes/15.jpg)| ![](readmes/16.jpg)   |
