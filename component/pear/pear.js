@@ -1,14 +1,8 @@
-/**
- * 全局路径引用容错处理
- * */
 window.rootPath = (function(src) {
 	src = document.scripts[document.scripts.length - 1].src;
 	return src.substring(0, src.lastIndexOf("/") + 1);
 })();
 
-/**
- * 核心依赖
- * */
 layui.config({
 	base: rootPath + "module/",
 	version: "3.8.0.Release"
