@@ -4,9 +4,9 @@
  * For LGPL see License.txt in the project root for license information.
  * For commercial licenses see https://www.tiny.cloud/
  *
- * Version: 5.0.16 (2019-09-24)
+ * Version: 5.6.2 (2020-12-08)
  */
-(function (domGlobals) {
+(function () {
     'use strict';
 
     var __assign = function () {
@@ -33,6 +33,14 @@
         }
       return t;
     }
+    function __spreadArrays() {
+      for (var s = 0, i = 0, il = arguments.length; i < il; i++)
+        s += arguments[i].length;
+      for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+          r[k] = a[j];
+      return r;
+    }
 
     var noop = function () {
     };
@@ -43,6 +51,11 @@
           args[_i] = arguments[_i];
         }
         return fa(fb.apply(null, args));
+      };
+    };
+    var compose1 = function (fbc, fab) {
+      return function (a) {
+        return fbc(fab(a));
       };
     };
     var constant = function (value) {
@@ -68,12 +81,8 @@
       };
     }
     var not = function (f) {
-      return function () {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-          args[_i] = arguments[_i];
-        }
-        return !f.apply(null, args);
+      return function (t) {
+        return !f(t);
       };
     };
     var die = function (msg) {
@@ -86,6 +95,44 @@
     };
     var never = constant(false);
     var always = constant(true);
+
+    var cached = function (f) {
+      var called = false;
+      var r;
+      return function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+          args[_i] = arguments[_i];
+        }
+        if (!called) {
+          called = true;
+          r = f.apply(null, args);
+        }
+        return r;
+      };
+    };
+
+    var DeviceType = function (os, browser, userAgent, mediaMatch) {
+      var isiPad = os.isiOS() && /ipad/i.test(userAgent) === true;
+      var isiPhone = os.isiOS() && !isiPad;
+      var isMobile = os.isiOS() || os.isAndroid();
+      var isTouch = isMobile || mediaMatch('(pointer:coarse)');
+      var isTablet = isiPad || !isiPhone && isMobile && mediaMatch('(min-device-width:768px)');
+      var isPhone = isiPhone || isMobile && !isTablet;
+      var iOSwebview = browser.isSafari() && os.isiOS() && /safari/i.test(userAgent) === false;
+      var isDesktop = !isPhone && !isTablet && !iOSwebview;
+      return {
+        isiPad: constant(isiPad),
+        isiPhone: constant(isiPhone),
+        isTablet: constant(isTablet),
+        isPhone: constant(isPhone),
+        isTouch: constant(isTouch),
+        isAndroid: os.isAndroid,
+        isiOS: os.isiOS,
+        isWebView: constant(iOSwebview),
+        isDesktop: constant(isDesktop)
+      };
+    };
 
     var none = function () {
       return NONE;
@@ -101,7 +148,7 @@
         return n;
       };
       var me = {
-        fold: function (n, s) {
+        fold: function (n, _s) {
           return n();
         },
         is: never,
@@ -129,9 +176,6 @@
         },
         toString: constant('none()')
       };
-      if (Object.freeze) {
-        Object.freeze(me);
-      }
       return me;
     }();
     var some = function (a) {
@@ -190,256 +234,46 @@
     var from = function (value) {
       return value === null || value === undefined ? NONE : some(value);
     };
-    var Option = {
+    var Optional = {
       some: some,
       none: none,
       from: from
     };
 
-    var keys = Object.keys;
-    var hasOwnProperty = Object.hasOwnProperty;
-    var each = function (obj, f) {
-      var props = keys(obj);
-      for (var k = 0, len = props.length; k < len; k++) {
-        var i = props[k];
-        var x = obj[i];
-        f(x, i);
-      }
-    };
-    var map = function (obj, f) {
-      return tupleMap(obj, function (x, i) {
-        return {
-          k: i,
-          v: f(x, i)
-        };
-      });
-    };
-    var tupleMap = function (obj, f) {
-      var r = {};
-      each(obj, function (x, i) {
-        var tuple = f(x, i);
-        r[tuple.k] = tuple.v;
-      });
-      return r;
-    };
-    var mapToArray = function (obj, f) {
-      var r = [];
-      each(obj, function (value, name) {
-        r.push(f(value, name));
-      });
-      return r;
-    };
-    var has = function (obj, key) {
-      return hasOwnProperty.call(obj, key);
-    };
-
-    var touchstart = constant('touchstart');
-    var touchmove = constant('touchmove');
-    var touchend = constant('touchend');
-    var mousedown = constant('mousedown');
-    var mousemove = constant('mousemove');
-    var mouseup = constant('mouseup');
-    var mouseover = constant('mouseover');
-    var keydown = constant('keydown');
-    var keyup = constant('keyup');
-    var input = constant('input');
-    var change = constant('change');
-    var click = constant('click');
-    var transitionend = constant('transitionend');
-    var selectstart = constant('selectstart');
-
-    var cached = function (f) {
-      var called = false;
-      var r;
-      return function () {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-          args[_i] = arguments[_i];
-        }
-        if (!called) {
-          called = true;
-          r = f.apply(null, args);
-        }
-        return r;
-      };
-    };
-
-    var firstMatch = function (regexes, s) {
-      for (var i = 0; i < regexes.length; i++) {
-        var x = regexes[i];
-        if (x.test(s)) {
-          return x;
-        }
-      }
-      return undefined;
-    };
-    var find = function (regexes, agent) {
-      var r = firstMatch(regexes, agent);
-      if (!r) {
-        return {
-          major: 0,
-          minor: 0
-        };
-      }
-      var group = function (i) {
-        return Number(agent.replace(r, '$' + i));
-      };
-      return nu(group(1), group(2));
-    };
-    var detect = function (versionRegexes, agent) {
-      var cleanedAgent = String(agent).toLowerCase();
-      if (versionRegexes.length === 0) {
-        return unknown();
-      }
-      return find(versionRegexes, cleanedAgent);
-    };
-    var unknown = function () {
-      return nu(0, 0);
-    };
-    var nu = function (major, minor) {
-      return {
-        major: major,
-        minor: minor
-      };
-    };
-    var Version = {
-      nu: nu,
-      detect: detect,
-      unknown: unknown
-    };
-
-    var edge = 'Edge';
-    var chrome = 'Chrome';
-    var ie = 'IE';
-    var opera = 'Opera';
-    var firefox = 'Firefox';
-    var safari = 'Safari';
-    var isBrowser = function (name, current) {
-      return function () {
-        return current === name;
-      };
-    };
-    var unknown$1 = function () {
-      return nu$1({
-        current: undefined,
-        version: Version.unknown()
-      });
-    };
-    var nu$1 = function (info) {
-      var current = info.current;
-      var version = info.version;
-      return {
-        current: current,
-        version: version,
-        isEdge: isBrowser(edge, current),
-        isChrome: isBrowser(chrome, current),
-        isIE: isBrowser(ie, current),
-        isOpera: isBrowser(opera, current),
-        isFirefox: isBrowser(firefox, current),
-        isSafari: isBrowser(safari, current)
-      };
-    };
-    var Browser = {
-      unknown: unknown$1,
-      nu: nu$1,
-      edge: constant(edge),
-      chrome: constant(chrome),
-      ie: constant(ie),
-      opera: constant(opera),
-      firefox: constant(firefox),
-      safari: constant(safari)
-    };
-
-    var windows = 'Windows';
-    var ios = 'iOS';
-    var android = 'Android';
-    var linux = 'Linux';
-    var osx = 'OSX';
-    var solaris = 'Solaris';
-    var freebsd = 'FreeBSD';
-    var isOS = function (name, current) {
-      return function () {
-        return current === name;
-      };
-    };
-    var unknown$2 = function () {
-      return nu$2({
-        current: undefined,
-        version: Version.unknown()
-      });
-    };
-    var nu$2 = function (info) {
-      var current = info.current;
-      var version = info.version;
-      return {
-        current: current,
-        version: version,
-        isWindows: isOS(windows, current),
-        isiOS: isOS(ios, current),
-        isAndroid: isOS(android, current),
-        isOSX: isOS(osx, current),
-        isLinux: isOS(linux, current),
-        isSolaris: isOS(solaris, current),
-        isFreeBSD: isOS(freebsd, current)
-      };
-    };
-    var OperatingSystem = {
-      unknown: unknown$2,
-      nu: nu$2,
-      windows: constant(windows),
-      ios: constant(ios),
-      android: constant(android),
-      linux: constant(linux),
-      osx: constant(osx),
-      solaris: constant(solaris),
-      freebsd: constant(freebsd)
-    };
-
-    var DeviceType = function (os, browser, userAgent) {
-      var isiPad = os.isiOS() && /ipad/i.test(userAgent) === true;
-      var isiPhone = os.isiOS() && !isiPad;
-      var isAndroid3 = os.isAndroid() && os.version.major === 3;
-      var isAndroid4 = os.isAndroid() && os.version.major === 4;
-      var isTablet = isiPad || isAndroid3 || isAndroid4 && /mobile/i.test(userAgent) === true;
-      var isTouch = os.isiOS() || os.isAndroid();
-      var isPhone = isTouch && !isTablet;
-      var iOSwebview = browser.isSafari() && os.isiOS() && /safari/i.test(userAgent) === false;
-      return {
-        isiPad: constant(isiPad),
-        isiPhone: constant(isiPhone),
-        isTablet: constant(isTablet),
-        isPhone: constant(isPhone),
-        isTouch: constant(isTouch),
-        isAndroid: os.isAndroid,
-        isiOS: os.isiOS,
-        isWebView: constant(iOSwebview)
-      };
-    };
-
     var typeOf = function (x) {
+      var t = typeof x;
       if (x === null) {
         return 'null';
-      }
-      var t = typeof x;
-      if (t === 'object' && (Array.prototype.isPrototypeOf(x) || x.constructor && x.constructor.name === 'Array')) {
+      } else if (t === 'object' && (Array.prototype.isPrototypeOf(x) || x.constructor && x.constructor.name === 'Array')) {
         return 'array';
-      }
-      if (t === 'object' && (String.prototype.isPrototypeOf(x) || x.constructor && x.constructor.name === 'String')) {
+      } else if (t === 'object' && (String.prototype.isPrototypeOf(x) || x.constructor && x.constructor.name === 'String')) {
         return 'string';
+      } else {
+        return t;
       }
-      return t;
     };
     var isType = function (type) {
       return function (value) {
         return typeOf(value) === type;
       };
     };
+    var isSimpleType = function (type) {
+      return function (value) {
+        return typeof value === type;
+      };
+    };
     var isString = isType('string');
     var isObject = isType('object');
     var isArray = isType('array');
-    var isBoolean = isType('boolean');
-    var isFunction = isType('function');
-    var isNumber = isType('number');
+    var isBoolean = isSimpleType('boolean');
+    var isNullable = function (a) {
+      return a === null || a === undefined;
+    };
+    var isNonNullable = function (a) {
+      return !isNullable(a);
+    };
+    var isFunction = isSimpleType('function');
+    var isNumber = isSimpleType('number');
 
     var nativeSlice = Array.prototype.slice;
     var nativeIndexOf = Array.prototype.indexOf;
@@ -459,7 +293,7 @@
       }
       return false;
     };
-    var map$1 = function (xs, f) {
+    var map = function (xs, f) {
       var len = xs.length;
       var r = new Array(len);
       for (var i = 0; i < len; i++) {
@@ -468,7 +302,7 @@
       }
       return r;
     };
-    var each$1 = function (xs, f) {
+    var each = function (xs, f) {
       for (var i = 0, len = xs.length; i < len; i++) {
         var x = xs[i];
         f(x, i);
@@ -497,28 +331,33 @@
       return acc;
     };
     var foldl = function (xs, f, acc) {
-      each$1(xs, function (x) {
+      each(xs, function (x) {
         acc = f(acc, x);
       });
       return acc;
     };
-    var find$1 = function (xs, pred) {
+    var findUntil = function (xs, pred, until) {
       for (var i = 0, len = xs.length; i < len; i++) {
         var x = xs[i];
         if (pred(x, i)) {
-          return Option.some(x);
+          return Optional.some(x);
+        } else if (until(x, i)) {
+          break;
         }
       }
-      return Option.none();
+      return Optional.none();
+    };
+    var find = function (xs, pred) {
+      return findUntil(xs, pred, never);
     };
     var findIndex = function (xs, pred) {
       for (var i = 0, len = xs.length; i < len; i++) {
         var x = xs[i];
         if (pred(x, i)) {
-          return Option.some(i);
+          return Optional.some(i);
         }
       }
-      return Option.none();
+      return Optional.none();
     };
     var flatten = function (xs) {
       var r = [];
@@ -531,8 +370,7 @@
       return r;
     };
     var bind = function (xs, f) {
-      var output = map$1(xs, f);
-      return flatten(output);
+      return flatten(map(xs, f));
     };
     var forall = function (xs, pred) {
       for (var i = 0, len = xs.length; i < len; ++i) {
@@ -556,13 +394,74 @@
     var pure = function (x) {
       return [x];
     };
-    var from$1 = isFunction(Array.from) ? Array.from : function (x) {
-      return nativeSlice.call(x);
+    var sort = function (xs, comparator) {
+      var copy = nativeSlice.call(xs, 0);
+      copy.sort(comparator);
+      return copy;
+    };
+    var get = function (xs, i) {
+      return i >= 0 && i < xs.length ? Optional.some(xs[i]) : Optional.none();
+    };
+    var head = function (xs) {
+      return get(xs, 0);
+    };
+    var findMap = function (arr, f) {
+      for (var i = 0; i < arr.length; i++) {
+        var r = f(arr[i], i);
+        if (r.isSome()) {
+          return r;
+        }
+      }
+      return Optional.none();
+    };
+
+    var firstMatch = function (regexes, s) {
+      for (var i = 0; i < regexes.length; i++) {
+        var x = regexes[i];
+        if (x.test(s)) {
+          return x;
+        }
+      }
+      return undefined;
+    };
+    var find$1 = function (regexes, agent) {
+      var r = firstMatch(regexes, agent);
+      if (!r) {
+        return {
+          major: 0,
+          minor: 0
+        };
+      }
+      var group = function (i) {
+        return Number(agent.replace(r, '$' + i));
+      };
+      return nu(group(1), group(2));
+    };
+    var detect = function (versionRegexes, agent) {
+      var cleanedAgent = String(agent).toLowerCase();
+      if (versionRegexes.length === 0) {
+        return unknown();
+      }
+      return find$1(versionRegexes, cleanedAgent);
+    };
+    var unknown = function () {
+      return nu(0, 0);
+    };
+    var nu = function (major, minor) {
+      return {
+        major: major,
+        minor: minor
+      };
+    };
+    var Version = {
+      nu: nu,
+      detect: detect,
+      unknown: unknown
     };
 
     var detect$1 = function (candidates, userAgent) {
       var agent = String(userAgent).toLowerCase();
-      return find$1(candidates, function (candidate) {
+      return find(candidates, function (candidate) {
         return candidate.search(agent);
       });
     };
@@ -590,14 +489,7 @@
     };
 
     var checkRange = function (str, substr, start) {
-      if (substr === '') {
-        return true;
-      }
-      if (str.length < substr.length) {
-        return false;
-      }
-      var x = str.substr(start, start + substr.length);
-      return x === substr;
+      return substr === '' || str.length >= substr.length && str.substr(start, start + substr.length) === substr;
     };
     var supplant = function (str, obj) {
       var isStringOrNumber = function (a) {
@@ -615,9 +507,12 @@
     var endsWith = function (str, suffix) {
       return checkRange(str, suffix, str.length - suffix.length);
     };
-    var trim = function (str) {
-      return str.replace(/^\s+|\s+$/g, '');
+    var blank = function (r) {
+      return function (s) {
+        return s.replace(r, '');
+      };
     };
+    var trim = blank(/^\s+|\s+$/g);
 
     var normalVersionRegex = /.*?version\/\ ?([0-9]+)\.([0-9]+).*/;
     var checkContains = function (target) {
@@ -701,8 +596,8 @@
       },
       {
         name: 'OSX',
-        search: checkContains('os x'),
-        versionRegexes: [/.*?os\ x\ ?([0-9]+)_([0-9]+).*/]
+        search: checkContains('mac os x'),
+        versionRegexes: [/.*?mac\ os\ x\ ?([0-9]+)_([0-9]+).*/]
       },
       {
         name: 'Linux',
@@ -718,6 +613,11 @@
         name: 'FreeBSD',
         search: checkContains('freebsd'),
         versionRegexes: []
+      },
+      {
+        name: 'ChromeOS',
+        search: checkContains('cros'),
+        versionRegexes: [/.*?chrome\/([0-9]+)\.([0-9]+).*/]
       }
     ];
     var PlatformInfo = {
@@ -725,12 +625,102 @@
       oses: constant(oses)
     };
 
-    var detect$2 = function (userAgent) {
+    var edge = 'Edge';
+    var chrome = 'Chrome';
+    var ie = 'IE';
+    var opera = 'Opera';
+    var firefox = 'Firefox';
+    var safari = 'Safari';
+    var unknown$1 = function () {
+      return nu$1({
+        current: undefined,
+        version: Version.unknown()
+      });
+    };
+    var nu$1 = function (info) {
+      var current = info.current;
+      var version = info.version;
+      var isBrowser = function (name) {
+        return function () {
+          return current === name;
+        };
+      };
+      return {
+        current: current,
+        version: version,
+        isEdge: isBrowser(edge),
+        isChrome: isBrowser(chrome),
+        isIE: isBrowser(ie),
+        isOpera: isBrowser(opera),
+        isFirefox: isBrowser(firefox),
+        isSafari: isBrowser(safari)
+      };
+    };
+    var Browser = {
+      unknown: unknown$1,
+      nu: nu$1,
+      edge: constant(edge),
+      chrome: constant(chrome),
+      ie: constant(ie),
+      opera: constant(opera),
+      firefox: constant(firefox),
+      safari: constant(safari)
+    };
+
+    var windows = 'Windows';
+    var ios = 'iOS';
+    var android = 'Android';
+    var linux = 'Linux';
+    var osx = 'OSX';
+    var solaris = 'Solaris';
+    var freebsd = 'FreeBSD';
+    var chromeos = 'ChromeOS';
+    var unknown$2 = function () {
+      return nu$2({
+        current: undefined,
+        version: Version.unknown()
+      });
+    };
+    var nu$2 = function (info) {
+      var current = info.current;
+      var version = info.version;
+      var isOS = function (name) {
+        return function () {
+          return current === name;
+        };
+      };
+      return {
+        current: current,
+        version: version,
+        isWindows: isOS(windows),
+        isiOS: isOS(ios),
+        isAndroid: isOS(android),
+        isOSX: isOS(osx),
+        isLinux: isOS(linux),
+        isSolaris: isOS(solaris),
+        isFreeBSD: isOS(freebsd),
+        isChromeOS: isOS(chromeos)
+      };
+    };
+    var OperatingSystem = {
+      unknown: unknown$2,
+      nu: nu$2,
+      windows: constant(windows),
+      ios: constant(ios),
+      android: constant(android),
+      linux: constant(linux),
+      osx: constant(osx),
+      solaris: constant(solaris),
+      freebsd: constant(freebsd),
+      chromeos: constant(chromeos)
+    };
+
+    var detect$2 = function (userAgent, mediaMatch) {
       var browsers = PlatformInfo.browsers();
       var oses = PlatformInfo.oses();
       var browser = UaString.detectBrowser(browsers, userAgent).fold(Browser.unknown, Browser.nu);
       var os = UaString.detectOs(oses, userAgent).fold(OperatingSystem.unknown, OperatingSystem.nu);
-      var deviceType = DeviceType(os, browser, userAgent);
+      var deviceType = DeviceType(os, browser, userAgent, mediaMatch);
       return {
         browser: browser,
         os: os,
@@ -739,34 +729,56 @@
     };
     var PlatformDetection = { detect: detect$2 };
 
-    var detect$3 = cached(function () {
-      var userAgent = domGlobals.navigator.userAgent;
-      return PlatformDetection.detect(userAgent);
+    var mediaMatch = function (query) {
+      return window.matchMedia(query).matches;
+    };
+    var platform = cached(function () {
+      return PlatformDetection.detect(navigator.userAgent, mediaMatch);
     });
-    var PlatformDetection$1 = { detect: detect$3 };
+    var detect$3 = function () {
+      return platform();
+    };
 
-    var alloy = { tap: constant('alloy.tap') };
-    var focus = constant('alloy.focus');
-    var postBlur = constant('alloy.blur.post');
-    var postPaste = constant('alloy.paste.post');
-    var receive = constant('alloy.receive');
-    var execute = constant('alloy.execute');
-    var focusItem = constant('alloy.focus.item');
+    var constant$1 = constant;
+    var touchstart = constant$1('touchstart');
+    var touchmove = constant$1('touchmove');
+    var touchend = constant$1('touchend');
+    var mousedown = constant$1('mousedown');
+    var mousemove = constant$1('mousemove');
+    var mouseup = constant$1('mouseup');
+    var mouseover = constant$1('mouseover');
+    var keydown = constant$1('keydown');
+    var keyup = constant$1('keyup');
+    var input = constant$1('input');
+    var change = constant$1('change');
+    var click = constant$1('click');
+    var transitionend = constant$1('transitionend');
+    var selectstart = constant$1('selectstart');
+
+    var prefixName = function (name) {
+      return constant('alloy.' + name);
+    };
+    var alloy = { tap: prefixName('tap') };
+    var focus = prefixName('focus');
+    var postBlur = prefixName('blur.post');
+    var postPaste = prefixName('paste.post');
+    var receive = prefixName('receive');
+    var execute = prefixName('execute');
+    var focusItem = prefixName('focus.item');
     var tap = alloy.tap;
-    var tapOrClick = PlatformDetection$1.detect().deviceType.isTouch() ? alloy.tap : click;
-    var longpress = constant('alloy.longpress');
-    var systemInit = constant('alloy.system.init');
-    var attachedToDom = constant('alloy.system.attached');
-    var detachedFromDom = constant('alloy.system.detached');
-    var focusShifted = constant('alloy.focusmanager.shifted');
-    var highlight = constant('alloy.highlight');
-    var dehighlight = constant('alloy.dehighlight');
+    var longpress = prefixName('longpress');
+    var systemInit = prefixName('system.init');
+    var attachedToDom = prefixName('system.attached');
+    var detachedFromDom = prefixName('system.detached');
+    var focusShifted = prefixName('focusmanager.shifted');
+    var highlight = prefixName('highlight');
+    var dehighlight = prefixName('dehighlight');
 
     var emit = function (component, event) {
-      dispatchWith(component, component.element(), event, {});
+      dispatchWith(component, component.element, event, {});
     };
     var emitWith = function (component, event, properties) {
-      dispatchWith(component, component.element(), event, properties);
+      dispatchWith(component, component.element, event, properties);
     };
     var emitExecute = function (component) {
       emit(component, execute());
@@ -776,32 +788,37 @@
     };
     var dispatchWith = function (component, target, event, properties) {
       var data = __assign({ target: target }, properties);
-      component.getSystem().triggerEvent(event, target, map(data, constant));
+      component.getSystem().triggerEvent(event, target, data);
     };
     var dispatchEvent = function (component, target, event, simulatedEvent) {
-      component.getSystem().triggerEvent(event, target, simulatedEvent.event());
+      component.getSystem().triggerEvent(event, target, simulatedEvent.event);
     };
     var dispatchFocus = function (component, target) {
-      component.getSystem().triggerFocus(target, component.element());
+      component.getSystem().triggerFocus(target, component.element);
     };
 
+    var DOCUMENT = 9;
+    var DOCUMENT_FRAGMENT = 11;
+    var ELEMENT = 1;
+    var TEXT = 3;
+
     var fromHtml = function (html, scope) {
-      var doc = scope || domGlobals.document;
+      var doc = scope || document;
       var div = doc.createElement('div');
       div.innerHTML = html;
       if (!div.hasChildNodes() || div.childNodes.length > 1) {
-        domGlobals.console.error('HTML does not have a single root node', html);
+        console.error('HTML does not have a single root node', html);
         throw new Error('HTML must have a single root node');
       }
       return fromDom(div.childNodes[0]);
     };
     var fromTag = function (tag, scope) {
-      var doc = scope || domGlobals.document;
+      var doc = scope || document;
       var node = doc.createElement(tag);
       return fromDom(node);
     };
     var fromText = function (text, scope) {
-      var doc = scope || domGlobals.document;
+      var doc = scope || document;
       var node = doc.createTextNode(text);
       return fromDom(node);
     };
@@ -809,13 +826,12 @@
       if (node === null || node === undefined) {
         throw new Error('Node cannot be null or undefined');
       }
-      return { dom: constant(node) };
+      return { dom: node };
     };
     var fromPoint = function (docElm, x, y) {
-      var doc = docElm.dom();
-      return Option.from(doc.elementFromPoint(x, y)).map(fromDom);
+      return Optional.from(docElm.dom.elementFromPoint(x, y)).map(fromDom);
     };
-    var Element = {
+    var SugarElement = {
       fromHtml: fromHtml,
       fromTag: fromTag,
       fromText: fromText,
@@ -823,153 +839,9 @@
       fromPoint: fromPoint
     };
 
-    var ATTRIBUTE = domGlobals.Node.ATTRIBUTE_NODE;
-    var CDATA_SECTION = domGlobals.Node.CDATA_SECTION_NODE;
-    var COMMENT = domGlobals.Node.COMMENT_NODE;
-    var DOCUMENT = domGlobals.Node.DOCUMENT_NODE;
-    var DOCUMENT_TYPE = domGlobals.Node.DOCUMENT_TYPE_NODE;
-    var DOCUMENT_FRAGMENT = domGlobals.Node.DOCUMENT_FRAGMENT_NODE;
-    var ELEMENT = domGlobals.Node.ELEMENT_NODE;
-    var TEXT = domGlobals.Node.TEXT_NODE;
-    var PROCESSING_INSTRUCTION = domGlobals.Node.PROCESSING_INSTRUCTION_NODE;
-    var ENTITY_REFERENCE = domGlobals.Node.ENTITY_REFERENCE_NODE;
-    var ENTITY = domGlobals.Node.ENTITY_NODE;
-    var NOTATION = domGlobals.Node.NOTATION_NODE;
-
-    var Global = typeof domGlobals.window !== 'undefined' ? domGlobals.window : Function('return this;')();
-
-    var name = function (element) {
-      var r = element.dom().nodeName;
-      return r.toLowerCase();
-    };
-    var type = function (element) {
-      return element.dom().nodeType;
-    };
-    var isType$1 = function (t) {
-      return function (element) {
-        return type(element) === t;
-      };
-    };
-    var isElement = isType$1(ELEMENT);
-    var isText = isType$1(TEXT);
-
-    var inBody = function (element) {
-      var dom = isText(element) ? element.dom().parentNode : element.dom();
-      return dom !== undefined && dom !== null && dom.ownerDocument.body.contains(dom);
-    };
-    var body = cached(function () {
-      return getBody(Element.fromDom(domGlobals.document));
-    });
-    var getBody = function (doc) {
-      var b = doc.dom().body;
-      if (b === null || b === undefined) {
-        throw new Error('Body is not available yet');
-      }
-      return Element.fromDom(b);
-    };
-
-    var Immutable = function () {
-      var fields = [];
-      for (var _i = 0; _i < arguments.length; _i++) {
-        fields[_i] = arguments[_i];
-      }
-      return function () {
-        var values = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-          values[_i] = arguments[_i];
-        }
-        if (fields.length !== values.length) {
-          throw new Error('Wrong number of arguments to struct. Expected "[' + fields.length + ']", got ' + values.length + ' arguments');
-        }
-        var struct = {};
-        each$1(fields, function (name, i) {
-          struct[name] = constant(values[i]);
-        });
-        return struct;
-      };
-    };
-
-    var sort = function (arr) {
-      return arr.slice(0).sort();
-    };
-    var reqMessage = function (required, keys) {
-      throw new Error('All required keys (' + sort(required).join(', ') + ') were not specified. Specified keys were: ' + sort(keys).join(', ') + '.');
-    };
-    var unsuppMessage = function (unsupported) {
-      throw new Error('Unsupported keys for object: ' + sort(unsupported).join(', '));
-    };
-    var validateStrArr = function (label, array) {
-      if (!isArray(array)) {
-        throw new Error('The ' + label + ' fields must be an array. Was: ' + array + '.');
-      }
-      each$1(array, function (a) {
-        if (!isString(a)) {
-          throw new Error('The value ' + a + ' in the ' + label + ' fields was not a string.');
-        }
-      });
-    };
-    var checkDupes = function (everything) {
-      var sorted = sort(everything);
-      var dupe = find$1(sorted, function (s, i) {
-        return i < sorted.length - 1 && s === sorted[i + 1];
-      });
-      dupe.each(function (d) {
-        throw new Error('The field: ' + d + ' occurs more than once in the combined fields: [' + sorted.join(', ') + '].');
-      });
-    };
-
-    var MixedBag = function (required, optional) {
-      var everything = required.concat(optional);
-      if (everything.length === 0) {
-        throw new Error('You must specify at least one required or optional field.');
-      }
-      validateStrArr('required', required);
-      validateStrArr('optional', optional);
-      checkDupes(everything);
-      return function (obj) {
-        var keys$1 = keys(obj);
-        var allReqd = forall(required, function (req) {
-          return contains(keys$1, req);
-        });
-        if (!allReqd) {
-          reqMessage(required, keys$1);
-        }
-        var unsupported = filter(keys$1, function (key) {
-          return !contains(everything, key);
-        });
-        if (unsupported.length > 0) {
-          unsuppMessage(unsupported);
-        }
-        var r = {};
-        each$1(required, function (req) {
-          r[req] = constant(obj[req]);
-        });
-        each$1(optional, function (opt) {
-          r[opt] = constant(Object.prototype.hasOwnProperty.call(obj, opt) ? Option.some(obj[opt]) : Option.none());
-        });
-        return r;
-      };
-    };
-
-    var compareDocumentPosition = function (a, b, match) {
-      return (a.compareDocumentPosition(b) & match) !== 0;
-    };
-    var documentPositionPreceding = function (a, b) {
-      return compareDocumentPosition(a, b, domGlobals.Node.DOCUMENT_POSITION_PRECEDING);
-    };
-    var documentPositionContainedBy = function (a, b) {
-      return compareDocumentPosition(a, b, domGlobals.Node.DOCUMENT_POSITION_CONTAINED_BY);
-    };
-    var Node = {
-      documentPositionPreceding: documentPositionPreceding,
-      documentPositionContainedBy: documentPositionContainedBy
-    };
-
-    var ELEMENT$1 = ELEMENT;
-    var DOCUMENT$1 = DOCUMENT;
     var is = function (element, selector) {
-      var dom = element.dom();
-      if (dom.nodeType !== ELEMENT$1) {
+      var dom = element.dom;
+      if (dom.nodeType !== ELEMENT) {
         return false;
       } else {
         var elem = dom;
@@ -987,47 +859,59 @@
       }
     };
     var bypassSelector = function (dom) {
-      return dom.nodeType !== ELEMENT$1 && dom.nodeType !== DOCUMENT$1 || dom.childElementCount === 0;
+      return dom.nodeType !== ELEMENT && dom.nodeType !== DOCUMENT && dom.nodeType !== DOCUMENT_FRAGMENT || dom.childElementCount === 0;
     };
     var all = function (selector, scope) {
-      var base = scope === undefined ? domGlobals.document : scope.dom();
-      return bypassSelector(base) ? [] : map$1(base.querySelectorAll(selector), Element.fromDom);
+      var base = scope === undefined ? document : scope.dom;
+      return bypassSelector(base) ? [] : map(base.querySelectorAll(selector), SugarElement.fromDom);
     };
     var one = function (selector, scope) {
-      var base = scope === undefined ? domGlobals.document : scope.dom();
-      return bypassSelector(base) ? Option.none() : Option.from(base.querySelector(selector)).map(Element.fromDom);
+      var base = scope === undefined ? document : scope.dom;
+      return bypassSelector(base) ? Optional.none() : Optional.from(base.querySelector(selector)).map(SugarElement.fromDom);
     };
 
     var eq = function (e1, e2) {
-      return e1.dom() === e2.dom();
+      return e1.dom === e2.dom;
     };
-    var regularContains = function (e1, e2) {
-      var d1 = e1.dom();
-      var d2 = e2.dom();
-      return d1 === d2 ? false : d1.contains(d2);
+
+    var Global = typeof window !== 'undefined' ? window : Function('return this;')();
+
+    var name = function (element) {
+      var r = element.dom.nodeName;
+      return r.toLowerCase();
     };
-    var ieContains = function (e1, e2) {
-      return Node.documentPositionContainedBy(e1.dom(), e2.dom());
+    var type = function (element) {
+      return element.dom.nodeType;
     };
-    var browser = PlatformDetection$1.detect().browser;
-    var contains$2 = browser.isIE() ? ieContains : regularContains;
+    var isType$1 = function (t) {
+      return function (element) {
+        return type(element) === t;
+      };
+    };
+    var isElement = isType$1(ELEMENT);
+    var isText = isType$1(TEXT);
+    var isDocument = isType$1(DOCUMENT);
+    var isDocumentFragment = isType$1(DOCUMENT_FRAGMENT);
 
     var owner = function (element) {
-      return Element.fromDom(element.dom().ownerDocument);
+      return SugarElement.fromDom(element.dom.ownerDocument);
+    };
+    var documentOrOwner = function (dos) {
+      return isDocument(dos) ? dos : owner(dos);
     };
     var defaultView = function (element) {
-      return Element.fromDom(element.dom().ownerDocument.defaultView);
+      return SugarElement.fromDom(documentOrOwner(element).dom.defaultView);
     };
     var parent = function (element) {
-      return Option.from(element.dom().parentNode).map(Element.fromDom);
+      return Optional.from(element.dom.parentNode).map(SugarElement.fromDom);
     };
     var parents = function (element, isRoot) {
       var stop = isFunction(isRoot) ? isRoot : never;
-      var dom = element.dom();
+      var dom = element.dom;
       var ret = [];
       while (dom.parentNode !== null && dom.parentNode !== undefined) {
         var rawParent = dom.parentNode;
-        var p = Element.fromDom(rawParent);
+        var p = SugarElement.fromDom(rawParent);
         ret.push(p);
         if (stop(p) === true) {
           break;
@@ -1046,24 +930,23 @@
       return parent(element).map(children).map(filterSelf).getOr([]);
     };
     var nextSibling = function (element) {
-      return Option.from(element.dom().nextSibling).map(Element.fromDom);
+      return Optional.from(element.dom.nextSibling).map(SugarElement.fromDom);
     };
     var children = function (element) {
-      return map$1(element.dom().childNodes, Element.fromDom);
+      return map(element.dom.childNodes, SugarElement.fromDom);
     };
     var child = function (element, index) {
-      var cs = element.dom().childNodes;
-      return Option.from(cs[index]).map(Element.fromDom);
+      var cs = element.dom.childNodes;
+      return Optional.from(cs[index]).map(SugarElement.fromDom);
     };
     var firstChild = function (element) {
       return child(element, 0);
     };
-    var spot = Immutable('element', 'offset');
 
     var before = function (marker, element) {
       var parent$1 = parent(marker);
       parent$1.each(function (v) {
-        v.dom().insertBefore(element.dom(), marker.dom());
+        v.dom.insertBefore(element.dom, marker.dom);
       });
     };
     var after = function (marker, element) {
@@ -1082,11 +965,11 @@
       firstChild$1.fold(function () {
         append(parent, element);
       }, function (v) {
-        parent.dom().insertBefore(element.dom(), v.dom());
+        parent.dom.insertBefore(element.dom, v.dom);
       });
     };
     var append = function (parent, element) {
-      parent.dom().appendChild(element.dom());
+      parent.dom.appendChild(element.dom);
     };
     var appendAt = function (parent, element, index) {
       child(parent, index).fold(function () {
@@ -1097,97 +980,376 @@
     };
 
     var append$1 = function (parent, elements) {
-      each$1(elements, function (x) {
+      each(elements, function (x) {
         append(parent, x);
       });
     };
 
     var empty = function (element) {
-      element.dom().textContent = '';
-      each$1(children(element), function (rogue) {
+      element.dom.textContent = '';
+      each(children(element), function (rogue) {
         remove(rogue);
       });
     };
     var remove = function (element) {
-      var dom = element.dom();
+      var dom = element.dom;
       if (dom.parentNode !== null) {
         dom.parentNode.removeChild(dom);
       }
     };
 
+    var isShadowRoot = function (dos) {
+      return isDocumentFragment(dos);
+    };
+    var supported = isFunction(Element.prototype.attachShadow) && isFunction(Node.prototype.getRootNode);
+    var isSupported = constant(supported);
+    var getRootNode = supported ? function (e) {
+      return SugarElement.fromDom(e.dom.getRootNode());
+    } : documentOrOwner;
+    var getShadowRoot = function (e) {
+      var r = getRootNode(e);
+      return isShadowRoot(r) ? Optional.some(r) : Optional.none();
+    };
+    var getShadowHost = function (e) {
+      return SugarElement.fromDom(e.dom.host);
+    };
+    var getOriginalEventTarget = function (event) {
+      if (isSupported() && isNonNullable(event.target)) {
+        var el = SugarElement.fromDom(event.target);
+        if (isElement(el) && isOpenShadowHost(el)) {
+          if (event.composed && event.composedPath) {
+            var composedPath = event.composedPath();
+            if (composedPath) {
+              return head(composedPath);
+            }
+          }
+        }
+      }
+      return Optional.from(event.target);
+    };
+    var isOpenShadowHost = function (element) {
+      return isNonNullable(element.dom.shadowRoot);
+    };
+
+    var inBody = function (element) {
+      var dom = isText(element) ? element.dom.parentNode : element.dom;
+      if (dom === undefined || dom === null || dom.ownerDocument === null) {
+        return false;
+      }
+      var doc = dom.ownerDocument;
+      return getShadowRoot(SugarElement.fromDom(dom)).fold(function () {
+        return doc.body.contains(dom);
+      }, compose1(inBody, getShadowHost));
+    };
+    var body = function () {
+      return getBody(SugarElement.fromDom(document));
+    };
+    var getBody = function (doc) {
+      var b = doc.dom.body;
+      if (b === null || b === undefined) {
+        throw new Error('Body is not available yet');
+      }
+      return SugarElement.fromDom(b);
+    };
+
     var fireDetaching = function (component) {
       emit(component, detachedFromDom());
       var children = component.components();
-      each$1(children, fireDetaching);
+      each(children, fireDetaching);
     };
     var fireAttaching = function (component) {
       var children = component.components();
-      each$1(children, fireAttaching);
+      each(children, fireAttaching);
       emit(component, attachedToDom());
     };
     var attach = function (parent, child) {
+      append(parent.element, child.element);
+    };
+    var detachChildren = function (component) {
+      each(component.components(), function (childComp) {
+        return remove(childComp.element);
+      });
+      empty(component.element);
+      component.syncComponents();
+    };
+    var replaceChildren = function (component, newChildren) {
+      var subs = component.components();
+      detachChildren(component);
+      var deleted = difference(subs, newChildren);
+      each(deleted, function (comp) {
+        fireDetaching(comp);
+        component.getSystem().removeFromWorld(comp);
+      });
+      each(newChildren, function (childComp) {
+        if (!childComp.getSystem().isConnected()) {
+          component.getSystem().addToWorld(childComp);
+          attach(component, childComp);
+          if (inBody(component.element)) {
+            fireAttaching(childComp);
+          }
+        } else {
+          attach(component, childComp);
+        }
+        component.syncComponents();
+      });
+    };
+
+    var attach$1 = function (parent, child) {
       attachWith(parent, child, append);
     };
     var attachWith = function (parent, child, insertion) {
       parent.getSystem().addToWorld(child);
-      insertion(parent.element(), child.element());
-      if (inBody(parent.element())) {
+      insertion(parent.element, child.element);
+      if (inBody(parent.element)) {
         fireAttaching(child);
       }
       parent.syncComponents();
     };
     var doDetach = function (component) {
       fireDetaching(component);
-      remove(component.element());
+      remove(component.element);
       component.getSystem().removeFromWorld(component);
     };
     var detach = function (component) {
-      var parent$1 = parent(component.element()).bind(function (p) {
-        return component.getSystem().getByDom(p).toOption();
+      var parent$1 = parent(component.element).bind(function (p) {
+        return component.getSystem().getByDom(p).toOptional();
       });
       doDetach(component);
       parent$1.each(function (p) {
         p.syncComponents();
       });
     };
-    var detachChildren = function (component) {
-      var subs = component.components();
-      each$1(subs, doDetach);
-      empty(component.element());
-      component.syncComponents();
-    };
     var attachSystemAfter = function (element, guiSystem) {
-      attachSystemInternal(element, guiSystem, after);
+      attachSystemWith(element, guiSystem, after);
     };
-    var attachSystemInternal = function (element, guiSystem, inserter) {
-      inserter(element, guiSystem.element());
-      var children$1 = children(guiSystem.element());
-      each$1(children$1, function (child) {
+    var attachSystemWith = function (element, guiSystem, inserter) {
+      inserter(element, guiSystem.element);
+      var children$1 = children(guiSystem.element);
+      each(children$1, function (child) {
         guiSystem.getByDom(child).each(fireAttaching);
       });
     };
     var detachSystem = function (guiSystem) {
-      var children$1 = children(guiSystem.element());
-      each$1(children$1, function (child) {
+      var children$1 = children(guiSystem.element);
+      each(children$1, function (child) {
         guiSystem.getByDom(child).each(fireDetaching);
       });
-      remove(guiSystem.element());
+      remove(guiSystem.element);
     };
+
+    var keys = Object.keys;
+    var hasOwnProperty = Object.hasOwnProperty;
+    var each$1 = function (obj, f) {
+      var props = keys(obj);
+      for (var k = 0, len = props.length; k < len; k++) {
+        var i = props[k];
+        var x = obj[i];
+        f(x, i);
+      }
+    };
+    var map$1 = function (obj, f) {
+      return tupleMap(obj, function (x, i) {
+        return {
+          k: i,
+          v: f(x, i)
+        };
+      });
+    };
+    var tupleMap = function (obj, f) {
+      var r = {};
+      each$1(obj, function (x, i) {
+        var tuple = f(x, i);
+        r[tuple.k] = tuple.v;
+      });
+      return r;
+    };
+    var objAcc = function (r) {
+      return function (x, i) {
+        r[i] = x;
+      };
+    };
+    var internalFilter = function (obj, pred, onTrue, onFalse) {
+      var r = {};
+      each$1(obj, function (x, i) {
+        (pred(x, i) ? onTrue : onFalse)(x, i);
+      });
+      return r;
+    };
+    var filter$1 = function (obj, pred) {
+      var t = {};
+      internalFilter(obj, pred, objAcc(t), noop);
+      return t;
+    };
+    var mapToArray = function (obj, f) {
+      var r = [];
+      each$1(obj, function (value, name) {
+        r.push(f(value, name));
+      });
+      return r;
+    };
+    var find$2 = function (obj, pred) {
+      var props = keys(obj);
+      for (var k = 0, len = props.length; k < len; k++) {
+        var i = props[k];
+        var x = obj[i];
+        if (pred(x, i, obj)) {
+          return Optional.some(x);
+        }
+      }
+      return Optional.none();
+    };
+    var values = function (obj) {
+      return mapToArray(obj, function (v) {
+        return v;
+      });
+    };
+    var get$1 = function (obj, key) {
+      return has(obj, key) ? Optional.from(obj[key]) : Optional.none();
+    };
+    var has = function (obj, key) {
+      return hasOwnProperty.call(obj, key);
+    };
+    var hasNonNullableKey = function (obj, key) {
+      return has(obj, key) && obj[key] !== undefined && obj[key] !== null;
+    };
+
+    var rawSet = function (dom, key, value) {
+      if (isString(value) || isBoolean(value) || isNumber(value)) {
+        dom.setAttribute(key, value + '');
+      } else {
+        console.error('Invalid call to Attribute.set. Key ', key, ':: Value ', value, ':: Element ', dom);
+        throw new Error('Attribute value was not simple');
+      }
+    };
+    var set = function (element, key, value) {
+      rawSet(element.dom, key, value);
+    };
+    var setAll = function (element, attrs) {
+      var dom = element.dom;
+      each$1(attrs, function (v, k) {
+        rawSet(dom, k, v);
+      });
+    };
+    var get$2 = function (element, key) {
+      var v = element.dom.getAttribute(key);
+      return v === null ? undefined : v;
+    };
+    var getOpt = function (element, key) {
+      return Optional.from(get$2(element, key));
+    };
+    var has$1 = function (element, key) {
+      var dom = element.dom;
+      return dom && dom.hasAttribute ? dom.hasAttribute(key) : false;
+    };
+    var remove$1 = function (element, key) {
+      element.dom.removeAttribute(key);
+    };
+
+    var read = function (element, attr) {
+      var value = get$2(element, attr);
+      return value === undefined || value === '' ? [] : value.split(' ');
+    };
+    var add = function (element, attr, id) {
+      var old = read(element, attr);
+      var nu = old.concat([id]);
+      set(element, attr, nu.join(' '));
+      return true;
+    };
+    var remove$2 = function (element, attr, id) {
+      var nu = filter(read(element, attr), function (v) {
+        return v !== id;
+      });
+      if (nu.length > 0) {
+        set(element, attr, nu.join(' '));
+      } else {
+        remove$1(element, attr);
+      }
+      return false;
+    };
+
+    var supports = function (element) {
+      return element.dom.classList !== undefined;
+    };
+    var get$3 = function (element) {
+      return read(element, 'class');
+    };
+    var add$1 = function (element, clazz) {
+      return add(element, 'class', clazz);
+    };
+    var remove$3 = function (element, clazz) {
+      return remove$2(element, 'class', clazz);
+    };
+
+    var add$2 = function (element, clazz) {
+      if (supports(element)) {
+        element.dom.classList.add(clazz);
+      } else {
+        add$1(element, clazz);
+      }
+    };
+    var cleanClass = function (element) {
+      var classList = supports(element) ? element.dom.classList : get$3(element);
+      if (classList.length === 0) {
+        remove$1(element, 'class');
+      }
+    };
+    var remove$4 = function (element, clazz) {
+      if (supports(element)) {
+        var classList = element.dom.classList;
+        classList.remove(clazz);
+      } else {
+        remove$3(element, clazz);
+      }
+      cleanClass(element);
+    };
+    var has$2 = function (element, clazz) {
+      return supports(element) && element.dom.classList.contains(clazz);
+    };
+
+    var swap = function (element, addCls, removeCls) {
+      remove$4(element, removeCls);
+      add$2(element, addCls);
+    };
+    var toAlpha = function (component, swapConfig, _swapState) {
+      swap(component.element, swapConfig.alpha, swapConfig.omega);
+    };
+    var toOmega = function (component, swapConfig, _swapState) {
+      swap(component.element, swapConfig.omega, swapConfig.alpha);
+    };
+    var clear = function (component, swapConfig, _swapState) {
+      remove$4(component.element, swapConfig.alpha);
+      remove$4(component.element, swapConfig.omega);
+    };
+    var isAlpha = function (component, swapConfig, _swapState) {
+      return has$2(component.element, swapConfig.alpha);
+    };
+    var isOmega = function (component, swapConfig, _swapState) {
+      return has$2(component.element, swapConfig.omega);
+    };
+
+    var SwapApis = /*#__PURE__*/Object.freeze({
+        __proto__: null,
+        toAlpha: toAlpha,
+        toOmega: toOmega,
+        isAlpha: isAlpha,
+        isOmega: isOmega,
+        clear: clear
+    });
 
     var value = function (o) {
       var is = function (v) {
         return o === v;
       };
-      var or = function (opt) {
+      var or = function (_opt) {
         return value(o);
       };
-      var orThunk = function (f) {
+      var orThunk = function (_f) {
         return value(o);
       };
       var map = function (f) {
         return value(f(o));
       };
-      var mapError = function (f) {
+      var mapError = function (_f) {
         return value(o);
       };
       var each = function (f) {
@@ -1205,8 +1367,8 @@
       var forall = function (f) {
         return f(o);
       };
-      var toOption = function () {
-        return Option.some(o);
+      var toOptional = function () {
+        return Optional.some(o);
       };
       return {
         is: is,
@@ -1224,7 +1386,7 @@
         bind: bind,
         exists: exists,
         forall: forall,
-        toOption: toOption
+        toOptional: toOptional
       };
     };
     var error = function (message) {
@@ -1240,13 +1402,13 @@
       var orThunk = function (f) {
         return f();
       };
-      var map = function (f) {
+      var map = function (_f) {
         return error(message);
       };
       var mapError = function (f) {
         return error(f(message));
       };
-      var bind = function (f) {
+      var bind = function (_f) {
         return error(message);
       };
       var fold = function (onError, _) {
@@ -1268,7 +1430,7 @@
         bind: bind,
         exists: never,
         forall: always,
-        toOption: Option.none
+        toOptional: Optional.none
       };
     };
     var fromOption = function (opt, err) {
@@ -1282,239 +1444,6 @@
       fromOption: fromOption
     };
 
-    var generate = function (cases) {
-      if (!isArray(cases)) {
-        throw new Error('cases must be an array');
-      }
-      if (cases.length === 0) {
-        throw new Error('there must be at least one case');
-      }
-      var constructors = [];
-      var adt = {};
-      each$1(cases, function (acase, count) {
-        var keys$1 = keys(acase);
-        if (keys$1.length !== 1) {
-          throw new Error('one and only one name per case');
-        }
-        var key = keys$1[0];
-        var value = acase[key];
-        if (adt[key] !== undefined) {
-          throw new Error('duplicate key detected:' + key);
-        } else if (key === 'cata') {
-          throw new Error('cannot have a case named cata (sorry)');
-        } else if (!isArray(value)) {
-          throw new Error('case arguments must be an array');
-        }
-        constructors.push(key);
-        adt[key] = function () {
-          var argLength = arguments.length;
-          if (argLength !== value.length) {
-            throw new Error('Wrong number of arguments to case ' + key + '. Expected ' + value.length + ' (' + value + '), got ' + argLength);
-          }
-          var args = new Array(argLength);
-          for (var i = 0; i < args.length; i++) {
-            args[i] = arguments[i];
-          }
-          var match = function (branches) {
-            var branchKeys = keys(branches);
-            if (constructors.length !== branchKeys.length) {
-              throw new Error('Wrong number of arguments to match. Expected: ' + constructors.join(',') + '\nActual: ' + branchKeys.join(','));
-            }
-            var allReqd = forall(constructors, function (reqKey) {
-              return contains(branchKeys, reqKey);
-            });
-            if (!allReqd) {
-              throw new Error('Not all branches were specified when using match. Specified: ' + branchKeys.join(', ') + '\nRequired: ' + constructors.join(', '));
-            }
-            return branches[key].apply(null, args);
-          };
-          return {
-            fold: function () {
-              if (arguments.length !== cases.length) {
-                throw new Error('Wrong number of arguments to fold. Expected ' + cases.length + ', got ' + arguments.length);
-              }
-              var target = arguments[count];
-              return target.apply(null, args);
-            },
-            match: match,
-            log: function (label) {
-              domGlobals.console.log(label, {
-                constructors: constructors,
-                constructor: key,
-                params: args
-              });
-            }
-          };
-        };
-      });
-      return adt;
-    };
-    var Adt = { generate: generate };
-
-    var hasOwnProperty$1 = Object.prototype.hasOwnProperty;
-    var shallow = function (old, nu) {
-      return nu;
-    };
-    var deep = function (old, nu) {
-      var bothObjects = isObject(old) && isObject(nu);
-      return bothObjects ? deepMerge(old, nu) : nu;
-    };
-    var baseMerge = function (merger) {
-      return function () {
-        var objects = new Array(arguments.length);
-        for (var i = 0; i < objects.length; i++) {
-          objects[i] = arguments[i];
-        }
-        if (objects.length === 0) {
-          throw new Error('Can\'t merge zero objects');
-        }
-        var ret = {};
-        for (var j = 0; j < objects.length; j++) {
-          var curObject = objects[j];
-          for (var key in curObject) {
-            if (hasOwnProperty$1.call(curObject, key)) {
-              ret[key] = merger(ret[key], curObject[key]);
-            }
-          }
-        }
-        return ret;
-      };
-    };
-    var deepMerge = baseMerge(deep);
-    var merge = baseMerge(shallow);
-
-    var adt = Adt.generate([
-      { strict: [] },
-      { defaultedThunk: ['fallbackThunk'] },
-      { asOption: [] },
-      { asDefaultedOptionThunk: ['fallbackThunk'] },
-      { mergeWithThunk: ['baseThunk'] }
-    ]);
-    var defaulted = function (fallback) {
-      return adt.defaultedThunk(constant(fallback));
-    };
-    var mergeWith = function (base) {
-      return adt.mergeWithThunk(constant(base));
-    };
-    var strict = adt.strict;
-    var asOption = adt.asOption;
-    var defaultedThunk = adt.defaultedThunk;
-    var mergeWithThunk = adt.mergeWithThunk;
-
-    var exclude = function (obj, fields) {
-      var r = {};
-      each(obj, function (v, k) {
-        if (!contains(fields, k)) {
-          r[k] = v;
-        }
-      });
-      return r;
-    };
-
-    var readOpt = function (key) {
-      return function (obj) {
-        return has(obj, key) ? Option.from(obj[key]) : Option.none();
-      };
-    };
-    var readOr = function (key, fallback) {
-      return function (obj) {
-        return has(obj, key) ? obj[key] : fallback;
-      };
-    };
-    var readOptFrom = function (obj, key) {
-      return readOpt(key)(obj);
-    };
-    var hasKey = function (obj, key) {
-      return has(obj, key) && obj[key] !== undefined && obj[key] !== null;
-    };
-
-    var wrap = function (key, value) {
-      var r = {};
-      r[key] = value;
-      return r;
-    };
-    var wrapAll = function (keyvalues) {
-      var r = {};
-      each$1(keyvalues, function (kv) {
-        r[kv.key] = kv.value;
-      });
-      return r;
-    };
-
-    var comparison = Adt.generate([
-      {
-        bothErrors: [
-          'error1',
-          'error2'
-        ]
-      },
-      {
-        firstError: [
-          'error1',
-          'value2'
-        ]
-      },
-      {
-        secondError: [
-          'value1',
-          'error2'
-        ]
-      },
-      {
-        bothValues: [
-          'value1',
-          'value2'
-        ]
-      }
-    ]);
-    var partition = function (results) {
-      var errors = [];
-      var values = [];
-      each$1(results, function (result) {
-        result.fold(function (err) {
-          errors.push(err);
-        }, function (value) {
-          values.push(value);
-        });
-      });
-      return {
-        errors: errors,
-        values: values
-      };
-    };
-
-    var exclude$1 = function (obj, fields) {
-      return exclude(obj, fields);
-    };
-    var readOpt$1 = function (key) {
-      return readOpt(key);
-    };
-    var readOr$1 = function (key, fallback) {
-      return readOr(key, fallback);
-    };
-    var readOptFrom$1 = function (obj, key) {
-      return readOptFrom(obj, key);
-    };
-    var wrap$1 = function (key, value) {
-      return wrap(key, value);
-    };
-    var wrapAll$1 = function (keyvalues) {
-      return wrapAll(keyvalues);
-    };
-    var mergeValues = function (values, base) {
-      return values.length === 0 ? Result.value(base) : Result.value(deepMerge(base, merge.apply(undefined, values)));
-    };
-    var mergeErrors = function (errors) {
-      return Result.error(flatten(errors));
-    };
-    var consolidate = function (objs, base) {
-      var partitions = partition(objs);
-      return partitions.errors.length > 0 ? mergeErrors(partitions.errors) : mergeValues(partitions.values, base);
-    };
-    var hasKey$1 = function (obj, key) {
-      return hasKey(obj, key);
-    };
-
     var SimpleResultType;
     (function (SimpleResultType) {
       SimpleResultType[SimpleResultType['Error'] = 0] = 'Error';
@@ -1523,10 +1452,10 @@
     var fold = function (res, onError, onValue) {
       return res.stype === SimpleResultType.Error ? onError(res.serror) : onValue(res.svalue);
     };
-    var partition$1 = function (results) {
+    var partition = function (results) {
       var values = [];
       var errors = [];
-      each$1(results, function (obj) {
+      each(results, function (obj) {
         fold(obj, function (err) {
           return errors.push(err);
         }, function (val) {
@@ -1594,13 +1523,217 @@
       fromResult: fromResult,
       toResult: toResult,
       svalue: svalue,
-      partition: partition$1,
+      partition: partition,
       serror: serror,
       bind: bind$1,
       bindError: bindError,
       map: map$2,
       mapError: mapError,
       fold: fold
+    };
+
+    var generate = function (cases) {
+      if (!isArray(cases)) {
+        throw new Error('cases must be an array');
+      }
+      if (cases.length === 0) {
+        throw new Error('there must be at least one case');
+      }
+      var constructors = [];
+      var adt = {};
+      each(cases, function (acase, count) {
+        var keys$1 = keys(acase);
+        if (keys$1.length !== 1) {
+          throw new Error('one and only one name per case');
+        }
+        var key = keys$1[0];
+        var value = acase[key];
+        if (adt[key] !== undefined) {
+          throw new Error('duplicate key detected:' + key);
+        } else if (key === 'cata') {
+          throw new Error('cannot have a case named cata (sorry)');
+        } else if (!isArray(value)) {
+          throw new Error('case arguments must be an array');
+        }
+        constructors.push(key);
+        adt[key] = function () {
+          var argLength = arguments.length;
+          if (argLength !== value.length) {
+            throw new Error('Wrong number of arguments to case ' + key + '. Expected ' + value.length + ' (' + value + '), got ' + argLength);
+          }
+          var args = new Array(argLength);
+          for (var i = 0; i < args.length; i++) {
+            args[i] = arguments[i];
+          }
+          var match = function (branches) {
+            var branchKeys = keys(branches);
+            if (constructors.length !== branchKeys.length) {
+              throw new Error('Wrong number of arguments to match. Expected: ' + constructors.join(',') + '\nActual: ' + branchKeys.join(','));
+            }
+            var allReqd = forall(constructors, function (reqKey) {
+              return contains(branchKeys, reqKey);
+            });
+            if (!allReqd) {
+              throw new Error('Not all branches were specified when using match. Specified: ' + branchKeys.join(', ') + '\nRequired: ' + constructors.join(', '));
+            }
+            return branches[key].apply(null, args);
+          };
+          return {
+            fold: function () {
+              if (arguments.length !== cases.length) {
+                throw new Error('Wrong number of arguments to fold. Expected ' + cases.length + ', got ' + arguments.length);
+              }
+              var target = arguments[count];
+              return target.apply(null, args);
+            },
+            match: match,
+            log: function (label) {
+              console.log(label, {
+                constructors: constructors,
+                constructor: key,
+                params: args
+              });
+            }
+          };
+        };
+      });
+      return adt;
+    };
+    var Adt = { generate: generate };
+
+    var hasOwnProperty$1 = Object.prototype.hasOwnProperty;
+    var shallow = function (old, nu) {
+      return nu;
+    };
+    var deep = function (old, nu) {
+      var bothObjects = isObject(old) && isObject(nu);
+      return bothObjects ? deepMerge(old, nu) : nu;
+    };
+    var baseMerge = function (merger) {
+      return function () {
+        var objects = new Array(arguments.length);
+        for (var i = 0; i < objects.length; i++) {
+          objects[i] = arguments[i];
+        }
+        if (objects.length === 0) {
+          throw new Error('Can\'t merge zero objects');
+        }
+        var ret = {};
+        for (var j = 0; j < objects.length; j++) {
+          var curObject = objects[j];
+          for (var key in curObject) {
+            if (hasOwnProperty$1.call(curObject, key)) {
+              ret[key] = merger(ret[key], curObject[key]);
+            }
+          }
+        }
+        return ret;
+      };
+    };
+    var deepMerge = baseMerge(deep);
+    var merge = baseMerge(shallow);
+
+    var adt = Adt.generate([
+      { strict: [] },
+      { defaultedThunk: ['fallbackThunk'] },
+      { asOption: [] },
+      { asDefaultedOptionThunk: ['fallbackThunk'] },
+      { mergeWithThunk: ['baseThunk'] }
+    ]);
+    var defaulted = function (fallback) {
+      return adt.defaultedThunk(constant(fallback));
+    };
+    var mergeWith = function (base) {
+      return adt.mergeWithThunk(constant(base));
+    };
+    var strict = adt.strict;
+    var asOption = adt.asOption;
+    var defaultedThunk = adt.defaultedThunk;
+    var asDefaultedOptionThunk = adt.asDefaultedOptionThunk;
+    var mergeWithThunk = adt.mergeWithThunk;
+
+    var comparison = Adt.generate([
+      {
+        bothErrors: [
+          'error1',
+          'error2'
+        ]
+      },
+      {
+        firstError: [
+          'error1',
+          'value2'
+        ]
+      },
+      {
+        secondError: [
+          'value1',
+          'error2'
+        ]
+      },
+      {
+        bothValues: [
+          'value1',
+          'value2'
+        ]
+      }
+    ]);
+    var partition$1 = function (results) {
+      var errors = [];
+      var values = [];
+      each(results, function (result) {
+        result.fold(function (err) {
+          errors.push(err);
+        }, function (value) {
+          values.push(value);
+        });
+      });
+      return {
+        errors: errors,
+        values: values
+      };
+    };
+
+    var exclude = function (obj, fields) {
+      var r = {};
+      each$1(obj, function (v, k) {
+        if (!contains(fields, k)) {
+          r[k] = v;
+        }
+      });
+      return r;
+    };
+
+    var wrap = function (key, value) {
+      var _a;
+      return _a = {}, _a[key] = value, _a;
+    };
+    var wrapAll = function (keyvalues) {
+      var r = {};
+      each(keyvalues, function (kv) {
+        r[kv.key] = kv.value;
+      });
+      return r;
+    };
+
+    var exclude$1 = function (obj, fields) {
+      return exclude(obj, fields);
+    };
+    var wrap$1 = function (key, value) {
+      return wrap(key, value);
+    };
+    var wrapAll$1 = function (keyvalues) {
+      return wrapAll(keyvalues);
+    };
+    var mergeValues = function (values, base) {
+      return values.length === 0 ? Result.value(base) : Result.value(deepMerge(base, merge.apply(undefined, values)));
+    };
+    var mergeErrors = function (errors) {
+      return Result.error(flatten(errors));
+    };
+    var consolidate = function (objs, base) {
+      var partitions = partition$1(objs);
+      return partitions.errors.length > 0 ? mergeErrors(partitions.errors) : mergeValues(partitions.values, base);
     };
 
     var mergeValues$1 = function (values, base) {
@@ -1622,41 +1755,6 @@
       consolidateArr: consolidateArr
     };
 
-    var typeAdt = Adt.generate([
-      {
-        setOf: [
-          'validator',
-          'valueType'
-        ]
-      },
-      { arrOf: ['valueType'] },
-      { objOf: ['fields'] },
-      { itemOf: ['validator'] },
-      {
-        choiceOf: [
-          'key',
-          'branches'
-        ]
-      },
-      { thunk: ['description'] },
-      {
-        func: [
-          'args',
-          'outputSchema'
-        ]
-      }
-    ]);
-    var fieldAdt = Adt.generate([
-      {
-        field: [
-          'name',
-          'presence',
-          'type'
-        ]
-      },
-      { state: ['name'] }
-    ]);
-
     var formatObj = function (input) {
       return isObject(input) && keys(input).length > 100 ? ' removed due to size' : JSON.stringify(input, null, 2);
     };
@@ -1667,7 +1765,7 @@
             return '... (only showing first ten failures)';
           }
         }]) : errors;
-      return map$1(es, function (e) {
+      return map(es, function (e) {
         return 'Failed path: (' + e.path.join(' > ') + ')\n' + e.getErrorInfo();
       });
     };
@@ -1721,21 +1819,21 @@
       }
     ]);
     var strictAccess = function (path, obj, key) {
-      return readOptFrom(obj, key).fold(function () {
+      return get$1(obj, key).fold(function () {
         return missingStrict(path, key, obj);
       }, SimpleResult.svalue);
     };
     var fallbackAccess = function (obj, key, fallbackThunk) {
-      var v = readOptFrom(obj, key).fold(function () {
+      var v = get$1(obj, key).fold(function () {
         return fallbackThunk(obj);
       }, identity);
       return SimpleResult.svalue(v);
     };
     var optionAccess = function (obj, key) {
-      return SimpleResult.svalue(readOptFrom(obj, key));
+      return SimpleResult.svalue(get$1(obj, key));
     };
     var optionDefaultedAccess = function (obj, key, fallback) {
-      var opt = readOptFrom(obj, key).map(function (val) {
+      var opt = get$1(obj, key).map(function (val) {
         return val === true ? fallback(obj) : val;
       });
       return SimpleResult.svalue(opt);
@@ -1750,12 +1848,12 @@
         };
         var bundleAsOption = function (optValue) {
           return optValue.fold(function () {
-            var outcome = wrap(okey, strength(Option.none()));
+            var outcome = wrap(okey, strength(Optional.none()));
             return SimpleResult.svalue(outcome);
           }, function (ov) {
             var result = prop.extract(path.concat([key]), strength, ov);
             return SimpleResult.map(result, function (res) {
-              return wrap(okey, strength(Option.some(res)));
+              return wrap(okey, strength(Optional.some(res)));
             });
           });
         };
@@ -1782,7 +1880,7 @@
       });
     };
     var cExtract = function (path, obj, fields, strength) {
-      var results = map$1(fields, function (field) {
+      var results = map(fields, function (field) {
         return cExtractOne(path, obj, field, strength);
       });
       return ResultCombine.consolidateObj(results, {});
@@ -1796,20 +1894,15 @@
       var toString = function () {
         return 'val';
       };
-      var toDsl = function () {
-        return typeAdt.itemOf(validator);
-      };
       return {
         extract: extract,
-        toString: toString,
-        toDsl: toDsl
+        toString: toString
       };
     };
     var getSetKeys = function (obj) {
-      var keys$1 = keys(obj);
-      return filter(keys$1, function (k) {
-        return hasKey$1(obj, k);
-      });
+      return keys(filter$1(obj, function (value) {
+        return value !== undefined && value !== null;
+      }));
     };
     var objOfOnly = function (fields) {
       var delegate = objOf(fields);
@@ -1821,14 +1914,13 @@
       var extract = function (path, strength, o) {
         var keys = isBoolean(o) ? [] : getSetKeys(o);
         var extra = filter(keys, function (k) {
-          return !hasKey$1(fieldNames, k);
+          return !hasNonNullableKey(fieldNames, k);
         });
         return extra.length === 0 ? delegate.extract(path, strength, o) : unsupportedFields(path, extra);
       };
       return {
         extract: extract,
-        toString: delegate.toString,
-        toDsl: delegate.toDsl
+        toString: delegate.toString
       };
     };
     var objOf = function (fields) {
@@ -1836,33 +1928,23 @@
         return cExtract(path, o, fields, strength);
       };
       var toString = function () {
-        var fieldStrings = map$1(fields, function (field) {
+        var fieldStrings = map(fields, function (field) {
           return field.fold(function (key, okey, presence, prop) {
             return key + ' -> ' + prop.toString();
-          }, function (okey, instantiator) {
+          }, function (okey, _instantiator) {
             return 'state(' + okey + ')';
           });
         });
         return 'obj{\n' + fieldStrings.join('\n') + '}';
       };
-      var toDsl = function () {
-        return typeAdt.objOf(map$1(fields, function (f) {
-          return f.fold(function (key, okey, presence, prop) {
-            return fieldAdt.field(key, presence, prop);
-          }, function (okey, instantiator) {
-            return fieldAdt.state(okey);
-          });
-        }));
-      };
       return {
         extract: extract,
-        toString: toString,
-        toDsl: toDsl
+        toString: toString
       };
     };
     var arrOf = function (prop) {
       var extract = function (path, strength, array) {
-        var results = map$1(array, function (a, i) {
+        var results = map(array, function (a, i) {
           return prop.extract(path.concat(['[' + i + ']']), strength, a);
         });
         return ResultCombine.consolidateArr(results);
@@ -1870,13 +1952,9 @@
       var toString = function () {
         return 'array(' + prop.toString() + ')';
       };
-      var toDsl = function () {
-        return typeAdt.arrOf(prop);
-      };
       return {
         extract: extract,
-        toString: toString,
-        toDsl: toDsl
+        toString: toString
       };
     };
     var setOf = function (validator, prop) {
@@ -1887,7 +1965,7 @@
         var keys$1 = keys(o);
         var validatedKeys = validateKeys(path, keys$1);
         return SimpleResult.bind(validatedKeys, function (validKeys) {
-          var schema = map$1(validKeys, function (vk) {
+          var schema = map(validKeys, function (vk) {
             return adt$1.field(vk, vk, strict(), prop);
           });
           return objOf(schema).extract(path, strength, o);
@@ -1896,13 +1974,9 @@
       var toString = function () {
         return 'setOf(' + prop.toString() + ')';
       };
-      var toDsl = function () {
-        return typeAdt.setOf(validator, prop);
-      };
       return {
         extract: extract,
-        toString: toString,
-        toDsl: toDsl
+        toString: toString
       };
     };
     var anyValue = constant(value$1(SimpleResult.svalue));
@@ -1910,7 +1984,7 @@
     var field = adt$1.field;
 
     var chooseFrom = function (path, strength, input, branches, ch) {
-      var fields = readOptFrom$1(branches, ch);
+      var fields = get$1(branches, ch);
       return fields.fold(function () {
         return missingBranch(path, branches, ch);
       }, function (vp) {
@@ -1919,7 +1993,7 @@
     };
     var choose = function (key, branches) {
       var extract = function (path, strength, input) {
-        var choice = readOptFrom$1(input, key);
+        var choice = get$1(input, key);
         return choice.fold(function () {
           return missingKey(path, key);
         }, function (chosen) {
@@ -1929,13 +2003,9 @@
       var toString = function () {
         return 'chooseOn(' + key + '). Possible values: ' + keys(branches);
       };
-      var toDsl = function () {
-        return typeAdt.choiceOf(key, branches);
-      };
       return {
         extract: extract,
-        toString: toString,
-        toDsl: toDsl
+        toString: toString
       };
     };
 
@@ -1971,10 +2041,10 @@
       return getOrDie(asRaw(label, prop, obj));
     };
     var formatError = function (errInfo) {
-      return 'Errors: \n' + formatErrors(errInfo.errors) + '\n\nInput object: ' + formatObj(errInfo.input);
+      return 'Errors: \n' + formatErrors(errInfo.errors).join('\n') + '\n\nInput object: ' + formatObj(errInfo.input);
     };
     var choose$1 = function (key, branches) {
-      return choose(key, map(branches, objOf));
+      return choose(key, map$1(branches, objOf));
     };
     var anyValue$1 = constant(_anyValue);
     var typedValue = function (validator, expectedType) {
@@ -1995,7 +2065,7 @@
       return strictOf(key, functionProcessor);
     };
     var forbid = function (key, message) {
-      return field(key, key, asOption(), value$1(function (v) {
+      return field(key, key, asOption(), value$1(function (_v) {
         return SimpleResult.serror('The field: ' + key + ' is forbidden. ' + message);
       }));
     };
@@ -2020,6 +2090,9 @@
     var defaultedOf = function (key, fallback, schema) {
       return field(key, key, defaulted(fallback), schema);
     };
+    var defaultedFunction = function (key, fallback) {
+      return defaultedOf(key, fallback, functionProcessor);
+    };
     var defaultedObjOf = function (key, fallback, objSchema) {
       return defaultedOf(key, fallback, objOf(objSchema));
     };
@@ -2027,17 +2100,48 @@
       return state(okey, instantiator);
     };
 
+    var SwapSchema = [
+      strict$1('alpha'),
+      strict$1('omega')
+    ];
+
+    var ensureIsRoot = function (isRoot) {
+      return isFunction(isRoot) ? isRoot : never;
+    };
+    var ancestor = function (scope, transform, isRoot) {
+      var element = scope.dom;
+      var stop = ensureIsRoot(isRoot);
+      while (element.parentNode) {
+        element = element.parentNode;
+        var el = SugarElement.fromDom(element);
+        var transformed = transform(el);
+        if (transformed.isSome()) {
+          return transformed;
+        } else if (stop(el)) {
+          break;
+        }
+      }
+      return Optional.none();
+    };
+    var closest = function (scope, transform, isRoot) {
+      var current = transform(scope);
+      var stop = ensureIsRoot(isRoot);
+      return current.orThunk(function () {
+        return stop(scope) ? Optional.none() : ancestor(scope, transform, stop);
+      });
+    };
+
     var isSource = function (component, simulatedEvent) {
-      return eq(component.element(), simulatedEvent.event().target());
+      return eq(component.element, simulatedEvent.event.target);
     };
 
     var nu$4 = function (parts) {
-      if (!hasKey$1(parts, 'can') && !hasKey$1(parts, 'abort') && !hasKey$1(parts, 'run')) {
+      if (!hasNonNullableKey(parts, 'can') && !hasNonNullableKey(parts, 'abort') && !hasNonNullableKey(parts, 'run')) {
         throw new Error('EventHandler defined by: ' + JSON.stringify(parts, null, 2) + ' does not have can, abort, or run!');
       }
       return asRawOrDie('Extracting event.handler', objOfOnly([
-        defaulted$1('can', constant(true)),
-        defaulted$1('abort', constant(false)),
+        defaulted$1('can', always),
+        defaulted$1('abort', never),
         defaulted$1('run', noop)
       ]), parts);
     };
@@ -2063,7 +2167,7 @@
         }, false);
       };
     };
-    var read = function (handler) {
+    var read$1 = function (handler) {
       return isFunction(handler) ? {
         can: constant(true),
         abort: constant(false),
@@ -2082,7 +2186,7 @@
         for (var _i = 0; _i < arguments.length; _i++) {
           args[_i] = arguments[_i];
         }
-        each$1(handlers, function (handler) {
+        each(handlers, function (handler) {
           handler.run.apply(undefined, args);
         });
       };
@@ -2091,54 +2195,6 @@
         abort: abort,
         run: run
       });
-    };
-
-    function ClosestOrAncestor (is, ancestor, scope, a, isRoot) {
-      return is(scope, a) ? Option.some(scope) : isFunction(isRoot) && isRoot(scope) ? Option.none() : ancestor(scope, a, isRoot);
-    }
-
-    var ancestor = function (scope, predicate, isRoot) {
-      var element = scope.dom();
-      var stop = isFunction(isRoot) ? isRoot : constant(false);
-      while (element.parentNode) {
-        element = element.parentNode;
-        var el = Element.fromDom(element);
-        if (predicate(el)) {
-          return Option.some(el);
-        } else if (stop(el)) {
-          break;
-        }
-      }
-      return Option.none();
-    };
-    var closest = function (scope, predicate, isRoot) {
-      var is = function (s, test) {
-        return test(s);
-      };
-      return ClosestOrAncestor(is, ancestor, scope, predicate, isRoot);
-    };
-    var descendant = function (scope, predicate) {
-      var descend = function (node) {
-        for (var i = 0; i < node.childNodes.length; i++) {
-          var child_1 = Element.fromDom(node.childNodes[i]);
-          if (predicate(child_1)) {
-            return Option.some(child_1);
-          }
-          var res = descend(node.childNodes[i]);
-          if (res.isSome()) {
-            return res;
-          }
-        }
-        return Option.none();
-      };
-      return descend(scope.dom());
-    };
-
-    var closest$1 = function (target, transform, isRoot) {
-      var delegate = closest(target, function (elem) {
-        return transform(elem).isSome();
-      }, isRoot);
-      return delegate.bind(transform);
     };
 
     var derive = function (configs) {
@@ -2166,8 +2222,11 @@
       return {
         key: name,
         value: nu$4({
-          run: function (component) {
-            action.apply(undefined, [component].concat(extra));
+          run: function (component, simulatedEvent) {
+            action.apply(undefined, [
+              component,
+              simulatedEvent
+            ].concat(extra));
           }
         })
       };
@@ -2194,7 +2253,7 @@
     var redirectToUid = function (name, uid) {
       return run(name, function (component, simulatedEvent) {
         component.getSystem().getByUid(uid).each(function (redirectee) {
-          dispatchEvent(redirectee, redirectee.element(), name, simulatedEvent);
+          dispatchEvent(redirectee, redirectee.element, name, simulatedEvent);
         });
       });
     };
@@ -2234,7 +2293,7 @@
       return f;
     };
     var cleanParameters = function (parameters) {
-      return map$1(parameters, function (p) {
+      return map(parameters, function (p) {
         return endsWith(p, '/*') ? p.substring(0, p.length - '/*'.length) : p;
       });
     };
@@ -2286,7 +2345,7 @@
       });
     };
     var loadEvent = function (bConfig, bState, f) {
-      return runOnInit(function (component, simulatedEvent) {
+      return runOnInit(function (component, _simulatedEvent) {
         f(component, bConfig, bState);
       });
     };
@@ -2328,12 +2387,12 @@
     };
     var doCreate = function (configSchema, schemaSchema, name, active, apis, extra, state) {
       var getConfig = function (info) {
-        return hasKey$1(info, name) ? info[name]() : Option.none();
+        return hasNonNullableKey(info, name) ? info[name]() : Optional.none();
       };
-      var wrappedApis = map(apis, function (apiF, apiName) {
+      var wrappedApis = map$1(apis, function (apiF, apiName) {
         return wrapApi(name, apiF, apiName);
       });
-      var wrappedExtra = map(extra, function (extraF, extraName) {
+      var wrappedExtra = map$1(extra, function (extraF, extraName) {
         return markAsExtraApi(extraF, extraName);
       });
       var me = __assign(__assign(__assign({}, wrappedExtra), wrappedApis), {
@@ -2358,7 +2417,7 @@
         },
         exhibit: function (info, base) {
           return getConfig(info).bind(function (behaviourInfo) {
-            return readOptFrom$1(active, 'exhibit').map(function (exhibitor) {
+            return get$1(active, 'exhibit').map(function (exhibitor) {
               return exhibitor(base, behaviourInfo.config, behaviourInfo.state);
             });
           }).getOr(nu$5({}));
@@ -2368,9 +2427,9 @@
         },
         handlers: function (info) {
           return getConfig(info).map(function (behaviourInfo) {
-            var getEvents = readOr$1('events', function (a, b) {
+            var getEvents = get$1(active, 'events').getOr(function () {
               return {};
-            })(active);
+            });
             return getEvents(behaviourInfo.config, behaviourInfo.state);
           }).getOr({});
         }
@@ -2421,130 +2480,6 @@
     };
     var revoke = constant(undefined);
 
-    var rawSet = function (dom, key, value) {
-      if (isString(value) || isBoolean(value) || isNumber(value)) {
-        dom.setAttribute(key, value + '');
-      } else {
-        domGlobals.console.error('Invalid call to Attr.set. Key ', key, ':: Value ', value, ':: Element ', dom);
-        throw new Error('Attribute value was not simple');
-      }
-    };
-    var set = function (element, key, value) {
-      rawSet(element.dom(), key, value);
-    };
-    var setAll = function (element, attrs) {
-      var dom = element.dom();
-      each(attrs, function (v, k) {
-        rawSet(dom, k, v);
-      });
-    };
-    var get = function (element, key) {
-      var v = element.dom().getAttribute(key);
-      return v === null ? undefined : v;
-    };
-    var has$1 = function (element, key) {
-      var dom = element.dom();
-      return dom && dom.hasAttribute ? dom.hasAttribute(key) : false;
-    };
-    var remove$1 = function (element, key) {
-      element.dom().removeAttribute(key);
-    };
-
-    var read$1 = function (element, attr) {
-      var value = get(element, attr);
-      return value === undefined || value === '' ? [] : value.split(' ');
-    };
-    var add = function (element, attr, id) {
-      var old = read$1(element, attr);
-      var nu = old.concat([id]);
-      set(element, attr, nu.join(' '));
-      return true;
-    };
-    var remove$2 = function (element, attr, id) {
-      var nu = filter(read$1(element, attr), function (v) {
-        return v !== id;
-      });
-      if (nu.length > 0) {
-        set(element, attr, nu.join(' '));
-      } else {
-        remove$1(element, attr);
-      }
-      return false;
-    };
-
-    var supports = function (element) {
-      return element.dom().classList !== undefined;
-    };
-    var get$1 = function (element) {
-      return read$1(element, 'class');
-    };
-    var add$1 = function (element, clazz) {
-      return add(element, 'class', clazz);
-    };
-    var remove$3 = function (element, clazz) {
-      return remove$2(element, 'class', clazz);
-    };
-
-    var add$2 = function (element, clazz) {
-      if (supports(element)) {
-        element.dom().classList.add(clazz);
-      } else {
-        add$1(element, clazz);
-      }
-    };
-    var cleanClass = function (element) {
-      var classList = supports(element) ? element.dom().classList : get$1(element);
-      if (classList.length === 0) {
-        remove$1(element, 'class');
-      }
-    };
-    var remove$4 = function (element, clazz) {
-      if (supports(element)) {
-        var classList = element.dom().classList;
-        classList.remove(clazz);
-      } else {
-        remove$3(element, clazz);
-      }
-      cleanClass(element);
-    };
-    var has$2 = function (element, clazz) {
-      return supports(element) && element.dom().classList.contains(clazz);
-    };
-
-    var swap = function (element, addCls, removeCls) {
-      remove$4(element, removeCls);
-      add$2(element, addCls);
-    };
-    var toAlpha = function (component, swapConfig, swapState) {
-      swap(component.element(), swapConfig.alpha, swapConfig.omega);
-    };
-    var toOmega = function (component, swapConfig, swapState) {
-      swap(component.element(), swapConfig.omega, swapConfig.alpha);
-    };
-    var clear = function (component, swapConfig, swapState) {
-      remove$4(component.element(), swapConfig.alpha);
-      remove$4(component.element(), swapConfig.omega);
-    };
-    var isAlpha = function (component, swapConfig, swapState) {
-      return has$2(component.element(), swapConfig.alpha);
-    };
-    var isOmega = function (component, swapConfig, swapState) {
-      return has$2(component.element(), swapConfig.omega);
-    };
-
-    var SwapApis = /*#__PURE__*/Object.freeze({
-        toAlpha: toAlpha,
-        toOmega: toOmega,
-        isAlpha: isAlpha,
-        isOmega: isOmega,
-        clear: clear
-    });
-
-    var SwapSchema = [
-      strict$1('alpha'),
-      strict$1('omega')
-    ];
-
     var Swapping = create$1({
       fields: SwapSchema,
       name: 'swapping',
@@ -2559,33 +2494,35 @@
       var set = function (v) {
         value = v;
       };
-      var clone = function () {
-        return Cell(get());
-      };
       return {
         get: get,
-        set: set,
-        clone: clone
+        set: set
       };
     };
 
+    var getDocument = function () {
+      return SugarElement.fromDom(document);
+    };
+
     var focus$1 = function (element) {
-      element.dom().focus();
+      return element.dom.focus();
     };
     var blur = function (element) {
-      element.dom().blur();
+      return element.dom.blur();
     };
     var hasFocus = function (element) {
-      var doc = owner(element).dom();
-      return element.dom() === doc.activeElement;
+      var root = getRootNode(element).dom;
+      return element.dom === root.activeElement;
     };
-    var active = function (_doc) {
-      var doc = _doc !== undefined ? _doc.dom() : domGlobals.document;
-      return Option.from(doc.activeElement).map(Element.fromDom);
+    var active = function (root) {
+      if (root === void 0) {
+        root = getDocument();
+      }
+      return Optional.from(root.dom.activeElement).map(SugarElement.fromDom);
     };
     var search = function (element) {
-      return active(owner(element)).filter(function (e) {
-        return element.dom().contains(e.dom());
+      return active(getRootNode(element)).filter(function (e) {
+        return element.dom.contains(e.dom);
       });
     };
 
@@ -2594,62 +2531,192 @@
     var global$2 = tinymce.util.Tools.resolve('tinymce.ThemeManager');
 
     var openLink = function (target) {
-      var link = domGlobals.document.createElement('a');
+      var link = document.createElement('a');
       link.target = '_blank';
       link.href = target.href;
       link.rel = 'noreferrer noopener';
-      var nuEvt = domGlobals.document.createEvent('MouseEvents');
-      nuEvt.initMouseEvent('click', true, true, domGlobals.window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-      domGlobals.document.body.appendChild(link);
+      var nuEvt = document.createEvent('MouseEvents');
+      nuEvt.initMouseEvent('click', true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+      document.body.appendChild(link);
       link.dispatchEvent(nuEvt);
-      domGlobals.document.body.removeChild(link);
+      document.body.removeChild(link);
     };
-    var TinyCodeDupe = { openLink: openLink };
 
+    var DefaultStyleFormats = [
+      {
+        title: 'Headings',
+        items: [
+          {
+            title: 'Heading 1',
+            format: 'h1'
+          },
+          {
+            title: 'Heading 2',
+            format: 'h2'
+          },
+          {
+            title: 'Heading 3',
+            format: 'h3'
+          },
+          {
+            title: 'Heading 4',
+            format: 'h4'
+          },
+          {
+            title: 'Heading 5',
+            format: 'h5'
+          },
+          {
+            title: 'Heading 6',
+            format: 'h6'
+          }
+        ]
+      },
+      {
+        title: 'Inline',
+        items: [
+          {
+            title: 'Bold',
+            icon: 'bold',
+            format: 'bold'
+          },
+          {
+            title: 'Italic',
+            icon: 'italic',
+            format: 'italic'
+          },
+          {
+            title: 'Underline',
+            icon: 'underline',
+            format: 'underline'
+          },
+          {
+            title: 'Strikethrough',
+            icon: 'strikethrough',
+            format: 'strikethrough'
+          },
+          {
+            title: 'Superscript',
+            icon: 'superscript',
+            format: 'superscript'
+          },
+          {
+            title: 'Subscript',
+            icon: 'subscript',
+            format: 'subscript'
+          },
+          {
+            title: 'Code',
+            icon: 'code',
+            format: 'code'
+          }
+        ]
+      },
+      {
+        title: 'Blocks',
+        items: [
+          {
+            title: 'Paragraph',
+            format: 'p'
+          },
+          {
+            title: 'Blockquote',
+            format: 'blockquote'
+          },
+          {
+            title: 'Div',
+            format: 'div'
+          },
+          {
+            title: 'Pre',
+            format: 'pre'
+          }
+        ]
+      },
+      {
+        title: 'Alignment',
+        items: [
+          {
+            title: 'Left',
+            icon: 'alignleft',
+            format: 'alignleft'
+          },
+          {
+            title: 'Center',
+            icon: 'aligncenter',
+            format: 'aligncenter'
+          },
+          {
+            title: 'Right',
+            icon: 'alignright',
+            format: 'alignright'
+          },
+          {
+            title: 'Justify',
+            icon: 'alignjustify',
+            format: 'alignjustify'
+          }
+        ]
+      }
+    ];
+
+    var defaults = [
+      'undo',
+      'bold',
+      'italic',
+      'link',
+      'image',
+      'bullist',
+      'styleselect'
+    ];
     var isSkinDisabled = function (editor) {
-      return editor.settings.skin === false;
+      return editor.getParam('skin') === false;
     };
-    var readOnlyOnInit = function (editor) {
+    var readOnlyOnInit = function (_editor) {
       return false;
+    };
+    var getToolbar = function (editor) {
+      return editor.getParam('toolbar', defaults, 'array');
+    };
+    var getStyleFormats = function (editor) {
+      return editor.getParam('style_formats', DefaultStyleFormats, 'array');
+    };
+    var getSkinUrl = function (editor) {
+      return editor.getParam('skin_url');
     };
 
     var formatChanged = 'formatChanged';
     var orientationChanged = 'orientationChanged';
     var dropupDismissed = 'dropupDismissed';
-    var TinyChannels = {
-      formatChanged: constant(formatChanged),
-      orientationChanged: constant(orientationChanged),
-      dropupDismissed: constant(dropupDismissed)
-    };
 
     var fromHtml$1 = function (html, scope) {
-      var doc = scope || domGlobals.document;
+      var doc = scope || document;
       var div = doc.createElement('div');
       div.innerHTML = html;
-      return children(Element.fromDom(div));
+      return children(SugarElement.fromDom(div));
     };
 
-    var get$2 = function (element) {
-      return element.dom().innerHTML;
+    var get$4 = function (element) {
+      return element.dom.innerHTML;
     };
     var set$1 = function (element, content) {
       var owner$1 = owner(element);
-      var docDom = owner$1.dom();
-      var fragment = Element.fromDom(docDom.createDocumentFragment());
+      var docDom = owner$1.dom;
+      var fragment = SugarElement.fromDom(docDom.createDocumentFragment());
       var contentElements = fromHtml$1(content, docDom);
       append$1(fragment, contentElements);
       empty(element);
       append(element, fragment);
     };
     var getOuter = function (element) {
-      var container = Element.fromTag('div');
-      var clone = Element.fromDom(element.dom().cloneNode(true));
+      var container = SugarElement.fromTag('div');
+      var clone = SugarElement.fromDom(element.dom.cloneNode(true));
       append(container, clone);
-      return get$2(container);
+      return get$4(container);
     };
 
     var clone = function (original, isDeep) {
-      return Element.fromDom(original.dom().cloneNode(isDeep));
+      return SugarElement.fromDom(original.dom.cloneNode(isDeep));
     };
     var shallow$1 = function (original) {
       return clone(original, false);
@@ -2665,50 +2732,29 @@
     };
 
     var chooseChannels = function (channels, message) {
-      return message.universal() ? channels : filter(channels, function (ch) {
-        return contains(message.channels(), ch);
+      return message.universal ? channels : filter(channels, function (ch) {
+        return contains(message.channels, ch);
       });
     };
     var events = function (receiveConfig) {
       return derive([run(receive(), function (component, message) {
           var channelMap = receiveConfig.channels;
           var channels = keys(channelMap);
-          var targetChannels = chooseChannels(channels, message);
-          each$1(targetChannels, function (ch) {
+          var receivingData = message;
+          var targetChannels = chooseChannels(channels, receivingData);
+          each(targetChannels, function (ch) {
             var channelInfo = channelMap[ch];
             var channelSchema = channelInfo.schema;
-            var data = asRawOrDie('channel[' + ch + '] data\nReceiver: ' + element(component.element()), channelSchema, message.data());
+            var data = asRawOrDie('channel[' + ch + '] data\nReceiver: ' + element(component.element), channelSchema, receivingData.data);
             channelInfo.onReceive(component, data);
           });
         })]);
     };
 
     var ActiveReceiving = /*#__PURE__*/Object.freeze({
+        __proto__: null,
         events: events
     });
-
-    var cat = function (arr) {
-      var r = [];
-      var push = function (x) {
-        r.push(x);
-      };
-      for (var i = 0; i < arr.length; i++) {
-        arr[i].each(push);
-      }
-      return r;
-    };
-    var findMap = function (arr, f) {
-      for (var i = 0; i < arr.length; i++) {
-        var r = f(arr[i], i);
-        if (r.isSome()) {
-          return r;
-        }
-      }
-      return Option.none();
-    };
-    var someIf = function (b, a) {
-      return b ? Option.some(a) : Option.none();
-    };
 
     var unknown$3 = 'unknown';
     var EventConfiguration;
@@ -2722,34 +2768,34 @@
       var sequence = [];
       var startTime = new Date().getTime();
       return {
-        logEventCut: function (name, target, purpose) {
+        logEventCut: function (_name, target, purpose) {
           sequence.push({
             outcome: 'cut',
             target: target,
             purpose: purpose
           });
         },
-        logEventStopped: function (name, target, purpose) {
+        logEventStopped: function (_name, target, purpose) {
           sequence.push({
             outcome: 'stopped',
             target: target,
             purpose: purpose
           });
         },
-        logNoParent: function (name, target, purpose) {
+        logNoParent: function (_name, target, purpose) {
           sequence.push({
             outcome: 'no-parent',
             target: target,
             purpose: purpose
           });
         },
-        logEventNoHandlers: function (name, target) {
+        logEventNoHandlers: function (_name, target) {
           sequence.push({
             outcome: 'no-handlers-left',
             target: target
           });
         },
-        logEventResponse: function (name, target, purpose) {
+        logEventResponse: function (_name, target, purpose) {
           sequence.push({
             outcome: 'response',
             purpose: purpose,
@@ -2766,11 +2812,11 @@
             ], eventName)) {
             return;
           }
-          domGlobals.console.log(eventName, {
+          console.log(eventName, {
             event: eventName,
             time: finishTime - startTime,
-            target: initialTarget.dom(),
-            sequence: map$1(sequence, function (s) {
+            target: initialTarget.dom,
+            sequence: map(sequence, function (s) {
               if (!contains([
                   'cut',
                   'stopped',
@@ -2786,10 +2832,10 @@
       };
     };
     var processEvent = function (eventName, initialTarget, f) {
-      var status = readOptFrom$1(eventConfig.get(), eventName).orThunk(function () {
+      var status = get$1(eventConfig.get(), eventName).orThunk(function () {
         var patterns = keys(eventConfig.get());
         return findMap(patterns, function (p) {
-          return eventName.indexOf(p) > -1 ? Option.some(eventConfig.get()[p]) : Option.none();
+          return eventName.indexOf(p) > -1 ? Optional.some(eventConfig.get()[p]) : Optional.none();
         });
       }).getOr(EventConfiguration.NORMAL);
       switch (status) {
@@ -2813,7 +2859,7 @@
       var err = new Error();
       if (err.stack !== undefined) {
         var lines = err.stack.split('\n');
-        return find$1(lines, function (line) {
+        return find(lines, function (line) {
           return line.indexOf('alloy') > 0 && !exists(path, function (p) {
             return line.indexOf(p) > -1;
           });
@@ -2857,7 +2903,7 @@
       return strictObjOf('markers', [strict$1('backgroundMenu')].concat(menuFields()).concat(itemFields()));
     };
     var markers = function (required) {
-      return strictObjOf('markers', map$1(required, strict$1));
+      return strictObjOf('markers', map(required, strict$1));
     };
     var onPresenceHandler = function (label, fieldName, presence) {
       var trace = getTrace();
@@ -2875,7 +2921,7 @@
       return onPresenceHandler('onHandler', fieldName, defaulted(noop));
     };
     var onKeyboardHandler = function (fieldName) {
-      return onPresenceHandler('onKeyboardHandler', fieldName, defaulted(Option.none));
+      return onPresenceHandler('onKeyboardHandler', fieldName, defaulted(Optional.none));
     };
     var onStrictHandler = function (fieldName) {
       return onPresenceHandler('onHandler', fieldName, strict());
@@ -2902,6 +2948,31 @@
       active: ActiveReceiving
     });
 
+    var SetupBehaviourCellState = function (initialState) {
+      var init = function () {
+        var cell = Cell(initialState);
+        var get = function () {
+          return cell.get();
+        };
+        var set = function (newState) {
+          return cell.set(newState);
+        };
+        var clear = function () {
+          return cell.set(initialState);
+        };
+        var readState = function () {
+          return cell.get();
+        };
+        return {
+          get: get,
+          set: set,
+          clear: clear,
+          readState: readState
+        };
+      };
+      return { init: init };
+    };
+
     var updateAriaState = function (component, toggleConfig, toggleState) {
       var ariaInfo = toggleConfig.aria;
       ariaInfo.update(component, ariaInfo, toggleState.get());
@@ -2909,9 +2980,9 @@
     var updateClass = function (component, toggleConfig, toggleState) {
       toggleConfig.toggleClass.each(function (toggleClass) {
         if (toggleState.get()) {
-          add$2(component.element(), toggleClass);
+          add$2(component.element, toggleClass);
         } else {
-          remove$4(component.element(), toggleClass);
+          remove$4(component.element, toggleClass);
         }
       });
     };
@@ -2940,6 +3011,7 @@
     };
 
     var ToggleApis = /*#__PURE__*/Object.freeze({
+        __proto__: null,
         onLoad: onLoad,
         toggle: toggle,
         isOn: isOn,
@@ -2948,7 +3020,7 @@
         set: set$2
     });
 
-    var exhibit = function (base, toggleConfig, toggleState) {
+    var exhibit = function () {
       return nu$5({});
     };
     var events$1 = function (toggleConfig, toggleState) {
@@ -2961,49 +3033,25 @@
     };
 
     var ActiveToggle = /*#__PURE__*/Object.freeze({
+        __proto__: null,
         exhibit: exhibit,
         events: events$1
     });
 
-    var SetupBehaviourCellState = function (initialState) {
-      var init = function () {
-        var cell = Cell(initialState);
-        var get = function () {
-          return cell.get();
-        };
-        var set = function (newState) {
-          return cell.set(newState);
-        };
-        var clear = function () {
-          return cell.set(initialState);
-        };
-        var readState = function () {
-          return cell.get();
-        };
-        return {
-          get: get,
-          set: set,
-          clear: clear,
-          readState: readState
-        };
-      };
-      return { init: init };
-    };
-
     var updatePressed = function (component, ariaInfo, status) {
-      set(component.element(), 'aria-pressed', status);
+      set(component.element, 'aria-pressed', status);
       if (ariaInfo.syncWithExpanded) {
         updateExpanded(component, ariaInfo, status);
       }
     };
     var updateSelected = function (component, ariaInfo, status) {
-      set(component.element(), 'aria-selected', status);
+      set(component.element, 'aria-selected', status);
     };
     var updateChecked = function (component, ariaInfo, status) {
-      set(component.element(), 'aria-checked', status);
+      set(component.element, 'aria-checked', status);
     };
     var updateExpanded = function (component, ariaInfo, status) {
-      set(component.element(), 'aria-expanded', status);
+      set(component.element, 'aria-expanded', status);
     };
 
     var ToggleSchema = [
@@ -3032,7 +3080,7 @@
 
     var format = function (command, update) {
       return Receiving.config({
-        channels: wrap$1(TinyChannels.formatChanged(), {
+        channels: wrap$1(formatChanged, {
           onReceive: function (button, data) {
             if (data.command === command) {
               update(button, data.state);
@@ -3042,7 +3090,7 @@
       });
     };
     var orientation = function (onReceive) {
-      return Receiving.config({ channels: wrap$1(TinyChannels.orientationChanged(), { onReceive: onReceive }) });
+      return Receiving.config({ channels: wrap$1(orientationChanged, { onReceive: onReceive }) });
     };
     var receive$1 = function (channel, onReceive) {
       return {
@@ -3050,61 +3098,54 @@
         value: { onReceive: onReceive }
       };
     };
-    var Receivers = {
-      format: format,
-      orientation: orientation,
-      receive: receive$1
-    };
 
     var prefix = 'tinymce-mobile';
     var resolve = function (p) {
       return prefix + '-' + p;
     };
-    var Styles = {
-      resolve: resolve,
-      prefix: constant(prefix)
-    };
 
-    var events$2 = function (optAction) {
-      var executeHandler = function (action) {
-        return run(execute(), function (component, simulatedEvent) {
-          action(component);
-          simulatedEvent.stop();
-        });
-      };
+    var pointerEvents = function () {
       var onClick = function (component, simulatedEvent) {
         simulatedEvent.stop();
         emitExecute(component);
       };
-      var onMousedown = function (component, simulatedEvent) {
-        simulatedEvent.cut();
-      };
-      var pointerEvents = PlatformDetection$1.detect().deviceType.isTouch() ? [run(tap(), onClick)] : [
+      return [
         run(click(), onClick),
-        run(mousedown(), onMousedown)
+        run(tap(), onClick),
+        cutter(touchstart()),
+        cutter(mousedown())
       ];
+    };
+    var events$2 = function (optAction) {
+      var executeHandler = function (action) {
+        return runOnExecute(function (component, simulatedEvent) {
+          action(component);
+          simulatedEvent.stop();
+        });
+      };
       return derive(flatten([
         optAction.map(executeHandler).toArray(),
-        pointerEvents
+        pointerEvents()
       ]));
     };
 
     var focus$2 = function (component, focusConfig) {
       if (!focusConfig.ignore) {
-        focus$1(component.element());
+        focus$1(component.element);
         focusConfig.onFocus(component);
       }
     };
     var blur$1 = function (component, focusConfig) {
       if (!focusConfig.ignore) {
-        blur(component.element());
+        blur(component.element);
       }
     };
     var isFocused = function (component) {
-      return hasFocus(component.element());
+      return hasFocus(component.element);
     };
 
     var FocusApis = /*#__PURE__*/Object.freeze({
+        __proto__: null,
         focus: focus$2,
         blur: blur$1,
         isFocused: isFocused
@@ -3119,11 +3160,12 @@
           focus$2(component, focusConfig);
           simulatedEvent.stop();
         })].concat(focusConfig.stopMousedown ? [run(mousedown(), function (_, simulatedEvent) {
-          simulatedEvent.event().prevent();
+          simulatedEvent.event.prevent();
         })] : []));
     };
 
     var ActiveFocus = /*#__PURE__*/Object.freeze({
+        __proto__: null,
         exhibit: exhibit$1,
         events: events$3
     });
@@ -3141,60 +3183,59 @@
       apis: FocusApis
     });
 
-    var isSupported = function (dom) {
+    var isSupported$1 = function (dom) {
       return dom.style !== undefined && isFunction(dom.style.getPropertyValue);
     };
 
     var internalSet = function (dom, property, value) {
       if (!isString(value)) {
-        domGlobals.console.error('Invalid call to CSS.set. Property ', property, ':: Value ', value, ':: Element ', dom);
+        console.error('Invalid call to CSS.set. Property ', property, ':: Value ', value, ':: Element ', dom);
         throw new Error('CSS value must be a string: ' + value);
       }
-      if (isSupported(dom)) {
+      if (isSupported$1(dom)) {
         dom.style.setProperty(property, value);
       }
     };
     var internalRemove = function (dom, property) {
-      if (isSupported(dom)) {
+      if (isSupported$1(dom)) {
         dom.style.removeProperty(property);
       }
     };
     var set$3 = function (element, property, value) {
-      var dom = element.dom();
+      var dom = element.dom;
       internalSet(dom, property, value);
     };
     var setAll$1 = function (element, css) {
-      var dom = element.dom();
-      each(css, function (v, k) {
+      var dom = element.dom;
+      each$1(css, function (v, k) {
         internalSet(dom, k, v);
       });
     };
-    var get$3 = function (element, property) {
-      var dom = element.dom();
-      var styles = domGlobals.window.getComputedStyle(dom);
+    var get$5 = function (element, property) {
+      var dom = element.dom;
+      var styles = window.getComputedStyle(dom);
       var r = styles.getPropertyValue(property);
-      var v = r === '' && !inBody(element) ? getUnsafeProperty(dom, property) : r;
-      return v === null ? undefined : v;
+      return r === '' && !inBody(element) ? getUnsafeProperty(dom, property) : r;
     };
     var getUnsafeProperty = function (dom, property) {
-      return isSupported(dom) ? dom.style.getPropertyValue(property) : '';
+      return isSupported$1(dom) ? dom.style.getPropertyValue(property) : '';
     };
     var getRaw = function (element, property) {
-      var dom = element.dom();
+      var dom = element.dom;
       var raw = getUnsafeProperty(dom, property);
-      return Option.from(raw).filter(function (r) {
+      return Optional.from(raw).filter(function (r) {
         return r.length > 0;
       });
     };
     var remove$5 = function (element, property) {
-      var dom = element.dom();
+      var dom = element.dom;
       internalRemove(dom, property);
-      if (has$1(element, 'style') && trim(get(element, 'style')) === '') {
+      if (getOpt(element, 'style').map(trim).is('')) {
         remove$1(element, 'style');
       }
     };
     var reflow = function (e) {
-      return e.dom().offsetWidth;
+      return e.dom.offsetWidth;
     };
 
     function Dimension (name, getOffset) {
@@ -3202,15 +3243,15 @@
         if (!isNumber(h) && !h.match(/^[0-9]+$/)) {
           throw new Error(name + '.set accepts only positive integer values. Value was ' + h);
         }
-        var dom = element.dom();
-        if (isSupported(dom)) {
+        var dom = element.dom;
+        if (isSupported$1(dom)) {
           dom.style[name] = h + 'px';
         }
       };
       var get = function (element) {
         var r = getOffset(element);
         if (r <= 0 || r === null) {
-          var css = get$3(element, name);
+          var css = get$5(element, name);
           return parseFloat(css) || 0;
         }
         return r;
@@ -3218,7 +3259,7 @@
       var getOuter = get;
       var aggregate = function (element, properties) {
         return foldl(properties, function (acc, property) {
-          var val = get$3(element, property);
+          var val = get$5(element, property);
           var value = val === undefined ? 0 : parseInt(val, 10);
           return isNaN(value) ? acc : acc + value;
         }, 0);
@@ -3238,10 +3279,10 @@
     }
 
     var api = Dimension('height', function (element) {
-      var dom = element.dom();
+      var dom = element.dom;
       return inBody(element) ? dom.getBoundingClientRect().height : dom.offsetHeight;
     });
-    var get$4 = function (element) {
+    var get$6 = function (element) {
       return api.get(element);
     };
 
@@ -3269,11 +3310,58 @@
       return all(selector, scope);
     };
 
+    function ClosestOrAncestor (is, ancestor, scope, a, isRoot) {
+      if (is(scope, a)) {
+        return Optional.some(scope);
+      } else if (isFunction(isRoot) && isRoot(scope)) {
+        return Optional.none();
+      } else {
+        return ancestor(scope, a, isRoot);
+      }
+    }
+
+    var ancestor$1 = function (scope, predicate, isRoot) {
+      var element = scope.dom;
+      var stop = isFunction(isRoot) ? isRoot : never;
+      while (element.parentNode) {
+        element = element.parentNode;
+        var el = SugarElement.fromDom(element);
+        if (predicate(el)) {
+          return Optional.some(el);
+        } else if (stop(el)) {
+          break;
+        }
+      }
+      return Optional.none();
+    };
+    var closest$1 = function (scope, predicate, isRoot) {
+      var is = function (s, test) {
+        return test(s);
+      };
+      return ClosestOrAncestor(is, ancestor$1, scope, predicate, isRoot);
+    };
+    var descendant = function (scope, predicate) {
+      var descend = function (node) {
+        for (var i = 0; i < node.childNodes.length; i++) {
+          var child_1 = SugarElement.fromDom(node.childNodes[i]);
+          if (predicate(child_1)) {
+            return Optional.some(child_1);
+          }
+          var res = descend(node.childNodes[i]);
+          if (res.isSome()) {
+            return res;
+          }
+        }
+        return Optional.none();
+      };
+      return descend(scope.dom);
+    };
+
     var first = function (selector) {
       return one(selector);
     };
-    var ancestor$1 = function (scope, selector, isRoot) {
-      return ancestor(scope, function (e) {
+    var ancestor$2 = function (scope, selector, isRoot) {
+      return ancestor$1(scope, function (e) {
         return is(e, selector);
       }, isRoot);
     };
@@ -3281,59 +3369,44 @@
       return one(selector, scope);
     };
     var closest$2 = function (scope, selector, isRoot) {
-      return ClosestOrAncestor(is, ancestor$1, scope, selector, isRoot);
+      var is$1 = function (element, selector) {
+        return is(element, selector);
+      };
+      return ClosestOrAncestor(is$1, ancestor$2, scope, selector, isRoot);
     };
 
-    var BACKSPACE = function () {
-      return [8];
-    };
-    var TAB = function () {
-      return [9];
-    };
-    var ENTER = function () {
-      return [13];
-    };
-    var ESCAPE = function () {
-      return [27];
-    };
-    var SPACE = function () {
-      return [32];
-    };
-    var LEFT = function () {
-      return [37];
-    };
-    var UP = function () {
-      return [38];
-    };
-    var RIGHT = function () {
-      return [39];
-    };
-    var DOWN = function () {
-      return [40];
-    };
+    var BACKSPACE = [8];
+    var TAB = [9];
+    var ENTER = [13];
+    var ESCAPE = [27];
+    var SPACE = [32];
+    var LEFT = [37];
+    var UP = [38];
+    var RIGHT = [39];
+    var DOWN = [40];
 
     var cyclePrev = function (values, index, predicate) {
       var before = reverse(values.slice(0, index));
       var after = reverse(values.slice(index + 1));
-      return find$1(before.concat(after), predicate);
+      return find(before.concat(after), predicate);
     };
     var tryPrev = function (values, index, predicate) {
       var before = reverse(values.slice(0, index));
-      return find$1(before, predicate);
+      return find(before, predicate);
     };
     var cycleNext = function (values, index, predicate) {
       var before = values.slice(0, index);
       var after = values.slice(index + 1);
-      return find$1(after.concat(before), predicate);
+      return find(after.concat(before), predicate);
     };
     var tryNext = function (values, index, predicate) {
       var after = values.slice(index + 1);
-      return find$1(after, predicate);
+      return find(after, predicate);
     };
 
     var inSet = function (keys) {
       return function (event) {
-        var raw = event.raw();
+        var raw = event.raw;
         return contains(keys, raw.which);
       };
     };
@@ -3345,11 +3418,11 @@
       };
     };
     var isShift = function (event) {
-      var raw = event.raw();
+      var raw = event.raw;
       return raw.shiftKey === true;
     };
     var isControl = function (event) {
-      var raw = event.raw();
+      var raw = event.raw;
       return raw.ctrlKey === true;
     };
     var isNotShift = not(isShift);
@@ -3361,7 +3434,7 @@
       };
     };
     var choose$2 = function (transitions, event) {
-      var transition = find$1(transitions, function (t) {
+      var transition = find(transitions, function (t) {
         return t.matches(event);
       });
       return transition.map(function (t) {
@@ -3373,23 +3446,47 @@
       var r = value + delta;
       if (r > max) {
         return min;
+      } else if (r < min) {
+        return max;
       } else {
-        return r < min ? max : r;
+        return r;
       }
     };
-    var cap = function (value, min, max) {
-      if (value <= min) {
-        return min;
-      } else {
-        return value >= max ? max : value;
+    var clamp = function (value, min, max) {
+      return Math.min(Math.max(value, min), max);
+    };
+
+    var cat = function (arr) {
+      var r = [];
+      var push = function (x) {
+        r.push(x);
+      };
+      for (var i = 0; i < arr.length; i++) {
+        arr[i].each(push);
       }
+      return r;
+    };
+    var sequence = function (arr) {
+      var r = [];
+      for (var i = 0; i < arr.length; i++) {
+        var x = arr[i];
+        if (x.isSome()) {
+          r.push(x.getOrDie());
+        } else {
+          return Optional.none();
+        }
+      }
+      return Optional.some(r);
+    };
+    var someIf = function (b, a) {
+      return b ? Optional.some(a) : Optional.none();
     };
 
     var dehighlightAllExcept = function (component, hConfig, hState, skip) {
-      var highlighted = descendants(component.element(), '.' + hConfig.highlightClass);
-      each$1(highlighted, function (h) {
+      var highlighted = descendants(component.element, '.' + hConfig.highlightClass);
+      each(highlighted, function (h) {
         if (!exists(skip, function (skipComp) {
-            return skipComp.element() === h;
+            return skipComp.element === h;
           })) {
           remove$4(h, hConfig.highlightClass);
           component.getSystem().getByDom(h).each(function (target) {
@@ -3404,7 +3501,7 @@
     };
     var dehighlight$1 = function (component, hConfig, hState, target) {
       if (isHighlighted(component, hConfig, hState, target)) {
-        remove$4(target.element(), hConfig.highlightClass);
+        remove$4(target.element, hConfig.highlightClass);
         hConfig.onDehighlight(component, target);
         emit(target, dehighlight());
       }
@@ -3412,7 +3509,7 @@
     var highlight$1 = function (component, hConfig, hState, target) {
       dehighlightAllExcept(component, hConfig, hState, [target]);
       if (!isHighlighted(component, hConfig, hState, target)) {
-        add$2(target.element(), hConfig.highlightClass);
+        add$2(target.element, hConfig.highlightClass);
         hConfig.onHighlight(component, target);
         emit(target, highlight());
       }
@@ -3436,45 +3533,45 @@
     };
     var highlightBy = function (component, hConfig, hState, predicate) {
       var candidates = getCandidates(component, hConfig);
-      var targetComp = find$1(candidates, predicate);
+      var targetComp = find(candidates, predicate);
       targetComp.each(function (c) {
         highlight$1(component, hConfig, hState, c);
       });
     };
     var isHighlighted = function (component, hConfig, hState, queryTarget) {
-      return has$2(queryTarget.element(), hConfig.highlightClass);
+      return has$2(queryTarget.element, hConfig.highlightClass);
     };
-    var getHighlighted = function (component, hConfig, hState) {
-      return descendant$1(component.element(), '.' + hConfig.highlightClass).bind(function (e) {
-        return component.getSystem().getByDom(e).toOption();
+    var getHighlighted = function (component, hConfig, _hState) {
+      return descendant$1(component.element, '.' + hConfig.highlightClass).bind(function (e) {
+        return component.getSystem().getByDom(e).toOptional();
       });
     };
     var getByIndex = function (component, hConfig, hState, index) {
-      var items = descendants(component.element(), '.' + hConfig.itemClass);
-      return Option.from(items[index]).fold(function () {
+      var items = descendants(component.element, '.' + hConfig.itemClass);
+      return Optional.from(items[index]).fold(function () {
         return Result.error('No element found with index ' + index);
       }, component.getSystem().getByDom);
     };
-    var getFirst = function (component, hConfig, hState) {
-      return descendant$1(component.element(), '.' + hConfig.itemClass).bind(function (e) {
-        return component.getSystem().getByDom(e).toOption();
+    var getFirst = function (component, hConfig, _hState) {
+      return descendant$1(component.element, '.' + hConfig.itemClass).bind(function (e) {
+        return component.getSystem().getByDom(e).toOptional();
       });
     };
-    var getLast = function (component, hConfig, hState) {
-      var items = descendants(component.element(), '.' + hConfig.itemClass);
-      var last = items.length > 0 ? Option.some(items[items.length - 1]) : Option.none();
+    var getLast = function (component, hConfig, _hState) {
+      var items = descendants(component.element, '.' + hConfig.itemClass);
+      var last = items.length > 0 ? Optional.some(items[items.length - 1]) : Optional.none();
       return last.bind(function (c) {
-        return component.getSystem().getByDom(c).toOption();
+        return component.getSystem().getByDom(c).toOptional();
       });
     };
     var getDelta = function (component, hConfig, hState, delta) {
-      var items = descendants(component.element(), '.' + hConfig.itemClass);
+      var items = descendants(component.element, '.' + hConfig.itemClass);
       var current = findIndex(items, function (item) {
         return has$2(item, hConfig.highlightClass);
       });
       return current.bind(function (selected) {
         var dest = cycleBy(selected, delta, 0, items.length - 1);
-        return component.getSystem().getByDom(items[dest]).toOption();
+        return component.getSystem().getByDom(items[dest]).toOptional();
       });
     };
     var getPrevious = function (component, hConfig, hState) {
@@ -3483,14 +3580,15 @@
     var getNext = function (component, hConfig, hState) {
       return getDelta(component, hConfig, hState, +1);
     };
-    var getCandidates = function (component, hConfig, hState) {
-      var items = descendants(component.element(), '.' + hConfig.itemClass);
-      return cat(map$1(items, function (i) {
-        return component.getSystem().getByDom(i).toOption();
+    var getCandidates = function (component, hConfig, _hState) {
+      var items = descendants(component.element, '.' + hConfig.itemClass);
+      return cat(map(items, function (i) {
+        return component.getSystem().getByDom(i).toOptional();
       }));
     };
 
     var HighlightApis = /*#__PURE__*/Object.freeze({
+        __proto__: null,
         dehighlightAll: dehighlightAll,
         dehighlight: dehighlight$1,
         highlight: highlight$1,
@@ -3535,11 +3633,11 @@
     };
     var dom = function () {
       var get = function (component) {
-        return search(component.element());
+        return search(component.element);
       };
       var set = function (component, focusee) {
         var prevFocus = get(component);
-        component.getSystem().triggerFocus(focusee, component.element());
+        component.getSystem().triggerFocus(focusee, component.element);
         var newFocus = get(component);
         reportFocusShifting(component, prevFocus, newFocus);
       };
@@ -3551,7 +3649,7 @@
     var highlights = function () {
       var get = function (component) {
         return Highlighting.getHighlighted(component).map(function (item) {
-          return item.element();
+          return item.element;
         });
       };
       var set = function (component, element) {
@@ -3593,19 +3691,19 @@
       };
       var processKey = function (component, simulatedEvent, getRules, keyingConfig, keyingState) {
         var rules = getRules(component, simulatedEvent, keyingConfig, keyingState);
-        return choose$2(rules, simulatedEvent.event()).bind(function (rule) {
+        return choose$2(rules, simulatedEvent.event).bind(function (rule) {
           return rule(component, simulatedEvent, keyingConfig, keyingState);
         });
       };
       var toEvents = function (keyingConfig, keyingState) {
-        var onFocusHandler = keyingConfig.focusInside !== FocusInsideModes.OnFocusMode ? Option.none() : optFocusIn(keyingConfig).map(function (focusIn) {
+        var onFocusHandler = keyingConfig.focusInside !== FocusInsideModes.OnFocusMode ? Optional.none() : optFocusIn(keyingConfig).map(function (focusIn) {
           return run(focus(), function (component, simulatedEvent) {
             focusIn(component, keyingConfig, keyingState);
             simulatedEvent.stop();
           });
         });
         var tryGoInsideComponent = function (component, simulatedEvent) {
-          var isEnterOrSpace = inSet(SPACE().concat(ENTER()))(simulatedEvent.event());
+          var isEnterOrSpace = inSet(SPACE.concat(ENTER))(simulatedEvent.event);
           if (keyingConfig.focusInside === FocusInsideModes.OnEnterOrSpaceMode && isEnterOrSpace && isSource(component, simulatedEvent)) {
             optFocusIn(keyingConfig).each(function (focusIn) {
               focusIn(component, keyingConfig, keyingState);
@@ -3613,7 +3711,7 @@
             });
           }
         };
-        return derive(onFocusHandler.toArray().concat([
+        var keyboardEvents = [
           run(keydown(), function (component, simulatedEvent) {
             processKey(component, simulatedEvent, getKeydownRules, keyingConfig, keyingState).fold(function () {
               tryGoInsideComponent(component, simulatedEvent);
@@ -3626,7 +3724,8 @@
               simulatedEvent.stop();
             });
           })
-        ]));
+        ];
+        return derive(onFocusHandler.toArray().concat(keyboardEvents));
       };
       var me = {
         schema: schema,
@@ -3642,21 +3741,21 @@
         option('onEnter'),
         defaulted$1('selector', '[data-alloy-tabstop="true"]:not(:disabled)'),
         defaulted$1('firstTabstop', 0),
-        defaulted$1('useTabstopAt', constant(true)),
+        defaulted$1('useTabstopAt', always),
         option('visibilitySelector')
       ].concat([cyclicField]);
       var isVisible = function (tabbingConfig, element) {
         var target = tabbingConfig.visibilitySelector.bind(function (sel) {
           return closest$2(element, sel);
         }).getOr(element);
-        return get$4(target) > 0;
+        return get$6(target) > 0;
       };
       var findInitial = function (component, tabbingConfig) {
-        var tabstops = descendants(component.element(), tabbingConfig.selector);
+        var tabstops = descendants(component.element, tabbingConfig.selector);
         var visibles = filter(tabstops, function (elem) {
           return isVisible(tabbingConfig, elem);
         });
-        return Option.from(visibles[tabbingConfig.firstTabstop]);
+        return Optional.from(visibles[tabbingConfig.firstTabstop]);
       };
       var findCurrent = function (component, tabbingConfig) {
         return tabbingConfig.focusManager.get(component).bind(function (elem) {
@@ -3666,7 +3765,7 @@
       var isTabstop = function (tabbingConfig, element) {
         return isVisible(tabbingConfig, element) && tabbingConfig.useTabstopAt(element);
       };
-      var focusIn = function (component, tabbingConfig) {
+      var focusIn = function (component, tabbingConfig, _tabbingState) {
         findInitial(component, tabbingConfig).each(function (target) {
           tabbingConfig.focusManager.set(component, target);
         });
@@ -3675,14 +3774,14 @@
         return cycle(tabstops, stopIndex, function (elem) {
           return isTabstop(tabbingConfig, elem);
         }).fold(function () {
-          return tabbingConfig.cyclic ? Option.some(true) : Option.none();
+          return tabbingConfig.cyclic ? Optional.some(true) : Optional.none();
         }, function (target) {
           tabbingConfig.focusManager.set(component, target);
-          return Option.some(true);
+          return Optional.some(true);
         });
       };
-      var go = function (component, simulatedEvent, tabbingConfig, cycle) {
-        var tabstops = descendants(component.element(), tabbingConfig.selector);
+      var go = function (component, _simulatedEvent, tabbingConfig, cycle) {
+        var tabstops = descendants(component.element, tabbingConfig.selector);
         return findCurrent(component, tabbingConfig).bind(function (tabstop) {
           var optStopIndex = findIndex(tabstops, curry(eq, tabstop));
           return optStopIndex.bind(function (stopIndex) {
@@ -3690,20 +3789,20 @@
           });
         });
       };
-      var goBackwards = function (component, simulatedEvent, tabbingConfig, tabbingState) {
+      var goBackwards = function (component, simulatedEvent, tabbingConfig) {
         var navigate = tabbingConfig.cyclic ? cyclePrev : tryPrev;
         return go(component, simulatedEvent, tabbingConfig, navigate);
       };
-      var goForwards = function (component, simulatedEvent, tabbingConfig, tabbingState) {
+      var goForwards = function (component, simulatedEvent, tabbingConfig) {
         var navigate = tabbingConfig.cyclic ? cycleNext : tryNext;
         return go(component, simulatedEvent, tabbingConfig, navigate);
       };
-      var execute = function (component, simulatedEvent, tabbingConfig, tabbingState) {
+      var execute = function (component, simulatedEvent, tabbingConfig) {
         return tabbingConfig.onEnter.bind(function (f) {
           return f(component, simulatedEvent);
         });
       };
-      var exit = function (component, simulatedEvent, tabbingConfig, tabbingState) {
+      var exit = function (component, simulatedEvent, tabbingConfig) {
         return tabbingConfig.onEscape.bind(function (f) {
           return f(component, simulatedEvent);
         });
@@ -3711,38 +3810,39 @@
       var getKeydownRules = constant([
         rule(and([
           isShift,
-          inSet(TAB())
+          inSet(TAB)
         ]), goBackwards),
-        rule(inSet(TAB()), goForwards),
-        rule(inSet(ESCAPE()), exit),
+        rule(inSet(TAB), goForwards),
+        rule(inSet(ESCAPE), exit),
         rule(and([
           isNotShift,
-          inSet(ENTER())
+          inSet(ENTER)
         ]), execute)
       ]);
       var getKeyupRules = constant([]);
       return typical(schema, NoState.init, getKeydownRules, getKeyupRules, function () {
-        return Option.some(focusIn);
+        return Optional.some(focusIn);
       });
     };
 
-    var AcyclicType = create$2(state$1('cyclic', constant(false)));
+    var AcyclicType = create$2(state$1('cyclic', never));
 
-    var CyclicType = create$2(state$1('cyclic', constant(true)));
+    var CyclicType = create$2(state$1('cyclic', always));
 
     var inside = function (target) {
-      return name(target) === 'input' && get(target, 'type') !== 'radio' || name(target) === 'textarea';
+      return name(target) === 'input' && get$2(target, 'type') !== 'radio' || name(target) === 'textarea';
     };
 
-    var doDefaultExecute = function (component, simulatedEvent, focused) {
+    var doDefaultExecute = function (component, _simulatedEvent, focused) {
       dispatch(component, focused, execute());
-      return Option.some(true);
+      return Optional.some(true);
     };
     var defaultExecute = function (component, simulatedEvent, focused) {
-      return inside(focused) && inSet(SPACE())(simulatedEvent.event()) ? Option.none() : doDefaultExecute(component, simulatedEvent, focused);
+      var isComplex = inside(focused) && inSet(SPACE)(simulatedEvent.event);
+      return isComplex ? Optional.none() : doDefaultExecute(component, simulatedEvent, focused);
     };
-    var stopEventForFirefox = function (component, simulatedEvent) {
-      return Option.some(true);
+    var stopEventForFirefox = function (_component, _simulatedEvent) {
+      return Optional.some(true);
     };
 
     var schema$1 = [
@@ -3753,49 +3853,49 @@
       defaulted$1('useDown', false)
     ];
     var execute$1 = function (component, simulatedEvent, executeConfig) {
-      return executeConfig.execute(component, simulatedEvent, component.element());
+      return executeConfig.execute(component, simulatedEvent, component.element);
     };
-    var getKeydownRules = function (component, simulatedEvent, executeConfig, executeState) {
-      var spaceExec = executeConfig.useSpace && !inside(component.element()) ? SPACE() : [];
-      var enterExec = executeConfig.useEnter ? ENTER() : [];
-      var downExec = executeConfig.useDown ? DOWN() : [];
+    var getKeydownRules = function (component, _simulatedEvent, executeConfig, _executeState) {
+      var spaceExec = executeConfig.useSpace && !inside(component.element) ? SPACE : [];
+      var enterExec = executeConfig.useEnter ? ENTER : [];
+      var downExec = executeConfig.useDown ? DOWN : [];
       var execKeys = spaceExec.concat(enterExec).concat(downExec);
       return [rule(inSet(execKeys), execute$1)].concat(executeConfig.useControlEnter ? [rule(and([
           isControl,
-          inSet(ENTER())
+          inSet(ENTER)
         ]), execute$1)] : []);
     };
-    var getKeyupRules = function (component, simulatedEvent, executeConfig, executeState) {
-      return executeConfig.useSpace && !inside(component.element()) ? [rule(inSet(SPACE()), stopEventForFirefox)] : [];
+    var getKeyupRules = function (component, _simulatedEvent, executeConfig, _executeState) {
+      return executeConfig.useSpace && !inside(component.element) ? [rule(inSet(SPACE), stopEventForFirefox)] : [];
     };
     var ExecutionType = typical(schema$1, NoState.init, getKeydownRules, getKeyupRules, function () {
-      return Option.none();
+      return Optional.none();
     });
 
-    var flatgrid = function (spec) {
-      var dimensions = Cell(Option.none());
+    var flatgrid = function () {
+      var dimensions = Cell(Optional.none());
       var setGridSize = function (numRows, numColumns) {
-        dimensions.set(Option.some({
-          numRows: constant(numRows),
-          numColumns: constant(numColumns)
+        dimensions.set(Optional.some({
+          numRows: numRows,
+          numColumns: numColumns
         }));
       };
       var getNumRows = function () {
         return dimensions.get().map(function (d) {
-          return d.numRows();
+          return d.numRows;
         });
       };
       var getNumColumns = function () {
         return dimensions.get().map(function (d) {
-          return d.numColumns();
+          return d.numColumns;
         });
       };
       return nu$6({
         readState: function () {
           return dimensions.get().map(function (d) {
             return {
-              numRows: d.numRows(),
-              numColumns: d.numColumns()
+              numRows: String(d.numRows),
+              numColumns: String(d.numColumns)
             };
           }).getOr({
             numRows: '?',
@@ -3812,6 +3912,7 @@
     };
 
     var KeyingState = /*#__PURE__*/Object.freeze({
+        __proto__: null,
         flatgrid: flatgrid,
         init: init
     });
@@ -3822,12 +3923,12 @@
       };
     };
     var getDirection = function (element) {
-      return get$3(element, 'direction') === 'rtl' ? 'rtl' : 'ltr';
+      return get$5(element, 'direction') === 'rtl' ? 'rtl' : 'ltr';
     };
 
     var useH = function (movement) {
       return function (component, simulatedEvent, config, state) {
-        var move = movement(component.element());
+        var move = movement(component.element);
         return use(move, component, simulatedEvent, config, state);
       };
     };
@@ -3846,7 +3947,7 @@
     };
     var use = function (move, component, simulatedEvent, config, state) {
       var outcome = config.focusManager.get(component).bind(function (focused) {
-        return move(component.element(), focused, config, state);
+        return move(component.element, focused, config, state);
       });
       return outcome.map(function (newFocus) {
         config.focusManager.set(component, newFocus);
@@ -3861,25 +3962,22 @@
       return dom.offsetWidth <= 0 && dom.offsetHeight <= 0;
     };
     var isVisible = function (element) {
-      var dom = element.dom();
-      return !isHidden(dom);
+      return !isHidden(element.dom);
     };
 
-    var indexInfo = MixedBag([
-      'index',
-      'candidates'
-    ], []);
     var locate = function (candidates, predicate) {
       return findIndex(candidates, predicate).map(function (index) {
-        return indexInfo({
+        return {
           index: index,
           candidates: candidates
-        });
+        };
       });
     };
 
     var locateVisible = function (container, current, selector) {
-      var predicate = curry(eq, current);
+      var predicate = function (x) {
+        return eq(x, current);
+      };
       var candidates = descendants(container, selector);
       var visible = filter(candidates, isVisible);
       return locate(visible, predicate);
@@ -3894,8 +3992,8 @@
       var oldRow = Math.floor(index / numCols);
       var oldColumn = index % numCols;
       return f(oldRow, oldColumn).bind(function (address) {
-        var newIndex = address.row() * numCols + address.column();
-        return newIndex >= 0 && newIndex < values.length ? Option.some(values[newIndex]) : Option.none();
+        var newIndex = address.row * numCols + address.column;
+        return newIndex >= 0 && newIndex < values.length ? Optional.some(values[newIndex]) : Optional.none();
       });
     };
     var cycleHorizontal = function (values, index, numRows, numCols, delta) {
@@ -3903,9 +4001,9 @@
         var onLastRow = oldRow === numRows - 1;
         var colsInRow = onLastRow ? values.length - oldRow * numCols : numCols;
         var newColumn = cycleBy(oldColumn, delta, 0, colsInRow - 1);
-        return Option.some({
-          row: constant(oldRow),
-          column: constant(newColumn)
+        return Optional.some({
+          row: oldRow,
+          column: newColumn
         });
       });
     };
@@ -3914,10 +4012,10 @@
         var newRow = cycleBy(oldRow, delta, 0, numRows - 1);
         var onLastRow = newRow === numRows - 1;
         var colsInRow = onLastRow ? values.length - newRow * numCols : numCols;
-        var newCol = cap(oldColumn, 0, colsInRow - 1);
-        return Option.some({
-          row: constant(newRow),
-          column: constant(newCol)
+        var newCol = clamp(oldColumn, 0, colsInRow - 1);
+        return Optional.some({
+          row: newRow,
+          column: newCol
         });
       });
     };
@@ -3941,8 +4039,8 @@
       defaulted$1('captureTab', false),
       initSize()
     ];
-    var focusIn = function (component, gridConfig, gridState) {
-      descendant$1(component.element(), gridConfig.selector).each(function (first) {
+    var focusIn = function (component, gridConfig, _gridState) {
+      descendant$1(component.element, gridConfig.selector).each(function (first) {
         gridConfig.focusManager.set(component, first);
       });
     };
@@ -3951,7 +4049,7 @@
         return closest$2(elem, gridConfig.selector);
       });
     };
-    var execute$2 = function (component, simulatedEvent, gridConfig, gridState) {
+    var execute$2 = function (component, simulatedEvent, gridConfig, _gridState) {
       return findCurrent(component, gridConfig).bind(function (focused) {
         return gridConfig.execute(component, simulatedEvent, focused);
       });
@@ -3959,14 +4057,14 @@
     var doMove = function (cycle) {
       return function (element, focused, gridConfig, gridState) {
         return locateVisible(element, focused, gridConfig.selector).bind(function (identified) {
-          return cycle(identified.candidates(), identified.index(), gridState.getNumRows().getOr(gridConfig.initSize.numRows), gridState.getNumColumns().getOr(gridConfig.initSize.numColumns));
+          return cycle(identified.candidates, identified.index, gridState.getNumRows().getOr(gridConfig.initSize.numRows), gridState.getNumColumns().getOr(gridConfig.initSize.numColumns));
         });
       };
     };
-    var handleTab = function (component, simulatedEvent, gridConfig, gridState) {
-      return gridConfig.captureTab ? Option.some(true) : Option.none();
+    var handleTab = function (_component, _simulatedEvent, gridConfig) {
+      return gridConfig.captureTab ? Optional.some(true) : Optional.none();
     };
-    var doEscape = function (component, simulatedEvent, gridConfig, gridState) {
+    var doEscape = function (component, simulatedEvent, gridConfig) {
       return gridConfig.onEscape(component, simulatedEvent);
     };
     var moveLeft = doMove(cycleLeft);
@@ -3974,48 +4072,48 @@
     var moveNorth = doMove(cycleUp);
     var moveSouth = doMove(cycleDown);
     var getKeydownRules$1 = constant([
-      rule(inSet(LEFT()), west(moveLeft, moveRight)),
-      rule(inSet(RIGHT()), east(moveLeft, moveRight)),
-      rule(inSet(UP()), north(moveNorth)),
-      rule(inSet(DOWN()), south(moveSouth)),
+      rule(inSet(LEFT), west(moveLeft, moveRight)),
+      rule(inSet(RIGHT), east(moveLeft, moveRight)),
+      rule(inSet(UP), north(moveNorth)),
+      rule(inSet(DOWN), south(moveSouth)),
       rule(and([
         isShift,
-        inSet(TAB())
+        inSet(TAB)
       ]), handleTab),
       rule(and([
         isNotShift,
-        inSet(TAB())
+        inSet(TAB)
       ]), handleTab),
-      rule(inSet(ESCAPE()), doEscape),
-      rule(inSet(SPACE().concat(ENTER())), execute$2)
+      rule(inSet(ESCAPE), doEscape),
+      rule(inSet(SPACE.concat(ENTER)), execute$2)
     ]);
-    var getKeyupRules$1 = constant([rule(inSet(SPACE()), stopEventForFirefox)]);
+    var getKeyupRules$1 = constant([rule(inSet(SPACE), stopEventForFirefox)]);
     var FlatgridType = typical(schema$2, flatgrid, getKeydownRules$1, getKeyupRules$1, function () {
-      return Option.some(focusIn);
+      return Optional.some(focusIn);
     });
 
     var horizontal = function (container, selector, current, delta) {
       var isDisabledButton = function (candidate) {
-        return name(candidate) === 'button' && get(candidate, 'disabled') === 'disabled';
+        return name(candidate) === 'button' && get$2(candidate, 'disabled') === 'disabled';
       };
       var tryCycle = function (initial, index, candidates) {
         var newIndex = cycleBy(index, delta, 0, candidates.length - 1);
         if (newIndex === initial) {
-          return Option.none();
+          return Optional.none();
         } else {
-          return isDisabledButton(candidates[newIndex]) ? tryCycle(initial, newIndex, candidates) : Option.from(candidates[newIndex]);
+          return isDisabledButton(candidates[newIndex]) ? tryCycle(initial, newIndex, candidates) : Optional.from(candidates[newIndex]);
         }
       };
       return locateVisible(container, current, selector).bind(function (identified) {
-        var index = identified.index();
-        var candidates = identified.candidates();
+        var index = identified.index;
+        var candidates = identified.candidates;
         return tryCycle(index, index, candidates);
       });
     };
 
     var schema$3 = [
       strict$1('selector'),
-      defaulted$1('getInitial', Option.none),
+      defaulted$1('getInitial', Optional.none),
       defaulted$1('execute', defaultExecute),
       onKeyboardHandler('onEscape'),
       defaulted$1('executeOnMove', false),
@@ -4031,9 +4129,9 @@
         return flowConfig.execute(component, simulatedEvent, focused);
       });
     };
-    var focusIn$1 = function (component, flowConfig) {
+    var focusIn$1 = function (component, flowConfig, _state) {
       flowConfig.getInitial(component).orThunk(function () {
-        return descendant$1(component.element(), flowConfig.selector);
+        return descendant$1(component.element, flowConfig.selector);
       }).each(function (first) {
         flowConfig.focusManager.set(component, first);
       });
@@ -4045,44 +4143,39 @@
       return horizontal(element, info.selector, focused, +1);
     };
     var doMove$1 = function (movement) {
-      return function (component, simulatedEvent, flowConfig) {
-        return movement(component, simulatedEvent, flowConfig).bind(function () {
-          return flowConfig.executeOnMove ? execute$3(component, simulatedEvent, flowConfig) : Option.some(true);
+      return function (component, simulatedEvent, flowConfig, flowState) {
+        return movement(component, simulatedEvent, flowConfig, flowState).bind(function () {
+          return flowConfig.executeOnMove ? execute$3(component, simulatedEvent, flowConfig) : Optional.some(true);
         });
       };
     };
-    var doEscape$1 = function (component, simulatedEvent, flowConfig, _flowState) {
+    var doEscape$1 = function (component, simulatedEvent, flowConfig) {
       return flowConfig.onEscape(component, simulatedEvent);
     };
     var getKeydownRules$2 = function (_component, _se, flowConfig, _flowState) {
-      var westMovers = LEFT().concat(flowConfig.allowVertical ? UP() : []);
-      var eastMovers = RIGHT().concat(flowConfig.allowVertical ? DOWN() : []);
+      var westMovers = LEFT.concat(flowConfig.allowVertical ? UP : []);
+      var eastMovers = RIGHT.concat(flowConfig.allowVertical ? DOWN : []);
       return [
         rule(inSet(westMovers), doMove$1(west(moveLeft$1, moveRight$1))),
         rule(inSet(eastMovers), doMove$1(east(moveLeft$1, moveRight$1))),
-        rule(inSet(ENTER()), execute$3),
-        rule(inSet(SPACE()), execute$3),
-        rule(inSet(ESCAPE()), doEscape$1)
+        rule(inSet(ENTER), execute$3),
+        rule(inSet(SPACE), execute$3),
+        rule(inSet(ESCAPE), doEscape$1)
       ];
     };
-    var getKeyupRules$2 = constant([rule(inSet(SPACE()), stopEventForFirefox)]);
+    var getKeyupRules$2 = constant([rule(inSet(SPACE), stopEventForFirefox)]);
     var FlowType = typical(schema$3, NoState.init, getKeydownRules$2, getKeyupRules$2, function () {
-      return Option.some(focusIn$1);
+      return Optional.some(focusIn$1);
     });
 
-    var outcome = MixedBag([
-      'rowIndex',
-      'columnIndex',
-      'cell'
-    ], []);
     var toCell = function (matrix, rowIndex, columnIndex) {
-      return Option.from(matrix[rowIndex]).bind(function (row) {
-        return Option.from(row[columnIndex]).map(function (cell) {
-          return outcome({
+      return Optional.from(matrix[rowIndex]).bind(function (row) {
+        return Optional.from(row[columnIndex]).map(function (cell) {
+          return {
             rowIndex: rowIndex,
             columnIndex: columnIndex,
             cell: cell
-          });
+          };
         });
       });
     };
@@ -4095,19 +4188,19 @@
     var cycleVertical$1 = function (matrix, colIndex, startRow, deltaRow) {
       var nextRowIndex = cycleBy(startRow, deltaRow, 0, matrix.length - 1);
       var colsInNextRow = matrix[nextRowIndex].length;
-      var nextColIndex = cap(colIndex, 0, colsInNextRow - 1);
+      var nextColIndex = clamp(colIndex, 0, colsInNextRow - 1);
       return toCell(matrix, nextRowIndex, nextColIndex);
     };
     var moveHorizontal = function (matrix, rowIndex, startCol, deltaCol) {
       var row = matrix[rowIndex];
       var colsInRow = row.length;
-      var newColIndex = cap(startCol + deltaCol, 0, colsInRow - 1);
+      var newColIndex = clamp(startCol + deltaCol, 0, colsInRow - 1);
       return toCell(matrix, rowIndex, newColIndex);
     };
     var moveVertical = function (matrix, colIndex, startRow, deltaRow) {
-      var nextRowIndex = cap(startRow + deltaRow, 0, matrix.length - 1);
+      var nextRowIndex = clamp(startRow + deltaRow, 0, matrix.length - 1);
       var colsInNextRow = matrix[nextRowIndex].length;
-      var nextColIndex = cap(colIndex, 0, colsInNextRow - 1);
+      var nextColIndex = clamp(colIndex, 0, colsInNextRow - 1);
       return toCell(matrix, nextRowIndex, nextColIndex);
     };
     var cycleRight$1 = function (matrix, startRow, startCol) {
@@ -4141,25 +4234,25 @@
         strict$1('cell')
       ]),
       defaulted$1('cycles', true),
-      defaulted$1('previousSelector', Option.none),
+      defaulted$1('previousSelector', Optional.none),
       defaulted$1('execute', defaultExecute)
     ];
-    var focusIn$2 = function (component, matrixConfig) {
+    var focusIn$2 = function (component, matrixConfig, _state) {
       var focused = matrixConfig.previousSelector(component).orThunk(function () {
         var selectors = matrixConfig.selectors;
-        return descendant$1(component.element(), selectors.cell);
+        return descendant$1(component.element, selectors.cell);
       });
       focused.each(function (cell) {
         matrixConfig.focusManager.set(component, cell);
       });
     };
     var execute$4 = function (component, simulatedEvent, matrixConfig) {
-      return search(component.element()).bind(function (focused) {
+      return search(component.element).bind(function (focused) {
         return matrixConfig.execute(component, simulatedEvent, focused);
       });
     };
     var toMatrix = function (rows, matrixConfig) {
-      return map$1(rows, function (row) {
+      return map(rows, function (row) {
         return descendants(row, matrixConfig.selectors.cell);
       });
     };
@@ -4173,7 +4266,7 @@
             return findIndex$1(allRows, inRow).bind(function (rowIndex) {
               var matrix = toMatrix(allRows, matrixConfig);
               return move(matrix, rowIndex, colIndex).map(function (next) {
-                return next.cell();
+                return next.cell;
               });
             });
           });
@@ -4185,15 +4278,15 @@
     var moveNorth$1 = doMove$2(cycleUp$1, moveUp);
     var moveSouth$1 = doMove$2(cycleDown$1, moveDown);
     var getKeydownRules$3 = constant([
-      rule(inSet(LEFT()), west(moveLeft$3, moveRight$3)),
-      rule(inSet(RIGHT()), east(moveLeft$3, moveRight$3)),
-      rule(inSet(UP()), north(moveNorth$1)),
-      rule(inSet(DOWN()), south(moveSouth$1)),
-      rule(inSet(SPACE().concat(ENTER())), execute$4)
+      rule(inSet(LEFT), west(moveLeft$3, moveRight$3)),
+      rule(inSet(RIGHT), east(moveLeft$3, moveRight$3)),
+      rule(inSet(UP), north(moveNorth$1)),
+      rule(inSet(DOWN), south(moveSouth$1)),
+      rule(inSet(SPACE.concat(ENTER)), execute$4)
     ]);
-    var getKeyupRules$3 = constant([rule(inSet(SPACE()), stopEventForFirefox)]);
+    var getKeyupRules$3 = constant([rule(inSet(SPACE), stopEventForFirefox)]);
     var MatrixType = typical(schema$4, NoState.init, getKeydownRules$3, getKeyupRules$3, function () {
-      return Option.some(focusIn$2);
+      return Optional.some(focusIn$2);
     });
 
     var schema$5 = [
@@ -4206,8 +4299,8 @@
         return menuConfig.execute(component, simulatedEvent, focused);
       });
     };
-    var focusIn$3 = function (component, menuConfig) {
-      descendant$1(component.element(), menuConfig.selector).each(function (first) {
+    var focusIn$3 = function (component, menuConfig, _state) {
+      descendant$1(component.element, menuConfig.selector).each(function (first) {
         menuConfig.focusManager.set(component, first);
       });
     };
@@ -4217,29 +4310,29 @@
     var moveDown$1 = function (element, focused, info) {
       return horizontal(element, info.selector, focused, +1);
     };
-    var fireShiftTab = function (component, simulatedEvent, menuConfig) {
-      return menuConfig.moveOnTab ? move(moveUp$1)(component, simulatedEvent, menuConfig) : Option.none();
+    var fireShiftTab = function (component, simulatedEvent, menuConfig, menuState) {
+      return menuConfig.moveOnTab ? move(moveUp$1)(component, simulatedEvent, menuConfig, menuState) : Optional.none();
     };
-    var fireTab = function (component, simulatedEvent, menuConfig) {
-      return menuConfig.moveOnTab ? move(moveDown$1)(component, simulatedEvent, menuConfig) : Option.none();
+    var fireTab = function (component, simulatedEvent, menuConfig, menuState) {
+      return menuConfig.moveOnTab ? move(moveDown$1)(component, simulatedEvent, menuConfig, menuState) : Optional.none();
     };
     var getKeydownRules$4 = constant([
-      rule(inSet(UP()), move(moveUp$1)),
-      rule(inSet(DOWN()), move(moveDown$1)),
+      rule(inSet(UP), move(moveUp$1)),
+      rule(inSet(DOWN), move(moveDown$1)),
       rule(and([
         isShift,
-        inSet(TAB())
+        inSet(TAB)
       ]), fireShiftTab),
       rule(and([
         isNotShift,
-        inSet(TAB())
+        inSet(TAB)
       ]), fireTab),
-      rule(inSet(ENTER()), execute$5),
-      rule(inSet(SPACE()), execute$5)
+      rule(inSet(ENTER), execute$5),
+      rule(inSet(SPACE), execute$5)
     ]);
-    var getKeyupRules$4 = constant([rule(inSet(SPACE()), stopEventForFirefox)]);
+    var getKeyupRules$4 = constant([rule(inSet(SPACE), stopEventForFirefox)]);
     var MenuType = typical(schema$5, NoState.init, getKeydownRules$4, getKeyupRules$4, function () {
-      return Option.some(focusIn$3);
+      return Optional.some(focusIn$3);
     });
 
     var schema$6 = [
@@ -4258,33 +4351,33 @@
     ];
     var getKeydownRules$5 = function (component, simulatedEvent, specialInfo) {
       return [
-        rule(inSet(SPACE()), specialInfo.onSpace),
+        rule(inSet(SPACE), specialInfo.onSpace),
         rule(and([
           isNotShift,
-          inSet(ENTER())
+          inSet(ENTER)
         ]), specialInfo.onEnter),
         rule(and([
           isShift,
-          inSet(ENTER())
+          inSet(ENTER)
         ]), specialInfo.onShiftEnter),
         rule(and([
           isShift,
-          inSet(TAB())
+          inSet(TAB)
         ]), specialInfo.onShiftTab),
         rule(and([
           isNotShift,
-          inSet(TAB())
+          inSet(TAB)
         ]), specialInfo.onTab),
-        rule(inSet(UP()), specialInfo.onUp),
-        rule(inSet(DOWN()), specialInfo.onDown),
-        rule(inSet(LEFT()), specialInfo.onLeft),
-        rule(inSet(RIGHT()), specialInfo.onRight),
-        rule(inSet(SPACE()), specialInfo.onSpace),
-        rule(inSet(ESCAPE()), specialInfo.onEscape)
+        rule(inSet(UP), specialInfo.onUp),
+        rule(inSet(DOWN), specialInfo.onDown),
+        rule(inSet(LEFT), specialInfo.onLeft),
+        rule(inSet(RIGHT), specialInfo.onRight),
+        rule(inSet(SPACE), specialInfo.onSpace),
+        rule(inSet(ESCAPE), specialInfo.onEscape)
       ];
     };
     var getKeyupRules$5 = function (component, simulatedEvent, specialInfo) {
-      return specialInfo.stopSpaceKeyup ? [rule(inSet(SPACE()), stopEventForFirefox)] : [];
+      return specialInfo.stopSpaceKeyup ? [rule(inSet(SPACE), stopEventForFirefox)] : [];
     };
     var SpecialType = typical(schema$6, NoState.init, getKeydownRules$5, getKeyupRules$5, function (specialInfo) {
       return specialInfo.focusIn;
@@ -4300,6 +4393,7 @@
     var special = SpecialType.schema();
 
     var KeyboardBranches = /*#__PURE__*/Object.freeze({
+        __proto__: null,
         acyclic: acyclic,
         cyclic: cyclic,
         flow: flow,
@@ -4310,6 +4404,9 @@
         special: special
     });
 
+    var isFlatgridState = function (keyState) {
+      return hasNonNullableKey(keyState, 'setGridSize');
+    };
     var Keying = createModes$1({
       branchKey: 'mode',
       branches: KeyboardBranches,
@@ -4323,14 +4420,14 @@
       apis: {
         focusIn: function (component, keyConfig, keyState) {
           keyConfig.sendFocusIn(keyConfig).fold(function () {
-            component.getSystem().triggerFocus(component.element(), component.element());
+            component.getSystem().triggerFocus(component.element, component.element);
           }, function (sendFocusIn) {
             sendFocusIn(component, keyConfig, keyState);
           });
         },
         setGridSize: function (component, keyConfig, keyState, numRows, numColumns) {
-          if (!hasKey$1(keyState, 'setGridSize')) {
-            domGlobals.console.error('Layout does not support setGridSize');
+          if (!isFlatgridState(keyState)) {
+            console.error('Layout does not support setGridSize');
           } else {
             keyState.setGridSize(numRows, numColumns);
           }
@@ -4340,11 +4437,11 @@
     });
 
     var field$1 = function (name, forbidden) {
-      return defaultedObjOf(name, {}, map$1(forbidden, function (f) {
+      return defaultedObjOf(name, {}, map(forbidden, function (f) {
         return forbid(f.name(), 'Cannot configure ' + f.name() + ' for ' + name);
       }).concat([state$1('dump', identity)]));
     };
-    var get$5 = function (data) {
+    var get$7 = function (data) {
       return data.dump;
     };
     var augment = function (data, original) {
@@ -4353,7 +4450,7 @@
     var SketchBehaviours = {
       field: field$1,
       augment: augment,
-      get: get$5
+      get: get$7
     };
 
     var _placeholder = 'placeholder';
@@ -4371,20 +4468,23 @@
         ]
       }
     ]);
+    var isSubstituted = function (spec) {
+      return has(spec, 'uiType');
+    };
     var subPlaceholder = function (owner, detail, compSpec, placeholders) {
       if (owner.exists(function (o) {
           return o !== compSpec.owner;
         })) {
         return adt$2.single(true, constant(compSpec));
       }
-      return readOptFrom$1(placeholders, compSpec.name).fold(function () {
+      return get$1(placeholders, compSpec.name).fold(function () {
         throw new Error('Unknown placeholder component: ' + compSpec.name + '\nKnown: [' + keys(placeholders) + ']\nNamespace: ' + owner.getOr('none') + '\nSpec: ' + JSON.stringify(compSpec, null, 2));
       }, function (newSpec) {
         return newSpec.replace();
       });
     };
     var scan = function (owner, detail, compSpec, placeholders) {
-      if (compSpec.uiType === _placeholder) {
+      if (isSubstituted(compSpec) && compSpec.uiType === _placeholder) {
         return subPlaceholder(owner, detail, compSpec, placeholders);
       } else {
         return adt$2.single(false, constant(compSpec));
@@ -4393,16 +4493,20 @@
     var substitute = function (owner, detail, compSpec, placeholders) {
       var base = scan(owner, detail, compSpec, placeholders);
       return base.fold(function (req, valueThunk) {
-        var value = valueThunk(detail, compSpec.config, compSpec.validated);
-        var childSpecs = readOptFrom$1(value, 'components').getOr([]);
+        var value = isSubstituted(compSpec) ? valueThunk(detail, compSpec.config, compSpec.validated) : valueThunk(detail);
+        var childSpecs = get$1(value, 'components').getOr([]);
         var substituted = bind(childSpecs, function (c) {
           return substitute(owner, detail, c, placeholders);
         });
         return [__assign(__assign({}, value), { components: substituted })];
       }, function (req, valuesThunk) {
-        var values = valuesThunk(detail, compSpec.config, compSpec.validated);
-        var preprocessor = compSpec.validated.preprocess.getOr(identity);
-        return preprocessor(values);
+        if (isSubstituted(compSpec)) {
+          var values = valuesThunk(detail, compSpec.config, compSpec.validated);
+          var preprocessor = compSpec.validated.preprocess.getOr(identity);
+          return preprocessor(values);
+        } else {
+          return valuesThunk(detail);
+        }
       });
     };
     var substituteAll = function (owner, detail, components, placeholders) {
@@ -4416,7 +4520,7 @@
         return called;
       };
       var replace = function () {
-        if (called === true) {
+        if (called) {
           throw new Error('Trying to use the same placeholder more than once: ' + label);
         }
         called = true;
@@ -4437,11 +4541,11 @@
       };
     };
     var substitutePlaces = function (owner, detail, components, placeholders) {
-      var ps = map(placeholders, function (ph, name) {
+      var ps = map$1(placeholders, function (ph, name) {
         return oneReplace(name, ph);
       });
       var outcome = substituteAll(owner, detail, components, ps);
-      each(ps, function (p) {
+      each$1(ps, function (p) {
         if (p.used() === false && p.required()) {
           throw new Error('Placeholder: ' + p.name() + ' was not found in components list\nNamespace: ' + owner.getOr('none') + '\nComponents: ' + JSON.stringify(detail.components, null, 2));
         }
@@ -4486,6 +4590,13 @@
       fDefaults,
       fOverrides
     ]);
+    var externalSpec = objOf([
+      fFactory,
+      fSchema,
+      fName,
+      fDefaults,
+      fOverrides
+    ]);
     var optionalSpec = objOf([
       fFactory,
       fSchema,
@@ -4504,7 +4615,7 @@
       fOverrides
     ]);
     var asNamedPart = function (part) {
-      return part.fold(Option.some, Option.none, Option.some, Option.some);
+      return part.fold(Optional.some, Optional.none, Optional.some, Optional.some);
     };
     var name$1 = function (part) {
       var get = function (data) {
@@ -4519,6 +4630,7 @@
       };
     };
     var required = convert(adt$3.required, requiredSpec);
+    var external = convert(adt$3.external, externalSpec);
     var optional = convert(adt$3.optional, optionalSpec);
     var group = convert(adt$3.group, groupSpec);
     var original = constant('entirety');
@@ -4529,7 +4641,7 @@
     var subs = function (owner, detail, parts) {
       var internals = {};
       var externals = {};
-      each$1(parts, function (part) {
+      each(parts, function (part) {
         part.fold(function (data) {
           internals[data.pname] = single(true, function (detail, partSpec, partValidated) {
             return data.factory.sketch(combine(detail, data, partSpec, partValidated));
@@ -4544,7 +4656,7 @@
         }, function (data) {
           internals[data.pname] = multiple(true, function (detail, _partSpec, _partValidated) {
             var units = detail[data.name];
-            return map$1(units, function (u) {
+            return map(units, function (u) {
               return data.factory.sketch(deepMerge(data.defaults(detail, u, _partValidated), u, data.overrides(detail, u)));
             });
           });
@@ -4558,7 +4670,7 @@
 
     var generate$2 = function (owner, parts) {
       var r = {};
-      each$1(parts, function (part) {
+      each(parts, function (part) {
         asNamedPart(part).each(function (np) {
           var g = doGenerateOne(owner, np.pname);
           r[np.name] = function (config) {
@@ -4590,36 +4702,36 @@
     };
     var schemas = function (parts) {
       return bind(parts, function (part) {
-        return part.fold(Option.none, Option.some, Option.none, Option.none).map(function (data) {
+        return part.fold(Optional.none, Optional.some, Optional.none, Optional.none).map(function (data) {
           return strictObjOf(data.name, data.schema.concat([snapshot(original())]));
         }).toArray();
       });
     };
     var names = function (parts) {
-      return map$1(parts, name$1);
+      return map(parts, name$1);
     };
     var substitutes = function (owner, detail, parts) {
       return subs(owner, detail, parts);
     };
     var components = function (owner, detail, internals) {
-      return substitutePlaces(Option.some(owner), detail, detail.components, internals);
+      return substitutePlaces(Optional.some(owner), detail, detail.components, internals);
     };
     var getPart = function (component, detail, partKey) {
       var uid = detail.partUids[partKey];
-      return component.getSystem().getByUid(uid).toOption();
+      return component.getSystem().getByUid(uid).toOptional();
     };
     var getPartOrDie = function (component, detail, partKey) {
       return getPart(component, detail, partKey).getOrDie('Could not find part: ' + partKey);
     };
     var getAllParts = function (component, detail) {
       var system = component.getSystem();
-      return map(detail.partUids, function (pUid, k) {
+      return map$1(detail.partUids, function (pUid, _k) {
         return constant(system.getByUid(pUid));
       });
     };
     var defaultUids = function (baseUid, partTypes) {
       var partNames = names(partTypes);
-      return wrapAll$1(map$1(partNames, function (pn) {
+      return wrapAll$1(map(partNames, function (pn) {
         return {
           key: pn,
           value: baseUid + '-' + pn
@@ -4637,7 +4749,7 @@
       return wrap$1(premadeTag, comp);
     };
     var getPremade = function (spec) {
-      return readOptFrom$1(spec, premadeTag);
+      return get$1(spec, premadeTag);
     };
     var makeApi = function (f) {
       return markAsSketchApi(function (component) {
@@ -4645,7 +4757,10 @@
         for (var _i = 1; _i < arguments.length; _i++) {
           rest[_i - 1] = arguments[_i];
         }
-        return f.apply(undefined, [component.getApis()].concat([component].concat(rest)));
+        return f.apply(void 0, __spreadArrays([
+          component.getApis(),
+          component
+        ], rest));
       }, f);
     };
 
@@ -4660,14 +4775,14 @@
       return id;
     };
     var writeOnly = function (elem, uid) {
-      Object.defineProperty(elem.dom(), idAttr$1, {
+      Object.defineProperty(elem.dom, idAttr$1, {
         value: uid,
         writable: true
       });
     };
     var read$2 = function (elem) {
-      var id = isElement(elem) ? elem.dom()[idAttr$1] : null;
-      return Option.from(id);
+      var id = isElement(elem) ? elem.dom[idAttr$1] : null;
+      return Optional.from(id);
     };
     var generate$3 = function (prefix) {
       return generate$1(prefix);
@@ -4702,8 +4817,11 @@
       var components$1 = components(owner, detail, subs.internals());
       return factory(detail, components$1, specWithUid, subs.externals());
     };
+    var hasUid = function (spec) {
+      return has(spec, 'uid');
+    };
     var supplyUid = function (spec) {
-      return spec.hasOwnProperty('uid') ? spec : __assign(__assign({}, spec), { uid: generate$3('uid') });
+      return hasUid(spec) ? spec : __assign(__assign({}, spec), { uid: generate$3('uid') });
     };
 
     function isSketchSpec(spec) {
@@ -4729,14 +4847,13 @@
       var sketch = function (spec) {
         return single$1(config.name, config.configFields, config.factory, spec);
       };
-      var apis = map(config.apis, makeApi);
-      var extraApis = map(config.extraApis, function (f, k) {
+      var apis = map$1(config.apis, makeApi);
+      var extraApis = map$1(config.extraApis, function (f, k) {
         return markAsExtraApi(f, k);
       });
       return __assign(__assign({
-        name: constant(config.name),
-        partFields: constant([]),
-        configFields: constant(config.configFields),
+        name: config.name,
+        configFields: config.configFields,
         sketch: sketch
       }, apis), extraApis);
     };
@@ -4746,16 +4863,16 @@
         return composite(config.name, config.configFields, config.partFields, config.factory, spec);
       };
       var parts = generate$2(config.name, config.partFields);
-      var apis = map(config.apis, makeApi);
-      var extraApis = map(config.extraApis, function (f, k) {
+      var apis = map$1(config.apis, makeApi);
+      var extraApis = map$1(config.extraApis, function (f, k) {
         return markAsExtraApi(f, k);
       });
       return __assign(__assign({
-        name: constant(config.name),
-        partFields: constant(config.partFields),
-        configFields: constant(config.configFields),
+        name: config.name,
+        partFields: config.partFields,
+        configFields: config.configFields,
         sketch: sketch,
-        parts: constant(parts)
+        parts: parts
       }, apis), extraApis);
     };
 
@@ -4763,8 +4880,8 @@
       var events = events$2(detail.action);
       var tag = detail.dom.tag;
       var lookupAttr = function (attr) {
-        return readOptFrom$1(detail.dom, 'attributes').bind(function (attrs) {
-          return readOptFrom$1(attrs, attr);
+        return get$1(detail.dom, 'attributes').bind(function (attrs) {
+          return get$1(attrs, attr);
         });
       };
       var getModAttributes = function () {
@@ -4813,7 +4930,7 @@
       ]
     });
 
-    var exhibit$2 = function (base, unselectConfig) {
+    var exhibit$2 = function () {
       return nu$5({
         styles: {
           '-webkit-user-select': 'none',
@@ -4824,11 +4941,12 @@
         attributes: { unselectable: 'on' }
       });
     };
-    var events$4 = function (unselectConfig) {
-      return derive([abort(selectstart(), constant(true))]);
+    var events$4 = function () {
+      return derive([abort(selectstart(), always)]);
     };
 
     var ActiveUnselecting = /*#__PURE__*/Object.freeze({
+        __proto__: null,
         events: events$4,
         exhibit: exhibit$2
     });
@@ -4840,7 +4958,7 @@
     });
 
     var getAttrs = function (elem) {
-      var attributes = elem.dom().attributes !== undefined ? elem.dom().attributes : [];
+      var attributes = elem.dom.attributes !== undefined ? elem.dom.attributes : [];
       return foldl(attributes, function (b, attr) {
         var _a;
         if (attr.name === 'class') {
@@ -4851,14 +4969,14 @@
       }, {});
     };
     var getClasses = function (elem) {
-      return Array.prototype.slice.call(elem.dom().classList, 0);
+      return Array.prototype.slice.call(elem.dom.classList, 0);
     };
     var fromHtml$2 = function (html) {
-      var elem = Element.fromHtml(html);
+      var elem = SugarElement.fromHtml(html);
       var children$1 = children(elem);
       var attrs = getAttrs(elem);
       var classes = getClasses(elem);
-      var contents = children$1.length === 0 ? {} : { innerHtml: get$2(elem) };
+      var contents = children$1.length === 0 ? {} : { innerHtml: get$4(elem) };
       return __assign({
         tag: name(elem),
         classes: classes,
@@ -4867,12 +4985,11 @@
     };
 
     var dom$1 = function (rawHtml) {
-      var html = supplant(rawHtml, { prefix: Styles.prefix() });
+      var html = supplant(rawHtml, { prefix: prefix });
       return fromHtml$2(html);
     };
     var spec = function (rawHtml) {
-      var sDom = dom$1(rawHtml);
-      return { dom: sDom };
+      return { dom: dom$1(rawHtml) };
     };
 
     var forToolbarCommand = function (editor, command) {
@@ -4883,11 +5000,11 @@
     var getToggleBehaviours = function (command) {
       return derive$1([
         Toggling.config({
-          toggleClass: Styles.resolve('toolbar-button-selected'),
+          toggleClass: resolve('toolbar-button-selected'),
           toggleOnExecute: false,
           aria: { mode: 'pressed' }
         }),
-        Receivers.format(command, function (button, status) {
+        format(command, function (button, status) {
           var toggle = status ? Toggling.on : Toggling.off;
           toggle(button);
         })
@@ -4905,7 +5022,7 @@
     };
     var getToolbarIconButton = function (clazz, editor) {
       var icons = editor.ui.registry.getAll().icons;
-      var optOxideIcon = Option.from(icons[clazz]);
+      var optOxideIcon = Optional.from(icons[clazz]);
       return optOxideIcon.fold(function () {
         return dom$1('<span class="${prefix}-toolbar-button ${prefix}-toolbar-group-item ${prefix}-icon-' + clazz + ' ${prefix}-icon"></span>');
       }, function (icon) {
@@ -4919,16 +5036,7 @@
         buttonBehaviours: deepMerge(derive$1([Unselecting.config({})]), extraBehaviours)
       });
     };
-    var Buttons = {
-      forToolbar: forToolbar,
-      forToolbarCommand: forToolbarCommand,
-      forToolbarStateAction: forToolbarStateAction,
-      forToolbarStateCommand: forToolbarStateCommand,
-      getToolbarIconButton: getToolbarIconButton
-    };
 
-    var platform = PlatformDetection$1.detect();
-    var isTouch = platform.deviceType.isTouch();
     var labelPart = optional({
       schema: [strict$1('dom')],
       name: 'label'
@@ -4941,16 +5049,21 @@
           return action.fold(function () {
             return {};
           }, function (a) {
-            var touchEvents = derive([runActionExtra(touchstart(), a, [detail])]);
-            var mouseEvents = derive([
-              runActionExtra(mousedown(), a, [detail]),
-              runActionExtra(mousemove(), function (l, det) {
-                if (det.mouseIsDown.get()) {
-                  a(l, det);
-                }
-              }, [detail])
-            ]);
-            return { events: isTouch ? touchEvents : mouseEvents };
+            return {
+              events: derive([
+                runActionExtra(touchstart(), function (comp, se, d) {
+                  return a(comp, d);
+                }, [detail]),
+                runActionExtra(mousedown(), function (comp, se, d) {
+                  return a(comp, d);
+                }, [detail]),
+                runActionExtra(mousemove(), function (comp, se, det) {
+                  if (det.mouseIsDown.get()) {
+                    a(comp, det);
+                  }
+                }, [detail])
+              ])
+            };
           });
         }
       });
@@ -4992,20 +5105,8 @@
             return model.setValueFrom(component, detail, value);
           });
         };
-        var touchEvents = derive([
-          run(touchstart(), setValueFrom),
-          run(touchmove(), setValueFrom)
-        ]);
-        var mouseEvents = derive([
-          run(mousedown(), setValueFrom),
-          run(mousemove(), function (spectrum, se) {
-            if (detail.mouseIsDown.get()) {
-              setValueFrom(spectrum, se);
-            }
-          })
-        ]);
         return {
-          behaviours: derive$1(isTouch ? [] : [
+          behaviours: derive$1([
             Keying.config({
               mode: 'special',
               onLeft: function (spectrum) {
@@ -5023,7 +5124,16 @@
             }),
             Focusing.config({})
           ]),
-          events: isTouch ? touchEvents : mouseEvents
+          events: derive([
+            run(touchstart(), setValueFrom),
+            run(touchmove(), setValueFrom),
+            run(mousedown(), setValueFrom),
+            run(mousemove(), function (spectrum, se) {
+              if (detail.mouseIsDown.get()) {
+                setValueFrom(spectrum, se);
+              }
+            })
+          ])
         };
       }
     });
@@ -5058,6 +5168,7 @@
     };
 
     var RepresentApis = /*#__PURE__*/Object.freeze({
+        __proto__: null,
         onLoad: onLoad$1,
         onUnload: onUnload,
         setValue: setValue,
@@ -5067,10 +5178,10 @@
 
     var events$5 = function (repConfig, repState) {
       var es = repConfig.resetOnDom ? [
-        runOnAttached(function (comp, se) {
+        runOnAttached(function (comp, _se) {
           onLoad$1(comp, repConfig, repState);
         }),
-        runOnDetached(function (comp, se) {
+        runOnDetached(function (comp, _se) {
           onUnload(comp, repConfig, repState);
         })
       ] : [loadEvent(repConfig, repState, onLoad$1)];
@@ -5078,6 +5189,7 @@
     };
 
     var ActiveRepresenting = /*#__PURE__*/Object.freeze({
+        __proto__: null,
         events: events$5
     });
 
@@ -5123,8 +5235,8 @@
         dataByText.set({});
       };
       var lookup = function (itemString) {
-        return readOptFrom$1(dataByValue.get(), itemString).orThunk(function () {
-          return readOptFrom$1(dataByText.get(), itemString);
+        return get$1(dataByValue.get(), itemString).orThunk(function () {
+          return get$1(dataByText.get(), itemString);
         });
       };
       var update = function (items) {
@@ -5132,10 +5244,10 @@
         var currentDataByText = dataByText.get();
         var newDataByValue = {};
         var newDataByText = {};
-        each$1(items, function (item) {
+        each(items, function (item) {
           newDataByValue[item.value] = item;
-          readOptFrom$1(item, 'meta').each(function (meta) {
-            readOptFrom$1(meta, 'text').each(function (text) {
+          get$1(item, 'meta').each(function (meta) {
+            get$1(meta, 'text').each(function (text) {
               newDataByText[text] = item;
             });
           });
@@ -5155,6 +5267,7 @@
     };
 
     var RepresentState = /*#__PURE__*/Object.freeze({
+        __proto__: null,
         memory: memory,
         dataset: dataset,
         manual: manual,
@@ -5199,14 +5312,14 @@
       })
     ];
 
-    var getValue$2 = function (component, repConfig, repState) {
+    var getValue$2 = function (component, repConfig, _repState) {
       return repConfig.store.getValue(component);
     };
-    var setValue$2 = function (component, repConfig, repState, data) {
+    var setValue$2 = function (component, repConfig, _repState, data) {
       repConfig.store.setValue(component, data);
       repConfig.onSetValue(component, data);
     };
-    var onLoad$3 = function (component, repConfig, repState) {
+    var onLoad$3 = function (component, repConfig, _repState) {
       repConfig.store.initialValue.each(function (data) {
         repConfig.store.setValue(component, data);
       });
@@ -5277,12 +5390,12 @@
     });
 
     var api$1 = Dimension('width', function (element) {
-      return element.dom().offsetWidth;
+      return element.dom.offsetWidth;
     });
     var set$4 = function (element, h) {
-      api$1.set(element, h);
+      return api$1.set(element, h);
     };
-    var get$6 = function (element) {
+    var get$8 = function (element) {
       return api$1.get(element);
     };
 
@@ -5291,28 +5404,30 @@
         return r(left + x, top + y);
       };
       return {
-        left: constant(left),
-        top: constant(top),
+        left: left,
+        top: top,
         translate: translate
       };
     };
-    var Position = r;
+    var SugarPosition = r;
 
-    var isTouch$1 = PlatformDetection$1.detect().deviceType.isTouch();
     var _sliderChangeEvent = 'slider.change.value';
     var sliderChangeEvent = constant(_sliderChangeEvent);
+    var isTouchEvent = function (evt) {
+      return evt.type.indexOf('touch') !== -1;
+    };
     var getEventSource = function (simulatedEvent) {
-      var evt = simulatedEvent.event().raw();
-      if (isTouch$1) {
+      var evt = simulatedEvent.event.raw;
+      if (isTouchEvent(evt)) {
         var touchEvent = evt;
-        return touchEvent.touches !== undefined && touchEvent.touches.length === 1 ? Option.some(touchEvent.touches[0]).map(function (t) {
-          return Position(t.clientX, t.clientY);
-        }) : Option.none();
+        return touchEvent.touches !== undefined && touchEvent.touches.length === 1 ? Optional.some(touchEvent.touches[0]).map(function (t) {
+          return SugarPosition(t.clientX, t.clientY);
+        }) : Optional.none();
       } else {
         var mouseEvent = evt;
-        return mouseEvent.clientX !== undefined ? Option.some(mouseEvent).map(function (me) {
-          return Position(me.clientX, me.clientY);
-        }) : Option.none();
+        return mouseEvent.clientX !== undefined ? Optional.some(mouseEvent).map(function (me) {
+          return SugarPosition(me.clientX, me.clientY);
+        }) : Optional.none();
       }
     };
 
@@ -5388,15 +5503,15 @@
     };
 
     var xValue = function (x) {
-      return { x: constant(x) };
+      return { x: x };
     };
     var yValue = function (y) {
-      return { y: constant(y) };
+      return { y: y };
     };
     var xyValue = function (x, y) {
       return {
-        x: constant(x),
-        y: constant(y)
+        x: x,
+        y: y
       };
     };
     var fireSliderChange = function (component, value) {
@@ -5515,7 +5630,7 @@
 
     var top = 'top', right = 'right', bottom = 'bottom', left = 'left', width = 'width', height = 'height';
     var getBounds = function (component) {
-      return component.element().dom().getBoundingClientRect();
+      return component.element.dom.getBoundingClientRect();
     };
     var getBoundsProperty = function (bounds, property) {
       return bounds[property];
@@ -5568,7 +5683,7 @@
       emitWith(spectrum, sliderChangeEvent(), { value: value });
     };
     var sliderValue = function (x) {
-      return { x: constant(x) };
+      return { x: x };
     };
     var findValueOfOffset = function (spectrum, detail, left) {
       var args = {
@@ -5604,9 +5719,9 @@
     };
     var moveBy = function (direction, spectrum, detail) {
       var f = direction > 0 ? increaseBy : reduceBy;
-      var xValue = f(currentValue(detail).x(), minX(detail), maxX(detail), step(detail));
+      var xValue = f(currentValue(detail).x, minX(detail), maxX(detail), step(detail));
       fireSliderChange$1(spectrum, sliderValue(xValue));
-      return Option.some(xValue);
+      return Optional.some(xValue);
     };
     var handleMovement = function (direction) {
       return function (spectrum, detail) {
@@ -5618,17 +5733,17 @@
     var getValueFromEvent = function (simulatedEvent) {
       var pos = getEventSource(simulatedEvent);
       return pos.map(function (p) {
-        return p.left();
+        return p.left;
       });
     };
     var findOffsetOfValue$1 = function (spectrum, detail, value, minEdge, maxEdge) {
       var minOffset = 0;
       var maxOffset = getXScreenRange(spectrum);
       var centerMinEdge = minEdge.bind(function (edge) {
-        return Option.some(getXCenterOffSetOf(edge, spectrum));
+        return Optional.some(getXCenterOffSetOf(edge, spectrum));
       }).getOr(minOffset);
       var centerMaxEdge = maxEdge.bind(function (edge) {
-        return Option.some(getXCenterOffSetOf(edge, spectrum));
+        return Optional.some(getXCenterOffSetOf(edge, spectrum));
       }).getOr(maxOffset);
       var args = {
         min: minX(detail),
@@ -5652,26 +5767,27 @@
     };
     var setPositionFromValue = function (slider, thumb, detail, edges) {
       var value = currentValue(detail);
-      var pos = findPositionOfValue(slider, edges.getSpectrum(slider), value.x(), edges.getLeftEdge(slider), edges.getRightEdge(slider), detail);
-      var thumbRadius = get$6(thumb.element()) / 2;
-      set$3(thumb.element(), 'left', pos - thumbRadius + 'px');
+      var pos = findPositionOfValue(slider, edges.getSpectrum(slider), value.x, edges.getLeftEdge(slider), edges.getRightEdge(slider), detail);
+      var thumbRadius = get$8(thumb.element) / 2;
+      set$3(thumb.element, 'left', pos - thumbRadius + 'px');
     };
     var onLeft = handleMovement(-1);
     var onRight = handleMovement(1);
-    var onUp = Option.none;
-    var onDown = Option.none;
+    var onUp = Optional.none;
+    var onDown = Optional.none;
     var edgeActions = {
-      'top-left': Option.none(),
-      'top': Option.none(),
-      'top-right': Option.none(),
-      'right': Option.some(setToREdge),
-      'bottom-right': Option.none(),
-      'bottom': Option.none(),
-      'bottom-left': Option.none(),
-      'left': Option.some(setToLEdge)
+      'top-left': Optional.none(),
+      'top': Optional.none(),
+      'top-right': Optional.none(),
+      'right': Optional.some(setToREdge),
+      'bottom-right': Optional.none(),
+      'bottom': Optional.none(),
+      'bottom-left': Optional.none(),
+      'left': Optional.some(setToLEdge)
     };
 
     var HorizontalModel = /*#__PURE__*/Object.freeze({
+        __proto__: null,
         setValueFrom: setValueFrom,
         setToMin: setToMin,
         setToMax: setToMax,
@@ -5690,7 +5806,7 @@
       emitWith(spectrum, sliderChangeEvent(), { value: value });
     };
     var sliderValue$1 = function (y) {
-      return { y: constant(y) };
+      return { y: y };
     };
     var findValueOfOffset$1 = function (spectrum, detail, top) {
       var args = {
@@ -5726,9 +5842,9 @@
     };
     var moveBy$1 = function (direction, spectrum, detail) {
       var f = direction > 0 ? increaseBy : reduceBy;
-      var yValue = f(currentValue(detail).y(), minY(detail), maxY(detail), step(detail));
+      var yValue = f(currentValue(detail).y, minY(detail), maxY(detail), step(detail));
       fireSliderChange$2(spectrum, sliderValue$1(yValue));
-      return Option.some(yValue);
+      return Optional.some(yValue);
     };
     var handleMovement$1 = function (direction) {
       return function (spectrum, detail) {
@@ -5740,17 +5856,17 @@
     var getValueFromEvent$1 = function (simulatedEvent) {
       var pos = getEventSource(simulatedEvent);
       return pos.map(function (p) {
-        return p.top();
+        return p.top;
       });
     };
     var findOffsetOfValue$2 = function (spectrum, detail, value, minEdge, maxEdge) {
       var minOffset = 0;
       var maxOffset = getYScreenRange(spectrum);
       var centerMinEdge = minEdge.bind(function (edge) {
-        return Option.some(getYCenterOffSetOf(edge, spectrum));
+        return Optional.some(getYCenterOffSetOf(edge, spectrum));
       }).getOr(minOffset);
       var centerMaxEdge = maxEdge.bind(function (edge) {
-        return Option.some(getYCenterOffSetOf(edge, spectrum));
+        return Optional.some(getYCenterOffSetOf(edge, spectrum));
       }).getOr(maxOffset);
       var args = {
         min: minY(detail),
@@ -5774,26 +5890,27 @@
     };
     var setPositionFromValue$1 = function (slider, thumb, detail, edges) {
       var value = currentValue(detail);
-      var pos = findPositionOfValue$1(slider, edges.getSpectrum(slider), value.y(), edges.getTopEdge(slider), edges.getBottomEdge(slider), detail);
-      var thumbRadius = get$4(thumb.element()) / 2;
-      set$3(thumb.element(), 'top', pos - thumbRadius + 'px');
+      var pos = findPositionOfValue$1(slider, edges.getSpectrum(slider), value.y, edges.getTopEdge(slider), edges.getBottomEdge(slider), detail);
+      var thumbRadius = get$6(thumb.element) / 2;
+      set$3(thumb.element, 'top', pos - thumbRadius + 'px');
     };
-    var onLeft$1 = Option.none;
-    var onRight$1 = Option.none;
+    var onLeft$1 = Optional.none;
+    var onRight$1 = Optional.none;
     var onUp$1 = handleMovement$1(-1);
     var onDown$1 = handleMovement$1(1);
     var edgeActions$1 = {
-      'top-left': Option.none(),
-      'top': Option.some(setToTEdge),
-      'top-right': Option.none(),
-      'right': Option.none(),
-      'bottom-right': Option.none(),
-      'bottom': Option.some(setToBEdge),
-      'bottom-left': Option.none(),
-      'left': Option.none()
+      'top-left': Optional.none(),
+      'top': Optional.some(setToTEdge),
+      'top-right': Optional.none(),
+      'right': Optional.none(),
+      'bottom-right': Optional.none(),
+      'bottom': Optional.some(setToBEdge),
+      'bottom-left': Optional.none(),
+      'left': Optional.none()
     };
 
     var VerticalModel = /*#__PURE__*/Object.freeze({
+        __proto__: null,
         setValueFrom: setValueFrom$1,
         setToMin: setToMin$1,
         setToMax: setToMax$1,
@@ -5813,23 +5930,23 @@
     };
     var sliderValue$2 = function (x, y) {
       return {
-        x: constant(x),
-        y: constant(y)
+        x: x,
+        y: y
       };
     };
     var setValueFrom$2 = function (spectrum, detail, value) {
-      var xValue = findValueOfOffset(spectrum, detail, value.left());
-      var yValue = findValueOfOffset$1(spectrum, detail, value.top());
+      var xValue = findValueOfOffset(spectrum, detail, value.left);
+      var yValue = findValueOfOffset$1(spectrum, detail, value.top);
       var val = sliderValue$2(xValue, yValue);
       fireSliderChange$3(spectrum, val);
       return val;
     };
     var moveBy$2 = function (direction, isVerticalMovement, spectrum, detail) {
       var f = direction > 0 ? increaseBy : reduceBy;
-      var xValue = isVerticalMovement ? currentValue(detail).x() : f(currentValue(detail).x(), minX(detail), maxX(detail), step(detail));
-      var yValue = !isVerticalMovement ? currentValue(detail).y() : f(currentValue(detail).y(), minY(detail), maxY(detail), step(detail));
+      var xValue = isVerticalMovement ? currentValue(detail).x : f(currentValue(detail).x, minX(detail), maxX(detail), step(detail));
+      var yValue = !isVerticalMovement ? currentValue(detail).y : f(currentValue(detail).y, minY(detail), maxY(detail), step(detail));
       fireSliderChange$3(spectrum, sliderValue$2(xValue, yValue));
-      return Option.some(xValue);
+      return Optional.some(xValue);
     };
     var handleMovement$2 = function (direction, isVerticalMovement) {
       return function (spectrum, detail) {
@@ -5853,29 +5970,30 @@
     };
     var setPositionFromValue$2 = function (slider, thumb, detail, edges) {
       var value = currentValue(detail);
-      var xPos = findPositionOfValue(slider, edges.getSpectrum(slider), value.x(), edges.getLeftEdge(slider), edges.getRightEdge(slider), detail);
-      var yPos = findPositionOfValue$1(slider, edges.getSpectrum(slider), value.y(), edges.getTopEdge(slider), edges.getBottomEdge(slider), detail);
-      var thumbXRadius = get$6(thumb.element()) / 2;
-      var thumbYRadius = get$4(thumb.element()) / 2;
-      set$3(thumb.element(), 'left', xPos - thumbXRadius + 'px');
-      set$3(thumb.element(), 'top', yPos - thumbYRadius + 'px');
+      var xPos = findPositionOfValue(slider, edges.getSpectrum(slider), value.x, edges.getLeftEdge(slider), edges.getRightEdge(slider), detail);
+      var yPos = findPositionOfValue$1(slider, edges.getSpectrum(slider), value.y, edges.getTopEdge(slider), edges.getBottomEdge(slider), detail);
+      var thumbXRadius = get$8(thumb.element) / 2;
+      var thumbYRadius = get$6(thumb.element) / 2;
+      set$3(thumb.element, 'left', xPos - thumbXRadius + 'px');
+      set$3(thumb.element, 'top', yPos - thumbYRadius + 'px');
     };
     var onLeft$2 = handleMovement$2(-1, false);
     var onRight$2 = handleMovement$2(1, false);
     var onUp$2 = handleMovement$2(-1, true);
     var onDown$2 = handleMovement$2(1, true);
     var edgeActions$2 = {
-      'top-left': Option.some(setToTLEdgeXY),
-      'top': Option.some(setToTEdgeXY),
-      'top-right': Option.some(setToTREdgeXY),
-      'right': Option.some(setToREdgeXY),
-      'bottom-right': Option.some(setToBREdgeXY),
-      'bottom': Option.some(setToBEdgeXY),
-      'bottom-left': Option.some(setToBLEdgeXY),
-      'left': Option.some(setToLEdgeXY)
+      'top-left': Optional.some(setToTLEdgeXY),
+      'top': Optional.some(setToTEdgeXY),
+      'top-right': Optional.some(setToTREdgeXY),
+      'right': Optional.some(setToREdgeXY),
+      'bottom-right': Optional.some(setToBREdgeXY),
+      'bottom': Optional.some(setToBEdgeXY),
+      'bottom-left': Optional.some(setToBLEdgeXY),
+      'left': Optional.some(setToLEdgeXY)
     };
 
     var TwoDModel = /*#__PURE__*/Object.freeze({
+        __proto__: null,
         setValueFrom: setValueFrom$2,
         setToMin: setToMin$2,
         setToMax: setToMax$2,
@@ -5888,7 +6006,6 @@
         edgeActions: edgeActions$2
     });
 
-    var isTouch$2 = PlatformDetection$1.detect().deviceType.isTouch();
     var SliderSchema = [
       defaulted$1('stepSize', 1),
       defaulted$1('onChange', noop),
@@ -5925,8 +6042,8 @@
           defaulted$1('maxY', 100),
           state$1('value', function (spec) {
             return Cell({
-              x: constant(spec.mode.minX),
-              y: constant(spec.mode.minY)
+              x: spec.mode.minX,
+              y: spec.mode.minY
             });
           }),
           strict$1('getInitialValue'),
@@ -5936,13 +6053,16 @@
       field$1('sliderBehaviours', [
         Keying,
         Representing
-      ])
-    ].concat(!isTouch$2 ? [state$1('mouseIsDown', function () {
+      ]),
+      state$1('mouseIsDown', function () {
         return Cell(false);
-      })] : []);
+      })
+    ];
 
-    var isTouch$3 = PlatformDetection$1.detect().deviceType.isTouch();
+    var mouseReleased = constant('mouse.released');
+
     var sketch = function (detail, components, _spec, _externals) {
+      var _a;
       var getThumb = function (component) {
         return getPartOrDie(component, detail, 'thumb');
       };
@@ -5977,7 +6097,7 @@
         var thumb = getThumb(slider);
         refresh(slider, thumb);
         detail.onChange(slider, thumb, newValue);
-        return Option.some(true);
+        return Optional.some(true);
       };
       var resetToMin = function (slider) {
         model.setToMin(slider, detail);
@@ -5985,76 +6105,67 @@
       var resetToMax = function (slider) {
         model.setToMax(slider, detail);
       };
-      var touchEvents = [
-        run(touchstart(), function (slider, _simulatedEvent) {
-          detail.onDragStart(slider, getThumb(slider));
-        }),
-        run(touchend(), function (slider, _simulatedEvent) {
-          detail.onDragEnd(slider, getThumb(slider));
-        })
-      ];
-      var mouseEvents = [
-        run(mousedown(), function (slider, simulatedEvent) {
-          simulatedEvent.stop();
-          detail.onDragStart(slider, getThumb(slider));
-          detail.mouseIsDown.set(true);
-        }),
-        run(mouseup(), function (slider, _simulatedEvent) {
-          detail.onDragEnd(slider, getThumb(slider));
-        })
-      ];
-      var uiEventsArr = isTouch$3 ? touchEvents : mouseEvents;
+      var choose = function (slider) {
+        var fireOnChoose = function () {
+          getPart(slider, detail, 'thumb').each(function (thumb) {
+            var value = modelDetail.value.get();
+            detail.onChoose(slider, thumb, value);
+          });
+        };
+        var wasDown = detail.mouseIsDown.get();
+        detail.mouseIsDown.set(false);
+        if (wasDown) {
+          fireOnChoose();
+        }
+      };
+      var onDragStart = function (slider, simulatedEvent) {
+        simulatedEvent.stop();
+        detail.mouseIsDown.set(true);
+        detail.onDragStart(slider, getThumb(slider));
+      };
+      var onDragEnd = function (slider, simulatedEvent) {
+        simulatedEvent.stop();
+        detail.onDragEnd(slider, getThumb(slider));
+        choose(slider);
+      };
       return {
         uid: detail.uid,
         dom: detail.dom,
         components: components,
-        behaviours: augment(detail.sliderBehaviours, flatten([
-          !isTouch$3 ? [Keying.config({
-              mode: 'special',
-              focusIn: function (slider) {
-                return getPart(slider, detail, 'spectrum').map(Keying.focusIn).map(constant(true));
+        behaviours: augment(detail.sliderBehaviours, [
+          Keying.config({
+            mode: 'special',
+            focusIn: function (slider) {
+              return getPart(slider, detail, 'spectrum').map(Keying.focusIn).map(always);
+            }
+          }),
+          Representing.config({
+            store: {
+              mode: 'manual',
+              getValue: function (_) {
+                return modelDetail.value.get();
               }
-            })] : [],
-          [
-            Representing.config({
-              store: {
-                mode: 'manual',
-                getValue: function (_) {
-                  return modelDetail.value.get();
-                }
-              }
-            }),
-            Receiving.config({
-              channels: {
-                'mouse.released': {
-                  onReceive: function (slider, se) {
-                    var wasDown = detail.mouseIsDown.get();
-                    detail.mouseIsDown.set(false);
-                    if (wasDown) {
-                      getPart(slider, detail, 'thumb').each(function (thumb) {
-                        var value = modelDetail.value.get();
-                        detail.onChoose(slider, thumb, value);
-                      });
-                    }
-                  }
-                }
-              }
-            })
-          ]
-        ])),
+            }
+          }),
+          Receiving.config({ channels: (_a = {}, _a[mouseReleased()] = { onReceive: choose }, _a) })
+        ]),
         events: derive([
           run(sliderChangeEvent(), function (slider, simulatedEvent) {
-            changeValue(slider, simulatedEvent.event().value());
+            changeValue(slider, simulatedEvent.event.value);
           }),
-          runOnAttached(function (slider, simulatedEvent) {
+          runOnAttached(function (slider, _simulatedEvent) {
             var getInitial = modelDetail.getInitialValue();
             modelDetail.value.set(getInitial);
             var thumb = getThumb(slider);
             refresh(slider, thumb);
             var spectrum = getSpectrum(slider);
             detail.onInit(slider, thumb, spectrum, modelDetail.value.get());
-          })
-        ].concat(uiEventsArr)),
+          }),
+          run(touchstart(), onDragStart),
+          run(touchend(), onDragEnd),
+          run(mousedown(), onDragStart),
+          run(mouseup(), onDragEnd)
+        ]),
         apis: {
           resetToMin: resetToMin,
           resetToMax: resetToMax,
@@ -6084,7 +6195,7 @@
     });
 
     var button = function (realm, clazz, makeItems, editor) {
-      return Buttons.forToolbar(clazz, function () {
+      return forToolbar(clazz, function () {
         var items = makeItems();
         realm.setContextToolbar([{
             label: clazz + ' group',
@@ -6106,26 +6217,26 @@
       };
       var onInit = function (slider, thumb, spectrum, value) {
         var color = getColor(value.x());
-        set$3(thumb.element(), 'background-color', color);
+        set$3(thumb.element, 'background-color', color);
       };
       var onChange = function (slider, thumb, value) {
         var color = getColor(value.x());
-        set$3(thumb.element(), 'background-color', color);
+        set$3(thumb.element, 'background-color', color);
         spec$1.onChange(slider, thumb, color);
       };
       return Slider.sketch({
         dom: dom$1('<div class="${prefix}-slider ${prefix}-hue-slider-container"></div>'),
         components: [
-          Slider.parts()['left-edge'](spec('<div class="${prefix}-hue-slider-black"></div>')),
-          Slider.parts().spectrum({
+          Slider.parts['left-edge'](spec('<div class="${prefix}-hue-slider-black"></div>')),
+          Slider.parts.spectrum({
             dom: dom$1('<div class="${prefix}-slider-gradient-container"></div>'),
             components: [spec('<div class="${prefix}-slider-gradient"></div>')],
-            behaviours: derive$1([Toggling.config({ toggleClass: Styles.resolve('thumb-active') })])
+            behaviours: derive$1([Toggling.config({ toggleClass: resolve('thumb-active') })])
           }),
-          Slider.parts()['right-edge'](spec('<div class="${prefix}-hue-slider-white"></div>')),
-          Slider.parts().thumb({
+          Slider.parts['right-edge'](spec('<div class="${prefix}-hue-slider-white"></div>')),
+          Slider.parts.thumb({
             dom: dom$1('<div class="${prefix}-slider-thumb"></div>'),
-            behaviours: derive$1([Toggling.config({ toggleClass: Styles.resolve('thumb-active') })])
+            behaviours: derive$1([Toggling.config({ toggleClass: resolve('thumb-active') })])
           })
         ],
         onChange: onChange,
@@ -6142,14 +6253,10 @@
           minX: 0,
           maxX: 360,
           getInitialValue: function () {
-            return {
-              x: function () {
-                return spec$1.getInitialValue();
-              }
-            };
+            return { x: spec$1.getInitialValue() };
           }
         },
-        sliderBehaviours: derive$1([Receivers.orientation(Slider.refresh)])
+        sliderBehaviours: derive$1([orientation(Slider.refresh)])
       });
     };
     var makeItems = function (spec) {
@@ -6171,10 +6278,71 @@
         return makeItems(spec);
       }, editor);
     };
-    var ColorSlider = {
-      makeItems: makeItems,
-      sketch: sketch$1
+
+    var candidatesArray = [
+      '9px',
+      '10px',
+      '11px',
+      '12px',
+      '14px',
+      '16px',
+      '18px',
+      '20px',
+      '24px',
+      '32px',
+      '36px'
+    ];
+    var defaultSize = 'medium';
+    var defaultIndex = 2;
+    var indexToSize = function (index) {
+      return Optional.from(candidatesArray[index]);
     };
+    var sizeToIndex = function (size) {
+      return findIndex(candidatesArray, function (v) {
+        return v === size;
+      });
+    };
+    var getRawOrComputed = function (isRoot, rawStart) {
+      var optStart = isElement(rawStart) ? Optional.some(rawStart) : parent(rawStart).filter(isElement);
+      return optStart.map(function (start) {
+        var inline = closest$1(start, function (elem) {
+          return getRaw(elem, 'font-size').isSome();
+        }, isRoot).bind(function (elem) {
+          return getRaw(elem, 'font-size');
+        });
+        return inline.getOrThunk(function () {
+          return get$5(start, 'font-size');
+        });
+      }).getOr('');
+    };
+    var getSize = function (editor) {
+      var node = editor.selection.getStart();
+      var elem = SugarElement.fromDom(node);
+      var root = SugarElement.fromDom(editor.getBody());
+      var isRoot = function (e) {
+        return eq(root, e);
+      };
+      var elemSize = getRawOrComputed(isRoot, elem);
+      return find(candidatesArray, function (size) {
+        return elemSize === size;
+      }).getOr(defaultSize);
+    };
+    var applySize = function (editor, value) {
+      var currentValue = getSize(editor);
+      if (currentValue !== value) {
+        editor.execCommand('fontSize', false, value);
+      }
+    };
+    var get$9 = function (editor) {
+      var size = getSize(editor);
+      return sizeToIndex(size).getOr(defaultIndex);
+    };
+    var apply$1 = function (editor, index) {
+      indexToSize(index).each(function (size) {
+        applySize(editor, size);
+      });
+    };
+    var candidates = constant(candidatesArray);
 
     var schema$7 = objOfOnly([
       strict$1('getInitialValue'),
@@ -6197,9 +6365,9 @@
         dom: {
           tag: 'div',
           classes: [
-            Styles.resolve('slider-' + spec$1.category + '-size-container'),
-            Styles.resolve('slider'),
-            Styles.resolve('slider-size-container')
+            resolve('slider-' + spec$1.category + '-size-container'),
+            resolve('slider'),
+            resolve('slider-size-container')
           ]
         },
         onChange: onChange,
@@ -6214,102 +6382,28 @@
           minX: 0,
           maxX: spec$1.sizes.length - 1,
           getInitialValue: function () {
-            return {
-              x: function () {
-                return spec$1.getInitialValue();
-              }
-            };
+            return { x: spec$1.getInitialValue() };
           }
         },
         stepSize: 1,
         snapToGrid: true,
-        sliderBehaviours: derive$1([Receivers.orientation(Slider.refresh)]),
+        sliderBehaviours: derive$1([orientation(Slider.refresh)]),
         components: [
-          Slider.parts().spectrum({
+          Slider.parts.spectrum({
             dom: dom$1('<div class="${prefix}-slider-size-container"></div>'),
             components: [spec('<div class="${prefix}-slider-size-line"></div>')]
           }),
-          Slider.parts().thumb({
+          Slider.parts.thumb({
             dom: dom$1('<div class="${prefix}-slider-thumb"></div>'),
-            behaviours: derive$1([Toggling.config({ toggleClass: Styles.resolve('thumb-active') })])
+            behaviours: derive$1([Toggling.config({ toggleClass: resolve('thumb-active') })])
           })
         ]
       });
     };
-    var SizeSlider = { sketch: sketch$2 };
 
-    var candidates = [
-      '9px',
-      '10px',
-      '11px',
-      '12px',
-      '14px',
-      '16px',
-      '18px',
-      '20px',
-      '24px',
-      '32px',
-      '36px'
-    ];
-    var defaultSize = 'medium';
-    var defaultIndex = 2;
-    var indexToSize = function (index) {
-      return Option.from(candidates[index]);
-    };
-    var sizeToIndex = function (size) {
-      return findIndex(candidates, function (v) {
-        return v === size;
-      });
-    };
-    var getRawOrComputed = function (isRoot, rawStart) {
-      var optStart = isElement(rawStart) ? Option.some(rawStart) : parent(rawStart).filter(isElement);
-      return optStart.map(function (start) {
-        var inline = closest(start, function (elem) {
-          return getRaw(elem, 'font-size').isSome();
-        }, isRoot).bind(function (elem) {
-          return getRaw(elem, 'font-size');
-        });
-        return inline.getOrThunk(function () {
-          return get$3(start, 'font-size');
-        });
-      }).getOr('');
-    };
-    var getSize = function (editor) {
-      var node = editor.selection.getStart();
-      var elem = Element.fromDom(node);
-      var root = Element.fromDom(editor.getBody());
-      var isRoot = function (e) {
-        return eq(root, e);
-      };
-      var elemSize = getRawOrComputed(isRoot, elem);
-      return find$1(candidates, function (size) {
-        return elemSize === size;
-      }).getOr(defaultSize);
-    };
-    var applySize = function (editor, value) {
-      var currentValue = getSize(editor);
-      if (currentValue !== value) {
-        editor.execCommand('fontSize', false, value);
-      }
-    };
-    var get$7 = function (editor) {
-      var size = getSize(editor);
-      return sizeToIndex(size).getOr(defaultIndex);
-    };
-    var apply$1 = function (editor, index) {
-      indexToSize(index).each(function (size) {
-        applySize(editor, size);
-      });
-    };
-    var FontSizes = {
-      candidates: constant(candidates),
-      get: get$7,
-      apply: apply$1
-    };
-
-    var sizes = FontSizes.candidates();
+    var sizes = candidates();
     var makeSlider$1 = function (spec) {
-      return SizeSlider.sketch({
+      return sketch$2({
         onChange: spec.onChange,
         sizes: sizes,
         category: 'font',
@@ -6326,10 +6420,10 @@
     var sketch$3 = function (realm, editor) {
       var spec = {
         onChange: function (value) {
-          FontSizes.apply(editor, value);
+          apply$1(editor, value);
         },
         getInitialValue: function () {
-          return FontSizes.get(editor);
+          return get$9(editor);
         }
       };
       return button(realm, 'font-size', function () {
@@ -6338,12 +6432,12 @@
     };
 
     var record = function (spec) {
-      var uid = isSketchSpec(spec) && hasKey$1(spec, 'uid') ? spec.uid : generate$3('memento');
+      var uid = isSketchSpec(spec) && hasNonNullableKey(spec, 'uid') ? spec.uid : generate$3('memento');
       var get = function (anyInSystem) {
         return anyInSystem.getSystem().getByUid(uid).getOrDie();
       };
       var getOpt = function (anyInSystem) {
-        return anyInSystem.getSystem().getByUid(uid).toOption();
+        return anyInSystem.getSystem().getByUid(uid).toOptional();
       };
       var asSpec = function () {
         return __assign(__assign({}, spec), { uid: uid });
@@ -6368,8 +6462,9 @@
         this._deferreds = [];
         doResolve(fn, bind(resolve, this), bind(reject, this));
       };
-      var asap = Promise.immediateFn || typeof window.setImmediate === 'function' && window.setImmediate || function (fn) {
-        domGlobals.setTimeout(fn, 1);
+      var anyWindow = window;
+      var asap = Promise.immediateFn || typeof anyWindow.setImmediate === 'function' && anyWindow.setImmediate || function (fn) {
+        setTimeout(fn, 1);
       };
       function bind(fn, thisArg) {
         return function () {
@@ -6533,7 +6628,7 @@
 
     function blobToDataUri(blob) {
       return new Promise(function (resolve) {
-        var reader = new domGlobals.FileReader();
+        var reader = new FileReader();
         reader.onloadend = function () {
           resolve(reader.result);
         };
@@ -6562,9 +6657,9 @@
       });
     };
     var extractBlob = function (simulatedEvent) {
-      var event = simulatedEvent.event();
-      var files = event.raw().target.files || event.raw().dataTransfer.files;
-      return Option.from(files[0]);
+      var event = simulatedEvent.event.raw;
+      var files = event.target.files || event.dataTransfer.files;
+      return Optional.from(files[0]);
     };
     var sketch$4 = function (editor) {
       var pickerDom = {
@@ -6591,20 +6686,20 @@
         ])
       });
       return Button.sketch({
-        dom: Buttons.getToolbarIconButton('image', editor),
+        dom: getToolbarIconButton('image', editor),
         components: [memPicker.asSpec()],
         action: function (button) {
           var picker = memPicker.get(button);
-          picker.element().dom().click();
+          picker.element.dom.click();
         }
       });
     };
 
-    var get$8 = function (element) {
-      return element.dom().textContent;
+    var get$a = function (element) {
+      return element.dom.textContent;
     };
     var set$5 = function (element, value) {
-      element.dom().textContent = value;
+      element.dom.textContent = value;
     };
 
     var isNotEmpty = function (val) {
@@ -6620,20 +6715,20 @@
         text: text,
         title: '',
         target: '',
-        link: Option.none()
+        link: Optional.none()
       };
     };
     var fromLink = function (link) {
-      var text = get$8(link);
-      var url = get(link, 'href');
-      var title = get(link, 'title');
-      var target = get(link, 'target');
+      var text = get$a(link);
+      var url = get$2(link, 'href');
+      var title = get$2(link, 'title');
+      var target = get$2(link, 'target');
       return {
         url: defaultToEmpty(url),
         text: text !== url ? defaultToEmpty(text) : '',
         title: defaultToEmpty(title),
         target: defaultToEmpty(target),
-        link: Option.some(link)
+        link: Optional.some(link)
       };
     };
     var getInfo = function (editor) {
@@ -6644,40 +6739,40 @@
       });
     };
     var wasSimple = function (link) {
-      var prevHref = get(link, 'href');
-      var prevText = get$8(link);
+      var prevHref = get$2(link, 'href');
+      var prevText = get$a(link);
       return prevHref === prevText;
     };
     var getTextToApply = function (link, url, info) {
-      return info.text.toOption().filter(isNotEmpty).fold(function () {
-        return wasSimple(link) ? Option.some(url) : Option.none();
-      }, Option.some);
+      return info.text.toOptional().filter(isNotEmpty).fold(function () {
+        return wasSimple(link) ? Optional.some(url) : Optional.none();
+      }, Optional.some);
     };
     var unlinkIfRequired = function (editor, info) {
       var activeLink = info.link.bind(identity);
-      activeLink.each(function (link) {
+      activeLink.each(function (_link) {
         editor.execCommand('unlink');
       });
     };
     var getAttrs$1 = function (url, info) {
       var attrs = {};
       attrs.href = url;
-      info.title.toOption().filter(isNotEmpty).each(function (title) {
+      info.title.toOptional().filter(isNotEmpty).each(function (title) {
         attrs.title = title;
       });
-      info.target.toOption().filter(isNotEmpty).each(function (target) {
+      info.target.toOptional().filter(isNotEmpty).each(function (target) {
         attrs.target = target;
       });
       return attrs;
     };
     var applyInfo = function (editor, info) {
-      info.url.toOption().filter(isNotEmpty).fold(function () {
+      info.url.toOptional().filter(isNotEmpty).fold(function () {
         unlinkIfRequired(editor, info);
       }, function (url) {
         var attrs = getAttrs$1(url, info);
         var activeLink = info.link.bind(identity);
         activeLink.fold(function () {
-          var text = info.text.toOption().filter(isNotEmpty).getOr(url);
+          var text = info.text.toOptional().filter(isNotEmpty).getOr(url);
           editor.insertContent(editor.dom.createHTML('a', attrs, editor.dom.encode(text)));
         }, function (link) {
           var text = getTextToApply(link, url, info);
@@ -6689,16 +6784,11 @@
       });
     };
     var query = function (editor) {
-      var start = Element.fromDom(editor.selection.getStart());
+      var start = SugarElement.fromDom(editor.selection.getStart());
       return closest$2(start, 'a');
     };
-    var LinkBridge = {
-      getInfo: getInfo,
-      applyInfo: applyInfo,
-      query: query
-    };
 
-    var platform$1 = PlatformDetection$1.detect();
+    var platform$1 = detect$3();
     var preserve = function (f, editor) {
       var rng = editor.selection.getRng();
       f();
@@ -6708,7 +6798,6 @@
       var wrapper = platform$1.os.isAndroid() ? preserve : apply;
       wrapper(f, editor);
     };
-    var RangePreserver = { forAndroid: forAndroid };
 
     var events$6 = function (name, eventHandlers) {
       var events = derive(eventHandlers);
@@ -6732,11 +6821,12 @@
       };
     };
 
-    var getCurrent = function (component, composeConfig, composeState) {
+    var getCurrent = function (component, composeConfig, _composeState) {
       return composeConfig.find(component);
     };
 
     var ComposeApis = /*#__PURE__*/Object.freeze({
+        __proto__: null,
         getCurrent: getCurrent
     });
 
@@ -6757,7 +6847,7 @@
           attributes: __assign({ role: 'presentation' }, attributes)
         }, domWithoutAttributes),
         components: detail.components,
-        behaviours: get$5(detail.containerBehaviours),
+        behaviours: get$7(detail.containerBehaviours),
         events: detail.events,
         domModification: detail.domModification,
         eventOrder: detail.eventOrder
@@ -6786,9 +6876,9 @@
               initialValue: detail.getInitialValue()
             }
           }),
-          Composing.config({ find: Option.some })
+          Composing.config({ find: Optional.some })
         ]),
-        events: derive([runOnAttached(function (component, simulatedEvent) {
+        events: derive([runOnAttached(function (component, _simulatedEvent) {
             Representing.setValue(component, detail.getInitialValue());
           })])
       };
@@ -6807,14 +6897,14 @@
       ]
     });
 
-    var get$9 = function (element) {
-      return element.dom().value;
+    var get$b = function (element) {
+      return element.dom.value;
     };
     var set$6 = function (element, value) {
       if (value === undefined) {
         throw new Error('Value.set was undefined');
       }
-      element.dom().value = value;
+      element.dom.value = value;
     };
 
     var schema$8 = constant([
@@ -6834,28 +6924,28 @@
     ]);
     var focusBehaviours = function (detail) {
       return derive$1([Focusing.config({
-          onFocus: detail.selectOnFocus === false ? noop : function (component) {
-            var input = component.element();
-            var value = get$9(input);
-            input.dom().setSelectionRange(0, value.length);
+          onFocus: !detail.selectOnFocus ? noop : function (component) {
+            var input = component.element;
+            var value = get$b(input);
+            input.dom.setSelectionRange(0, value.length);
           }
         })]);
     };
     var behaviours = function (detail) {
       return __assign(__assign({}, focusBehaviours(detail)), augment(detail.inputBehaviours, [Representing.config({
-          store: {
-            mode: 'manual',
-            initialValue: detail.data.getOr(undefined),
+          store: __assign(__assign({ mode: 'manual' }, detail.data.map(function (data) {
+            return { initialValue: data };
+          }).getOr({})), {
             getValue: function (input) {
-              return get$9(input.element());
+              return get$b(input.element);
             },
             setValue: function (input, data) {
-              var current = get$9(input.element());
+              var current = get$b(input.element);
               if (current !== data) {
-                set$6(input.element(), data);
+                set$6(input.element, data);
               }
             }
-          },
+          }),
           onSetValue: detail.onSetValue
         })]));
     };
@@ -6868,7 +6958,7 @@
       };
     };
 
-    var factory$3 = function (detail, spec) {
+    var factory$3 = function (detail, _spec) {
       return {
         uid: detail.uid,
         dom: dom$2(detail),
@@ -6893,6 +6983,7 @@
     };
 
     var ActiveTabstopping = /*#__PURE__*/Object.freeze({
+        __proto__: null,
         exhibit: exhibit$3
     });
 
@@ -6910,11 +7001,11 @@
     var field$2 = function (name, placeholder) {
       var inputSpec = record(Input.sketch({
         inputAttributes: { placeholder: global$3.translate(placeholder) },
-        onSetValue: function (input$1, data) {
+        onSetValue: function (input$1, _data) {
           emit(input$1, input());
         },
         inputBehaviours: derive$1([
-          Composing.config({ find: Option.some }),
+          Composing.config({ find: Optional.some }),
           Tabstopping.config({}),
           Keying.config({ mode: 'execution' })
         ]),
@@ -6936,10 +7027,10 @@
             buttonSpec.asSpec()
           ],
           containerBehaviours: derive$1([
-            Toggling.config({ toggleClass: Styles.resolve('input-container-empty') }),
+            Toggling.config({ toggleClass: resolve('input-container-empty') }),
             Composing.config({
               find: function (comp) {
-                return Option.some(inputSpec.get(comp));
+                return Optional.some(inputSpec.get(comp));
               }
             }),
             config(clearInputBehaviour, [run(input(), function (iContainer) {
@@ -6961,7 +7052,7 @@
             styles: { display: 'none' }
           },
           getInitialValue: function () {
-            return Option.none();
+            return Optional.none();
           }
         })
       };
@@ -6974,42 +7065,41 @@
       'select'
     ];
     var onLoad$5 = function (component, disableConfig, disableState) {
-      if (disableConfig.disabled) {
-        disable(component, disableConfig);
-      }
+      var f = disableConfig.disabled() ? disable : enable;
+      f(component, disableConfig);
     };
     var hasNative = function (component, config) {
-      return config.useNative === true && contains(nativeDisabled, name(component.element()));
+      return config.useNative === true && contains(nativeDisabled, name(component.element));
     };
     var nativeIsDisabled = function (component) {
-      return has$1(component.element(), 'disabled');
+      return has$1(component.element, 'disabled');
     };
     var nativeDisable = function (component) {
-      set(component.element(), 'disabled', 'disabled');
+      set(component.element, 'disabled', 'disabled');
     };
     var nativeEnable = function (component) {
-      remove$1(component.element(), 'disabled');
+      remove$1(component.element, 'disabled');
     };
     var ariaIsDisabled = function (component) {
-      return get(component.element(), 'aria-disabled') === 'true';
+      return get$2(component.element, 'aria-disabled') === 'true';
     };
     var ariaDisable = function (component) {
-      set(component.element(), 'aria-disabled', 'true');
+      set(component.element, 'aria-disabled', 'true');
     };
     var ariaEnable = function (component) {
-      set(component.element(), 'aria-disabled', 'false');
+      set(component.element, 'aria-disabled', 'false');
     };
-    var disable = function (component, disableConfig, disableState) {
+    var disable = function (component, disableConfig, _disableState) {
       disableConfig.disableClass.each(function (disableClass) {
-        add$2(component.element(), disableClass);
+        add$2(component.element, disableClass);
       });
       var f = hasNative(component, disableConfig) ? nativeDisable : ariaDisable;
       f(component);
       disableConfig.onDisabled(component);
     };
-    var enable = function (component, disableConfig, disableState) {
+    var enable = function (component, disableConfig, _disableState) {
       disableConfig.disableClass.each(function (disableClass) {
-        remove$4(component.element(), disableClass);
+        remove$4(component.element, disableClass);
       });
       var f = hasNative(component, disableConfig) ? nativeEnable : ariaEnable;
       f(component);
@@ -7020,10 +7110,11 @@
     };
     var set$7 = function (component, disableConfig, disableState, disabled) {
       var f = disabled ? disable : enable;
-      f(component, disableConfig, disableState);
+      f(component, disableConfig);
     };
 
     var DisableApis = /*#__PURE__*/Object.freeze({
+        __proto__: null,
         enable: enable,
         disable: disable,
         isDisabled: isDisabled,
@@ -7031,12 +7122,12 @@
         set: set$7
     });
 
-    var exhibit$4 = function (base, disableConfig, disableState) {
-      return nu$5({ classes: disableConfig.disabled ? disableConfig.disableClass.map(pure).getOr([]) : [] });
+    var exhibit$4 = function (base, disableConfig) {
+      return nu$5({ classes: disableConfig.disabled() ? disableConfig.disableClass.toArray() : [] });
     };
     var events$7 = function (disableConfig, disableState) {
       return derive([
-        abort(execute(), function (component, simulatedEvent) {
+        abort(execute(), function (component, _simulatedEvent) {
           return isDisabled(component, disableConfig);
         }),
         loadEvent(disableConfig, disableState, onLoad$5)
@@ -7044,12 +7135,13 @@
     };
 
     var ActiveDisable = /*#__PURE__*/Object.freeze({
+        __proto__: null,
         exhibit: exhibit$4,
         events: events$7
     });
 
     var DisableSchema = [
-      defaulted$1('disabled', false),
+      defaultedFunction('disabled', never),
       defaulted$1('useNative', true),
       option('disableClass'),
       onHandler('onDisabled'),
@@ -7084,7 +7176,7 @@
       }();
       var spec = fSpec(parts);
       var partNames = parts.record();
-      var fieldParts = map$1(partNames, function (n) {
+      var fieldParts = map(partNames, function (n) {
         return required({
           name: n,
           pname: getPartName(n)
@@ -7097,7 +7189,7 @@
         return Result.error(e);
       }, Result.value);
     };
-    var make = function (detail, components, spec) {
+    var make = function (detail, components) {
       return {
         uid: detail.uid,
         dom: detail.dom,
@@ -7107,15 +7199,15 @@
               mode: 'manual',
               getValue: function (form) {
                 var resPs = getAllParts(form, detail);
-                return map(resPs, function (resPThunk, pName) {
+                return map$1(resPs, function (resPThunk, pName) {
                   return resPThunk().bind(function (v) {
                     var opt = Composing.getCurrent(v);
-                    return toResult$1(opt, 'missing current');
+                    return toResult$1(opt, new Error('Cannot find a current component to extract the value from for form part \'' + pName + '\': ' + element(v.element)));
                   }).map(Representing.getValue);
                 });
               },
               setValue: function (form, values) {
-                each(values, function (newValue, key) {
+                each$1(values, function (newValue, key) {
                   getPart(form, detail, key).each(function (wrapper) {
                     Composing.getCurrent(wrapper).each(function (field) {
                       Representing.setValue(field, newValue);
@@ -7140,22 +7232,22 @@
     };
 
     var api$2 = function () {
-      var subject = Cell(Option.none());
+      var subject = Cell(Optional.none());
       var revoke = function () {
-        subject.get().each(function (s) {
-          s.destroy();
+        return subject.get().each(function (s) {
+          return s.destroy();
         });
       };
       var clear = function () {
         revoke();
-        subject.set(Option.none());
+        subject.set(Optional.none());
       };
       var set = function (s) {
         revoke();
-        subject.set(Option.some(s));
+        subject.set(Optional.some(s));
       };
       var run = function (f) {
-        subject.get().each(f);
+        return subject.get().each(f);
       };
       var isSet = function () {
         return subject.get().isSome();
@@ -7168,18 +7260,18 @@
       };
     };
     var value$2 = function () {
-      var subject = Cell(Option.none());
+      var subject = Cell(Optional.none());
       var clear = function () {
-        subject.set(Option.none());
+        return subject.set(Optional.none());
       };
       var set = function (s) {
-        subject.set(Option.some(s));
-      };
-      var on = function (f) {
-        subject.get().each(f);
+        return subject.set(Optional.some(s));
       };
       var isSet = function () {
         return subject.get().isSome();
+      };
+      var on = function (f) {
+        return subject.get().each(f);
       };
       return {
         clear: clear,
@@ -7229,11 +7321,6 @@
         return firstDirection === SWIPING_RIGHT && lastDirection === SWIPING_RIGHT ? SWIPING_RIGHT : firstDirection === SWIPING_LEFT && lastDirection === SWIPING_LEFT ? SWIPING_LEFT : SWIPING_NONE;
       }
     };
-    var SwipingModel = {
-      init: init$2,
-      move: move$1,
-      complete: complete
-    };
 
     var sketch$6 = function (rawSpec) {
       var navigateEvent = 'navigateEvent';
@@ -7259,23 +7346,25 @@
             emitWith(button, navigateEvent, { direction: direction });
           },
           buttonBehaviours: derive$1([Disabling.config({
-              disableClass: Styles.resolve('toolbar-navigation-disabled'),
-              disabled: !enabled
+              disableClass: resolve('toolbar-navigation-disabled'),
+              disabled: function () {
+                return !enabled;
+              }
             })])
         });
       };
       var reposition = function (dialog, message) {
-        descendant$1(dialog.element(), '.' + Styles.resolve('serialised-dialog-chain')).each(function (parent) {
+        descendant$1(dialog.element, '.' + resolve('serialised-dialog-chain')).each(function (parent) {
           set$3(parent, 'left', -spec$1.state.currentScreen.get() * message.width + 'px');
         });
       };
       var navigate = function (dialog, direction) {
-        var screens = descendants(dialog.element(), '.' + Styles.resolve('serialised-dialog-screen'));
-        descendant$1(dialog.element(), '.' + Styles.resolve('serialised-dialog-chain')).each(function (parent) {
+        var screens = descendants(dialog.element, '.' + resolve('serialised-dialog-screen'));
+        descendant$1(dialog.element, '.' + resolve('serialised-dialog-chain')).each(function (parent) {
           if (spec$1.state.currentScreen.get() + direction >= 0 && spec$1.state.currentScreen.get() + direction < screens.length) {
             getRaw(parent, 'left').each(function (left) {
               var currentLeft = parseInt(left, 10);
-              var w = get$6(screens[0]);
+              var w = get$8(screens[0]);
               set$3(parent, 'left', currentLeft - direction * w + 'px');
             });
             spec$1.state.currentScreen.set(spec$1.state.currentScreen.get() + direction);
@@ -7283,11 +7372,11 @@
         });
       };
       var focusInput = function (dialog) {
-        var inputs = descendants(dialog.element(), 'input');
-        var optInput = Option.from(inputs[spec$1.state.currentScreen.get()]);
+        var inputs = descendants(dialog.element, 'input');
+        var optInput = Optional.from(inputs[spec$1.state.currentScreen.get()]);
         optInput.each(function (input) {
           dialog.getSystem().getByDom(input).each(function (inputComp) {
-            dispatchFocus(dialog, inputComp.element());
+            dispatchFocus(dialog, inputComp.element);
           });
         });
         var dotitems = memDots.get(dialog);
@@ -7302,7 +7391,7 @@
           dom: dom$1('<div class="${prefix}-serialised-dialog"></div>'),
           components: [Container.sketch({
               dom: dom$1('<div class="${prefix}-serialised-dialog-chain" style="left: 0px; position: absolute;"></div>'),
-              components: map$1(spec$1.fields, function (field, i) {
+              components: map(spec$1.fields, function (field, i) {
                 return i <= spec$1.maxFieldIndex ? Container.sketch({
                   dom: dom$1('<div class="${prefix}-serialised-dialog-screen"></div>'),
                   components: [
@@ -7314,25 +7403,25 @@
               })
             })],
           formBehaviours: derive$1([
-            Receivers.orientation(function (dialog, message) {
+            orientation(function (dialog, message) {
               reposition(dialog, message);
             }),
             Keying.config({
               mode: 'special',
-              focusIn: function (dialog) {
+              focusIn: function (dialog, _specialInfo) {
                 focusInput(dialog);
               },
-              onTab: function (dialog) {
+              onTab: function (dialog, _specialInfo) {
                 navigate(dialog, +1);
-                return Option.some(true);
+                return Optional.some(true);
               },
-              onShiftTab: function (dialog) {
+              onShiftTab: function (dialog, _specialInfo) {
                 navigate(dialog, -1);
-                return Option.some(true);
+                return Optional.some(true);
               }
             }),
             config(formAdhocEvents, [
-              runOnAttached(function (dialog, simulatedEvent) {
+              runOnAttached(function (dialog, _simulatedEvent) {
                 resetState();
                 var dotitems = memDots.get(dialog);
                 Highlighting.highlightFirst(dotitems);
@@ -7342,14 +7431,14 @@
               }),
               runOnExecute(spec$1.onExecute),
               run(transitionend(), function (dialog, simulatedEvent) {
-                var event = simulatedEvent.event();
-                if (event.raw().propertyName === 'left') {
+                var event = simulatedEvent.event;
+                if (event.raw.propertyName === 'left') {
                   focusInput(dialog);
                 }
               }),
               run(navigateEvent, function (dialog, simulatedEvent) {
-                var event = simulatedEvent.event();
-                var direction = event.direction();
+                var event = simulatedEvent.event;
+                var direction = event.direction;
                 navigate(dialog, direction);
               })
             ])
@@ -7359,8 +7448,8 @@
       var memDots = record({
         dom: dom$1('<div class="${prefix}-dot-container"></div>'),
         behaviours: derive$1([Highlighting.config({
-            highlightClass: Styles.resolve('dot-active'),
-            itemClass: Styles.resolve('dot-item')
+            highlightClass: resolve('dot-active'),
+            itemClass: resolve('dot-item')
           })]),
         components: bind(spec$1.fields, function (_f, i) {
           return i <= spec$1.maxFieldIndex ? [spec('<div class="${prefix}-dot-item ${prefix}-icon-full-dot ${prefix}-icon"></div>')] : [];
@@ -7381,21 +7470,21 @@
             }
           }),
           config(wrapperAdhocEvents, [
-            run(touchstart(), function (wrapper, simulatedEvent) {
-              var event = simulatedEvent.event();
-              spec$1.state.dialogSwipeState.set(SwipingModel.init(event.raw().touches[0].clientX));
+            run(touchstart(), function (_wrapper, simulatedEvent) {
+              var event = simulatedEvent.event;
+              spec$1.state.dialogSwipeState.set(init$2(event.raw.touches[0].clientX));
             }),
-            run(touchmove(), function (wrapper, simulatedEvent) {
-              var event = simulatedEvent.event();
+            run(touchmove(), function (_wrapper, simulatedEvent) {
+              var event = simulatedEvent.event;
               spec$1.state.dialogSwipeState.on(function (state) {
-                simulatedEvent.event().prevent();
-                spec$1.state.dialogSwipeState.set(SwipingModel.move(state, event.raw().touches[0].clientX));
+                simulatedEvent.event.prevent();
+                spec$1.state.dialogSwipeState.set(move$1(state, event.raw.touches[0].clientX));
               });
             }),
-            run(touchend(), function (wrapper) {
+            run(touchend(), function (wrapper, _simulatedEvent) {
               spec$1.state.dialogSwipeState.on(function (state) {
                 var dialog = memForm.get(wrapper);
-                var direction = -1 * SwipingModel.complete(state);
+                var direction = -1 * complete(state);
                 navigate(dialog, direction);
               });
             })
@@ -7422,11 +7511,11 @@
                 'target'
               ].length - 1,
               getInitialValue: function () {
-                return Option.some(LinkBridge.getInfo(editor));
+                return Optional.some(getInfo(editor));
               },
-              onExecute: function (dialog) {
+              onExecute: function (dialog, _simulatedEvent) {
                 var info = Representing.getValue(dialog);
-                LinkBridge.applyInfo(editor, info);
+                applyInfo(editor, info);
                 realm.restoreToolbar();
                 editor.focus();
               }
@@ -7434,144 +7523,27 @@
         }];
     });
     var sketch$7 = function (realm, editor) {
-      return Buttons.forToolbarStateAction(editor, 'link', 'link', function () {
+      return forToolbarStateAction(editor, 'link', 'link', function () {
         var groups = getGroups(realm, editor);
         realm.setContextToolbar(groups);
-        RangePreserver.forAndroid(editor, function () {
+        forAndroid(editor, function () {
           realm.focusToolbar();
         });
-        LinkBridge.query(editor).each(function (link) {
-          editor.selection.select(link.dom());
+        query(editor).each(function (link) {
+          editor.selection.select(link.dom);
         });
       });
     };
 
-    var DefaultStyleFormats = [
-      {
-        title: 'Headings',
-        items: [
-          {
-            title: 'Heading 1',
-            format: 'h1'
-          },
-          {
-            title: 'Heading 2',
-            format: 'h2'
-          },
-          {
-            title: 'Heading 3',
-            format: 'h3'
-          },
-          {
-            title: 'Heading 4',
-            format: 'h4'
-          },
-          {
-            title: 'Heading 5',
-            format: 'h5'
-          },
-          {
-            title: 'Heading 6',
-            format: 'h6'
-          }
-        ]
-      },
-      {
-        title: 'Inline',
-        items: [
-          {
-            title: 'Bold',
-            icon: 'bold',
-            format: 'bold'
-          },
-          {
-            title: 'Italic',
-            icon: 'italic',
-            format: 'italic'
-          },
-          {
-            title: 'Underline',
-            icon: 'underline',
-            format: 'underline'
-          },
-          {
-            title: 'Strikethrough',
-            icon: 'strikethrough',
-            format: 'strikethrough'
-          },
-          {
-            title: 'Superscript',
-            icon: 'superscript',
-            format: 'superscript'
-          },
-          {
-            title: 'Subscript',
-            icon: 'subscript',
-            format: 'subscript'
-          },
-          {
-            title: 'Code',
-            icon: 'code',
-            format: 'code'
-          }
-        ]
-      },
-      {
-        title: 'Blocks',
-        items: [
-          {
-            title: 'Paragraph',
-            format: 'p'
-          },
-          {
-            title: 'Blockquote',
-            format: 'blockquote'
-          },
-          {
-            title: 'Div',
-            format: 'div'
-          },
-          {
-            title: 'Pre',
-            format: 'pre'
-          }
-        ]
-      },
-      {
-        title: 'Alignment',
-        items: [
-          {
-            title: 'Left',
-            icon: 'alignleft',
-            format: 'alignleft'
-          },
-          {
-            title: 'Center',
-            icon: 'aligncenter',
-            format: 'aligncenter'
-          },
-          {
-            title: 'Right',
-            icon: 'alignright',
-            format: 'alignright'
-          },
-          {
-            title: 'Justify',
-            icon: 'alignjustify',
-            format: 'alignjustify'
-          }
-        ]
-      }
-    ];
-
     var isRecursive = function (component, originator, target) {
-      return eq(originator, component.element()) && !eq(originator, target);
+      return eq(originator, component.element) && !eq(originator, target);
     };
     var events$8 = derive([can(focus(), function (component, simulatedEvent) {
-        var originator = simulatedEvent.event().originator();
-        var target = simulatedEvent.event().target();
+        var event = simulatedEvent.event;
+        var originator = event.originator;
+        var target = event.target;
         if (isRecursive(component, originator, target)) {
-          domGlobals.console.warn(focus() + ' did not get interpreted by the desired target. ' + '\nOriginator: ' + element(originator) + '\nTarget: ' + element(target) + '\nCheck the ' + focus() + ' event handlers');
+          console.warn(focus() + ' did not get interpreted by the desired target. ' + '\nOriginator: ' + element(originator) + '\nTarget: ' + element(target) + '\nCheck the ' + focus() + ' event handlers');
           return false;
         } else {
           return true;
@@ -7579,6 +7551,7 @@
       })]);
 
     var DefaultEvents = /*#__PURE__*/Object.freeze({
+        __proto__: null,
         events: events$8
     });
 
@@ -7587,7 +7560,7 @@
     var NoContextApi = function (getComp) {
       var fail = function (event) {
         return function () {
-          throw new Error('The component must be in a context to send: ' + event + '\n' + element(getComp().element()) + ' is not in context.');
+          throw new Error('The component must be in a context to send: ' + event + (getComp ? '\n' + element(getComp().element) + ' is not in context.' : ''));
         };
       };
       return {
@@ -7605,13 +7578,13 @@
         broadcast: fail('broadcast'),
         broadcastOn: fail('broadcastOn'),
         broadcastEvent: fail('broadcastEvent'),
-        isConnected: constant(false)
+        isConnected: never
       };
     };
     var singleton = NoContextApi();
 
     var generateFrom = function (spec, all) {
-      var schema = map$1(all, function (a) {
+      var schema = map(all, function (a) {
         return optionObjOf(a.name(), [
           strict$1('config'),
           defaulted$1('state', NoState)
@@ -7624,9 +7597,8 @@
       });
       return {
         list: all,
-        data: map(validated, function (optBlobThunk) {
-          var optBlob = optBlobThunk;
-          var output = optBlob.map(function (blob) {
+        data: map$1(validated, function (optBlobThunk) {
+          var output = optBlobThunk.map(function (blob) {
             return {
               config: blob.config,
               state: blob.state.init(blob.config)
@@ -7647,9 +7619,9 @@
 
     var byInnerKey = function (data, tuple) {
       var r = {};
-      each(data, function (detail, key) {
-        each(detail, function (value, indexKey) {
-          var chain = readOr$1(indexKey, [])(r);
+      each$1(data, function (detail, key) {
+        each$1(detail, function (value, indexKey) {
+          var chain = get$1(r, indexKey).getOr([]);
           r[indexKey] = chain.concat([tuple(key, value)]);
         });
       });
@@ -7658,16 +7630,15 @@
 
     var combine$1 = function (info, baseMod, behaviours, base) {
       var modsByBehaviour = __assign({}, baseMod);
-      each$1(behaviours, function (behaviour) {
+      each(behaviours, function (behaviour) {
         modsByBehaviour[behaviour.name()] = behaviour.exhibit(info, base);
       });
-      var nameAndMod = function (name, modification) {
+      var byAspect = byInnerKey(modsByBehaviour, function (name, modification) {
         return {
           name: name,
           modification: modification
         };
-      };
-      var byAspect = byInnerKey(modsByBehaviour, nameAndMod);
+      });
       var combineObjects = function (objects) {
         return foldr(objects, function (b, a) {
           return __assign(__assign({}, a.modification), b);
@@ -7686,11 +7657,10 @@
     };
 
     var sortKeys = function (label, keyName, array, order) {
-      var sliced = array.slice(0);
       try {
-        var sorted = sliced.sort(function (a, b) {
-          var aKey = a[keyName]();
-          var bKey = b[keyName]();
+        var sorted = sort(array, function (a, b) {
+          var aKey = a[keyName];
+          var bKey = b[keyName];
           var aIndex = order.indexOf(aKey);
           var bIndex = order.indexOf(bKey);
           if (aIndex === -1) {
@@ -7716,17 +7686,17 @@
     var uncurried = function (handler, purpose) {
       return {
         handler: handler,
-        purpose: constant(purpose)
+        purpose: purpose
       };
     };
     var curried = function (handler, purpose) {
       return {
         cHandler: handler,
-        purpose: constant(purpose)
+        purpose: purpose
       };
     };
     var curryArgs = function (descHandler, extraArgs) {
-      return curried(curry.apply(undefined, [descHandler.handler].concat(extraArgs)), descHandler.purpose());
+      return curried(curry.apply(undefined, [descHandler.handler].concat(extraArgs)), descHandler.purpose);
     };
     var getCurried = function (descHandler) {
       return descHandler.cHandler;
@@ -7734,13 +7704,13 @@
 
     var behaviourTuple = function (name, handler) {
       return {
-        name: constant(name),
-        handler: constant(handler)
+        name: name,
+        handler: handler
       };
     };
     var nameToHandlers = function (behaviours, info) {
       var r = {};
-      each$1(behaviours, function (behaviour) {
+      each(behaviours, function (behaviour) {
         r[behaviour.name()] = behaviour.handlers(info);
       });
       return r;
@@ -7754,7 +7724,7 @@
       return combineGroups(byEventName, eventOrder);
     };
     var assemble = function (rawHandler) {
-      var handler = read(rawHandler);
+      var handler = read$1(rawHandler);
       return function (component, simulatedEvent) {
         var rest = [];
         for (var _i = 2; _i < arguments.length; _i++) {
@@ -7772,8 +7742,8 @@
       };
     };
     var missingOrderError = function (eventName, tuples) {
-      return Result.error(['The event (' + eventName + ') has more than one behaviour that listens to it.\nWhen this occurs, you must ' + 'specify an event ordering for the behaviours in your spec (e.g. [ "listing", "toggling" ]).\nThe behaviours that ' + 'can trigger it are: ' + JSON.stringify(map$1(tuples, function (c) {
-          return c.name();
+      return Result.error(['The event (' + eventName + ') has more than one behaviour that listens to it.\nWhen this occurs, you must ' + 'specify an event ordering for the behaviours in your spec (e.g. [ "listing", "toggling" ]).\nThe behaviours that ' + 'can trigger it are: ' + JSON.stringify(map(tuples, function (c) {
+          return c.name;
         }), null, 2)]);
     };
     var fuse$1 = function (tuples, eventOrder, eventName) {
@@ -7782,8 +7752,8 @@
         return missingOrderError(eventName, tuples);
       } else {
         return sortKeys('Event: ' + eventName, 'name', tuples, order).map(function (sortedTuples) {
-          var handlers = map$1(sortedTuples, function (tuple) {
-            return tuple.handler();
+          var handlers = map(sortedTuples, function (tuple) {
+            return tuple.handler;
           });
           return fuse(handlers);
         });
@@ -7791,21 +7761,23 @@
     };
     var combineGroups = function (byEventName, eventOrder) {
       var r = mapToArray(byEventName, function (tuples, eventName) {
-        var combined = tuples.length === 1 ? Result.value(tuples[0].handler()) : fuse$1(tuples, eventOrder, eventName);
+        var combined = tuples.length === 1 ? Result.value(tuples[0].handler) : fuse$1(tuples, eventOrder, eventName);
         return combined.map(function (handler) {
           var assembled = assemble(handler);
           var purpose = tuples.length > 1 ? filter(eventOrder[eventName], function (o) {
             return exists(tuples, function (t) {
-              return t.name() === o;
+              return t.name === o;
             });
-          }).join(' > ') : tuples[0].name();
+          }).join(' > ') : tuples[0].name;
           return wrap$1(eventName, uncurried(assembled, purpose));
         });
       });
       return consolidate(r, {});
     };
 
+    var baseBehaviour = 'alloy.base.behaviour';
     var toInfo = function (spec) {
+      var _a;
       return asRaw('custom.definition', objOf([
         field('dom', 'dom', strict(), objOf([
           strict$1('tag'),
@@ -7819,54 +7791,54 @@
         strict$1('uid'),
         defaulted$1('events', {}),
         defaulted$1('apis', {}),
-        field('eventOrder', 'eventOrder', mergeWith({
-          'alloy.execute': [
-            'disabling',
-            'alloy.base.behaviour',
-            'toggling',
-            'typeaheadevents'
-          ],
-          'alloy.focus': [
-            'alloy.base.behaviour',
-            'focusing',
-            'keying'
-          ],
-          'alloy.system.init': [
-            'alloy.base.behaviour',
-            'disabling',
-            'toggling',
-            'representing'
-          ],
-          'input': [
-            'alloy.base.behaviour',
-            'representing',
-            'streaming',
-            'invalidating'
-          ],
-          'alloy.system.detached': [
-            'alloy.base.behaviour',
-            'representing',
-            'item-events',
-            'tooltipping'
-          ],
-          'mousedown': [
-            'focusing',
-            'alloy.base.behaviour',
-            'item-type-events'
-          ],
-          'mouseover': [
-            'item-type-events',
-            'tooltipping'
-          ]
-        }), anyValue$1()),
+        field('eventOrder', 'eventOrder', mergeWith((_a = {}, _a[execute()] = [
+          'disabling',
+          baseBehaviour,
+          'toggling',
+          'typeaheadevents'
+        ], _a[focus()] = [
+          baseBehaviour,
+          'focusing',
+          'keying'
+        ], _a[systemInit()] = [
+          baseBehaviour,
+          'disabling',
+          'toggling',
+          'representing'
+        ], _a[input()] = [
+          baseBehaviour,
+          'representing',
+          'streaming',
+          'invalidating'
+        ], _a[detachedFromDom()] = [
+          baseBehaviour,
+          'representing',
+          'item-events',
+          'tooltipping'
+        ], _a[mousedown()] = [
+          'focusing',
+          baseBehaviour,
+          'item-type-events'
+        ], _a[touchstart()] = [
+          'focusing',
+          baseBehaviour,
+          'item-type-events'
+        ], _a[mouseover()] = [
+          'item-type-events',
+          'tooltipping'
+        ], _a[receive()] = [
+          'receiving',
+          'reflecting',
+          'tooltipping'
+        ], _a)), anyValue$1()),
         option('domModification')
       ]), spec);
     };
     var toDefinition = function (detail) {
       return __assign(__assign({}, detail.dom), {
         uid: detail.uid,
-        domChildren: map$1(detail.components, function (comp) {
-          return comp.element();
+        domChildren: map(detail.components, function (comp) {
+          return comp.element;
         })
       });
     };
@@ -7880,18 +7852,18 @@
     };
 
     var add$3 = function (element, classes) {
-      each$1(classes, function (x) {
+      each(classes, function (x) {
         add$2(element, x);
       });
     };
     var remove$6 = function (element, classes) {
-      each$1(classes, function (x) {
+      each(classes, function (x) {
         remove$4(element, x);
       });
     };
 
     var renderToDom = function (definition) {
-      var subject = Element.fromTag(definition.tag);
+      var subject = SugarElement.fromTag(definition.tag);
       setAll(subject, definition.attributes);
       add$3(subject, definition.classes);
       setAll$1(subject, definition.styles);
@@ -7911,11 +7883,11 @@
     };
 
     var getBehaviours$1 = function (spec) {
-      var behaviours = readOr$1('behaviours', {})(spec);
+      var behaviours = get$1(spec, 'behaviours').getOr({});
       var keys$1 = filter(keys(behaviours), function (k) {
         return behaviours[k] !== undefined;
       });
-      return map$1(keys$1, function (k) {
+      return map(keys$1, function (k) {
         return behaviours[k].me;
       });
     };
@@ -7990,22 +7962,22 @@
         getSystem: systemApi.get,
         config: config,
         hasConfigured: hasConfigured,
-        spec: constant(spec),
+        spec: spec,
         readState: readState,
         getApis: getApis,
         connect: connect,
         disconnect: disconnect,
-        element: constant(item),
+        element: item,
         syncComponents: syncComponents,
         components: subcomponents.get,
-        events: constant(events)
+        events: events
       };
       return me;
     };
 
     var buildSubcomponents = function (spec) {
-      var components = readOr$1('components', [])(spec);
-      return map$1(components, build$1);
+      var components = get$1(spec, 'components').getOr([]);
+      return map(components, build$1);
     };
     var buildFromSpec = function (userSpec) {
       var _a = make$1(userSpec), specEvents = _a.events, spec = __rest(_a, ['events']);
@@ -8017,10 +7989,10 @@
       return Result.value(build(completeSpec));
     };
     var text = function (textContent) {
-      var element = Element.fromText(textContent);
-      return external({ element: element });
+      var element = SugarElement.fromText(textContent);
+      return external$1({ element: element });
     };
-    var external = function (spec) {
+    var external$1 = function (spec) {
       var extSpec = asRawOrDie('external.component', objOfOnly([
         strict$1('element'),
         option('uid')
@@ -8039,19 +8011,19 @@
       });
       var me = {
         getSystem: systemApi.get,
-        config: Option.none,
-        hasConfigured: constant(false),
+        config: Optional.none,
+        hasConfigured: never,
         connect: connect,
         disconnect: disconnect,
         getApis: function () {
           return {};
         },
-        element: constant(extSpec.element),
-        spec: constant(spec),
+        element: extSpec.element,
+        spec: spec,
         readState: constant('No state'),
         syncComponents: noop,
         components: constant([]),
-        events: constant({})
+        events: {}
       };
       return premade(me);
     };
@@ -8069,7 +8041,7 @@
     var hoverEvent = 'alloy.item-hover';
     var focusEvent = 'alloy.item-focus';
     var onHover = function (item) {
-      if (search(item.element()).isNone() || Focusing.isFocused(item)) {
+      if (search(item.element).isNone() || Focusing.isFocused(item)) {
         if (!Focusing.isFocused(item)) {
           Focusing.focus(item);
         }
@@ -8104,12 +8076,10 @@
               initialValue: detail.data
             }
           }),
-          config('item-type-events', [
-            run(tapOrClick(), emitExecute),
-            cutter(mousedown()),
+          config('item-type-events', __spreadArrays(pointerEvents(), [
             run(mouseover(), onHover),
             run(focusItem(), Focusing.focus)
-          ])
+          ]))
         ]),
         components: detail.components,
         eventOrder: detail.eventOrder
@@ -8156,7 +8126,7 @@
             behaviours: derive$1([Representing.config({
                 store: {
                   mode: 'manual',
-                  getValue: function (component) {
+                  getValue: function (_component) {
                     return detail.data;
                   },
                   setValue: function () {
@@ -8177,12 +8147,12 @@
         });
       };
       var onHorizontalArrow = function (component, simulatedEvent) {
-        return inside(simulatedEvent.event().target()) ? Option.none() : function () {
+        return inside(simulatedEvent.event.target) ? Optional.none() : function () {
           if (detail.autofocus) {
-            simulatedEvent.setSource(component.element());
-            return Option.none();
+            simulatedEvent.setSource(component.element);
+            return Optional.none();
           } else {
-            return Option.none();
+            return Optional.none();
           }
         }();
       };
@@ -8192,12 +8162,12 @@
         domModification: detail.domModification,
         events: derive([
           runOnExecute(function (component, simulatedEvent) {
-            focusWidget(component).each(function (widget) {
+            focusWidget(component).each(function (_widget) {
               simulatedEvent.stop();
             });
           }),
           run(mouseover(), onHover),
-          run(focusItem(), function (component, simulatedEvent) {
+          run(focusItem(), function (component, _simulatedEvent) {
             if (detail.autofocus) {
               focusWidget(component);
             } else {
@@ -8228,12 +8198,12 @@
             onEscape: function (component, simulatedEvent) {
               if (!Focusing.isFocused(component) && !detail.autofocus) {
                 Focusing.focus(component);
-                return Option.some(true);
+                return Optional.some(true);
               } else if (detail.autofocus) {
-                simulatedEvent.setSource(component.element());
-                return Option.none();
+                simulatedEvent.setSource(component.element);
+                return Optional.none();
               } else {
-                return Option.none();
+                return Optional.none();
               }
             }
           })
@@ -8348,7 +8318,7 @@
 
     var focus$4 = constant('alloy.menu-focus');
 
-    var make$2 = function (detail, components, spec, externals) {
+    var make$2 = function (detail, components, _spec, _externals) {
       return {
         uid: detail.uid,
         dom: detail.dom,
@@ -8365,13 +8335,13 @@
               initialValue: detail.value
             }
           }),
-          Composing.config({ find: Option.some }),
+          Composing.config({ find: Optional.some }),
           Keying.config(detail.movement.config(detail, detail.movement))
         ]),
         events: derive([
           run(focus$3(), function (menu, simulatedEvent) {
-            var event = simulatedEvent.event();
-            menu.getSystem().getByDom(event.target()).each(function (item) {
+            var event = simulatedEvent.event;
+            menu.getSystem().getByDom(event.target).each(function (item) {
               Highlighting.highlight(menu, item);
               simulatedEvent.stop();
               emitWith(menu, focus$4(), {
@@ -8381,7 +8351,7 @@
             });
           }),
           run(hover(), function (menu, simulatedEvent) {
-            var item = simulatedEvent.event().item();
+            var item = simulatedEvent.event.item;
             Highlighting.highlight(menu, item);
           })
         ]),
@@ -8399,16 +8369,16 @@
     });
 
     var preserve$1 = function (f, container) {
-      var ownerDoc = owner(container);
-      var refocus = active(ownerDoc).bind(function (focused) {
+      var dos = getRootNode(container);
+      var refocus = active(dos).bind(function (focused) {
         var hasFocus = function (elem) {
           return eq(focused, elem);
         };
-        return hasFocus(container) ? Option.some(container) : descendant(container, hasFocus);
+        return hasFocus(container) ? Optional.some(container) : descendant(container, hasFocus);
       });
       var result = f(container);
       refocus.each(function (oldFocus) {
-        active(ownerDoc).filter(function (newFocus) {
+        active(dos).filter(function (newFocus) {
           return eq(newFocus, oldFocus);
         }).fold(function () {
           focus$1(oldFocus);
@@ -8418,13 +8388,10 @@
     };
 
     var set$8 = function (component, replaceConfig, replaceState, data) {
-      detachChildren(component);
       preserve$1(function () {
-        var children = map$1(data, component.getSystem().build);
-        each$1(children, function (l) {
-          attach(component, l);
-        });
-      }, component.element());
+        var newChildren = map(data, component.getSystem().build);
+        replaceChildren(component, newChildren);
+      }, component.element);
     };
     var insert = function (component, replaceConfig, insertion, childSpec) {
       var child = component.getSystem().build(childSpec);
@@ -8438,17 +8405,17 @@
     };
     var remove$7 = function (component, replaceConfig, replaceState, removee) {
       var children = contents(component);
-      var foundChild = find$1(children, function (child) {
-        return eq(removee.element(), child.element());
+      var foundChild = find(children, function (child) {
+        return eq(removee.element, child.element);
       });
       foundChild.each(detach);
     };
-    var contents = function (component, replaceConfig) {
+    var contents = function (component, _replaceConfig) {
       return component.components();
     };
     var replaceAt = function (component, replaceConfig, replaceState, replaceeIndex, replacer) {
       var children = contents(component);
-      return Option.from(children[replaceeIndex]).map(function (replacee) {
+      return Optional.from(children[replaceeIndex]).map(function (replacee) {
         remove$7(component, replaceConfig, replaceState, replacee);
         replacer.each(function (r) {
           insert(component, replaceConfig, function (p, c) {
@@ -8466,6 +8433,7 @@
     };
 
     var ReplaceApis = /*#__PURE__*/Object.freeze({
+        __proto__: null,
         append: append$2,
         prepend: prepend$1,
         remove: remove$7,
@@ -8490,27 +8458,27 @@
       });
     };
     var trace = function (items, byItem, byMenu, finish) {
-      return readOptFrom$1(byMenu, finish).bind(function (triggerItem) {
-        return readOptFrom$1(items, triggerItem).bind(function (triggerMenu) {
+      return get$1(byMenu, finish).bind(function (triggerItem) {
+        return get$1(items, triggerItem).bind(function (triggerMenu) {
           var rest = trace(items, byItem, byMenu, triggerMenu);
-          return Option.some([triggerMenu].concat(rest));
+          return Optional.some([triggerMenu].concat(rest));
         });
       }).getOr([]);
     };
     var generate$5 = function (menus, expansions) {
       var items = {};
-      each(menus, function (menuItems, menu) {
-        each$1(menuItems, function (item) {
+      each$1(menus, function (menuItems, menu) {
+        each(menuItems, function (item) {
           items[item] = menu;
         });
       });
       var byItem = expansions;
       var byMenu = transpose(expansions);
-      var menuPaths = map(byMenu, function (_triggerItem, submenu) {
+      var menuPaths = map$1(byMenu, function (_triggerItem, submenu) {
         return [submenu].concat(trace(items, byItem, byMenu, submenu));
       });
-      return map(items, function (menu) {
-        return readOptFrom$1(menuPaths, menu).getOr([menu]);
+      return map$1(items, function (menu) {
+        return get$1(menuPaths, menu).getOr([menu]);
       });
     };
 
@@ -8518,13 +8486,13 @@
       var expansions = Cell({});
       var menus = Cell({});
       var paths = Cell({});
-      var primary = Cell(Option.none());
+      var primary = Cell(Optional.none());
       var directory = Cell({});
       var clear = function () {
         expansions.set({});
         menus.set({});
         paths.set({});
-        primary.set(Option.none());
+        primary.set(Optional.none());
       };
       var isClear = function () {
         return primary.get().isNone();
@@ -8537,40 +8505,76 @@
         }, _a)));
       };
       var setContents = function (sPrimary, sMenus, sExpansions, dir) {
-        primary.set(Option.some(sPrimary));
+        primary.set(Optional.some(sPrimary));
         expansions.set(sExpansions);
         menus.set(sMenus);
         directory.set(dir);
         var sPaths = generate$5(dir, sExpansions);
         paths.set(sPaths);
       };
+      var getTriggeringItem = function (menuValue) {
+        return find$2(expansions.get(), function (v, _k) {
+          return v === menuValue;
+        });
+      };
+      var getTriggerData = function (menuValue, getItemByValue, path) {
+        return getPreparedMenu(menuValue).bind(function (menu) {
+          return getTriggeringItem(menuValue).bind(function (triggeringItemValue) {
+            return getItemByValue(triggeringItemValue).map(function (triggeredItem) {
+              return {
+                triggeredMenu: menu,
+                triggeringItem: triggeredItem,
+                triggeringPath: path
+              };
+            });
+          });
+        });
+      };
+      var getTriggeringPath = function (itemValue, getItemByValue) {
+        var extraPath = filter(lookupItem(itemValue).toArray(), function (menuValue) {
+          return getPreparedMenu(menuValue).isSome();
+        });
+        return get$1(paths.get(), itemValue).bind(function (path) {
+          var revPath = reverse(extraPath.concat(path));
+          var triggers = bind(revPath, function (menuValue, menuIndex) {
+            return getTriggerData(menuValue, getItemByValue, revPath.slice(0, menuIndex + 1)).fold(function () {
+              return primary.get().is(menuValue) ? [] : [Optional.none()];
+            }, function (data) {
+              return [Optional.some(data)];
+            });
+          });
+          return sequence(triggers);
+        });
+      };
       var expand = function (itemValue) {
-        return readOptFrom$1(expansions.get(), itemValue).map(function (menu) {
-          var current = readOptFrom$1(paths.get(), itemValue).getOr([]);
+        return get$1(expansions.get(), itemValue).map(function (menu) {
+          var current = get$1(paths.get(), itemValue).getOr([]);
           return [menu].concat(current);
         });
       };
       var collapse = function (itemValue) {
-        return readOptFrom$1(paths.get(), itemValue).bind(function (path) {
-          return path.length > 1 ? Option.some(path.slice(1)) : Option.none();
+        return get$1(paths.get(), itemValue).bind(function (path) {
+          return path.length > 1 ? Optional.some(path.slice(1)) : Optional.none();
         });
       };
       var refresh = function (itemValue) {
-        return readOptFrom$1(paths.get(), itemValue);
+        return get$1(paths.get(), itemValue);
+      };
+      var getPreparedMenu = function (menuValue) {
+        return lookupMenu(menuValue).bind(extractPreparedMenu);
       };
       var lookupMenu = function (menuValue) {
-        return readOptFrom$1(menus.get(), menuValue);
+        return get$1(menus.get(), menuValue);
+      };
+      var lookupItem = function (itemValue) {
+        return get$1(expansions.get(), itemValue);
       };
       var otherMenus = function (path) {
         var menuValues = directory.get();
         return difference(keys(menuValues), path);
       };
       var getPrimary = function () {
-        return primary.get().bind(function (primaryName) {
-          return lookupMenu(primaryName).bind(function (prep) {
-            return prep.type === 'prepared' ? Option.some(prep.menu) : Option.none();
-          });
-        });
+        return primary.get().bind(getPreparedMenu);
       };
       var getMenus = function () {
         return menus.get();
@@ -8582,23 +8586,30 @@
         refresh: refresh,
         collapse: collapse,
         lookupMenu: lookupMenu,
+        lookupItem: lookupItem,
         otherMenus: otherMenus,
         getPrimary: getPrimary,
         getMenus: getMenus,
         clear: clear,
-        isClear: isClear
+        isClear: isClear,
+        getTriggeringPath: getTriggeringPath
       };
     };
-    var LayeredState = { init: init$3 };
+    var extractPreparedMenu = function (prep) {
+      return prep.type === 'prepared' ? Optional.some(prep.menu) : Optional.none();
+    };
+    var LayeredState = {
+      init: init$3,
+      extractPreparedMenu: extractPreparedMenu
+    };
 
-    var make$3 = function (detail, rawUiSpec) {
-      var submenuParentItems = Cell(Option.none());
+    var make$3 = function (detail, _rawUiSpec) {
+      var submenuParentItems = Cell(Optional.none());
       var buildMenus = function (container, primaryName, menus) {
-        return map(menus, function (spec, name) {
+        return map$1(menus, function (spec, name) {
           var makeSketch = function () {
-            return Menu.sketch(__assign(__assign({ dom: spec.dom }, spec), {
+            return Menu.sketch(__assign(__assign({}, spec), {
               value: name,
-              items: spec.items,
               markers: detail.markers,
               fakeFocus: detail.fakeFocus,
               onHighlight: detail.onHighlight,
@@ -8624,8 +8635,19 @@
       var getItemValue = function (item) {
         return Representing.getValue(item).value;
       };
-      var toDirectory = function (container) {
-        return map(detail.data.menus, function (data, menuName) {
+      var getItemByValue = function (_container, menus, itemValue) {
+        return findMap(menus, function (menu) {
+          if (!menu.getSystem().isConnected()) {
+            return Optional.none();
+          }
+          var candidates = Highlighting.getCandidates(menu);
+          return find(candidates, function (c) {
+            return getItemValue(c) === itemValue;
+          });
+        });
+      };
+      var toDirectory = function (_container) {
+        return map$1(detail.data.menus, function (data, _menuName) {
           return bind(data.items, function (item) {
             return item.type === 'separator' ? [] : [item.data.value];
           });
@@ -8636,20 +8658,20 @@
         Highlighting.getHighlighted(menu).orThunk(function () {
           return Highlighting.getFirst(menu);
         }).each(function (item) {
-          dispatch(container, item.element(), focusItem());
+          dispatch(container, item.element, focusItem());
         });
       };
       var getMenus = function (state, menuValues) {
-        return cat(map$1(menuValues, function (mv) {
+        return cat(map(menuValues, function (mv) {
           return state.lookupMenu(mv).bind(function (prep) {
-            return prep.type === 'prepared' ? Option.some(prep.menu) : Option.none();
+            return prep.type === 'prepared' ? Optional.some(prep.menu) : Optional.none();
           });
         }));
       };
       var closeOthers = function (container, state, path) {
         var others = getMenus(state, state.otherMenus(path));
-        each$1(others, function (o) {
-          remove$6(o.element(), [detail.markers.backgroundMenu]);
+        each(others, function (o) {
+          remove$6(o.element, [detail.markers.backgroundMenu]);
           if (!detail.stayInDom) {
             Replacing.remove(container, o);
           }
@@ -8658,45 +8680,45 @@
       var getSubmenuParents = function (container) {
         return submenuParentItems.get().getOrThunk(function () {
           var r = {};
-          var items = descendants(container.element(), '.' + detail.markers.item);
+          var items = descendants(container.element, '.' + detail.markers.item);
           var parentItems = filter(items, function (i) {
-            return get(i, 'aria-haspopup') === 'true';
+            return get$2(i, 'aria-haspopup') === 'true';
           });
-          each$1(parentItems, function (i) {
+          each(parentItems, function (i) {
             container.getSystem().getByDom(i).each(function (itemComp) {
               var key = getItemValue(itemComp);
               r[key] = itemComp;
             });
           });
-          submenuParentItems.set(Option.some(r));
+          submenuParentItems.set(Optional.some(r));
           return r;
         });
       };
       var updateAriaExpansions = function (container, path) {
         var parentItems = getSubmenuParents(container);
-        each(parentItems, function (v, k) {
+        each$1(parentItems, function (v, k) {
           var expanded = contains(path, k);
-          set(v.element(), 'aria-expanded', expanded);
+          set(v.element, 'aria-expanded', expanded);
         });
       };
       var updateMenuPath = function (container, state, path) {
-        return Option.from(path[0]).bind(function (latestMenuName) {
+        return Optional.from(path[0]).bind(function (latestMenuName) {
           return state.lookupMenu(latestMenuName).bind(function (menuPrep) {
             if (menuPrep.type === 'notbuilt') {
-              return Option.none();
+              return Optional.none();
             } else {
               var activeMenu = menuPrep.menu;
               var rest = getMenus(state, path.slice(1));
-              each$1(rest, function (r) {
-                add$2(r.element(), detail.markers.backgroundMenu);
+              each(rest, function (r) {
+                add$2(r.element, detail.markers.backgroundMenu);
               });
-              if (!inBody(activeMenu.element())) {
+              if (!inBody(activeMenu.element)) {
                 Replacing.append(container, premade$1(activeMenu));
               }
-              remove$6(activeMenu.element(), [detail.markers.backgroundMenu]);
+              remove$6(activeMenu.element, [detail.markers.backgroundMenu]);
               setActiveMenu(container, activeMenu);
               closeOthers(container, state, path);
-              return Option.some(activeMenu);
+              return Optional.some(activeMenu);
             }
           });
         });
@@ -8722,19 +8744,19 @@
         var value = getItemValue(item);
         return layeredState.expand(value).bind(function (path) {
           updateAriaExpansions(container, path);
-          return Option.from(path[0]).bind(function (menuName) {
+          return Optional.from(path[0]).bind(function (menuName) {
             return layeredState.lookupMenu(menuName).bind(function (activeMenuPrep) {
               var activeMenu = buildIfRequired(container, menuName, activeMenuPrep);
-              if (!inBody(activeMenu.element())) {
+              if (!inBody(activeMenu.element)) {
                 Replacing.append(container, premade$1(activeMenu));
               }
-              detail.onOpenSubmenu(container, item, activeMenu);
+              detail.onOpenSubmenu(container, item, activeMenu, reverse(path));
               if (decision === ExpandHighlightDecision.HighlightSubmenu) {
                 Highlighting.highlightFirst(activeMenu);
                 return updateMenuPath(container, layeredState, path);
               } else {
                 Highlighting.dehighlightAll(activeMenu);
-                return Option.some(item);
+                return Optional.some(item);
               }
             });
           });
@@ -8758,10 +8780,10 @@
         });
       };
       var onRight = function (container, item) {
-        return inside(item.element()) ? Option.none() : expandRight(container, item, ExpandHighlightDecision.HighlightSubmenu);
+        return inside(item.element) ? Optional.none() : expandRight(container, item, ExpandHighlightDecision.HighlightSubmenu);
       };
       var onLeft = function (container, item) {
-        return inside(item.element()) ? Option.none() : collapseLeft(container, item);
+        return inside(item.element) ? Optional.none() : collapseLeft(container, item);
       };
       var onEscape = function (container, item) {
         return collapseLeft(container, item).orThunk(function () {
@@ -8773,7 +8795,7 @@
       var keyOnItem = function (f) {
         return function (container, simulatedEvent) {
           return closest$2(simulatedEvent.getSource(), '.' + detail.markers.item).bind(function (target) {
-            return container.getSystem().getByDom(target).toOption().bind(function (item) {
+            return container.getSystem().getByDom(target).toOptional().bind(function (item) {
               return f(container, item).map(function () {
                 return true;
               });
@@ -8783,15 +8805,18 @@
       };
       var events = derive([
         run(focus$4(), function (sandbox, simulatedEvent) {
-          var menu = simulatedEvent.event().menu();
-          Highlighting.highlight(sandbox, menu);
-          var value = getItemValue(simulatedEvent.event().item());
-          layeredState.refresh(value).each(function (path) {
-            return closeOthers(sandbox, layeredState, path);
+          var item = simulatedEvent.event.item;
+          layeredState.lookupItem(getItemValue(item)).each(function () {
+            var menu = simulatedEvent.event.menu;
+            Highlighting.highlight(sandbox, menu);
+            var value = getItemValue(simulatedEvent.event.item);
+            layeredState.refresh(value).each(function (path) {
+              return closeOthers(sandbox, layeredState, path);
+            });
           });
         }),
         runOnExecute(function (component, simulatedEvent) {
-          var target = simulatedEvent.event().target();
+          var target = simulatedEvent.event.target;
           component.getSystem().getByDom(target).each(function (item) {
             var itemValue = getItemValue(item);
             if (itemValue.indexOf('collapse-item') === 0) {
@@ -8803,7 +8828,7 @@
             });
           });
         }),
-        runOnAttached(function (container, simulatedEvent) {
+        runOnAttached(function (container, _simulatedEvent) {
           setup(container).each(function (primary) {
             Replacing.append(container, premade$1(primary));
             detail.onOpenMenu(container, primary);
@@ -8813,16 +8838,17 @@
           });
         })
       ].concat(detail.navigateOnHover ? [run(hover(), function (sandbox, simulatedEvent) {
-          var item = simulatedEvent.event().item();
+          var item = simulatedEvent.event.item;
           updateView(sandbox, item);
           expandRight(sandbox, item, ExpandHighlightDecision.HighlightParent);
           detail.onHover(sandbox, item);
         })] : []));
+      var getActiveItem = function (container) {
+        return Highlighting.getHighlighted(container).bind(Highlighting.getHighlighted);
+      };
       var collapseMenuApi = function (container) {
-        Highlighting.getHighlighted(container).each(function (currentMenu) {
-          Highlighting.getHighlighted(currentMenu).each(function (currentItem) {
-            collapseLeft(container, currentItem);
-          });
+        getActiveItem(container).each(function (currentItem) {
+          collapseLeft(container, currentItem);
         });
       };
       var highlightPrimary = function (container) {
@@ -8830,9 +8856,40 @@
           setActiveMenu(container, primary);
         });
       };
+      var extractMenuFromContainer = function (container) {
+        return Optional.from(container.components()[0]).filter(function (comp) {
+          return get$2(comp.element, 'role') === 'menu';
+        });
+      };
+      var repositionMenus = function (container) {
+        var maybeActivePrimary = layeredState.getPrimary().bind(function (primary) {
+          return getActiveItem(container).bind(function (currentItem) {
+            var itemValue = getItemValue(currentItem);
+            var allMenus = values(layeredState.getMenus());
+            var preparedMenus = cat(map(allMenus, LayeredState.extractPreparedMenu));
+            return layeredState.getTriggeringPath(itemValue, function (v) {
+              return getItemByValue(container, preparedMenus, v);
+            });
+          }).map(function (triggeringPath) {
+            return {
+              primary: primary,
+              triggeringPath: triggeringPath
+            };
+          });
+        });
+        maybeActivePrimary.fold(function () {
+          extractMenuFromContainer(container).each(function (primaryMenu) {
+            detail.onRepositionMenu(container, primaryMenu, []);
+          });
+        }, function (_a) {
+          var primary = _a.primary, triggeringPath = _a.triggeringPath;
+          detail.onRepositionMenu(container, primary, triggeringPath);
+        });
+      };
       var apis = {
         collapseMenu: collapseMenuApi,
-        highlightPrimary: highlightPrimary
+        highlightPrimary: highlightPrimary,
+        repositionMenus: repositionMenus
       };
       return {
         uid: detail.uid,
@@ -8844,9 +8901,9 @@
             onRight: keyOnItem(onRight),
             onLeft: keyOnItem(onLeft),
             onEscape: keyOnItem(onEscape),
-            focusIn: function (container, keyInfo) {
+            focusIn: function (container, _keyInfo) {
               layeredState.getPrimary().each(function (primary) {
-                dispatch(container, primary.element(), focusItem());
+                dispatch(container, primary.element, focusItem());
               });
             }
           }),
@@ -8895,6 +8952,7 @@
         onStrictKeyboardHandler('onEscape'),
         onStrictHandler('onOpenMenu'),
         onStrictHandler('onOpenSubmenu'),
+        onHandler('onRepositionMenu'),
         onHandler('onCollapseMenu'),
         defaulted$1('highlightImmediately', true),
         strictObjOf('data', [
@@ -8923,6 +8981,9 @@
         },
         highlightPrimary: function (apis, tmenu) {
           apis.highlightPrimary(tmenu);
+        },
+        repositionMenus: function (apis, tmenu) {
+          apis.repositionMenus(tmenu);
         }
       },
       factory: make$3,
@@ -8934,8 +8995,8 @@
     });
 
     var findRoute = function (component, transConfig, transState, route) {
-      return readOptFrom$1(transConfig.routes, route.start).bind(function (sConfig) {
-        return readOptFrom$1(sConfig, route.destination);
+      return get$1(transConfig.routes, route.start).bind(function (sConfig) {
+        return get$1(sConfig, route.destination);
       });
     };
     var getTransition = function (comp, transConfig, transState) {
@@ -8957,34 +9018,38 @@
     var disableTransition = function (comp, transConfig, transState) {
       getTransition(comp, transConfig, transState).each(function (routeTransition) {
         var t = routeTransition.transition;
-        remove$4(comp.element(), t.transitionClass);
-        remove$1(comp.element(), transConfig.destinationAttr);
+        remove$4(comp.element, t.transitionClass);
+        remove$1(comp.element, transConfig.destinationAttr);
       });
     };
     var getNewRoute = function (comp, transConfig, transState, destination) {
       return {
-        start: get(comp.element(), transConfig.stateAttr),
+        start: get$2(comp.element, transConfig.stateAttr),
         destination: destination
       };
     };
-    var getCurrentRoute = function (comp, transConfig, transState) {
-      var el = comp.element();
-      return has$1(el, transConfig.destinationAttr) ? Option.some({
-        start: get(comp.element(), transConfig.stateAttr),
-        destination: get(comp.element(), transConfig.destinationAttr)
-      }) : Option.none();
+    var getCurrentRoute = function (comp, transConfig, _transState) {
+      var el = comp.element;
+      return getOpt(el, transConfig.destinationAttr).map(function (destination) {
+        return {
+          start: get$2(comp.element, transConfig.stateAttr),
+          destination: destination
+        };
+      });
     };
     var jumpTo = function (comp, transConfig, transState, destination) {
       disableTransition(comp, transConfig, transState);
-      if (has$1(comp.element(), transConfig.stateAttr) && get(comp.element(), transConfig.stateAttr) !== destination) {
+      if (has$1(comp.element, transConfig.stateAttr) && get$2(comp.element, transConfig.stateAttr) !== destination) {
         transConfig.onFinish(comp, destination);
       }
-      set(comp.element(), transConfig.stateAttr, destination);
+      set(comp.element, transConfig.stateAttr, destination);
     };
-    var fasttrack = function (comp, transConfig, transState, destination) {
-      if (has$1(comp.element(), transConfig.destinationAttr)) {
-        set(comp.element(), transConfig.stateAttr, get(comp.element(), transConfig.destinationAttr));
-        remove$1(comp.element(), transConfig.destinationAttr);
+    var fasttrack = function (comp, transConfig, _transState, _destination) {
+      if (has$1(comp.element, transConfig.destinationAttr)) {
+        getOpt(comp.element, transConfig.destinationAttr).each(function (destination) {
+          set(comp.element, transConfig.stateAttr, destination);
+        });
+        remove$1(comp.element, transConfig.destinationAttr);
       }
     };
     var progressTo = function (comp, transConfig, transState, destination) {
@@ -8995,16 +9060,16 @@
       }, function (routeTransition) {
         disableTransition(comp, transConfig, transState);
         var t = routeTransition.transition;
-        add$2(comp.element(), t.transitionClass);
-        set(comp.element(), transConfig.destinationAttr, destination);
+        add$2(comp.element, t.transitionClass);
+        set(comp.element, transConfig.destinationAttr, destination);
       });
     };
-    var getState$1 = function (comp, transConfig, transState) {
-      var e = comp.element();
-      return has$1(e, transConfig.stateAttr) ? Option.some(get(e, transConfig.stateAttr)) : Option.none();
+    var getState$1 = function (comp, transConfig, _transState) {
+      return getOpt(comp.element, transConfig.stateAttr);
     };
 
     var TransitionApis = /*#__PURE__*/Object.freeze({
+        __proto__: null,
         findRoute: findRoute,
         disableTransition: disableTransition,
         getCurrentRoute: getCurrentRoute,
@@ -9016,7 +9081,7 @@
     var events$9 = function (transConfig, transState) {
       return derive([
         run(transitionend(), function (component, simulatedEvent) {
-          var raw = simulatedEvent.event().raw();
+          var raw = simulatedEvent.event.raw;
           getCurrentRoute(component, transConfig).each(function (route) {
             findRoute(component, transConfig, transState, route).each(function (rInfo) {
               rInfo.transition.each(function (rTransition) {
@@ -9028,13 +9093,14 @@
             });
           });
         }),
-        runOnAttached(function (comp, se) {
+        runOnAttached(function (comp, _se) {
           jumpTo(comp, transConfig, transState, transConfig.initialState);
         })
       ]);
     };
 
     var ActiveTransitioning = /*#__PURE__*/Object.freeze({
+        __proto__: null,
         events: events$9
     });
 
@@ -9052,7 +9118,7 @@
 
     var createRoutes = function (routes) {
       var r = {};
-      each(routes, function (v, k) {
+      each$1(routes, function (v, k) {
         var waypoints = k.split('<->');
         r[waypoints[0]] = wrap$1(waypoints[1], v);
         r[waypoints[1]] = wrap$1(waypoints[0], v);
@@ -9126,29 +9192,25 @@
       }
     });
 
-    var scrollable = Styles.resolve('scrollable');
+    var scrollableStyle = resolve('scrollable');
     var register = function (element) {
-      add$2(element, scrollable);
+      add$2(element, scrollableStyle);
     };
     var deregister = function (element) {
-      remove$4(element, scrollable);
+      remove$4(element, scrollableStyle);
     };
-    var Scrollable = {
-      register: register,
-      deregister: deregister,
-      scrollable: constant(scrollable)
-    };
+    var scrollable = scrollableStyle;
 
     var getValue$4 = function (item) {
-      return readOptFrom$1(item, 'format').getOr(item.title);
+      return get$1(item, 'format').getOr(item.title);
     };
     var convert$1 = function (formats, memMenuThunk) {
-      var mainMenu = makeMenu('Styles', [].concat(map$1(formats.items, function (k) {
-        return makeItem(getValue$4(k), k.title, k.isSelected(), k.getPreview(), hasKey$1(formats.expansions, getValue$4(k)));
+      var mainMenu = makeMenu('Styles', [].concat(map(formats.items, function (k) {
+        return makeItem(getValue$4(k), k.title, k.isSelected(), k.getPreview(), hasNonNullableKey(formats.expansions, getValue$4(k)));
       })), memMenuThunk, false);
-      var submenus = map(formats.menus, function (menuItems, menuName) {
-        var items = map$1(menuItems, function (item) {
-          return makeItem(getValue$4(item), item.title, item.isSelected !== undefined ? item.isSelected() : false, item.getPreview !== undefined ? item.getPreview() : '', hasKey$1(formats.expansions, getValue$4(item)));
+      var submenus = map$1(formats.menus, function (menuItems, menuName) {
+        var items = map(menuItems, function (item) {
+          return makeItem(getValue$4(item), item.title, item.isSelected !== undefined ? item.isSelected() : false, item.getPreview !== undefined ? item.getPreview() : '', hasNonNullableKey(formats.expansions, getValue$4(item)));
         });
         return makeMenu(menuName, items, memMenuThunk, true);
       });
@@ -9165,14 +9227,14 @@
         type: 'item',
         dom: {
           tag: 'div',
-          classes: isMenu ? [Styles.resolve('styles-item-is-menu')] : []
+          classes: isMenu ? [resolve('styles-item-is-menu')] : []
         },
         toggling: {
           toggleOnExecute: false,
-          toggleClass: Styles.resolve('format-matches'),
+          toggleClass: resolve('format-matches'),
           selected: selected
         },
-        itemBehaviours: derive$1(isMenu ? [] : [Receivers.format(value, function (comp, status) {
+        itemBehaviours: derive$1(isMenu ? [] : [format(value, function (comp, status) {
             var toggle = status ? Toggling.on : Toggling.off;
             toggle(comp);
           })]),
@@ -9193,13 +9255,13 @@
           Button.sketch({
             dom: {
               tag: 'div',
-              classes: [Styles.resolve('styles-collapser')]
+              classes: [resolve('styles-collapser')]
             },
             components: collapsable ? [
               {
                 dom: {
                   tag: 'span',
-                  classes: [Styles.resolve('styles-collapse-icon')]
+                  classes: [resolve('styles-collapse-icon')]
                 }
               },
               text(value)
@@ -9214,19 +9276,19 @@
           {
             dom: {
               tag: 'div',
-              classes: [Styles.resolve('styles-menu-items-container')]
+              classes: [resolve('styles-menu-items-container')]
             },
-            components: [Menu.parts().items({})],
+            components: [Menu.parts.items({})],
             behaviours: derive$1([config('adhoc-scrollable-menu', [
-                runOnAttached(function (component, simulatedEvent) {
-                  set$3(component.element(), 'overflow-y', 'auto');
-                  set$3(component.element(), '-webkit-overflow-scrolling', 'touch');
-                  Scrollable.register(component.element());
+                runOnAttached(function (component, _simulatedEvent) {
+                  set$3(component.element, 'overflow-y', 'auto');
+                  set$3(component.element, '-webkit-overflow-scrolling', 'touch');
+                  register(component.element);
                 }),
                 runOnDetached(function (component) {
-                  remove$5(component.element(), 'overflow-y');
-                  remove$5(component.element(), '-webkit-overflow-scrolling');
-                  Scrollable.deregister(component.element());
+                  remove$5(component.element, 'overflow-y');
+                  remove$5(component.element, '-webkit-overflow-scrolling');
+                  deregister(component.element);
                 })
               ])])
           }
@@ -9250,35 +9312,35 @@
       var memMenu = record(tieredMenu.sketch({
         dom: {
           tag: 'div',
-          classes: [Styles.resolve('styles-menu')]
+          classes: [resolve('styles-menu')]
         },
         components: [],
         fakeFocus: true,
         stayInDom: true,
-        onExecute: function (tmenu, item) {
+        onExecute: function (_tmenu, item) {
           var v = Representing.getValue(item);
           settings.handle(item, v.value);
-          return Option.none();
+          return Optional.none();
         },
         onEscape: function () {
-          return Option.none();
+          return Optional.none();
         },
         onOpenMenu: function (container, menu) {
-          var w = get$6(container.element());
-          set$4(menu.element(), w);
+          var w = get$8(container.element);
+          set$4(menu.element, w);
           Transitioning.jumpTo(menu, 'current');
         },
         onOpenSubmenu: function (container, item, submenu) {
-          var w = get$6(container.element());
-          var menu = ancestor$1(item.element(), '[role="menu"]').getOrDie('hacky');
+          var w = get$8(container.element);
+          var menu = ancestor$2(item.element, '[role="menu"]').getOrDie('hacky');
           var menuComp = container.getSystem().getByDom(menu).getOrDie();
-          set$4(submenu.element(), w);
+          set$4(submenu.element, w);
           Transitioning.progressTo(menuComp, 'before');
           Transitioning.jumpTo(submenu, 'after');
           Transitioning.progressTo(submenu, 'current');
         },
         onCollapseMenu: function (container, item, menu) {
-          var submenu = ancestor$1(item.element(), '[role="menu"]').getOrDie('hacky');
+          var submenu = ancestor$2(item.element, '[role="menu"]').getOrDie('hacky');
           var submenuComp = container.getSystem().getByDom(submenu).getOrDie();
           Transitioning.progressTo(submenuComp, 'after');
           Transitioning.progressTo(menu, 'current');
@@ -9287,16 +9349,15 @@
         highlightImmediately: true,
         data: dataset.tmenu,
         markers: {
-          backgroundMenu: Styles.resolve('styles-background-menu'),
-          menu: Styles.resolve('styles-menu'),
-          selectedMenu: Styles.resolve('styles-selected-menu'),
-          item: Styles.resolve('styles-item'),
-          selectedItem: Styles.resolve('styles-selected-item')
+          backgroundMenu: resolve('styles-background-menu'),
+          menu: resolve('styles-menu'),
+          selectedMenu: resolve('styles-selected-menu'),
+          item: resolve('styles-item'),
+          selectedItem: resolve('styles-selected-item')
         }
       }));
       return memMenu.asSpec();
     };
-    var StylesMenu = { sketch: sketch$8 };
 
     var getFromExpandingItem = function (item) {
       var newItem = deepMerge(exclude$1(item, ['items']), { menu: true });
@@ -9310,7 +9371,7 @@
       };
     };
     var getFromItem = function (item) {
-      return hasKey$1(item, 'items') ? getFromExpandingItem(item) : {
+      return hasNonNullableKey(item, 'items') ? getFromExpandingItem(item) : {
         item: item,
         menus: {},
         expansions: {}
@@ -9330,9 +9391,8 @@
         items: []
       });
     };
-    var StyleConversions = { expand: expand };
 
-    var register$1 = function (editor, settings) {
+    var register$1 = function (editor) {
       var isSelectedFor = function (format) {
         return function () {
           return editor.formatter.match(format);
@@ -9340,8 +9400,7 @@
       };
       var getPreview = function (format) {
         return function () {
-          var styles = editor.formatter.getCssText(format);
-          return styles;
+          return editor.formatter.getCssText(format);
         };
       };
       var enrichSupported = function (item) {
@@ -9352,7 +9411,7 @@
       };
       var enrichMenu = function (item) {
         return deepMerge(item, {
-          isSelected: constant(false),
+          isSelected: never,
           getPreview: constant('')
         });
       };
@@ -9366,20 +9425,19 @@
         editor.formatter.register(formatName, newItem);
         return newItem;
       };
-      var formats = readOptFrom$1(settings, 'style_formats').getOr(DefaultStyleFormats);
       var doEnrich = function (items) {
-        return map$1(items, function (item) {
-          if (hasKey$1(item, 'items')) {
+        return map(items, function (item) {
+          if (hasNonNullableKey(item, 'items')) {
             var newItems = doEnrich(item.items);
             return deepMerge(enrichMenu(item), { items: newItems });
-          } else if (hasKey$1(item, 'format')) {
+          } else if (hasNonNullableKey(item, 'format')) {
             return enrichSupported(item);
           } else {
             return enrichCustom(item);
           }
         });
       };
-      return doEnrich(formats);
+      return doEnrich(getStyleFormats(editor));
     };
     var prune = function (editor, formats) {
       var doPrune = function (items) {
@@ -9388,17 +9446,17 @@
             var newItems = doPrune(item.items);
             return newItems.length > 0 ? [item] : [];
           } else {
-            var keep = hasKey$1(item, 'format') ? editor.formatter.canApply(item.format) : true;
+            var keep = hasNonNullableKey(item, 'format') ? editor.formatter.canApply(item.format) : true;
             return keep ? [item] : [];
           }
         });
       };
       var prunedItems = doPrune(formats);
-      return StyleConversions.expand(prunedItems);
+      return expand(prunedItems);
     };
     var ui = function (editor, formats, onDone) {
       var pruned = prune(editor, formats);
-      return StylesMenu.sketch({
+      return sketch$8({
         formats: pruned,
         handle: function (item, value) {
           editor.undoManager.transact(function () {
@@ -9412,20 +9470,7 @@
         }
       });
     };
-    var StyleFormats = {
-      register: register$1,
-      ui: ui
-    };
 
-    var defaults = [
-      'undo',
-      'bold',
-      'italic',
-      'link',
-      'image',
-      'bullist',
-      'styleselect'
-    ];
     var extract$1 = function (rawToolbar) {
       var toolbar = rawToolbar.replace(/\|/g, ' ').trim();
       return toolbar.length > 0 ? toolbar.split(/\s+/) : [];
@@ -9435,24 +9480,24 @@
         return isArray(item) ? identifyFromArray(item) : extract$1(item);
       });
     };
-    var identify = function (settings) {
-      var toolbar = settings.toolbar !== undefined ? settings.toolbar : defaults;
+    var identify = function (editor) {
+      var toolbar = getToolbar(editor);
       return isArray(toolbar) ? identifyFromArray(toolbar) : extract$1(toolbar);
     };
     var setup = function (realm, editor) {
       var commandSketch = function (name) {
         return function () {
-          return Buttons.forToolbarCommand(editor, name);
+          return forToolbarCommand(editor, name);
         };
       };
       var stateCommandSketch = function (name) {
         return function () {
-          return Buttons.forToolbarStateCommand(editor, name);
+          return forToolbarStateCommand(editor, name);
         };
       };
       var actionSketch = function (name, query, action) {
         return function () {
-          return Buttons.forToolbarStateAction(editor, name, query, action);
+          return forToolbarStateAction(editor, name, query, action);
         };
       };
       var undo = commandSketch('undo');
@@ -9480,28 +9525,28 @@
         return sketch$3(realm, editor);
       };
       var forecolor = function () {
-        return ColorSlider.sketch(realm, editor);
+        return sketch$1(realm, editor);
       };
-      var styleFormats = StyleFormats.register(editor, editor.settings);
+      var styleFormats = register$1(editor);
       var styleFormatsMenu = function () {
-        return StyleFormats.ui(editor, styleFormats, function () {
+        return ui(editor, styleFormats, function () {
           editor.fire('scrollIntoView');
         });
       };
       var styleselect = function () {
-        return Buttons.forToolbar('style-formats', function (button) {
+        return forToolbar('style-formats', function (button) {
           editor.fire('toReading');
-          realm.dropup().appear(styleFormatsMenu, Toggling.on, button);
+          realm.dropup.appear(styleFormatsMenu, Toggling.on, button);
         }, derive$1([
           Toggling.config({
-            toggleClass: Styles.resolve('toolbar-button-selected'),
+            toggleClass: resolve('toolbar-button-selected'),
             toggleOnExecute: false,
             aria: { mode: 'pressed' }
           }),
           Receiving.config({
             channels: wrapAll$1([
-              Receivers.receive(TinyChannels.orientationChanged(), Toggling.off),
-              Receivers.receive(TinyChannels.dropupDismissed(), Toggling.off)
+              receive$1(orientationChanged, Toggling.off),
+              receive$1(dropupDismissed, Toggling.off)
             ])
           })
         ]), editor);
@@ -9511,75 +9556,71 @@
           isSupported: function () {
             var buttons = editor.ui.registry.getAll().buttons;
             return prereq.forall(function (p) {
-              return hasKey$1(buttons, p);
+              return hasNonNullableKey(buttons, p);
             });
           },
           sketch: sketch
         };
       };
       return {
-        undo: feature(Option.none(), undo),
-        redo: feature(Option.none(), redo),
-        bold: feature(Option.none(), bold),
-        italic: feature(Option.none(), italic),
-        underline: feature(Option.none(), underline),
-        removeformat: feature(Option.none(), removeformat),
-        link: feature(Option.none(), link),
-        unlink: feature(Option.none(), unlink),
-        image: feature(Option.none(), image),
-        bullist: feature(Option.some('bullist'), bullist),
-        numlist: feature(Option.some('numlist'), numlist),
-        fontsizeselect: feature(Option.none(), fontsizeselect),
-        forecolor: feature(Option.none(), forecolor),
-        styleselect: feature(Option.none(), styleselect)
+        undo: feature(Optional.none(), undo),
+        redo: feature(Optional.none(), redo),
+        bold: feature(Optional.none(), bold),
+        italic: feature(Optional.none(), italic),
+        underline: feature(Optional.none(), underline),
+        removeformat: feature(Optional.none(), removeformat),
+        link: feature(Optional.none(), link),
+        unlink: feature(Optional.none(), unlink),
+        image: feature(Optional.none(), image),
+        bullist: feature(Optional.some('bullist'), bullist),
+        numlist: feature(Optional.some('numlist'), numlist),
+        fontsizeselect: feature(Optional.none(), fontsizeselect),
+        forecolor: feature(Optional.none(), forecolor),
+        styleselect: feature(Optional.none(), styleselect)
       };
     };
-    var detect$4 = function (settings, features) {
-      var itemNames = identify(settings);
+    var detect$4 = function (editor, features) {
+      var itemNames = identify(editor);
       var present = {};
       return bind(itemNames, function (iName) {
-        var r = !hasKey$1(present, iName) && hasKey$1(features, iName) && features[iName].isSupported() ? [features[iName].sketch()] : [];
+        var r = !hasNonNullableKey(present, iName) && hasNonNullableKey(features, iName) && features[iName].isSupported() ? [features[iName].sketch()] : [];
         present[iName] = true;
         return r;
       });
     };
-    var Features = {
-      identify: identify,
-      setup: setup,
-      detect: detect$4
-    };
 
     var mkEvent = function (target, x, y, stop, prevent, kill, raw) {
       return {
-        target: constant(target),
-        x: constant(x),
-        y: constant(y),
+        target: target,
+        x: x,
+        y: y,
         stop: stop,
         prevent: prevent,
         kill: kill,
-        raw: constant(raw)
+        raw: raw
       };
+    };
+    var fromRawEvent = function (rawEvent) {
+      var target = SugarElement.fromDom(getOriginalEventTarget(rawEvent).getOr(rawEvent.target));
+      var stop = function () {
+        return rawEvent.stopPropagation();
+      };
+      var prevent = function () {
+        return rawEvent.preventDefault();
+      };
+      var kill = compose(prevent, stop);
+      return mkEvent(target, rawEvent.clientX, rawEvent.clientY, stop, prevent, kill, rawEvent);
     };
     var handle = function (filter, handler) {
       return function (rawEvent) {
-        if (!filter(rawEvent)) {
-          return;
+        if (filter(rawEvent)) {
+          handler(fromRawEvent(rawEvent));
         }
-        var target = Element.fromDom(rawEvent.target);
-        var stop = function () {
-          rawEvent.stopPropagation();
-        };
-        var prevent = function () {
-          rawEvent.preventDefault();
-        };
-        var kill = compose(prevent, stop);
-        var evt = mkEvent(target, rawEvent.clientX, rawEvent.clientY, stop, prevent, kill, rawEvent);
-        handler(evt);
       };
     };
     var binder = function (element, event, filter, handler, useCapture) {
       var wrapped = handle(filter, handler);
-      element.dom().addEventListener(event, wrapped, useCapture);
+      element.dom.addEventListener(event, wrapped, useCapture);
       return { unbind: curry(unbind, element, event, wrapped, useCapture) };
     };
     var bind$2 = function (element, event, filter, handler) {
@@ -9589,36 +9630,36 @@
       return binder(element, event, filter, handler, true);
     };
     var unbind = function (element, event, handler, useCapture) {
-      element.dom().removeEventListener(event, handler, useCapture);
+      element.dom.removeEventListener(event, handler, useCapture);
     };
 
-    var filter$1 = constant(true);
+    var filter$2 = always;
     var bind$3 = function (element, event, handler) {
-      return bind$2(element, event, filter$1, handler);
+      return bind$2(element, event, filter$2, handler);
     };
     var capture$1 = function (element, event, handler) {
-      return capture(element, event, filter$1, handler);
+      return capture(element, event, filter$2, handler);
     };
 
     var global$4 = tinymce.util.Tools.resolve('tinymce.util.Delay');
 
     var INTERVAL = 50;
     var INSURANCE = 1000 / INTERVAL;
-    var get$a = function (outerWindow) {
+    var get$c = function (outerWindow) {
       var isPortrait = outerWindow.matchMedia('(orientation: portrait)').matches;
       return { isPortrait: constant(isPortrait) };
     };
     var getActualWidth = function (outerWindow) {
-      var isIos = PlatformDetection$1.detect().os.isiOS();
-      var isPortrait = get$a(outerWindow).isPortrait();
+      var isIos = detect$3().os.isiOS();
+      var isPortrait = get$c(outerWindow).isPortrait();
       return isIos && !isPortrait ? outerWindow.screen.height : outerWindow.screen.width;
     };
     var onChange = function (outerWindow, listeners) {
-      var win = Element.fromDom(outerWindow);
+      var win = SugarElement.fromDom(outerWindow);
       var poller = null;
       var change = function () {
         global$4.clearInterval(poller);
-        var orientation = get$a(outerWindow);
+        var orientation = get$c(outerWindow);
         listeners.onChange(orientation);
         onAdjustment(function () {
           listeners.onReady(orientation);
@@ -9632,10 +9673,10 @@
         poller = global$4.setInterval(function () {
           if (flag !== outerWindow.innerHeight) {
             global$4.clearInterval(poller);
-            f(Option.some(outerWindow.innerHeight));
+            f(Optional.some(outerWindow.innerHeight));
           } else if (insurance > INSURANCE) {
             global$4.clearInterval(poller);
-            f(Option.none());
+            f(Optional.none());
           }
           insurance++;
         }, INTERVAL);
@@ -9648,352 +9689,23 @@
         destroy: destroy
       };
     };
-    var Orientation = {
-      get: get$a,
-      onChange: onChange,
-      getActualWidth: getActualWidth
-    };
-
-    function DelayedFunction (fun, delay) {
-      var ref = null;
-      var schedule = function () {
-        var args = [];
-        for (var _i = 0; _i < arguments.length; _i++) {
-          args[_i] = arguments[_i];
-        }
-        ref = domGlobals.setTimeout(function () {
-          fun.apply(null, args);
-          ref = null;
-        }, delay);
-      };
-      var cancel = function () {
-        if (ref !== null) {
-          domGlobals.clearTimeout(ref);
-          ref = null;
-        }
-      };
-      return {
-        cancel: cancel,
-        schedule: schedule
-      };
-    }
-
-    var SIGNIFICANT_MOVE = 5;
-    var LONGPRESS_DELAY = 400;
-    var getTouch = function (event) {
-      var raw = event.raw();
-      if (raw.touches === undefined || raw.touches.length !== 1) {
-        return Option.none();
-      }
-      return Option.some(raw.touches[0]);
-    };
-    var isFarEnough = function (touch, data) {
-      var distX = Math.abs(touch.clientX - data.x());
-      var distY = Math.abs(touch.clientY - data.y());
-      return distX > SIGNIFICANT_MOVE || distY > SIGNIFICANT_MOVE;
-    };
-    var monitor = function (settings) {
-      var startData = Cell(Option.none());
-      var longpress$1 = DelayedFunction(function (event) {
-        startData.set(Option.none());
-        settings.triggerEvent(longpress(), event);
-      }, LONGPRESS_DELAY);
-      var handleTouchstart = function (event) {
-        getTouch(event).each(function (touch) {
-          longpress$1.cancel();
-          var data = {
-            x: constant(touch.clientX),
-            y: constant(touch.clientY),
-            target: event.target
-          };
-          longpress$1.schedule(event);
-          startData.set(Option.some(data));
-        });
-        return Option.none();
-      };
-      var handleTouchmove = function (event) {
-        longpress$1.cancel();
-        getTouch(event).each(function (touch) {
-          startData.get().each(function (data) {
-            if (isFarEnough(touch, data)) {
-              startData.set(Option.none());
-            }
-          });
-        });
-        return Option.none();
-      };
-      var handleTouchend = function (event) {
-        longpress$1.cancel();
-        var isSame = function (data) {
-          return eq(data.target(), event.target());
-        };
-        return startData.get().filter(isSame).map(function (data) {
-          return settings.triggerEvent(tap(), event);
-        });
-      };
-      var handlers = wrapAll$1([
-        {
-          key: touchstart(),
-          value: handleTouchstart
-        },
-        {
-          key: touchmove(),
-          value: handleTouchmove
-        },
-        {
-          key: touchend(),
-          value: handleTouchend
-        }
-      ]);
-      var fireIfReady = function (event, type) {
-        return readOptFrom$1(handlers, type).bind(function (handler) {
-          return handler(event);
-        });
-      };
-      return { fireIfReady: fireIfReady };
-    };
-
-    var monitor$1 = function (editorApi) {
-      var tapEvent = monitor({
-        triggerEvent: function (type, evt) {
-          editorApi.onTapContent(evt);
-        }
-      });
-      var onTouchend = function () {
-        return bind$3(editorApi.body(), 'touchend', function (evt) {
-          tapEvent.fireIfReady(evt, 'touchend');
-        });
-      };
-      var onTouchmove = function () {
-        return bind$3(editorApi.body(), 'touchmove', function (evt) {
-          tapEvent.fireIfReady(evt, 'touchmove');
-        });
-      };
-      var fireTouchstart = function (evt) {
-        tapEvent.fireIfReady(evt, 'touchstart');
-      };
-      return {
-        fireTouchstart: fireTouchstart,
-        onTouchend: onTouchend,
-        onTouchmove: onTouchmove
-      };
-    };
-    var TappingEvent = { monitor: monitor$1 };
-
-    var isAndroid6 = PlatformDetection$1.detect().os.version.major >= 6;
-    var initEvents = function (editorApi, toolstrip, alloy) {
-      var tapping = TappingEvent.monitor(editorApi);
-      var outerDoc = owner(toolstrip);
-      var isRanged = function (sel) {
-        return !eq(sel.start(), sel.finish()) || sel.soffset() !== sel.foffset();
-      };
-      var hasRangeInUi = function () {
-        return active(outerDoc).filter(function (input) {
-          return name(input) === 'input';
-        }).exists(function (input) {
-          return input.dom().selectionStart !== input.dom().selectionEnd;
-        });
-      };
-      var updateMargin = function () {
-        var rangeInContent = editorApi.doc().dom().hasFocus() && editorApi.getSelection().exists(isRanged);
-        alloy.getByDom(toolstrip).each((rangeInContent || hasRangeInUi()) === true ? Toggling.on : Toggling.off);
-      };
-      var listeners = [
-        bind$3(editorApi.body(), 'touchstart', function (evt) {
-          editorApi.onTouchContent();
-          tapping.fireTouchstart(evt);
-        }),
-        tapping.onTouchmove(),
-        tapping.onTouchend(),
-        bind$3(toolstrip, 'touchstart', function (evt) {
-          editorApi.onTouchToolstrip();
-        }),
-        editorApi.onToReading(function () {
-          blur(editorApi.body());
-        }),
-        editorApi.onToEditing(noop),
-        editorApi.onScrollToCursor(function (tinyEvent) {
-          tinyEvent.preventDefault();
-          editorApi.getCursorBox().each(function (bounds) {
-            var cWin = editorApi.win();
-            var isOutside = bounds.top() > cWin.innerHeight || bounds.bottom() > cWin.innerHeight;
-            var cScrollBy = isOutside ? bounds.bottom() - cWin.innerHeight + 50 : 0;
-            if (cScrollBy !== 0) {
-              cWin.scrollTo(cWin.pageXOffset, cWin.pageYOffset + cScrollBy);
-            }
-          });
-        })
-      ].concat(isAndroid6 === true ? [] : [
-        bind$3(Element.fromDom(editorApi.win()), 'blur', function () {
-          alloy.getByDom(toolstrip).each(Toggling.off);
-        }),
-        bind$3(outerDoc, 'select', updateMargin),
-        bind$3(editorApi.doc(), 'selectionchange', updateMargin)
-      ]);
-      var destroy = function () {
-        each$1(listeners, function (l) {
-          l.unbind();
-        });
-      };
-      return { destroy: destroy };
-    };
-    var AndroidEvents = { initEvents: initEvents };
-
-    var safeParse = function (element, attribute) {
-      var parsed = parseInt(get(element, attribute), 10);
-      return isNaN(parsed) ? 0 : parsed;
-    };
-    var DataAttributes = { safeParse: safeParse };
-
-    function NodeValue (is, name) {
-      var get = function (element) {
-        if (!is(element)) {
-          throw new Error('Can only get ' + name + ' value of a ' + name + ' node');
-        }
-        return getOption(element).getOr('');
-      };
-      var getOption = function (element) {
-        return is(element) ? Option.from(element.dom().nodeValue) : Option.none();
-      };
-      var set = function (element, value) {
-        if (!is(element)) {
-          throw new Error('Can only set raw ' + name + ' value of a ' + name + ' node');
-        }
-        element.dom().nodeValue = value;
-      };
-      return {
-        get: get,
-        getOption: getOption,
-        set: set
-      };
-    }
-
-    var api$3 = NodeValue(isText, 'text');
-    var get$b = function (element) {
-      return api$3.get(element);
-    };
-    var getOption = function (element) {
-      return api$3.getOption(element);
-    };
-
-    var getEnd = function (element) {
-      return name(element) === 'img' ? 1 : getOption(element).fold(function () {
-        return children(element).length;
-      }, function (v) {
-        return v.length;
-      });
-    };
-    var NBSP = '\xA0';
-    var isTextNodeWithCursorPosition = function (el) {
-      return getOption(el).filter(function (text) {
-        return text.trim().length !== 0 || text.indexOf(NBSP) > -1;
-      }).isSome();
-    };
-    var elementsWithCursorPosition = [
-      'img',
-      'br'
-    ];
-    var isCursorPosition = function (elem) {
-      var hasCursorPosition = isTextNodeWithCursorPosition(elem);
-      return hasCursorPosition || contains(elementsWithCursorPosition, name(elem));
-    };
-
-    var create$3 = Immutable('start', 'soffset', 'finish', 'foffset');
-    var SimRange = { create: create$3 };
-
-    var adt$4 = Adt.generate([
-      { before: ['element'] },
-      {
-        on: [
-          'element',
-          'offset'
-        ]
-      },
-      { after: ['element'] }
-    ]);
-    var cata = function (subject, onBefore, onOn, onAfter) {
-      return subject.fold(onBefore, onOn, onAfter);
-    };
-    var getStart = function (situ) {
-      return situ.fold(identity, identity, identity);
-    };
-    var before$1 = adt$4.before;
-    var on$1 = adt$4.on;
-    var after$1 = adt$4.after;
-    var Situ = {
-      before: before$1,
-      on: on$1,
-      after: after$1,
-      cata: cata,
-      getStart: getStart
-    };
-
-    var adt$5 = Adt.generate([
-      { domRange: ['rng'] },
-      {
-        relative: [
-          'startSitu',
-          'finishSitu'
-        ]
-      },
-      {
-        exact: [
-          'start',
-          'soffset',
-          'finish',
-          'foffset'
-        ]
-      }
-    ]);
-    var exactFromRange = function (simRange) {
-      return adt$5.exact(simRange.start(), simRange.soffset(), simRange.finish(), simRange.foffset());
-    };
-    var getStart$1 = function (selection) {
-      return selection.match({
-        domRange: function (rng) {
-          return Element.fromDom(rng.startContainer);
-        },
-        relative: function (startSitu, finishSitu) {
-          return Situ.getStart(startSitu);
-        },
-        exact: function (start, soffset, finish, foffset) {
-          return start;
-        }
-      });
-    };
-    var domRange = adt$5.domRange;
-    var relative = adt$5.relative;
-    var exact = adt$5.exact;
-    var getWin = function (selection) {
-      var start = getStart$1(selection);
-      return defaultView(start);
-    };
-    var range$1 = SimRange.create;
-    var Selection = {
-      domRange: domRange,
-      relative: relative,
-      exact: exact,
-      exactFromRange: exactFromRange,
-      getWin: getWin,
-      range: range$1
-    };
 
     var setStart = function (rng, situ) {
       situ.fold(function (e) {
-        rng.setStartBefore(e.dom());
+        rng.setStartBefore(e.dom);
       }, function (e, o) {
-        rng.setStart(e.dom(), o);
+        rng.setStart(e.dom, o);
       }, function (e) {
-        rng.setStartAfter(e.dom());
+        rng.setStartAfter(e.dom);
       });
     };
     var setFinish = function (rng, situ) {
       situ.fold(function (e) {
-        rng.setEndBefore(e.dom());
+        rng.setEndBefore(e.dom);
       }, function (e, o) {
-        rng.setEnd(e.dom(), o);
+        rng.setEnd(e.dom, o);
       }, function (e) {
-        rng.setEndAfter(e.dom());
+        rng.setEndAfter(e.dom);
       });
     };
     var relativeToNative = function (win, startSitu, finishSitu) {
@@ -10004,27 +9716,27 @@
     };
     var exactToNative = function (win, start, soffset, finish, foffset) {
       var rng = win.document.createRange();
-      rng.setStart(start.dom(), soffset);
-      rng.setEnd(finish.dom(), foffset);
+      rng.setStart(start.dom, soffset);
+      rng.setEnd(finish.dom, foffset);
       return rng;
     };
     var toRect = function (rect) {
       return {
-        left: constant(rect.left),
-        top: constant(rect.top),
-        right: constant(rect.right),
-        bottom: constant(rect.bottom),
-        width: constant(rect.width),
-        height: constant(rect.height)
+        left: rect.left,
+        top: rect.top,
+        right: rect.right,
+        bottom: rect.bottom,
+        width: rect.width,
+        height: rect.height
       };
     };
     var getFirstRect = function (rng) {
       var rects = rng.getClientRects();
       var rect = rects.length > 0 ? rects[0] : rng.getBoundingClientRect();
-      return rect.width > 0 || rect.height > 0 ? Option.some(rect).map(toRect) : Option.none();
+      return rect.width > 0 || rect.height > 0 ? Optional.some(rect).map(toRect) : Optional.none();
     };
 
-    var adt$6 = Adt.generate([
+    var adt$4 = Adt.generate([
       {
         ltr: [
           'start',
@@ -10043,14 +9755,14 @@
       }
     ]);
     var fromRange = function (win, type, range) {
-      return type(Element.fromDom(range.startContainer), range.startOffset, Element.fromDom(range.endContainer), range.endOffset);
+      return type(SugarElement.fromDom(range.startContainer), range.startOffset, SugarElement.fromDom(range.endContainer), range.endOffset);
     };
     var getRanges = function (win, selection) {
       return selection.match({
         domRange: function (rng) {
           return {
             ltr: constant(rng),
-            rtl: Option.none
+            rtl: Optional.none
           };
         },
         relative: function (startSitu, finishSitu) {
@@ -10059,7 +9771,7 @@
               return relativeToNative(win, startSitu, finishSitu);
             }),
             rtl: cached(function () {
-              return Option.some(relativeToNative(win, finishSitu, startSitu));
+              return Optional.some(relativeToNative(win, finishSitu, startSitu));
             })
           };
         },
@@ -10069,7 +9781,7 @@
               return exactToNative(win, start, soffset, finish, foffset);
             }),
             rtl: cached(function () {
-              return Option.some(exactToNative(win, finish, foffset, start, soffset));
+              return Optional.some(exactToNative(win, finish, foffset, start, soffset));
             })
           };
         }
@@ -10082,12 +9794,12 @@
           return rev.collapsed === false;
         });
         return reversed.map(function (rev) {
-          return adt$6.rtl(Element.fromDom(rev.endContainer), rev.endOffset, Element.fromDom(rev.startContainer), rev.startOffset);
+          return adt$4.rtl(SugarElement.fromDom(rev.endContainer), rev.endOffset, SugarElement.fromDom(rev.startContainer), rev.startOffset);
         }).getOrThunk(function () {
-          return fromRange(win, adt$6.ltr, rng);
+          return fromRange(win, adt$4.ltr, rng);
         });
       } else {
-        return fromRange(win, adt$6.ltr, rng);
+        return fromRange(win, adt$4.ltr, rng);
       }
     };
     var diagnose = function (win, selection) {
@@ -10099,176 +9811,143 @@
       return diagnosis.match({
         ltr: function (start, soffset, finish, foffset) {
           var rng = win.document.createRange();
-          rng.setStart(start.dom(), soffset);
-          rng.setEnd(finish.dom(), foffset);
+          rng.setStart(start.dom, soffset);
+          rng.setEnd(finish.dom, foffset);
           return rng;
         },
         rtl: function (start, soffset, finish, foffset) {
           var rng = win.document.createRange();
-          rng.setStart(finish.dom(), foffset);
-          rng.setEnd(start.dom(), soffset);
+          rng.setStart(finish.dom, foffset);
+          rng.setEnd(start.dom, soffset);
           return rng;
         }
       });
     };
+    var ltr = adt$4.ltr;
+    var rtl = adt$4.rtl;
 
-    var searchForPoint = function (rectForOffset, x, y, maxX, length) {
-      if (length === 0) {
-        return 0;
-      } else if (x === maxX) {
-        return length - 1;
+    var create$3 = function (start, soffset, finish, foffset) {
+      return {
+        start: start,
+        soffset: soffset,
+        finish: finish,
+        foffset: foffset
+      };
+    };
+    var SimRange = { create: create$3 };
+
+    function NodeValue (is, name) {
+      var get = function (element) {
+        if (!is(element)) {
+          throw new Error('Can only get ' + name + ' value of a ' + name + ' node');
+        }
+        return getOption(element).getOr('');
+      };
+      var getOption = function (element) {
+        return is(element) ? Optional.from(element.dom.nodeValue) : Optional.none();
+      };
+      var set = function (element, value) {
+        if (!is(element)) {
+          throw new Error('Can only set raw ' + name + ' value of a ' + name + ' node');
+        }
+        element.dom.nodeValue = value;
+      };
+      return {
+        get: get,
+        getOption: getOption,
+        set: set
+      };
+    }
+
+    var api$3 = NodeValue(isText, 'text');
+    var getOption = function (element) {
+      return api$3.getOption(element);
+    };
+
+    var getEnd = function (element) {
+      return name(element) === 'img' ? 1 : getOption(element).fold(function () {
+        return children(element).length;
+      }, function (v) {
+        return v.length;
+      });
+    };
+
+    var adt$5 = Adt.generate([
+      { before: ['element'] },
+      {
+        on: [
+          'element',
+          'offset'
+        ]
+      },
+      { after: ['element'] }
+    ]);
+    var cata = function (subject, onBefore, onOn, onAfter) {
+      return subject.fold(onBefore, onOn, onAfter);
+    };
+    var getStart = function (situ) {
+      return situ.fold(identity, identity, identity);
+    };
+    var before$1 = adt$5.before;
+    var on$1 = adt$5.on;
+    var after$1 = adt$5.after;
+    var Situ = {
+      before: before$1,
+      on: on$1,
+      after: after$1,
+      cata: cata,
+      getStart: getStart
+    };
+
+    var adt$6 = Adt.generate([
+      { domRange: ['rng'] },
+      {
+        relative: [
+          'startSitu',
+          'finishSitu'
+        ]
+      },
+      {
+        exact: [
+          'start',
+          'soffset',
+          'finish',
+          'foffset'
+        ]
       }
-      var xDelta = maxX;
-      for (var i = 1; i < length; i++) {
-        var rect = rectForOffset(i);
-        var curDeltaX = Math.abs(x - rect.left);
-        if (y <= rect.bottom) {
-          if (y < rect.top || curDeltaX > xDelta) {
-            return i - 1;
-          } else {
-            xDelta = curDeltaX;
-          }
+    ]);
+    var exactFromRange = function (simRange) {
+      return adt$6.exact(simRange.start, simRange.soffset, simRange.finish, simRange.foffset);
+    };
+    var getStart$1 = function (selection) {
+      return selection.match({
+        domRange: function (rng) {
+          return SugarElement.fromDom(rng.startContainer);
+        },
+        relative: function (startSitu, _finishSitu) {
+          return Situ.getStart(startSitu);
+        },
+        exact: function (start, _soffset, _finish, _foffset) {
+          return start;
         }
-      }
-      return 0;
-    };
-    var inRect = function (rect, x, y) {
-      return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
-    };
-
-    var locateOffset = function (doc, textnode, x, y, rect) {
-      var rangeForOffset = function (o) {
-        var r = doc.dom().createRange();
-        r.setStart(textnode.dom(), o);
-        r.collapse(true);
-        return r;
-      };
-      var rectForOffset = function (o) {
-        var r = rangeForOffset(o);
-        return r.getBoundingClientRect();
-      };
-      var length = get$b(textnode).length;
-      var offset = searchForPoint(rectForOffset, x, y, rect.right, length);
-      return rangeForOffset(offset);
-    };
-    var locate$1 = function (doc, node, x, y) {
-      var r = doc.dom().createRange();
-      r.selectNode(node.dom());
-      var rects = r.getClientRects();
-      var foundRect = findMap(rects, function (rect) {
-        return inRect(rect, x, y) ? Option.some(rect) : Option.none();
-      });
-      return foundRect.map(function (rect) {
-        return locateOffset(doc, node, x, y, rect);
       });
     };
-
-    var searchInChildren = function (doc, node, x, y) {
-      var r = doc.dom().createRange();
-      var nodes = children(node);
-      return findMap(nodes, function (n) {
-        r.selectNode(n.dom());
-        return inRect(r.getBoundingClientRect(), x, y) ? locateNode(doc, n, x, y) : Option.none();
-      });
+    var domRange = adt$6.domRange;
+    var relative = adt$6.relative;
+    var exact = adt$6.exact;
+    var getWin = function (selection) {
+      var start = getStart$1(selection);
+      return defaultView(start);
     };
-    var locateNode = function (doc, node, x, y) {
-      return isText(node) ? locate$1(doc, node, x, y) : searchInChildren(doc, node, x, y);
+    var range$1 = SimRange.create;
+    var SimSelection = {
+      domRange: domRange,
+      relative: relative,
+      exact: exact,
+      exactFromRange: exactFromRange,
+      getWin: getWin,
+      range: range$1
     };
-    var locate$2 = function (doc, node, x, y) {
-      var r = doc.dom().createRange();
-      r.selectNode(node.dom());
-      var rect = r.getBoundingClientRect();
-      var boundedX = Math.max(rect.left, Math.min(rect.right, x));
-      var boundedY = Math.max(rect.top, Math.min(rect.bottom, y));
-      return locateNode(doc, node, boundedX, boundedY);
-    };
-
-    var first$1 = function (element) {
-      return descendant(element, isCursorPosition);
-    };
-    var last = function (element) {
-      return descendantRtl(element, isCursorPosition);
-    };
-    var descendantRtl = function (scope, predicate) {
-      var descend = function (element) {
-        var children$1 = children(element);
-        for (var i = children$1.length - 1; i >= 0; i--) {
-          var child = children$1[i];
-          if (predicate(child)) {
-            return Option.some(child);
-          }
-          var res = descend(child);
-          if (res.isSome()) {
-            return res;
-          }
-        }
-        return Option.none();
-      };
-      return descend(scope);
-    };
-
-    var COLLAPSE_TO_LEFT = true;
-    var COLLAPSE_TO_RIGHT = false;
-    var getCollapseDirection = function (rect, x) {
-      return x - rect.left < rect.right - x ? COLLAPSE_TO_LEFT : COLLAPSE_TO_RIGHT;
-    };
-    var createCollapsedNode = function (doc, target, collapseDirection) {
-      var r = doc.dom().createRange();
-      r.selectNode(target.dom());
-      r.collapse(collapseDirection);
-      return r;
-    };
-    var locateInElement = function (doc, node, x) {
-      var cursorRange = doc.dom().createRange();
-      cursorRange.selectNode(node.dom());
-      var rect = cursorRange.getBoundingClientRect();
-      var collapseDirection = getCollapseDirection(rect, x);
-      var f = collapseDirection === COLLAPSE_TO_LEFT ? first$1 : last;
-      return f(node).map(function (target) {
-        return createCollapsedNode(doc, target, collapseDirection);
-      });
-    };
-    var locateInEmpty = function (doc, node, x) {
-      var rect = node.dom().getBoundingClientRect();
-      var collapseDirection = getCollapseDirection(rect, x);
-      return Option.some(createCollapsedNode(doc, node, collapseDirection));
-    };
-    var search$1 = function (doc, node, x) {
-      var f = children(node).length === 0 ? locateInEmpty : locateInElement;
-      return f(doc, node, x);
-    };
-
-    var caretPositionFromPoint = function (doc, x, y) {
-      return Option.from(doc.dom().caretPositionFromPoint(x, y)).bind(function (pos) {
-        if (pos.offsetNode === null) {
-          return Option.none();
-        }
-        var r = doc.dom().createRange();
-        r.setStart(pos.offsetNode, pos.offset);
-        r.collapse();
-        return Option.some(r);
-      });
-    };
-    var caretRangeFromPoint = function (doc, x, y) {
-      return Option.from(doc.dom().caretRangeFromPoint(x, y));
-    };
-    var searchTextNodes = function (doc, node, x, y) {
-      var r = doc.dom().createRange();
-      r.selectNode(node.dom());
-      var rect = r.getBoundingClientRect();
-      var boundedX = Math.max(rect.left, Math.min(rect.right, x));
-      var boundedY = Math.max(rect.top, Math.min(rect.bottom, y));
-      return locate$2(doc, node, boundedX, boundedY);
-    };
-    var searchFromPoint = function (doc, x, y) {
-      return Element.fromPoint(doc, x, y).bind(function (elem) {
-        var fallback = function () {
-          return search$1(doc, elem, x);
-        };
-        return children(elem).length === 0 ? fallback() : searchTextNodes(doc, elem, x, y).orThunk(fallback);
-      });
-    };
-    var availableSearch = document.caretPositionFromPoint ? caretPositionFromPoint : document.caretRangeFromPoint ? caretRangeFromPoint : searchFromPoint;
 
     var beforeSpecial = function (element, offset) {
       var name$1 = name(element);
@@ -10286,14 +9965,14 @@
     var preprocessExact = function (start, soffset, finish, foffset) {
       var startSitu = beforeSpecial(start, soffset);
       var finishSitu = beforeSpecial(finish, foffset);
-      return Selection.relative(startSitu, finishSitu);
+      return SimSelection.relative(startSitu, finishSitu);
     };
 
     var makeRange = function (start, soffset, finish, foffset) {
       var doc = owner(start);
-      var rng = doc.dom().createRange();
-      rng.setStart(start.dom(), soffset);
-      rng.setEnd(finish.dom(), foffset);
+      var rng = doc.dom.createRange();
+      rng.setStart(start.dom, soffset);
+      rng.setEnd(finish.dom, foffset);
       return rng;
     };
     var after$2 = function (start, soffset, finish, foffset) {
@@ -10302,8 +9981,11 @@
       return r.collapsed && !same;
     };
 
+    var getNativeSelection = function (win) {
+      return Optional.from(win.getSelection());
+    };
     var doSetNativeRange = function (win, rng) {
-      Option.from(win.getSelection()).each(function (selection) {
+      getNativeSelection(win).each(function (selection) {
         selection.removeAllRanges();
         selection.addRange(rng);
       });
@@ -10313,8 +9995,8 @@
       doSetNativeRange(win, rng);
     };
     var setLegacyRtlRange = function (win, selection, start, soffset, finish, foffset) {
-      selection.collapse(start.dom(), soffset);
-      selection.extend(finish.dom(), foffset);
+      selection.collapse(start.dom, soffset);
+      selection.extend(finish.dom, foffset);
     };
     var setRangeFromRelative = function (win, relative) {
       return diagnose(win, relative).match({
@@ -10322,18 +10004,19 @@
           doSetRange(win, start, soffset, finish, foffset);
         },
         rtl: function (start, soffset, finish, foffset) {
-          var selection = win.getSelection();
-          if (selection.setBaseAndExtent) {
-            selection.setBaseAndExtent(start.dom(), soffset, finish.dom(), foffset);
-          } else if (selection.extend) {
-            try {
-              setLegacyRtlRange(win, selection, start, soffset, finish, foffset);
-            } catch (e) {
+          getNativeSelection(win).each(function (selection) {
+            if (selection.setBaseAndExtent) {
+              selection.setBaseAndExtent(start.dom, soffset, finish.dom, foffset);
+            } else if (selection.extend) {
+              try {
+                setLegacyRtlRange(win, selection, start, soffset, finish, foffset);
+              } catch (e) {
+                doSetRange(win, finish, foffset, start, soffset);
+              }
+            } else {
               doSetRange(win, finish, foffset, start, soffset);
             }
-          } else {
-            doSetRange(win, finish, foffset, start, soffset);
-          }
+          });
         }
       });
     };
@@ -10345,24 +10028,28 @@
       if (selection.rangeCount > 0) {
         var firstRng = selection.getRangeAt(0);
         var lastRng = selection.getRangeAt(selection.rangeCount - 1);
-        return Option.some(SimRange.create(Element.fromDom(firstRng.startContainer), firstRng.startOffset, Element.fromDom(lastRng.endContainer), lastRng.endOffset));
+        return Optional.some(SimRange.create(SugarElement.fromDom(firstRng.startContainer), firstRng.startOffset, SugarElement.fromDom(lastRng.endContainer), lastRng.endOffset));
       } else {
-        return Option.none();
+        return Optional.none();
       }
     };
     var doGetExact = function (selection) {
-      var anchor = Element.fromDom(selection.anchorNode);
-      var focus = Element.fromDom(selection.focusNode);
-      return after$2(anchor, selection.anchorOffset, focus, selection.focusOffset) ? Option.some(SimRange.create(anchor, selection.anchorOffset, focus, selection.focusOffset)) : readRange(selection);
+      if (selection.anchorNode === null || selection.focusNode === null) {
+        return readRange(selection);
+      } else {
+        var anchor = SugarElement.fromDom(selection.anchorNode);
+        var focus_1 = SugarElement.fromDom(selection.focusNode);
+        return after$2(anchor, selection.anchorOffset, focus_1, selection.focusOffset) ? Optional.some(SimRange.create(anchor, selection.anchorOffset, focus_1, selection.focusOffset)) : readRange(selection);
+      }
     };
     var getExact = function (win) {
-      return Option.from(win.getSelection()).filter(function (sel) {
+      return getNativeSelection(win).filter(function (sel) {
         return sel.rangeCount > 0;
       }).bind(doGetExact);
     };
-    var get$c = function (win) {
+    var get$d = function (win) {
       return getExact(win).map(function (range) {
-        return Selection.exact(range.start(), range.soffset(), range.finish(), range.foffset());
+        return SimSelection.exact(range.start, range.soffset, range.finish, range.foffset);
       });
     };
     var getFirstRect$1 = function (win, selection) {
@@ -10370,135 +10057,19 @@
       return getFirstRect(rng);
     };
     var clear$1 = function (win) {
-      var selection = win.getSelection();
-      selection.removeAllRanges();
-    };
-
-    var COLLAPSED_WIDTH = 2;
-    var collapsedRect = function (rect) {
-      return {
-        left: rect.left,
-        top: rect.top,
-        right: rect.right,
-        bottom: rect.bottom,
-        width: constant(COLLAPSED_WIDTH),
-        height: rect.height
-      };
-    };
-    var toRect$1 = function (rawRect) {
-      return {
-        left: constant(rawRect.left),
-        top: constant(rawRect.top),
-        right: constant(rawRect.right),
-        bottom: constant(rawRect.bottom),
-        width: constant(rawRect.width),
-        height: constant(rawRect.height)
-      };
-    };
-    var getRectsFromRange = function (range) {
-      if (!range.collapsed) {
-        return map$1(range.getClientRects(), toRect$1);
-      } else {
-        var start_1 = Element.fromDom(range.startContainer);
-        return parent(start_1).bind(function (parent) {
-          var selection = Selection.exact(start_1, range.startOffset, parent, getEnd(parent));
-          var optRect = getFirstRect$1(range.startContainer.ownerDocument.defaultView, selection);
-          return optRect.map(collapsedRect).map(pure);
-        }).getOr([]);
-      }
-    };
-    var getRectangles = function (cWin) {
-      var sel = cWin.getSelection();
-      return sel !== undefined && sel.rangeCount > 0 ? getRectsFromRange(sel.getRangeAt(0)) : [];
-    };
-    var Rectangles = { getRectangles: getRectangles };
-
-    var autocompleteHack = function () {
-      return function (f) {
-        global$4.setTimeout(function () {
-          f();
-        }, 0);
-      };
-    };
-    var resume = function (cWin) {
-      cWin.focus();
-      var iBody = Element.fromDom(cWin.document.body);
-      var inInput = active().exists(function (elem) {
-        return contains([
-          'input',
-          'textarea'
-        ], name(elem));
-      });
-      var transaction = inInput ? autocompleteHack() : apply;
-      transaction(function () {
-        active().each(blur);
-        focus$1(iBody);
+      getNativeSelection(win).each(function (selection) {
+        return selection.removeAllRanges();
       });
     };
-    var ResumeEditing = { resume: resume };
-
-    var EXTRA_SPACING = 50;
-    var data = 'data-' + Styles.resolve('last-outer-height');
-    var setLastHeight = function (cBody, value) {
-      set(cBody, data, value);
-    };
-    var getLastHeight = function (cBody) {
-      return DataAttributes.safeParse(cBody, data);
-    };
-    var getBoundsFrom = function (rect) {
-      return {
-        top: constant(rect.top()),
-        bottom: constant(rect.top() + rect.height())
-      };
-    };
-    var getBounds$1 = function (cWin) {
-      var rects = Rectangles.getRectangles(cWin);
-      return rects.length > 0 ? Option.some(rects[0]).map(getBoundsFrom) : Option.none();
-    };
-    var findDelta = function (outerWindow, cBody) {
-      var last = getLastHeight(cBody);
-      var current = outerWindow.innerHeight;
-      return last > current ? Option.some(last - current) : Option.none();
-    };
-    var calculate = function (cWin, bounds, delta) {
-      var isOutside = bounds.top() > cWin.innerHeight || bounds.bottom() > cWin.innerHeight;
-      return isOutside ? Math.min(delta, bounds.bottom() - cWin.innerHeight + EXTRA_SPACING) : 0;
-    };
-    var setup$1 = function (outerWindow, cWin) {
-      var cBody = Element.fromDom(cWin.document.body);
-      var toEditing = function () {
-        ResumeEditing.resume(cWin);
-      };
-      var onResize = bind$3(Element.fromDom(outerWindow), 'resize', function () {
-        findDelta(outerWindow, cBody).each(function (delta) {
-          getBounds$1(cWin).each(function (bounds) {
-            var cScrollBy = calculate(cWin, bounds, delta);
-            if (cScrollBy !== 0) {
-              cWin.scrollTo(cWin.pageXOffset, cWin.pageYOffset + cScrollBy);
-            }
-          });
-        });
-        setLastHeight(cBody, outerWindow.innerHeight);
-      });
-      setLastHeight(cBody, outerWindow.innerHeight);
-      var destroy = function () {
-        onResize.unbind();
-      };
-      return {
-        toEditing: toEditing,
-        destroy: destroy
-      };
-    };
-    var AndroidSetup = { setup: setup$1 };
 
     var getBodyFromFrame = function (frame) {
-      return Option.some(Element.fromDom(frame.dom().contentWindow.document.body));
+      return Optional.some(SugarElement.fromDom(frame.dom.contentWindow.document.body));
     };
     var getDocFromFrame = function (frame) {
-      return Option.some(Element.fromDom(frame.dom().contentWindow.document));
+      return Optional.some(SugarElement.fromDom(frame.dom.contentWindow.document));
     };
     var getWinFromFrame = function (frame) {
-      return Option.from(frame.dom().contentWindow);
+      return Optional.from(frame.dom.contentWindow);
     };
     var getSelectionFromFrame = function (frame) {
       var optWin = getWinFromFrame(frame);
@@ -10525,35 +10096,25 @@
         };
       });
     };
-    var toRect$2 = function (rect) {
-      return {
-        left: constant(rect.left),
-        top: constant(rect.top),
-        right: constant(rect.right),
-        bottom: constant(rect.bottom),
-        width: constant(rect.width),
-        height: constant(rect.height)
-      };
-    };
     var getActiveApi = function (editor) {
       var frame = getFrame(editor);
       var tryFallbackBox = function (win) {
         var isCollapsed = function (sel) {
-          return eq(sel.start(), sel.finish()) && sel.soffset() === sel.foffset();
+          return eq(sel.start, sel.finish) && sel.soffset === sel.foffset;
         };
         var toStartRect = function (sel) {
-          var rect = sel.start().dom().getBoundingClientRect();
-          return rect.width > 0 || rect.height > 0 ? Option.some(rect).map(toRect$2) : Option.none();
+          var rect = sel.start.dom.getBoundingClientRect();
+          return rect.width > 0 || rect.height > 0 ? Optional.some(rect) : Optional.none();
         };
         return getExact(win).filter(isCollapsed).bind(toStartRect);
       };
       return getBodyFromFrame(frame).bind(function (body) {
         return getDocFromFrame(frame).bind(function (doc) {
           return getWinFromFrame(frame).map(function (win) {
-            var html = Element.fromDom(doc.dom().documentElement);
+            var html = SugarElement.fromDom(doc.dom.documentElement);
             var getCursorBox = editor.getCursorBox.getOrThunk(function () {
               return function () {
-                return get$c(win).bind(function (sel) {
+                return get$d(win).bind(function (sel) {
                   return getFirstRect$1(win, sel).orThunk(function () {
                     return tryFallbackBox(win);
                   });
@@ -10571,14 +10132,14 @@
               };
             });
             return {
-              body: constant(body),
-              doc: constant(doc),
-              win: constant(win),
-              html: constant(html),
+              body: body,
+              doc: doc,
+              win: win,
+              html: html,
               getSelection: curry(getSelectionFromFrame, frame),
               setSelection: setSelection,
               clearSelection: clearSelection,
-              frame: constant(frame),
+              frame: frame,
               onKeyup: getOrListen(editor, doc, 'onKeyup', 'keyup'),
               onNodeChanged: getOrListen(editor, doc, 'onNodeChanged', 'SelectionChange'),
               onDomChanged: editor.onDomChanged,
@@ -10596,77 +10157,18 @@
         });
       });
     };
-    var PlatformEditor = {
-      getBody: getOrDerive('getBody', getBodyFromFrame),
-      getDoc: getOrDerive('getDoc', getDocFromFrame),
-      getWin: getOrDerive('getWin', getWinFromFrame),
-      getSelection: getOrDerive('getSelection', getSelectionFromFrame),
-      getFrame: getFrame,
-      getActiveApi: getActiveApi
-    };
-
-    var attr = 'data-ephox-mobile-fullscreen-style';
-    var siblingStyles = 'display:none!important;';
-    var ancestorPosition = 'position:absolute!important;';
-    var ancestorStyles = 'top:0!important;left:0!important;margin:0!important;padding:0!important;width:100%!important;height:100%!important;overflow:visible!important;';
-    var bgFallback = 'background-color:rgb(255,255,255)!important;';
-    var isAndroid = PlatformDetection$1.detect().os.isAndroid();
-    var matchColor = function (editorBody) {
-      var color = get$3(editorBody, 'background-color');
-      return color !== undefined && color !== '' ? 'background-color:' + color + '!important' : bgFallback;
-    };
-    var clobberStyles = function (container, editorBody) {
-      var gatherSibilings = function (element) {
-        var siblings = siblings$2(element, '*');
-        return siblings;
-      };
-      var clobber = function (clobberStyle) {
-        return function (element) {
-          var styles = get(element, 'style');
-          var backup = styles === undefined ? 'no-styles' : styles.trim();
-          if (backup === clobberStyle) {
-            return;
-          } else {
-            set(element, attr, backup);
-            set(element, 'style', clobberStyle);
-          }
-        };
-      };
-      var ancestors = ancestors$1(container, '*');
-      var siblings = bind(ancestors, gatherSibilings);
-      var bgColor = matchColor(editorBody);
-      each$1(siblings, clobber(siblingStyles));
-      each$1(ancestors, clobber(ancestorPosition + ancestorStyles + bgColor));
-      var containerStyles = isAndroid === true ? '' : ancestorPosition;
-      clobber(containerStyles + ancestorStyles + bgColor)(container);
-    };
-    var restoreStyles = function () {
-      var clobberedEls = all$2('[' + attr + ']');
-      each$1(clobberedEls, function (element) {
-        var restore = get(element, attr);
-        if (restore !== 'no-styles') {
-          set(element, 'style', restore);
-        } else {
-          remove$1(element, 'style');
-        }
-        remove$1(element, attr);
-      });
-    };
-    var Thor = {
-      clobberStyles: clobberStyles,
-      restoreStyles: restoreStyles
-    };
+    var getWin$1 = getOrDerive('getWin', getWinFromFrame);
 
     var tag = function () {
       var head = first('head').getOrDie();
       var nu = function () {
-        var meta = Element.fromTag('meta');
+        var meta = SugarElement.fromTag('meta');
         set(meta, 'name', 'viewport');
         append(head, meta);
         return meta;
       };
       var element = first('meta[name="viewport"]').getOrThunk(nu);
-      var backup = get(element, 'content');
+      var backup = get$2(element, 'content');
       var maximize = function () {
         set(element, 'content', 'width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0');
       };
@@ -10682,31 +10184,379 @@
         restore: restore
       };
     };
-    var MetaViewport = { tag: tag };
+
+    var attr = 'data-ephox-mobile-fullscreen-style';
+    var siblingStyles = 'display:none!important;';
+    var ancestorPosition = 'position:absolute!important;';
+    var ancestorStyles = 'top:0!important;left:0!important;margin:0!important;padding:0!important;width:100%!important;height:100%!important;overflow:visible!important;';
+    var bgFallback = 'background-color:rgb(255,255,255)!important;';
+    var isAndroid = detect$3().os.isAndroid();
+    var matchColor = function (editorBody) {
+      var color = get$5(editorBody, 'background-color');
+      return color !== undefined && color !== '' ? 'background-color:' + color + '!important' : bgFallback;
+    };
+    var clobberStyles = function (container, editorBody) {
+      var gatherSiblings = function (element) {
+        return siblings$2(element, '*');
+      };
+      var clobber = function (clobberStyle) {
+        return function (element) {
+          var styles = get$2(element, 'style');
+          var backup = styles === undefined ? 'no-styles' : styles.trim();
+          if (backup === clobberStyle) {
+            return;
+          } else {
+            set(element, attr, backup);
+            set(element, 'style', clobberStyle);
+          }
+        };
+      };
+      var ancestors = ancestors$1(container, '*');
+      var siblings = bind(ancestors, gatherSiblings);
+      var bgColor = matchColor(editorBody);
+      each(siblings, clobber(siblingStyles));
+      each(ancestors, clobber(ancestorPosition + ancestorStyles + bgColor));
+      var containerStyles = isAndroid === true ? '' : ancestorPosition;
+      clobber(containerStyles + ancestorStyles + bgColor)(container);
+    };
+    var restoreStyles = function () {
+      var clobberedEls = all$2('[' + attr + ']');
+      each(clobberedEls, function (element) {
+        var restore = get$2(element, attr);
+        if (restore !== 'no-styles') {
+          set(element, 'style', restore);
+        } else {
+          remove$1(element, 'style');
+        }
+        remove$1(element, attr);
+      });
+    };
+
+    function DelayedFunction (fun, delay) {
+      var ref = null;
+      var schedule = function () {
+        var args = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+          args[_i] = arguments[_i];
+        }
+        ref = setTimeout(function () {
+          fun.apply(null, args);
+          ref = null;
+        }, delay);
+      };
+      var cancel = function () {
+        if (ref !== null) {
+          clearTimeout(ref);
+          ref = null;
+        }
+      };
+      return {
+        cancel: cancel,
+        schedule: schedule
+      };
+    }
+
+    var SIGNIFICANT_MOVE = 5;
+    var LONGPRESS_DELAY = 400;
+    var getTouch = function (event) {
+      var raw = event.raw;
+      if (raw.touches === undefined || raw.touches.length !== 1) {
+        return Optional.none();
+      }
+      return Optional.some(raw.touches[0]);
+    };
+    var isFarEnough = function (touch, data) {
+      var distX = Math.abs(touch.clientX - data.x);
+      var distY = Math.abs(touch.clientY - data.y);
+      return distX > SIGNIFICANT_MOVE || distY > SIGNIFICANT_MOVE;
+    };
+    var monitor = function (settings) {
+      var startData = Cell(Optional.none());
+      var longpressFired = Cell(false);
+      var longpress$1 = DelayedFunction(function (event) {
+        settings.triggerEvent(longpress(), event);
+        longpressFired.set(true);
+      }, LONGPRESS_DELAY);
+      var handleTouchstart = function (event) {
+        getTouch(event).each(function (touch) {
+          longpress$1.cancel();
+          var data = {
+            x: touch.clientX,
+            y: touch.clientY,
+            target: event.target
+          };
+          longpress$1.schedule(event);
+          longpressFired.set(false);
+          startData.set(Optional.some(data));
+        });
+        return Optional.none();
+      };
+      var handleTouchmove = function (event) {
+        longpress$1.cancel();
+        getTouch(event).each(function (touch) {
+          startData.get().each(function (data) {
+            if (isFarEnough(touch, data)) {
+              startData.set(Optional.none());
+            }
+          });
+        });
+        return Optional.none();
+      };
+      var handleTouchend = function (event) {
+        longpress$1.cancel();
+        var isSame = function (data) {
+          return eq(data.target, event.target);
+        };
+        return startData.get().filter(isSame).map(function (_data) {
+          if (longpressFired.get()) {
+            event.prevent();
+            return false;
+          } else {
+            return settings.triggerEvent(tap(), event);
+          }
+        });
+      };
+      var handlers = wrapAll$1([
+        {
+          key: touchstart(),
+          value: handleTouchstart
+        },
+        {
+          key: touchmove(),
+          value: handleTouchmove
+        },
+        {
+          key: touchend(),
+          value: handleTouchend
+        }
+      ]);
+      var fireIfReady = function (event, type) {
+        return get$1(handlers, type).bind(function (handler) {
+          return handler(event);
+        });
+      };
+      return { fireIfReady: fireIfReady };
+    };
+
+    var monitor$1 = function (editorApi) {
+      var tapEvent = monitor({
+        triggerEvent: function (type, evt) {
+          editorApi.onTapContent(evt);
+        }
+      });
+      var onTouchend = function () {
+        return bind$3(editorApi.body, 'touchend', function (evt) {
+          tapEvent.fireIfReady(evt, 'touchend');
+        });
+      };
+      var onTouchmove = function () {
+        return bind$3(editorApi.body, 'touchmove', function (evt) {
+          tapEvent.fireIfReady(evt, 'touchmove');
+        });
+      };
+      var fireTouchstart = function (evt) {
+        tapEvent.fireIfReady(evt, 'touchstart');
+      };
+      return {
+        fireTouchstart: fireTouchstart,
+        onTouchend: onTouchend,
+        onTouchmove: onTouchmove
+      };
+    };
+
+    var isAndroid6 = detect$3().os.version.major >= 6;
+    var initEvents = function (editorApi, toolstrip, alloy) {
+      var tapping = monitor$1(editorApi);
+      var outerDoc = owner(toolstrip);
+      var isRanged = function (sel) {
+        return !eq(sel.start, sel.finish) || sel.soffset !== sel.foffset;
+      };
+      var hasRangeInUi = function () {
+        return active(outerDoc).filter(function (input) {
+          return name(input) === 'input';
+        }).exists(function (input) {
+          return input.dom.selectionStart !== input.dom.selectionEnd;
+        });
+      };
+      var updateMargin = function () {
+        var rangeInContent = editorApi.doc.dom.hasFocus() && editorApi.getSelection().exists(isRanged);
+        alloy.getByDom(toolstrip).each((rangeInContent || hasRangeInUi()) === true ? Toggling.on : Toggling.off);
+      };
+      var listeners = [
+        bind$3(editorApi.body, 'touchstart', function (evt) {
+          editorApi.onTouchContent();
+          tapping.fireTouchstart(evt);
+        }),
+        tapping.onTouchmove(),
+        tapping.onTouchend(),
+        bind$3(toolstrip, 'touchstart', function (_evt) {
+          editorApi.onTouchToolstrip();
+        }),
+        editorApi.onToReading(function () {
+          blur(editorApi.body);
+        }),
+        editorApi.onToEditing(noop),
+        editorApi.onScrollToCursor(function (tinyEvent) {
+          tinyEvent.preventDefault();
+          editorApi.getCursorBox().each(function (bounds) {
+            var cWin = editorApi.win;
+            var isOutside = bounds.top > cWin.innerHeight || bounds.bottom > cWin.innerHeight;
+            var cScrollBy = isOutside ? bounds.bottom - cWin.innerHeight + 50 : 0;
+            if (cScrollBy !== 0) {
+              cWin.scrollTo(cWin.pageXOffset, cWin.pageYOffset + cScrollBy);
+            }
+          });
+        })
+      ].concat(isAndroid6 === true ? [] : [
+        bind$3(SugarElement.fromDom(editorApi.win), 'blur', function () {
+          alloy.getByDom(toolstrip).each(Toggling.off);
+        }),
+        bind$3(outerDoc, 'select', updateMargin),
+        bind$3(editorApi.doc, 'selectionchange', updateMargin)
+      ]);
+      var destroy = function () {
+        each(listeners, function (l) {
+          l.unbind();
+        });
+      };
+      return { destroy: destroy };
+    };
+
+    var safeParse = function (element, attribute) {
+      var parsed = parseInt(get$2(element, attribute), 10);
+      return isNaN(parsed) ? 0 : parsed;
+    };
+
+    var COLLAPSED_WIDTH = 2;
+    var collapsedRect = function (rect) {
+      return __assign(__assign({}, rect), { width: COLLAPSED_WIDTH });
+    };
+    var toRect$1 = function (rawRect) {
+      return {
+        left: rawRect.left,
+        top: rawRect.top,
+        right: rawRect.right,
+        bottom: rawRect.bottom,
+        width: rawRect.width,
+        height: rawRect.height
+      };
+    };
+    var getRectsFromRange = function (range) {
+      if (!range.collapsed) {
+        return map(range.getClientRects(), toRect$1);
+      } else {
+        var start_1 = SugarElement.fromDom(range.startContainer);
+        return parent(start_1).bind(function (parent) {
+          var selection = SimSelection.exact(start_1, range.startOffset, parent, getEnd(parent));
+          var optRect = getFirstRect$1(range.startContainer.ownerDocument.defaultView, selection);
+          return optRect.map(collapsedRect).map(pure);
+        }).getOr([]);
+      }
+    };
+    var getRectangles = function (cWin) {
+      var sel = cWin.getSelection();
+      return sel !== undefined && sel.rangeCount > 0 ? getRectsFromRange(sel.getRangeAt(0)) : [];
+    };
+
+    var autocompleteHack = function () {
+      return function (f) {
+        global$4.setTimeout(function () {
+          f();
+        }, 0);
+      };
+    };
+    var resume = function (cWin) {
+      cWin.focus();
+      var iBody = SugarElement.fromDom(cWin.document.body);
+      var inInput = active().exists(function (elem) {
+        return contains([
+          'input',
+          'textarea'
+        ], name(elem));
+      });
+      var transaction = inInput ? autocompleteHack() : apply;
+      transaction(function () {
+        active().each(blur);
+        focus$1(iBody);
+      });
+    };
+
+    var EXTRA_SPACING = 50;
+    var data = 'data-' + resolve('last-outer-height');
+    var setLastHeight = function (cBody, value) {
+      set(cBody, data, value);
+    };
+    var getLastHeight = function (cBody) {
+      return safeParse(cBody, data);
+    };
+    var getBoundsFrom = function (rect) {
+      return {
+        top: rect.top,
+        bottom: rect.top + rect.height
+      };
+    };
+    var getBounds$1 = function (cWin) {
+      var rects = getRectangles(cWin);
+      return rects.length > 0 ? Optional.some(rects[0]).map(getBoundsFrom) : Optional.none();
+    };
+    var findDelta = function (outerWindow, cBody) {
+      var last = getLastHeight(cBody);
+      var current = outerWindow.innerHeight;
+      return last > current ? Optional.some(last - current) : Optional.none();
+    };
+    var calculate = function (cWin, bounds, delta) {
+      var isOutside = bounds.top > cWin.innerHeight || bounds.bottom > cWin.innerHeight;
+      return isOutside ? Math.min(delta, bounds.bottom - cWin.innerHeight + EXTRA_SPACING) : 0;
+    };
+    var setup$1 = function (outerWindow, cWin) {
+      var cBody = SugarElement.fromDom(cWin.document.body);
+      var toEditing = function () {
+        resume(cWin);
+      };
+      var onResize = bind$3(SugarElement.fromDom(outerWindow), 'resize', function () {
+        findDelta(outerWindow, cBody).each(function (delta) {
+          getBounds$1(cWin).each(function (bounds) {
+            var cScrollBy = calculate(cWin, bounds, delta);
+            if (cScrollBy !== 0) {
+              cWin.scrollTo(cWin.pageXOffset, cWin.pageYOffset + cScrollBy);
+            }
+          });
+        });
+        setLastHeight(cBody, outerWindow.innerHeight);
+      });
+      setLastHeight(cBody, outerWindow.innerHeight);
+      var destroy = function () {
+        onResize.unbind();
+      };
+      return {
+        toEditing: toEditing,
+        destroy: destroy
+      };
+    };
 
     var create$4 = function (platform, mask) {
-      var meta = MetaViewport.tag();
+      var meta = tag();
       var androidApi = api$2();
       var androidEvents = api$2();
       var enter = function () {
         mask.hide();
-        add$2(platform.container, Styles.resolve('fullscreen-maximized'));
-        add$2(platform.container, Styles.resolve('android-maximized'));
+        add$2(platform.container, resolve('fullscreen-maximized'));
+        add$2(platform.container, resolve('android-maximized'));
         meta.maximize();
-        add$2(platform.body, Styles.resolve('android-scroll-reload'));
-        androidApi.set(AndroidSetup.setup(platform.win, PlatformEditor.getWin(platform.editor).getOrDie('no')));
-        PlatformEditor.getActiveApi(platform.editor).each(function (editorApi) {
-          Thor.clobberStyles(platform.container, editorApi.body());
-          androidEvents.set(AndroidEvents.initEvents(editorApi, platform.toolstrip, platform.alloy));
+        add$2(platform.body, resolve('android-scroll-reload'));
+        androidApi.set(setup$1(platform.win, getWin$1(platform.editor).getOrDie('no')));
+        getActiveApi(platform.editor).each(function (editorApi) {
+          clobberStyles(platform.container, editorApi.body);
+          androidEvents.set(initEvents(editorApi, platform.toolstrip, platform.alloy));
         });
       };
       var exit = function () {
         meta.restore();
         mask.show();
-        remove$4(platform.container, Styles.resolve('fullscreen-maximized'));
-        remove$4(platform.container, Styles.resolve('android-maximized'));
-        Thor.restoreStyles();
-        remove$4(platform.body, Styles.resolve('android-scroll-reload'));
+        remove$4(platform.container, resolve('fullscreen-maximized'));
+        remove$4(platform.container, resolve('android-maximized'));
+        restoreStyles();
+        remove$4(platform.body, resolve('android-scroll-reload'));
         androidEvents.clear();
         androidApi.clear();
       };
@@ -10715,13 +10565,12 @@
         exit: exit
       };
     };
-    var AndroidMode = { create: create$4 };
 
-    var first$2 = function (fn, rate) {
+    var first$1 = function (fn, rate) {
       var timer = null;
       var cancel = function () {
         if (timer !== null) {
-          domGlobals.clearTimeout(timer);
+          clearTimeout(timer);
           timer = null;
         }
       };
@@ -10731,7 +10580,7 @@
           args[_i] = arguments[_i];
         }
         if (timer === null) {
-          timer = domGlobals.setTimeout(function () {
+          timer = setTimeout(function () {
             fn.apply(null, args);
             timer = null;
           }, rate);
@@ -10742,11 +10591,11 @@
         throttle: throttle
       };
     };
-    var last$1 = function (fn, rate) {
+    var last = function (fn, rate) {
       var timer = null;
       var cancel = function () {
         if (timer !== null) {
-          domGlobals.clearTimeout(timer);
+          clearTimeout(timer);
           timer = null;
         }
       };
@@ -10756,9 +10605,9 @@
           args[_i] = arguments[_i];
         }
         if (timer !== null) {
-          domGlobals.clearTimeout(timer);
+          clearTimeout(timer);
         }
-        timer = domGlobals.setTimeout(function () {
+        timer = setTimeout(function () {
           fn.apply(null, args);
           timer = null;
         }, rate);
@@ -10769,15 +10618,15 @@
       };
     };
 
-    var sketch$9 = function (onView, translate) {
+    var sketch$9 = function (onView, _translate) {
       var memIcon = record(Container.sketch({
         dom: dom$1('<div aria-hidden="true" class="${prefix}-mask-tap-icon"></div>'),
         containerBehaviours: derive$1([Toggling.config({
-            toggleClass: Styles.resolve('mask-tap-icon-selected'),
+            toggleClass: resolve('mask-tap-icon-selected'),
             toggleOnExecute: false
           })])
       }));
-      var onViewThrottle = first$2(onView, 200);
+      var onViewThrottle = first$1(onView, 200);
       return Container.sketch({
         dom: dom$1('<div class="${prefix}-disabled-mask"></div>'),
         components: [Container.sketch({
@@ -10785,16 +10634,16 @@
             components: [Button.sketch({
                 dom: dom$1('<div class="${prefix}-content-tap-section"></div>'),
                 components: [memIcon.asSpec()],
-                action: function (button) {
+                action: function (_button) {
                   onViewThrottle.throttle();
                 },
-                buttonBehaviours: derive$1([Toggling.config({ toggleClass: Styles.resolve('mask-tap-icon-selected') })])
+                buttonBehaviours: derive$1([Toggling.config({ toggleClass: resolve('mask-tap-icon-selected') })])
               })]
           })]
       });
     };
-    var TapToEditMask = { sketch: sketch$9 };
 
+    var unbindNoop = constant({ unbind: noop });
     var MobileSchema = objOf([
       strictObjOf('editor', [
         strict$1('getFrame'),
@@ -10812,10 +10661,10 @@
         defaulted$1('onTouchContent', noop),
         defaulted$1('onTapContent', noop),
         defaulted$1('onTouchToolstrip', noop),
-        defaulted$1('onScrollToCursor', constant({ unbind: noop })),
-        defaulted$1('onScrollToElement', constant({ unbind: noop })),
-        defaulted$1('onToEditing', constant({ unbind: noop })),
-        defaulted$1('onToReading', constant({ unbind: noop })),
+        defaulted$1('onScrollToCursor', unbindNoop),
+        defaulted$1('onScrollToElement', unbindNoop),
+        defaulted$1('onToEditing', unbindNoop),
+        defaulted$1('onToReading', unbindNoop),
         defaulted$1('onToolbarScrollStart', identity)
       ]),
       strict$1('socket'),
@@ -10825,14 +10674,14 @@
       strict$1('container'),
       strict$1('alloy'),
       state$1('win', function (spec) {
-        return owner(spec.socket).dom().defaultView;
+        return owner(spec.socket).dom.defaultView;
       }),
       state$1('body', function (spec) {
-        return Element.fromDom(spec.socket.dom().ownerDocument.body);
+        return SugarElement.fromDom(spec.socket.dom.ownerDocument.body);
       }),
       defaulted$1('translate', identity),
       defaulted$1('setReadOnly', noop),
-      defaulted$1('readOnlyOnInit', constant(true))
+      defaulted$1('readOnlyOnInit', always)
     ]);
 
     var produce = function (raw) {
@@ -10842,7 +10691,7 @@
         mobile.setReadOnly(mobile.readOnlyOnInit());
         mode.enter();
       };
-      var mask = build$1(TapToEditMask.sketch(onTap, mobile.translate));
+      var mask = build$1(sketch$9(onTap, mobile.translate));
       mobile.alloy.add(mask);
       var maskApi = {
         show: function () {
@@ -10852,8 +10701,8 @@
           mobile.alloy.remove(mask);
         }
       };
-      append(mobile.container, mask.element());
-      var mode = AndroidMode.create(mobile, maskApi);
+      append(mobile.container, mask.element);
+      var mode = create$4(mobile, maskApi);
       return {
         setReadOnly: mobile.setReadOnly,
         refreshStructure: noop,
@@ -10862,14 +10711,13 @@
         destroy: noop
       };
     };
-    var AndroidWebapp = { produce: produce };
 
     var schema$e = constant([
       strict$1('dom'),
       defaulted$1('shell', true),
       field$1('toolbarBehaviours', [Replacing])
     ]);
-    var enhanceGroups = function (detail) {
+    var enhanceGroups = function () {
       return { behaviours: derive$1([Replacing.config({})]) };
     };
     var parts$2 = constant([optional({
@@ -10877,17 +10725,17 @@
         overrides: enhanceGroups
       })]);
 
-    var factory$4 = function (detail, components, spec, _externals) {
+    var factory$4 = function (detail, components, _spec, _externals) {
       var setGroups = function (toolbar, groups) {
         getGroupContainer(toolbar).fold(function () {
-          domGlobals.console.error('Toolbar was defined to not be a shell, but no groups container was specified in components');
+          console.error('Toolbar was defined to not be a shell, but no groups container was specified in components');
           throw new Error('Toolbar was defined to not be a shell, but no groups container was specified in components');
         }, function (container) {
           Replacing.set(container, groups);
         });
       };
       var getGroupContainer = function (component) {
-        return detail.shell ? Option.some(component) : getPart(component, detail, 'groups');
+        return detail.shell ? Optional.some(component) : getPart(component, detail, 'groups');
       };
       var extra = detail.shell ? {
         behaviours: [Replacing.config({})],
@@ -10927,7 +10775,7 @@
         unit: 'item'
       })]);
 
-    var factory$5 = function (detail, components, spec, _externals) {
+    var factory$5 = function (detail, components, _spec, _externals) {
       return {
         uid: detail.uid,
         dom: detail.dom,
@@ -10946,64 +10794,60 @@
       factory: factory$5
     });
 
-    var dataHorizontal = 'data-' + Styles.resolve('horizontal-scroll');
+    var dataHorizontal = 'data-' + resolve('horizontal-scroll');
     var canScrollVertically = function (container) {
-      container.dom().scrollTop = 1;
-      var result = container.dom().scrollTop !== 0;
-      container.dom().scrollTop = 0;
+      container.dom.scrollTop = 1;
+      var result = container.dom.scrollTop !== 0;
+      container.dom.scrollTop = 0;
       return result;
     };
     var canScrollHorizontally = function (container) {
-      container.dom().scrollLeft = 1;
-      var result = container.dom().scrollLeft !== 0;
-      container.dom().scrollLeft = 0;
+      container.dom.scrollLeft = 1;
+      var result = container.dom.scrollLeft !== 0;
+      container.dom.scrollLeft = 0;
       return result;
     };
     var hasVerticalScroll = function (container) {
-      return container.dom().scrollTop > 0 || canScrollVertically(container);
+      return container.dom.scrollTop > 0 || canScrollVertically(container);
     };
     var hasHorizontalScroll = function (container) {
-      return container.dom().scrollLeft > 0 || canScrollHorizontally(container);
+      return container.dom.scrollLeft > 0 || canScrollHorizontally(container);
     };
     var markAsHorizontal = function (container) {
       set(container, dataHorizontal, 'true');
     };
     var hasScroll = function (container) {
-      return get(container, dataHorizontal) === 'true' ? hasHorizontalScroll(container) : hasVerticalScroll(container);
+      return get$2(container, dataHorizontal) === 'true' ? hasHorizontalScroll(container) : hasVerticalScroll(container);
     };
     var exclusive = function (scope, selector) {
       return bind$3(scope, 'touchmove', function (event) {
-        closest$2(event.target(), selector).filter(hasScroll).fold(function () {
-          event.raw().preventDefault();
+        closest$2(event.target, selector).filter(hasScroll).fold(function () {
+          event.prevent();
         }, noop);
       });
     };
-    var Scrollables = {
-      exclusive: exclusive,
-      markAsHorizontal: markAsHorizontal
-    };
 
-    function ScrollingToolbar () {
+    var ScrollingToolbar = function () {
       var makeGroup = function (gSpec) {
         var scrollClass = gSpec.scrollable === true ? '${prefix}-toolbar-scrollable-group' : '';
         return {
           dom: dom$1('<div aria-label="' + gSpec.label + '" class="${prefix}-toolbar-group ' + scrollClass + '"></div>'),
-          tgroupBehaviours: derive$1([config('adhoc-scrollable-toolbar', gSpec.scrollable === true ? [runOnInit(function (component, simulatedEvent) {
-                set$3(component.element(), 'overflow-x', 'auto');
-                Scrollables.markAsHorizontal(component.element());
-                Scrollable.register(component.element());
+          tgroupBehaviours: derive$1([config('adhoc-scrollable-toolbar', gSpec.scrollable === true ? [runOnInit(function (component, _simulatedEvent) {
+                set$3(component.element, 'overflow-x', 'auto');
+                markAsHorizontal(component.element);
+                register(component.element);
               })] : [])]),
-          components: [Container.sketch({ components: [ToolbarGroup.parts().items({})] })],
-          markers: { itemSelector: '.' + Styles.resolve('toolbar-group-item') },
+          components: [Container.sketch({ components: [ToolbarGroup.parts.items({})] })],
+          markers: { itemSelector: '.' + resolve('toolbar-group-item') },
           items: gSpec.items
         };
       };
       var toolbar = build$1(Toolbar.sketch({
         dom: dom$1('<div class="${prefix}-toolbar"></div>'),
-        components: [Toolbar.parts().groups({})],
+        components: [Toolbar.parts.groups({})],
         toolbarBehaviours: derive$1([
           Toggling.config({
-            toggleClass: Styles.resolve('context-toolbar'),
+            toggleClass: resolve('context-toolbar'),
             toggleOnExecute: false,
             aria: { mode: 'none' }
           }),
@@ -11012,10 +10856,10 @@
         shell: true
       }));
       var wrapper = build$1(Container.sketch({
-        dom: { classes: [Styles.resolve('toolstrip')] },
+        dom: { classes: [resolve('toolstrip')] },
         components: [premade$1(toolbar)],
         containerBehaviours: derive$1([Toggling.config({
-            toggleClass: Styles.resolve('android-selection-context-toolbar'),
+            toggleClass: resolve('android-selection-context-toolbar'),
             toggleOnExecute: false
           })])
       }));
@@ -11029,7 +10873,7 @@
         resetGroups();
       };
       var createGroups = function (gs) {
-        return map$1(gs, compose(ToolbarGroup.sketch, makeGroup));
+        return map(gs, compose(ToolbarGroup.sketch, makeGroup));
       };
       var refresh = function () {
       };
@@ -11046,8 +10890,8 @@
         Keying.focusIn(toolbar);
       };
       return {
-        wrapper: constant(wrapper),
-        toolbar: constant(toolbar),
+        wrapper: wrapper,
+        toolbar: toolbar,
         createGroups: createGroups,
         setGroups: setGroups,
         setContextToolbar: setContextToolbar,
@@ -11055,7 +10899,7 @@
         refresh: refresh,
         focus: focus
       };
-    }
+    };
 
     var makeEditSwitch = function (webapp) {
       return build$1(Button.sketch({
@@ -11086,15 +10930,10 @@
       var f = readOnly ? showEdit : hideEdit;
       f(socket, switchToEdit);
     };
-    var CommonRealm = {
-      makeEditSwitch: makeEditSwitch,
-      makeSocket: makeSocket,
-      updateMode: updateMode
-    };
 
     var getAnimationRoot = function (component, slideConfig) {
       return slideConfig.getAnimationRoot.fold(function () {
-        return component.element();
+        return component.element;
       }, function (get) {
         return get(component);
       });
@@ -11114,20 +10953,20 @@
       ]);
     };
     var setShrunk = function (component, slideConfig) {
-      remove$4(component.element(), slideConfig.openClass);
-      add$2(component.element(), slideConfig.closedClass);
-      set$3(component.element(), getDimensionProperty(slideConfig), '0px');
-      reflow(component.element());
+      remove$4(component.element, slideConfig.openClass);
+      add$2(component.element, slideConfig.closedClass);
+      set$3(component.element, getDimensionProperty(slideConfig), '0px');
+      reflow(component.element);
     };
     var setGrown = function (component, slideConfig) {
-      remove$4(component.element(), slideConfig.closedClass);
-      add$2(component.element(), slideConfig.openClass);
-      remove$5(component.element(), getDimensionProperty(slideConfig));
+      remove$4(component.element, slideConfig.closedClass);
+      add$2(component.element, slideConfig.openClass);
+      remove$5(component.element, getDimensionProperty(slideConfig));
     };
     var doImmediateShrink = function (component, slideConfig, slideState, _calculatedSize) {
       slideState.setCollapsed();
-      set$3(component.element(), getDimensionProperty(slideConfig), getDimension(slideConfig, component.element()));
-      reflow(component.element());
+      set$3(component.element, getDimensionProperty(slideConfig), getDimension(slideConfig, component.element));
+      reflow(component.element);
       disableTransitions(component, slideConfig);
       setShrunk(component, slideConfig);
       slideConfig.onStartShrink(component);
@@ -11135,11 +10974,11 @@
     };
     var doStartShrink = function (component, slideConfig, slideState, calculatedSize) {
       var size = calculatedSize.getOrThunk(function () {
-        return getDimension(slideConfig, component.element());
+        return getDimension(slideConfig, component.element);
       });
       slideState.setCollapsed();
-      set$3(component.element(), getDimensionProperty(slideConfig), size);
-      reflow(component.element());
+      set$3(component.element, getDimensionProperty(slideConfig), size);
+      reflow(component.element);
       var root = getAnimationRoot(component, slideConfig);
       remove$4(root, slideConfig.growingClass);
       add$2(root, slideConfig.shrinkingClass);
@@ -11147,19 +10986,19 @@
       slideConfig.onStartShrink(component);
     };
     var doStartSmartShrink = function (component, slideConfig, slideState) {
-      var size = getDimension(slideConfig, component.element());
+      var size = getDimension(slideConfig, component.element);
       var shrinker = size === '0px' ? doImmediateShrink : doStartShrink;
-      shrinker(component, slideConfig, slideState, Option.some(size));
+      shrinker(component, slideConfig, slideState, Optional.some(size));
     };
     var doStartGrow = function (component, slideConfig, slideState) {
       var root = getAnimationRoot(component, slideConfig);
       var wasShrinking = has$2(root, slideConfig.shrinkingClass);
-      var beforeSize = getDimension(slideConfig, component.element());
+      var beforeSize = getDimension(slideConfig, component.element);
       setGrown(component, slideConfig);
-      var fullSize = getDimension(slideConfig, component.element());
+      var fullSize = getDimension(slideConfig, component.element);
       var startPartialGrow = function () {
-        set$3(component.element(), getDimensionProperty(slideConfig), beforeSize);
-        reflow(component.element());
+        set$3(component.element, getDimensionProperty(slideConfig), beforeSize);
+        reflow(component.element);
       };
       var startCompleteGrow = function () {
         setShrunk(component, slideConfig);
@@ -11169,15 +11008,15 @@
       remove$4(root, slideConfig.shrinkingClass);
       add$2(root, slideConfig.growingClass);
       setGrown(component, slideConfig);
-      set$3(component.element(), getDimensionProperty(slideConfig), fullSize);
+      set$3(component.element, getDimensionProperty(slideConfig), fullSize);
       slideState.setExpanded();
       slideConfig.onStartGrow(component);
     };
     var refresh = function (component, slideConfig, slideState) {
       if (slideState.isExpanded()) {
-        remove$5(component.element(), getDimensionProperty(slideConfig));
-        var fullSize = getDimension(slideConfig, component.element());
-        set$3(component.element(), getDimensionProperty(slideConfig), fullSize);
+        remove$5(component.element, getDimensionProperty(slideConfig));
+        var fullSize = getDimension(slideConfig, component.element);
+        set$3(component.element, getDimensionProperty(slideConfig), fullSize);
       }
     };
     var grow = function (component, slideConfig, slideState) {
@@ -11192,7 +11031,7 @@
     };
     var immediateShrink = function (component, slideConfig, slideState) {
       if (slideState.isExpanded()) {
-        doImmediateShrink(component, slideConfig, slideState);
+        doImmediateShrink(component, slideConfig, slideState, Optional.none());
       }
     };
     var hasGrown = function (component, slideConfig, slideState) {
@@ -11201,11 +11040,11 @@
     var hasShrunk = function (component, slideConfig, slideState) {
       return slideState.isCollapsed();
     };
-    var isGrowing = function (component, slideConfig, slideState) {
+    var isGrowing = function (component, slideConfig, _slideState) {
       var root = getAnimationRoot(component, slideConfig);
       return has$2(root, slideConfig.growingClass) === true;
     };
-    var isShrinking = function (component, slideConfig, slideState) {
+    var isShrinking = function (component, slideConfig, _slideState) {
       var root = getAnimationRoot(component, slideConfig);
       return has$2(root, slideConfig.shrinkingClass) === true;
     };
@@ -11218,6 +11057,7 @@
     };
 
     var SlidingApis = /*#__PURE__*/Object.freeze({
+        __proto__: null,
         refresh: refresh,
         grow: grow,
         shrink: shrink,
@@ -11231,7 +11071,7 @@
         disableTransitions: disableTransitions
     });
 
-    var exhibit$5 = function (base, slideConfig) {
+    var exhibit$5 = function (base, slideConfig, _slideState) {
       var expanded = slideConfig.expanded;
       return expanded ? nu$5({
         classes: [slideConfig.openClass],
@@ -11243,11 +11083,11 @@
     };
     var events$a = function (slideConfig, slideState) {
       return derive([runOnSource(transitionend(), function (component, simulatedEvent) {
-          var raw = simulatedEvent.event().raw();
+          var raw = simulatedEvent.event.raw;
           if (raw.propertyName === slideConfig.dimension.property) {
             disableTransitions(component, slideConfig);
             if (slideState.isExpanded()) {
-              remove$5(component.element(), slideConfig.dimension.property);
+              remove$5(component.element, slideConfig.dimension.property);
             }
             var notify = slideState.isExpanded() ? slideConfig.onGrown : slideConfig.onShrunk;
             notify(component);
@@ -11256,6 +11096,7 @@
     };
 
     var ActiveSliding = /*#__PURE__*/Object.freeze({
+        __proto__: null,
         exhibit: exhibit$5,
         events: events$a
     });
@@ -11275,13 +11116,13 @@
         width: [
           output('property', 'width'),
           output('getDimension', function (elem) {
-            return get$6(elem) + 'px';
+            return get$8(elem) + 'px';
           })
         ],
         height: [
           output('property', 'height'),
           output('getDimension', function (elem) {
-            return get$4(elem) + 'px';
+            return get$6(elem) + 'px';
           })
         ]
       }))
@@ -11306,6 +11147,7 @@
     };
 
     var SlidingState = /*#__PURE__*/Object.freeze({
+        __proto__: null,
         init: init$4
     });
 
@@ -11321,35 +11163,35 @@
       var dropup = build$1(Container.sketch({
         dom: {
           tag: 'div',
-          classes: [Styles.resolve('dropup')]
+          classes: [resolve('dropup')]
         },
         components: [],
         containerBehaviours: derive$1([
           Replacing.config({}),
           Sliding.config({
-            closedClass: Styles.resolve('dropup-closed'),
-            openClass: Styles.resolve('dropup-open'),
-            shrinkingClass: Styles.resolve('dropup-shrinking'),
-            growingClass: Styles.resolve('dropup-growing'),
+            closedClass: resolve('dropup-closed'),
+            openClass: resolve('dropup-open'),
+            shrinkingClass: resolve('dropup-shrinking'),
+            growingClass: resolve('dropup-growing'),
             dimension: { property: 'height' },
             onShrunk: function (component) {
               refresh();
               scrollIntoView();
               Replacing.set(component, []);
             },
-            onGrown: function (component) {
+            onGrown: function (_component) {
               refresh();
               scrollIntoView();
             }
           }),
-          Receivers.orientation(function (component, data) {
+          orientation(function (_component, _data) {
             disappear(noop);
           })
         ])
       }));
       var appear = function (menu, update, component) {
         if (Sliding.hasShrunk(dropup) === true && Sliding.isTransitioning(dropup) === false) {
-          domGlobals.window.requestAnimationFrame(function () {
+          window.requestAnimationFrame(function () {
             update(component);
             Replacing.set(dropup, [menu()]);
             Sliding.grow(dropup);
@@ -11357,7 +11199,7 @@
         }
       };
       var disappear = function (onReadyToShrink) {
-        domGlobals.window.requestAnimationFrame(function () {
+        window.requestAnimationFrame(function () {
           onReadyToShrink();
           Sliding.shrink(dropup);
         });
@@ -11365,7 +11207,7 @@
       return {
         appear: appear,
         disappear: disappear,
-        component: constant(dropup),
+        component: dropup,
         element: dropup.element
       };
     };
@@ -11375,26 +11217,28 @@
     };
 
     var isDangerous = function (event) {
-      var keyEv = event.raw();
-      return keyEv.which === BACKSPACE()[0] && !contains([
+      var keyEv = event.raw;
+      return keyEv.which === BACKSPACE[0] && !contains([
         'input',
         'textarea'
-      ], name(event.target())) && !closest$3(event.target(), '[contenteditable="true"]');
+      ], name(event.target)) && !closest$3(event.target, '[contenteditable="true"]');
     };
-    var isFirefox = PlatformDetection$1.detect().browser.isFirefox();
+    var isFirefox = function () {
+      return detect$3().browser.isFirefox();
+    };
     var settingsSchema = objOfOnly([
       strictFunction('triggerEvent'),
       defaulted$1('stopBackspace', true)
     ]);
     var bindFocus = function (container, handler) {
-      if (isFirefox) {
+      if (isFirefox()) {
         return capture$1(container, 'focus', handler);
       } else {
         return bind$3(container, 'focusin', handler);
       }
     };
     var bindBlur = function (container, handler) {
-      if (isFirefox) {
+      if (isFirefox()) {
         return capture$1(container, 'blur', handler);
       } else {
         return bind$3(container, 'focusout', handler);
@@ -11402,12 +11246,12 @@
     };
     var setup$2 = function (container, rawSettings) {
       var settings = asRawOrDie('Getting GUI events settings', settingsSchema, rawSettings);
-      var pointerEvents = PlatformDetection$1.detect().deviceType.isTouch() ? [
+      var pointerEvents = [
         'touchstart',
         'touchmove',
         'touchend',
-        'gesturestart'
-      ] : [
+        'touchcancel',
+        'gesturestart',
         'mousedown',
         'mouseup',
         'mouseover',
@@ -11416,7 +11260,7 @@
         'click'
       ];
       var tapEvent = monitor(settings);
-      var simpleEvents = map$1(pointerEvents.concat([
+      var simpleEvents = map(pointerEvents.concat([
         'selectstart',
         'input',
         'contextmenu',
@@ -11443,7 +11287,7 @@
           }
         });
       });
-      var pasteTimeout = Cell(Option.none());
+      var pasteTimeout = Cell(Optional.none());
       var onPaste = bind$3(container, 'paste', function (event) {
         tapEvent.fireIfReady(event, 'paste').each(function (tapStopped) {
           if (tapStopped) {
@@ -11454,7 +11298,7 @@
         if (stopped) {
           event.kill();
         }
-        pasteTimeout.set(Option.some(domGlobals.setTimeout(function () {
+        pasteTimeout.set(Optional.some(setTimeout(function () {
           settings.triggerEvent(postPaste(), event);
         }, 0)));
       });
@@ -11472,34 +11316,32 @@
           event.kill();
         }
       });
-      var focusoutTimeout = Cell(Option.none());
+      var focusoutTimeout = Cell(Optional.none());
       var onFocusOut = bindBlur(container, function (event) {
         var stopped = settings.triggerEvent('focusout', event);
         if (stopped) {
           event.kill();
         }
-        focusoutTimeout.set(Option.some(domGlobals.setTimeout(function () {
+        focusoutTimeout.set(Optional.some(setTimeout(function () {
           settings.triggerEvent(postBlur(), event);
         }, 0)));
       });
       var unbind = function () {
-        each$1(simpleEvents, function (e) {
+        each(simpleEvents, function (e) {
           e.unbind();
         });
         onKeydown.unbind();
         onFocusIn.unbind();
         onFocusOut.unbind();
         onPaste.unbind();
-        pasteTimeout.get().each(domGlobals.clearTimeout);
-        focusoutTimeout.get().each(domGlobals.clearTimeout);
+        pasteTimeout.get().each(clearTimeout);
+        focusoutTimeout.get().each(clearTimeout);
       };
       return { unbind: unbind };
     };
 
     var derive$2 = function (rawEvent, rawTarget) {
-      var source = readOptFrom$1(rawEvent, 'target').map(function (getTarget) {
-        return getTarget();
-      }).getOr(rawTarget);
+      var source = get$1(rawEvent, 'target').getOr(rawTarget);
       return Cell(source);
     };
 
@@ -11517,7 +11359,7 @@
         cut: cut,
         isStopped: stopper.get,
         isCut: cutter.get,
-        event: constant(event),
+        event: event,
         setSource: source.set,
         getSource: source.get
       };
@@ -11531,8 +11373,8 @@
         stop: stop,
         cut: noop,
         isStopped: stopper.get,
-        isCut: constant(false),
-        event: constant(event),
+        isCut: never,
+        event: event,
         setSource: die('Cannot set source of a broadcasted event'),
         getSource: die('Cannot get source of a broadcasted event')
       };
@@ -11550,21 +11392,21 @@
         logger.logEventNoHandlers(eventType, target);
         return adt$7.complete();
       }, function (handlerInfo) {
-        var descHandler = handlerInfo.descHandler();
+        var descHandler = handlerInfo.descHandler;
         var eventHandler = getCurried(descHandler);
         eventHandler(simulatedEvent);
         if (simulatedEvent.isStopped()) {
-          logger.logEventStopped(eventType, handlerInfo.element(), descHandler.purpose());
+          logger.logEventStopped(eventType, handlerInfo.element, descHandler.purpose);
           return adt$7.stopped();
         } else if (simulatedEvent.isCut()) {
-          logger.logEventCut(eventType, handlerInfo.element(), descHandler.purpose());
+          logger.logEventCut(eventType, handlerInfo.element, descHandler.purpose);
           return adt$7.complete();
         } else {
-          return parent(handlerInfo.element()).fold(function () {
-            logger.logNoParent(eventType, handlerInfo.element(), descHandler.purpose());
+          return parent(handlerInfo.element).fold(function () {
+            logger.logNoParent(eventType, handlerInfo.element, descHandler.purpose);
             return adt$7.complete();
           }, function (parent) {
-            logger.logEventResponse(eventType, handlerInfo.element(), descHandler.purpose());
+            logger.logEventResponse(eventType, handlerInfo.element, descHandler.purpose);
             return adt$7.resume(parent);
           });
         }
@@ -11583,35 +11425,39 @@
       var source = derive$2(rawEvent, target);
       return doTriggerHandler(lookup, eventType, rawEvent, target, source, logger);
     };
-    var broadcast = function (listeners, rawEvent, logger) {
+    var broadcast = function (listeners, rawEvent, _logger) {
       var simulatedEvent = fromExternal(rawEvent);
-      each$1(listeners, function (listener) {
-        var descHandler = listener.descHandler();
+      each(listeners, function (listener) {
+        var descHandler = listener.descHandler;
         var handler = getCurried(descHandler);
         handler(simulatedEvent);
       });
       return simulatedEvent.isStopped();
     };
     var triggerUntilStopped = function (lookup, eventType, rawEvent, logger) {
-      var rawTarget = rawEvent.target();
-      return triggerOnUntilStopped(lookup, eventType, rawEvent, rawTarget, logger);
+      return triggerOnUntilStopped(lookup, eventType, rawEvent, rawEvent.target, logger);
     };
     var triggerOnUntilStopped = function (lookup, eventType, rawEvent, rawTarget, logger) {
       var source = derive$2(rawEvent, rawTarget);
       return doTriggerOnUntilStopped(lookup, eventType, rawEvent, rawTarget, source, logger);
     };
 
-    var eventHandler = Immutable('element', 'descHandler');
+    var eventHandler = function (element, descHandler) {
+      return {
+        element: element,
+        descHandler: descHandler
+      };
+    };
     var broadcastHandler = function (id, handler) {
       return {
-        id: constant(id),
-        descHandler: constant(handler)
+        id: id,
+        descHandler: handler
       };
     };
     function EventRegistry () {
       var registry = {};
       var registerId = function (extraArgs, id, events) {
-        each(events, function (v, k) {
+        each$1(events, function (v, k) {
           var handlers = registry[k] !== undefined ? registry[k] : {};
           handlers[id] = curryArgs(v, extraArgs);
           registry[k] = handlers;
@@ -11619,30 +11465,30 @@
       };
       var findHandler = function (handlers, elem) {
         return read$2(elem).fold(function () {
-          return Option.none();
+          return Optional.none();
         }, function (id) {
-          var reader = readOpt$1(id);
-          return handlers.bind(reader).map(function (descHandler) {
+          return handlers.bind(function (h) {
+            return get$1(h, id);
+          }).map(function (descHandler) {
             return eventHandler(elem, descHandler);
           });
         });
       };
       var filterByType = function (type) {
-        return readOptFrom$1(registry, type).map(function (handlers) {
+        return get$1(registry, type).map(function (handlers) {
           return mapToArray(handlers, function (f, id) {
             return broadcastHandler(id, f);
           });
         }).getOr([]);
       };
       var find = function (isAboveRoot, type, target) {
-        var readType = readOpt$1(type);
-        var handlers = readType(registry);
-        return closest$1(target, function (elem) {
+        var handlers = get$1(registry, type);
+        return closest(target, function (elem) {
           return findHandler(handlers, elem);
         }, isAboveRoot);
       };
       var unregisterId = function (id) {
-        each(registry, function (handlersById, eventName) {
+        each$1(registry, function (handlersById, _eventName) {
           if (handlersById.hasOwnProperty(id)) {
             delete handlersById[id];
           }
@@ -11660,9 +11506,9 @@
       var events = EventRegistry();
       var components = {};
       var readOrTag = function (component) {
-        var elem = component.element();
+        var elem = component.element;
         return read$2(elem).fold(function () {
-          return write('uid-', component.element());
+          return write('uid-', component.element);
         }, function (uid) {
           return uid;
         });
@@ -11672,20 +11518,20 @@
         if (conflict === component) {
           unregister(component);
         } else {
-          throw new Error('The tagId "' + tagId + '" is already used by: ' + element(conflict.element()) + '\nCannot use it for: ' + element(component.element()) + '\n' + 'The conflicting element is' + (inBody(conflict.element()) ? ' ' : ' not ') + 'already in the DOM');
+          throw new Error('The tagId "' + tagId + '" is already used by: ' + element(conflict.element) + '\nCannot use it for: ' + element(component.element) + '\n' + 'The conflicting element is' + (inBody(conflict.element) ? ' ' : ' not ') + 'already in the DOM');
         }
       };
       var register = function (component) {
         var tagId = readOrTag(component);
-        if (hasKey$1(components, tagId)) {
+        if (hasNonNullableKey(components, tagId)) {
           failOnDuplicate(component, tagId);
         }
         var extraArgs = [component];
-        events.registerId(extraArgs, tagId, component.events());
+        events.registerId(extraArgs, tagId, component.events);
         components[tagId] = component;
       };
       var unregister = function (component) {
-        read$2(component.element()).each(function (tagId) {
+        read$2(component.element).each(function (tagId) {
           delete components[tagId];
           events.unregisterId(tagId);
         });
@@ -11697,7 +11543,7 @@
         return events.find(isAboveRoot, type, target);
       };
       var getById = function (id) {
-        return readOpt$1(id)(components);
+        return get$1(components, id);
       };
       return {
         find: find,
@@ -11710,7 +11556,7 @@
 
     var takeover = function (root) {
       var isAboveRoot = function (el) {
-        return parent(root.element()).fold(function () {
+        return parent(root.element).fold(function () {
           return true;
         }, function (parent) {
           return eq(el, parent);
@@ -11720,9 +11566,9 @@
       var lookup = function (eventName, target) {
         return registry.find(isAboveRoot, eventName, target);
       };
-      var domEvents = setup$2(root.element(), {
+      var domEvents = setup$2(root.element, {
         triggerEvent: function (eventName, event) {
-          return monitorEvent(eventName, event.target(), function (logger) {
+          return monitorEvent(eventName, event.target, function (logger) {
             return triggerUntilStopped(lookup, eventName, event, logger);
           });
         }
@@ -11731,7 +11577,7 @@
         debugInfo: constant('real'),
         triggerEvent: function (eventName, target, data) {
           monitorEvent(eventName, target, function (logger) {
-            triggerOnUntilStopped(lookup, eventName, data, target, logger);
+            return triggerOnUntilStopped(lookup, eventName, data, target, logger);
           });
         },
         triggerFocus: function (target, originator) {
@@ -11740,16 +11586,17 @@
           }, function (_alloyId) {
             monitorEvent(focus(), target, function (logger) {
               triggerHandler(lookup, focus(), {
-                originator: constant(originator),
+                originator: originator,
                 kill: noop,
                 prevent: noop,
-                target: constant(target)
+                target: target
               }, target, logger);
+              return false;
             });
           });
         },
         triggerEscape: function (comp, simulatedEvent) {
-          systemApi.triggerEvent('keydown', comp.element(), simulatedEvent.event());
+          systemApi.triggerEvent('keydown', comp.element, simulatedEvent.event);
         },
         getByUid: function (uid) {
           return getByUid(uid);
@@ -11779,52 +11626,52 @@
         broadcastEvent: function (eventName, event) {
           broadcastEvent(eventName, event);
         },
-        isConnected: constant(true)
+        isConnected: always
       };
       var addToWorld = function (component) {
         component.connect(systemApi);
-        if (!isText(component.element())) {
+        if (!isText(component.element)) {
           registry.register(component);
-          each$1(component.components(), addToWorld);
-          systemApi.triggerEvent(systemInit(), component.element(), { target: constant(component.element()) });
+          each(component.components(), addToWorld);
+          systemApi.triggerEvent(systemInit(), component.element, { target: component.element });
         }
       };
       var removeFromWorld = function (component) {
-        if (!isText(component.element())) {
-          each$1(component.components(), removeFromWorld);
+        if (!isText(component.element)) {
+          each(component.components(), removeFromWorld);
           registry.unregister(component);
         }
         component.disconnect();
       };
       var add = function (component) {
-        attach(root, component);
+        attach$1(root, component);
       };
       var remove$1 = function (component) {
         detach(component);
       };
       var destroy = function () {
         domEvents.unbind();
-        remove(root.element());
+        remove(root.element);
       };
       var broadcastData = function (data) {
         var receivers = registry.filter(receive());
-        each$1(receivers, function (receiver) {
-          var descHandler = receiver.descHandler();
+        each(receivers, function (receiver) {
+          var descHandler = receiver.descHandler;
           var handler = getCurried(descHandler);
           handler(data);
         });
       };
       var broadcast$1 = function (message) {
         broadcastData({
-          universal: constant(true),
-          data: constant(message)
+          universal: true,
+          data: message
         });
       };
       var broadcastOn = function (channels, message) {
         broadcastData({
-          universal: constant(false),
-          channels: constant(channels),
-          data: constant(message)
+          universal: false,
+          channels: channels,
+          data: message
         });
       };
       var broadcastEvent = function (eventName, event) {
@@ -11842,7 +11689,7 @@
       };
       addToWorld(root);
       return {
-        root: constant(root),
+        root: root,
         element: root.element,
         destroy: destroy,
         add: add,
@@ -11857,29 +11704,29 @@
       };
     };
 
-    var READ_ONLY_MODE_CLASS = constant(Styles.resolve('readonly-mode'));
-    var EDIT_MODE_CLASS = constant(Styles.resolve('edit-mode'));
+    var READ_ONLY_MODE_CLASS = resolve('readonly-mode');
+    var EDIT_MODE_CLASS = resolve('edit-mode');
     function OuterContainer (spec) {
       var root = build$1(Container.sketch({
-        dom: { classes: [Styles.resolve('outer-container')].concat(spec.classes) },
+        dom: { classes: [resolve('outer-container')].concat(spec.classes) },
         containerBehaviours: derive$1([Swapping.config({
-            alpha: READ_ONLY_MODE_CLASS(),
-            omega: EDIT_MODE_CLASS()
+            alpha: READ_ONLY_MODE_CLASS,
+            omega: EDIT_MODE_CLASS
           })])
       }));
       return takeover(root);
     }
 
     function AndroidRealm (scrollIntoView) {
-      var alloy = OuterContainer({ classes: [Styles.resolve('android-container')] });
+      var alloy = OuterContainer({ classes: [resolve('android-container')] });
       var toolbar = ScrollingToolbar();
       var webapp = api$2();
-      var switchToEdit = CommonRealm.makeEditSwitch(webapp);
-      var socket = CommonRealm.makeSocket();
+      var switchToEdit = makeEditSwitch(webapp);
+      var socket = makeSocket();
       var dropup = build$2(noop, scrollIntoView);
-      alloy.add(toolbar.wrapper());
+      alloy.add(toolbar.wrapper);
       alloy.add(socket);
-      alloy.add(dropup.component());
+      alloy.add(dropup.component);
       var setToolbarGroups = function (rawGroups) {
         var groups = toolbar.createGroups(rawGroups);
         toolbar.setGroups(groups);
@@ -11895,7 +11742,7 @@
         toolbar.restoreToolbar();
       };
       var init = function (spec) {
-        webapp.set(AndroidWebapp.produce(spec));
+        webapp.set(produce(spec));
       };
       var exit = function () {
         webapp.run(function (w) {
@@ -11903,11 +11750,11 @@
           Replacing.remove(socket, switchToEdit);
         });
       };
-      var updateMode = function (readOnly) {
-        CommonRealm.updateMode(socket, switchToEdit, readOnly, alloy.root());
+      var updateMode$1 = function (readOnly) {
+        updateMode(socket, switchToEdit, readOnly, alloy.root);
       };
       return {
-        system: constant(alloy),
+        system: alloy,
         element: alloy.element,
         init: init,
         exit: exit,
@@ -11915,14 +11762,14 @@
         setContextToolbar: setContextToolbar,
         focusToolbar: focusToolbar,
         restoreToolbar: restoreToolbar,
-        updateMode: updateMode,
-        socket: constant(socket),
-        dropup: constant(dropup)
+        updateMode: updateMode$1,
+        socket: socket,
+        dropup: dropup
       };
     }
 
     var input$1 = function (parent, operation) {
-      var input = Element.fromTag('input');
+      var input = SugarElement.fromTag('input');
       setAll$1(input, {
         opacity: '0',
         position: 'absolute',
@@ -11934,17 +11781,7 @@
       operation(input);
       remove(input);
     };
-    var CaptureBin = { input: input$1 };
 
-    var refreshInput = function (input) {
-      var start = input.dom().selectionStart;
-      var end = input.dom().selectionEnd;
-      var dir = input.dom().selectionDirection;
-      global$4.setTimeout(function () {
-        input.dom().setSelectionRange(start, end, dir);
-        focus$1(input);
-      }, 50);
-    };
     var refresh$1 = function (winScope) {
       var sel = winScope.getSelection();
       if (sel.rangeCount > 0) {
@@ -11956,10 +11793,6 @@
         sel.addRange(r);
       }
     };
-    var CursorRefresh = {
-      refreshInput: refreshInput,
-      refresh: refresh$1
-    };
 
     var resume$1 = function (cWin, frame) {
       active().each(function (active) {
@@ -11968,23 +11801,22 @@
         }
       });
       cWin.focus();
-      focus$1(Element.fromDom(cWin.document.body));
-      CursorRefresh.refresh(cWin);
+      focus$1(SugarElement.fromDom(cWin.document.body));
+      refresh$1(cWin);
     };
-    var ResumeEditing$1 = { resume: resume$1 };
 
     var stubborn = function (outerBody, cWin, page, frame) {
       var toEditing = function () {
-        ResumeEditing$1.resume(cWin, frame);
+        resume$1(cWin, frame);
       };
       var toReading = function () {
-        CaptureBin.input(outerBody, blur);
+        input$1(outerBody, blur);
       };
       var captureInput = bind$3(page, 'keydown', function (evt) {
         if (!contains([
             'input',
             'textarea'
-          ], name(evt.target()))) {
+          ], name(evt.target))) {
           toEditing();
         }
       });
@@ -12000,32 +11832,8 @@
         destroy: destroy
       };
     };
-    var timid = function (outerBody, cWin, page, frame) {
-      var dismissKeyboard = function () {
-        blur(frame);
-      };
-      var onToolbarTouch = function () {
-        dismissKeyboard();
-      };
-      var toReading = function () {
-        dismissKeyboard();
-      };
-      var toEditing = function () {
-        ResumeEditing$1.resume(cWin, frame);
-      };
-      return {
-        toReading: toReading,
-        toEditing: toEditing,
-        onToolbarTouch: onToolbarTouch,
-        destroy: noop
-      };
-    };
-    var IosKeyboard = {
-      stubborn: stubborn,
-      timid: timid
-    };
 
-    var initEvents$1 = function (editorApi, iosApi, toolstrip, socket, dropup) {
+    var initEvents$1 = function (editorApi, iosApi, toolstrip, socket, _dropup) {
       var saveSelectionFirst = function () {
         iosApi.run(function (api) {
           api.highlightSelection();
@@ -12037,17 +11845,17 @@
         });
       };
       var scrollToY = function (yTop, height) {
-        var y = yTop - socket.dom().scrollTop;
+        var y = yTop - socket.dom.scrollTop;
         iosApi.run(function (api) {
           api.scrollIntoView(y, y + height);
         });
       };
-      var scrollToElement = function (target) {
+      var scrollToElement = function (_target) {
         scrollToY(iosApi, socket);
       };
       var scrollToCursor = function () {
         editorApi.getCursorBox().each(function (box) {
-          scrollToY(box.top(), box.height());
+          scrollToY(box.top, box.height);
         });
       };
       var clearSelection = function () {
@@ -12066,7 +11874,7 @@
         });
       };
       var reposition = function () {
-        var toolbarHeight = get$4(toolstrip);
+        var toolbarHeight = get$6(toolstrip);
         iosApi.run(function (api) {
           api.setViewportOffset(toolbarHeight);
         });
@@ -12088,8 +11896,8 @@
           api.onToolbarTouch(event);
         });
       };
-      var tapping = TappingEvent.monitor(editorApi);
-      var refreshThrottle = last$1(refreshView, 300);
+      var tapping = monitor$1(editorApi);
+      var refreshThrottle = last(refreshView, 300);
       var listeners = [
         editorApi.onKeyup(clearAndRefresh),
         editorApi.onNodeChanged(refreshIosSelection),
@@ -12100,15 +11908,15 @@
           refreshThrottle.throttle();
         }),
         editorApi.onScrollToElement(function (event) {
-          scrollToElement(event.element());
+          scrollToElement(event.element);
         }),
         editorApi.onToEditing(toEditing),
         editorApi.onToReading(toReading),
-        bind$3(editorApi.doc(), 'touchend', function (touchEvent) {
-          if (eq(editorApi.html(), touchEvent.target()) || eq(editorApi.body(), touchEvent.target())) ;
+        bind$3(editorApi.doc, 'touchend', function (touchEvent) {
+          if (eq(editorApi.html, touchEvent.target) || eq(editorApi.body, touchEvent.target)) ;
         }),
         bind$3(toolstrip, 'transitionend', function (transitionEvent) {
-          if (transitionEvent.raw().propertyName === 'height') {
+          if (transitionEvent.raw.propertyName === 'height') {
             reposition();
           }
         }),
@@ -12117,14 +11925,14 @@
           onToolbarTouch(touchEvent);
           editorApi.onTouchToolstrip();
         }),
-        bind$3(editorApi.body(), 'touchstart', function (evt) {
+        bind$3(editorApi.body, 'touchstart', function (evt) {
           clearSelection();
           editorApi.onTouchContent();
           tapping.fireTouchstart(evt);
         }),
         tapping.onTouchmove(),
         tapping.onTouchend(),
-        bind$3(editorApi.body(), 'click', function (event) {
+        bind$3(editorApi.body, 'click', function (event) {
           event.kill();
         }),
         bind$3(toolstrip, 'touchmove', function () {
@@ -12132,42 +11940,41 @@
         })
       ];
       var destroy = function () {
-        each$1(listeners, function (l) {
+        each(listeners, function (l) {
           l.unbind();
         });
       };
       return { destroy: destroy };
     };
-    var IosEvents = { initEvents: initEvents$1 };
 
     function FakeSelection (win, frame) {
       var doc = win.document;
-      var container = Element.fromTag('div');
-      add$2(container, Styles.resolve('unfocused-selections'));
-      append(Element.fromDom(doc.documentElement), container);
+      var container = SugarElement.fromTag('div');
+      add$2(container, resolve('unfocused-selections'));
+      append(SugarElement.fromDom(doc.documentElement), container);
       var onTouch = bind$3(container, 'touchstart', function (event) {
         event.prevent();
-        ResumeEditing$1.resume(win, frame);
+        resume$1(win, frame);
         clear();
       });
       var make = function (rectangle) {
-        var span = Element.fromTag('span');
+        var span = SugarElement.fromTag('span');
         add$3(span, [
-          Styles.resolve('layer-editor'),
-          Styles.resolve('unfocused-selection')
+          resolve('layer-editor'),
+          resolve('unfocused-selection')
         ]);
         setAll$1(span, {
-          left: rectangle.left() + 'px',
-          top: rectangle.top() + 'px',
-          width: rectangle.width() + 'px',
-          height: rectangle.height() + 'px'
+          left: rectangle.left + 'px',
+          top: rectangle.top + 'px',
+          width: rectangle.width + 'px',
+          height: rectangle.height + 'px'
         });
         return span;
       };
       var update = function () {
         clear();
-        var rectangles = Rectangles.getRectangles(win);
-        var spans = map$1(rectangles, make);
+        var rectangles = getRectangles(win);
+        var spans = map(rectangles, make);
         append$1(container, spans);
       };
       var clear = function () {
@@ -12686,7 +12493,7 @@
     var Promise$1 = module.exports.boltExport;
 
     var nu$7 = function (baseFn) {
-      var data = Option.none();
+      var data = Optional.none();
       var callbacks = [];
       var map = function (f) {
         return nu$7(function (nCallback) {
@@ -12703,19 +12510,21 @@
         }
       };
       var set = function (x) {
-        data = Option.some(x);
-        run(callbacks);
-        callbacks = [];
+        if (!isReady()) {
+          data = Optional.some(x);
+          run(callbacks);
+          callbacks = [];
+        }
       };
       var isReady = function () {
         return data.isSome();
       };
       var run = function (cbs) {
-        each$1(cbs, call);
+        each(cbs, call);
       };
       var call = function (cb) {
         data.each(function (x) {
-          domGlobals.setTimeout(function () {
+          setTimeout(function () {
             cb(x);
           }, 0);
         });
@@ -12738,7 +12547,7 @@
     };
 
     var errorReporter = function (err) {
-      domGlobals.setTimeout(function () {
+      setTimeout(function () {
         throw err;
       }, 0);
     };
@@ -12805,11 +12614,11 @@
 
     var adjust = function (value, destination, amount) {
       if (Math.abs(value - destination) <= amount) {
-        return Option.none();
+        return Optional.none();
       } else if (value < destination) {
-        return Option.some(value + amount);
+        return Optional.some(value + amount);
       } else {
-        return Option.some(value - amount);
+        return Optional.some(value - amount);
       }
     };
     var create$5 = function () {
@@ -12843,10 +12652,6 @@
         }, rate);
       };
       return { animate: animate };
-    };
-    var SmoothAnimation = {
-      create: create$5,
-      adjust: adjust
     };
 
     var findDevice = function (deviceWidth, deviceHeight) {
@@ -12912,26 +12717,22 @@
       return findDevice(outerWindow.screen.width, outerWindow.screen.height);
     };
     var accountableKeyboardHeight = function (outerWindow) {
-      var portrait = Orientation.get(outerWindow).isPortrait();
+      var portrait = get$c(outerWindow).isPortrait();
       var limits = softKeyboardLimits(outerWindow);
       var keyboard = portrait ? limits.portrait : limits.landscape;
       var visualScreenHeight = portrait ? outerWindow.screen.height : outerWindow.screen.width;
       return visualScreenHeight - outerWindow.innerHeight > keyboard ? 0 : keyboard;
     };
     var getGreenzone = function (socket, dropup) {
-      var outerWindow = owner(socket).dom().defaultView;
-      var viewportHeight = get$4(socket) + get$4(dropup);
+      var outerWindow = owner(socket).dom.defaultView;
+      var viewportHeight = get$6(socket) + get$6(dropup);
       var acc = accountableKeyboardHeight(outerWindow);
       return viewportHeight - acc;
     };
     var updatePadding = function (contentBody, socket, dropup) {
       var greenzoneHeight = getGreenzone(socket, dropup);
-      var deltaHeight = get$4(socket) + get$4(dropup) - greenzoneHeight;
+      var deltaHeight = get$6(socket) + get$6(dropup) - greenzoneHeight;
       set$3(contentBody, 'padding-bottom', deltaHeight + 'px');
-    };
-    var DeviceZones = {
-      getGreenzone: getGreenzone,
-      updatePadding: updatePadding
     };
 
     var fixture = Adt.generate([
@@ -12949,18 +12750,18 @@
         ]
       }
     ]);
-    var yFixedData = 'data-' + Styles.resolve('position-y-fixed');
-    var yFixedProperty = 'data-' + Styles.resolve('y-property');
-    var yScrollingData = 'data-' + Styles.resolve('scrolling');
-    var windowSizeData = 'data-' + Styles.resolve('last-window-height');
+    var yFixedData = 'data-' + resolve('position-y-fixed');
+    var yFixedProperty = 'data-' + resolve('y-property');
+    var yScrollingData = 'data-' + resolve('scrolling');
+    var windowSizeData = 'data-' + resolve('last-window-height');
     var getYFixedData = function (element) {
-      return DataAttributes.safeParse(element, yFixedData);
+      return safeParse(element, yFixedData);
     };
     var getYFixedProperty = function (element) {
-      return get(element, yFixedProperty);
+      return get$2(element, yFixedProperty);
     };
     var getLastWindowSize = function (element) {
-      return DataAttributes.safeParse(element, windowSizeData);
+      return safeParse(element, windowSizeData);
     };
     var classifyFixed = function (element, offsetY) {
       var prop = getYFixedProperty(element);
@@ -12971,15 +12772,15 @@
     };
     var classify = function (element) {
       var offsetY = getYFixedData(element);
-      var classifier = get(element, yScrollingData) === 'true' ? classifyScrolling : classifyFixed;
+      var classifier = get$2(element, yScrollingData) === 'true' ? classifyScrolling : classifyFixed;
       return classifier(element, offsetY);
     };
     var findFixtures = function (container) {
       var candidates = descendants(container, '[' + yFixedData + ']');
-      return map$1(candidates, classify);
+      return map(candidates, classify);
     };
     var takeoverToolbar = function (toolbar) {
-      var oldToolbarStyle = get(toolbar, 'style');
+      var oldToolbarStyle = get$2(toolbar, 'style');
       setAll$1(toolbar, {
         position: 'absolute',
         top: '0px'
@@ -12994,8 +12795,8 @@
       return { restore: restore };
     };
     var takeoverViewport = function (toolbarHeight, height, viewport) {
-      var oldViewportStyle = get(viewport, 'style');
-      Scrollable.register(viewport);
+      var oldViewportStyle = get$2(viewport, 'style');
+      register(viewport);
       setAll$1(viewport, {
         position: 'absolute',
         height: height + 'px',
@@ -13006,7 +12807,7 @@
       set(viewport, yScrollingData, 'true');
       set(viewport, yFixedProperty, 'top');
       var restore = function () {
-        Scrollable.deregister(viewport);
+        deregister(viewport);
         set(viewport, 'style', oldViewportStyle || '');
         remove$1(viewport, yFixedData);
         remove$1(viewport, yScrollingData);
@@ -13014,8 +12815,8 @@
       };
       return { restore: restore };
     };
-    var takeoverDropup = function (dropup, toolbarHeight, viewportHeight) {
-      var oldDropupStyle = get(dropup, 'style');
+    var takeoverDropup = function (dropup) {
+      var oldDropupStyle = get$2(dropup, 'style');
       setAll$1(dropup, {
         position: 'absolute',
         bottom: '0px'
@@ -13030,16 +12831,16 @@
       return { restore: restore };
     };
     var deriveViewportHeight = function (viewport, toolbarHeight, dropupHeight) {
-      var outerWindow = owner(viewport).dom().defaultView;
+      var outerWindow = owner(viewport).dom.defaultView;
       var winH = outerWindow.innerHeight;
       set(viewport, windowSizeData, winH + 'px');
       return winH - toolbarHeight - dropupHeight;
     };
     var takeover$1 = function (viewport, contentBody, toolbar, dropup) {
-      var outerWindow = owner(viewport).dom().defaultView;
+      var outerWindow = owner(viewport).dom.defaultView;
       var toolbarSetup = takeoverToolbar(toolbar);
-      var toolbarHeight = get$4(toolbar);
-      var dropupHeight = get$4(dropup);
+      var toolbarHeight = get$6(toolbar);
+      var dropupHeight = get$6(dropup);
       var viewportHeight = deriveViewportHeight(viewport, toolbarHeight, dropupHeight);
       var viewportSetup = takeoverViewport(toolbarHeight, viewportHeight, viewport);
       var dropupSetup = takeoverDropup(dropup);
@@ -13057,12 +12858,12 @@
       };
       var refresh = function () {
         if (isActive) {
-          var newToolbarHeight = get$4(toolbar);
-          var dropupHeight_1 = get$4(dropup);
+          var newToolbarHeight = get$6(toolbar);
+          var dropupHeight_1 = get$6(dropup);
           var newHeight = deriveViewportHeight(viewport, newToolbarHeight, dropupHeight_1);
           set(viewport, yFixedData, newToolbarHeight + 'px');
           set$3(viewport, 'height', newHeight + 'px');
-          DeviceZones.updatePadding(contentBody, viewport, dropup);
+          updatePadding(contentBody, viewport, dropup);
         }
       };
       var setViewportOffset = function (newYOffset) {
@@ -13070,7 +12871,7 @@
         set(viewport, yFixedData, offsetPx);
         refresh();
       };
-      DeviceZones.updatePadding(contentBody, viewport, dropup);
+      updatePadding(contentBody, viewport, dropup);
       return {
         setViewportOffset: setViewportOffset,
         isExpanding: isExpanding,
@@ -13079,33 +12880,28 @@
         restore: restore
       };
     };
-    var IosViewport = {
-      findFixtures: findFixtures,
-      takeover: takeover$1,
-      getYFixedData: getYFixedData
-    };
 
-    var animator = SmoothAnimation.create();
+    var animator = create$5();
     var ANIMATION_STEP = 15;
     var NUM_TOP_ANIMATION_FRAMES = 10;
     var ANIMATION_RATE = 10;
-    var lastScroll = 'data-' + Styles.resolve('last-scroll-top');
+    var lastScroll = 'data-' + resolve('last-scroll-top');
     var getTop = function (element) {
       var raw = getRaw(element, 'top').getOr('0');
       return parseInt(raw, 10);
     };
     var getScrollTop = function (element) {
-      return parseInt(element.dom().scrollTop, 10);
+      return parseInt(element.dom.scrollTop, 10);
     };
     var moveScrollAndTop = function (element, destination, finalTop) {
       return Future.nu(function (callback) {
         var getCurrent = curry(getScrollTop, element);
         var update = function (newScroll) {
-          element.dom().scrollTop = newScroll;
+          element.dom.scrollTop = newScroll;
           set$3(element, 'top', getTop(element) + ANIMATION_STEP + 'px');
         };
         var finish = function () {
-          element.dom().scrollTop = destination;
+          element.dom.scrollTop = destination;
           set$3(element, 'top', finalTop + 'px');
           callback(destination);
         };
@@ -13117,16 +12913,16 @@
         var getCurrent = curry(getScrollTop, element);
         set(element, lastScroll, getCurrent());
         var update = function (newScroll, abort) {
-          var previous = DataAttributes.safeParse(element, lastScroll);
-          if (previous !== element.dom().scrollTop) {
-            abort(element.dom().scrollTop);
+          var previous = safeParse(element, lastScroll);
+          if (previous !== element.dom.scrollTop) {
+            abort(element.dom.scrollTop);
           } else {
-            element.dom().scrollTop = newScroll;
+            element.dom.scrollTop = newScroll;
             set(element, lastScroll, newScroll);
           }
         };
         var finish = function () {
-          element.dom().scrollTop = destination;
+          element.dom.scrollTop = destination;
           set(element, lastScroll, destination);
           callback(destination);
         };
@@ -13151,23 +12947,17 @@
       });
     };
     var updateTop = function (element, amount) {
-      var newTop = amount + IosViewport.getYFixedData(element) + 'px';
+      var newTop = amount + getYFixedData(element) + 'px';
       set$3(element, 'top', newTop);
     };
     var moveWindowScroll = function (toolbar, viewport, destY) {
-      var outerWindow = owner(toolbar).dom().defaultView;
+      var outerWindow = owner(toolbar).dom.defaultView;
       return Future.nu(function (callback) {
         updateTop(toolbar, destY);
         updateTop(viewport, destY);
         outerWindow.scrollTo(0, destY);
         callback(destY);
       });
-    };
-    var IosScrolling = {
-      moveScrollAndTop: moveScrollAndTop,
-      moveOnlyScroll: moveOnlyScroll,
-      moveOnlyTop: moveOnlyTop,
-      moveWindowScroll: moveWindowScroll
     };
 
     function BackgroundActivity (doAction) {
@@ -13190,15 +12980,14 @@
     }
 
     var scrollIntoView = function (cWin, socket, dropup, top, bottom) {
-      var greenzone = DeviceZones.getGreenzone(socket, dropup);
-      var refreshCursor = curry(CursorRefresh.refresh, cWin);
+      var greenzone = getGreenzone(socket, dropup);
+      var refreshCursor = curry(refresh$1, cWin);
       if (top > greenzone || bottom > greenzone) {
-        IosScrolling.moveOnlyScroll(socket, socket.dom().scrollTop - greenzone + bottom).get(refreshCursor);
+        moveOnlyScroll(socket, socket.dom.scrollTop - greenzone + bottom).get(refreshCursor);
       } else if (top < 0) {
-        IosScrolling.moveOnlyScroll(socket, socket.dom().scrollTop + top).get(refreshCursor);
-      }
+        moveOnlyScroll(socket, socket.dom.scrollTop + top).get(refreshCursor);
+      } else ;
     };
-    var Greenzone = { scrollIntoView: scrollIntoView };
 
     var par = function (asyncValues, nu) {
       return nu(function (callback) {
@@ -13216,7 +13005,7 @@
         if (asyncValues.length === 0) {
           callback([]);
         } else {
-          each$1(asyncValues, function (asyncValue, i) {
+          each(asyncValues, function (asyncValue, i) {
             asyncValue.get(cb(i));
           });
         }
@@ -13236,8 +13025,8 @@
       var destTop = winY + offsetY;
       var oldProp = getRaw(element, 'top').getOr(offsetY);
       var delta = destTop - parseInt(oldProp, 10);
-      var destScroll = element.dom().scrollTop + delta;
-      return IosScrolling.moveScrollAndTop(element, destScroll, destTop);
+      var destScroll = element.dom.scrollTop + delta;
+      return moveScrollAndTop(element, destScroll, destTop);
     };
     var updateFixture = function (fixture, winY) {
       return fixture.fold(function (element, property, offsetY) {
@@ -13247,63 +13036,62 @@
       });
     };
     var updatePositions = function (container, winY) {
-      var fixtures = IosViewport.findFixtures(container);
-      var updates = map$1(fixtures, function (fixture) {
+      var fixtures = findFixtures(container);
+      var updates = map(fixtures, function (fixture) {
         return updateFixture(fixture, winY);
       });
       return par$1(updates);
     };
-    var IosUpdates = { updatePositions: updatePositions };
 
     var VIEW_MARGIN = 5;
     var register$2 = function (toolstrip, socket, container, outerWindow, structure, cWin) {
       var scroller = BackgroundActivity(function (y) {
-        return IosScrolling.moveWindowScroll(toolstrip, socket, y);
+        return moveWindowScroll(toolstrip, socket, y);
       });
       var scrollBounds = function () {
-        var rects = Rectangles.getRectangles(cWin);
-        return Option.from(rects[0]).bind(function (rect) {
-          var viewTop = rect.top() - socket.dom().scrollTop;
+        var rects = getRectangles(cWin);
+        return Optional.from(rects[0]).bind(function (rect) {
+          var viewTop = rect.top - socket.dom.scrollTop;
           var outside = viewTop > outerWindow.innerHeight + VIEW_MARGIN || viewTop < -VIEW_MARGIN;
-          return outside ? Option.some({
-            top: constant(viewTop),
-            bottom: constant(viewTop + rect.height())
-          }) : Option.none();
+          return outside ? Optional.some({
+            top: viewTop,
+            bottom: viewTop + rect.height
+          }) : Optional.none();
         });
       };
-      var scrollThrottle = last$1(function () {
+      var scrollThrottle = last(function () {
         scroller.idle(function () {
-          IosUpdates.updatePositions(container, outerWindow.pageYOffset).get(function () {
+          updatePositions(container, outerWindow.pageYOffset).get(function () {
             var extraScroll = scrollBounds();
             extraScroll.each(function (extra) {
-              socket.dom().scrollTop = socket.dom().scrollTop + extra.top();
+              socket.dom.scrollTop = socket.dom.scrollTop + extra.top;
             });
             scroller.start(0);
             structure.refresh();
           });
         });
       }, 1000);
-      var onScroll = bind$3(Element.fromDom(outerWindow), 'scroll', function () {
+      var onScroll = bind$3(SugarElement.fromDom(outerWindow), 'scroll', function () {
         if (outerWindow.pageYOffset < 0) {
           return;
         }
         scrollThrottle.throttle();
       });
-      IosUpdates.updatePositions(container, outerWindow.pageYOffset).get(identity);
+      updatePositions(container, outerWindow.pageYOffset).get(identity);
       return { unbind: onScroll.unbind };
     };
     var setup$3 = function (bag) {
-      var cWin = bag.cWin();
-      var ceBody = bag.ceBody();
-      var socket = bag.socket();
-      var toolstrip = bag.toolstrip();
-      var toolbar = bag.toolbar();
-      var contentElement = bag.contentElement();
-      var keyboardType = bag.keyboardType();
-      var outerWindow = bag.outerWindow();
-      var dropup = bag.dropup();
-      var structure = IosViewport.takeover(socket, ceBody, toolstrip, dropup);
-      var keyboardModel = keyboardType(bag.outerBody(), cWin, body(), contentElement, toolstrip, toolbar);
+      var cWin = bag.cWin;
+      var ceBody = bag.ceBody;
+      var socket = bag.socket;
+      var toolstrip = bag.toolstrip;
+      var contentElement = bag.contentElement;
+      var keyboardType = bag.keyboardType;
+      var outerWindow = bag.outerWindow;
+      var dropup = bag.dropup;
+      var outerBody = bag.outerBody;
+      var structure = takeover$1(socket, ceBody, toolstrip, dropup);
+      var keyboardModel = keyboardType(outerBody, cWin, body(), contentElement);
       var toEditing = function () {
         keyboardModel.toEditing();
         clearSelection();
@@ -13311,22 +13099,22 @@
       var toReading = function () {
         keyboardModel.toReading();
       };
-      var onToolbarTouch = function (event) {
-        keyboardModel.onToolbarTouch(event);
+      var onToolbarTouch = function (_event) {
+        keyboardModel.onToolbarTouch();
       };
-      var onOrientation = Orientation.onChange(outerWindow, {
+      var onOrientation = onChange(outerWindow, {
         onChange: noop,
         onReady: structure.refresh
       });
       onOrientation.onAdjustment(function () {
         structure.refresh();
       });
-      var onResize = bind$3(Element.fromDom(outerWindow), 'resize', function () {
+      var onResize = bind$3(SugarElement.fromDom(outerWindow), 'resize', function () {
         if (structure.isExpanding()) {
           structure.refresh();
         }
       });
-      var onScroll = register$2(toolstrip, socket, bag.outerBody(), outerWindow, structure, cWin);
+      var onScroll = register$2(toolstrip, socket, outerBody, outerWindow, structure, cWin);
       var unfocusedSelection = FakeSelection(cWin, contentElement);
       var refreshSelection = function () {
         if (unfocusedSelection.isActive()) {
@@ -13339,15 +13127,15 @@
       var clearSelection = function () {
         unfocusedSelection.clear();
       };
-      var scrollIntoView = function (top, bottom) {
-        Greenzone.scrollIntoView(cWin, socket, dropup, top, bottom);
+      var scrollIntoView$1 = function (top, bottom) {
+        scrollIntoView(cWin, socket, dropup, top, bottom);
       };
       var syncHeight = function () {
-        set$3(contentElement, 'height', contentElement.dom().contentWindow.document.body.scrollHeight + 'px');
+        set$3(contentElement, 'height', contentElement.dom.contentWindow.document.body.scrollHeight + 'px');
       };
       var setViewportOffset = function (newYOffset) {
         structure.setViewportOffset(newYOffset);
-        IosScrolling.moveOnlyTop(socket, newYOffset).get(identity);
+        moveOnlyTop(socket, newYOffset).get(identity);
       };
       var destroy = function () {
         structure.restore();
@@ -13356,7 +13144,7 @@
         onResize.unbind();
         keyboardModel.destroy();
         unfocusedSelection.destroy();
-        CaptureBin.input(body(), blur);
+        input$1(body(), blur);
       };
       return {
         toEditing: toEditing,
@@ -13365,7 +13153,7 @@
         refreshSelection: refreshSelection,
         clearSelection: clearSelection,
         highlightSelection: highlightSelection,
-        scrollIntoView: scrollIntoView,
+        scrollIntoView: scrollIntoView$1,
         updateToolbarPadding: noop,
         setViewportOffset: setViewportOffset,
         syncHeight: syncHeight,
@@ -13373,67 +13161,44 @@
         destroy: destroy
       };
     };
-    var IosSetup = { setup: setup$3 };
 
     var create$6 = function (platform, mask) {
-      var meta = MetaViewport.tag();
+      var meta = tag();
       var priorState = value$2();
       var scrollEvents = value$2();
       var iosApi = api$2();
       var iosEvents = api$2();
       var enter = function () {
         mask.hide();
-        var doc = Element.fromDom(domGlobals.document);
-        PlatformEditor.getActiveApi(platform.editor).each(function (editorApi) {
+        var doc = SugarElement.fromDom(document);
+        getActiveApi(platform.editor).each(function (editorApi) {
           priorState.set({
             socketHeight: getRaw(platform.socket, 'height'),
-            iframeHeight: getRaw(editorApi.frame(), 'height'),
-            outerScroll: domGlobals.document.body.scrollTop
+            iframeHeight: getRaw(editorApi.frame, 'height'),
+            outerScroll: document.body.scrollTop
           });
-          scrollEvents.set({ exclusives: Scrollables.exclusive(doc, '.' + Scrollable.scrollable()) });
-          add$2(platform.container, Styles.resolve('fullscreen-maximized'));
-          Thor.clobberStyles(platform.container, editorApi.body());
+          scrollEvents.set({ exclusives: exclusive(doc, '.' + scrollable) });
+          add$2(platform.container, resolve('fullscreen-maximized'));
+          clobberStyles(platform.container, editorApi.body);
           meta.maximize();
           set$3(platform.socket, 'overflow', 'scroll');
           set$3(platform.socket, '-webkit-overflow-scrolling', 'touch');
-          focus$1(editorApi.body());
-          var setupBag = MixedBag([
-            'cWin',
-            'ceBody',
-            'socket',
-            'toolstrip',
-            'toolbar',
-            'dropup',
-            'contentElement',
-            'cursor',
-            'keyboardType',
-            'isScrolling',
-            'outerWindow',
-            'outerBody'
-          ], []);
-          iosApi.set(IosSetup.setup(setupBag({
-            cWin: editorApi.win(),
-            ceBody: editorApi.body(),
+          focus$1(editorApi.body);
+          iosApi.set(setup$3({
+            cWin: editorApi.win,
+            ceBody: editorApi.body,
             socket: platform.socket,
             toolstrip: platform.toolstrip,
-            toolbar: platform.toolbar,
-            dropup: platform.dropup.element(),
-            contentElement: editorApi.frame(),
-            cursor: noop,
+            dropup: platform.dropup.element,
+            contentElement: editorApi.frame,
             outerBody: platform.body,
             outerWindow: platform.win,
-            keyboardType: IosKeyboard.stubborn,
-            isScrolling: function () {
-              var scrollValue = scrollEvents;
-              return scrollValue.get().exists(function (s) {
-                return s.socket.isScrolling();
-              });
-            }
-          })));
+            keyboardType: stubborn
+          }));
           iosApi.run(function (api) {
             api.syncHeight();
           });
-          iosEvents.set(IosEvents.initEvents(editorApi, iosApi, platform.toolstrip, platform.socket, platform.dropup));
+          iosEvents.set(initEvents$1(editorApi, iosApi, platform.toolstrip, platform.socket, platform.dropup));
         });
       };
       var exit = function () {
@@ -13448,20 +13213,20 @@
           s.iframeHeight.each(function (h) {
             set$3(platform.editor.getFrame(), 'height', h);
           });
-          domGlobals.document.body.scrollTop = s.scrollTop;
+          document.body.scrollTop = s.scrollTop;
         });
         priorState.clear();
         scrollEvents.on(function (s) {
           s.exclusives.unbind();
         });
         scrollEvents.clear();
-        remove$4(platform.container, Styles.resolve('fullscreen-maximized'));
-        Thor.restoreStyles();
-        Scrollable.deregister(platform.toolbar);
+        remove$4(platform.container, resolve('fullscreen-maximized'));
+        restoreStyles();
+        deregister(platform.toolbar);
         remove$5(platform.socket, 'overflow');
         remove$5(platform.socket, '-webkit-overflow-scrolling');
         blur(platform.editor.getFrame());
-        PlatformEditor.getActiveApi(platform.editor).each(function (editorApi) {
+        getActiveApi(platform.editor).each(function (editorApi) {
           editorApi.clearSelection();
         });
       };
@@ -13476,7 +13241,6 @@
         exit: exit
       };
     };
-    var IosMode = { create: create$6 };
 
     var produce$1 = function (raw) {
       var mobile = asRawOrDie('Getting IosWebapp schema', MobileSchema, raw);
@@ -13486,7 +13250,7 @@
         mobile.setReadOnly(mobile.readOnlyOnInit());
         mode.enter();
       };
-      var mask = build$1(TapToEditMask.sketch(onView, mobile.translate));
+      var mask = build$1(sketch$9(onView, mobile.translate));
       mobile.alloy.add(mask);
       var maskApi = {
         show: function () {
@@ -13496,7 +13260,7 @@
           mobile.alloy.remove(mask);
         }
       };
-      var mode = IosMode.create(mobile, maskApi);
+      var mode = create$6(mobile, maskApi);
       return {
         setReadOnly: mobile.setReadOnly,
         refreshStructure: mode.refreshStructure,
@@ -13505,22 +13269,21 @@
         destroy: noop
       };
     };
-    var IosWebapp = { produce: produce$1 };
 
     function IosRealm (scrollIntoView) {
-      var alloy = OuterContainer({ classes: [Styles.resolve('ios-container')] });
+      var alloy = OuterContainer({ classes: [resolve('ios-container')] });
       var toolbar = ScrollingToolbar();
       var webapp = api$2();
-      var switchToEdit = CommonRealm.makeEditSwitch(webapp);
-      var socket = CommonRealm.makeSocket();
+      var switchToEdit = makeEditSwitch(webapp);
+      var socket = makeSocket();
       var dropup = build$2(function () {
         webapp.run(function (w) {
           w.refreshStructure();
         });
       }, scrollIntoView);
-      alloy.add(toolbar.wrapper());
+      alloy.add(toolbar.wrapper);
       alloy.add(socket);
-      alloy.add(dropup.component());
+      alloy.add(dropup.component);
       var setToolbarGroups = function (rawGroups) {
         var groups = toolbar.createGroups(rawGroups);
         toolbar.setGroups(groups);
@@ -13536,7 +13299,7 @@
         toolbar.restoreToolbar();
       };
       var init = function (spec) {
-        webapp.set(IosWebapp.produce(spec));
+        webapp.set(produce$1(spec));
       };
       var exit = function () {
         webapp.run(function (w) {
@@ -13544,11 +13307,11 @@
           w.exit();
         });
       };
-      var updateMode = function (readOnly) {
-        CommonRealm.updateMode(socket, switchToEdit, readOnly, alloy.root());
+      var updateMode$1 = function (readOnly) {
+        updateMode(socket, switchToEdit, readOnly, alloy.root);
       };
       return {
-        system: constant(alloy),
+        system: alloy,
         element: alloy.element,
         init: init,
         exit: exit,
@@ -13556,16 +13319,16 @@
         setContextToolbar: setContextToolbar,
         focusToolbar: focusToolbar,
         restoreToolbar: restoreToolbar,
-        updateMode: updateMode,
-        socket: constant(socket),
-        dropup: constant(dropup)
+        updateMode: updateMode$1,
+        socket: socket,
+        dropup: dropup
       };
     }
 
     var global$5 = tinymce.util.Tools.resolve('tinymce.EditorManager');
 
     var derive$3 = function (editor) {
-      var base = readOptFrom$1(editor.settings, 'skin_url').fold(function () {
+      var base = Optional.from(getSkinUrl(editor)).fold(function () {
         return global$5.baseURL + '/skins/ui/oxide';
       }, function (url) {
         return url;
@@ -13575,48 +13338,36 @@
         ui: base + '/skin.mobile.min.css'
       };
     };
-    var CssUrls = { derive: derive$3 };
 
-    var fontSizes = [
-      'x-small',
-      'small',
-      'medium',
-      'large',
-      'x-large'
-    ];
     var fireChange = function (realm, command, state) {
-      realm.system().broadcastOn([TinyChannels.formatChanged()], {
+      realm.system.broadcastOn([formatChanged], {
         command: command,
         state: state
       });
     };
     var init$5 = function (realm, editor) {
       var allFormats = keys(editor.formatter.get());
-      each$1(allFormats, function (command) {
+      each(allFormats, function (command) {
         editor.formatter.formatChanged(command, function (state) {
           fireChange(realm, command, state);
         });
       });
-      each$1([
+      each([
         'ul',
         'ol'
       ], function (command) {
-        editor.selection.selectorChanged(command, function (state, data) {
+        editor.selection.selectorChanged(command, function (state, _data) {
           fireChange(realm, command, state);
         });
       });
     };
-    var FormatChangers = {
-      init: init$5,
-      fontSizes: constant(fontSizes)
-    };
 
     var fireSkinLoaded = function (editor) {
-      var done = function () {
-        editor._skinLoaded = true;
-        editor.fire('SkinLoaded');
-      };
       return function () {
+        var done = function () {
+          editor._skinLoaded = true;
+          editor.fire('SkinLoaded');
+        };
         if (editor.initialized) {
           done();
         } else {
@@ -13624,36 +13375,39 @@
         }
       };
     };
-    var SkinLoaded = { fireSkinLoaded: fireSkinLoaded };
 
-    var READING = constant('toReading');
-    var EDITING = constant('toEditing');
+    var READING = 'toReading';
+    var EDITING = 'toEditing';
     var renderMobileTheme = function (editor) {
       var renderUI = function () {
         var targetNode = editor.getElement();
-        var cssUrls = CssUrls.derive(editor);
+        var cssUrls = derive$3(editor);
         if (isSkinDisabled(editor) === false) {
+          var styleSheetLoader_1 = global$1.DOM.styleSheetLoader;
           editor.contentCSS.push(cssUrls.content);
-          global$1.DOM.styleSheetLoader.load(cssUrls.ui, SkinLoaded.fireSkinLoaded(editor));
+          styleSheetLoader_1.load(cssUrls.ui, fireSkinLoaded(editor));
+          editor.on('remove', function () {
+            return styleSheetLoader_1.unload(cssUrls.ui);
+          });
         } else {
-          SkinLoaded.fireSkinLoaded(editor)();
+          fireSkinLoaded(editor)();
         }
         var doScrollIntoView = function () {
           editor.fire('ScrollIntoView');
         };
-        var realm = PlatformDetection$1.detect().os.isAndroid() ? AndroidRealm(doScrollIntoView) : IosRealm(doScrollIntoView);
-        var original = Element.fromDom(targetNode);
-        attachSystemAfter(original, realm.system());
+        var realm = detect$3().os.isAndroid() ? AndroidRealm(doScrollIntoView) : IosRealm(doScrollIntoView);
+        var original = SugarElement.fromDom(targetNode);
+        attachSystemAfter(original, realm.system);
         var findFocusIn = function (elem) {
           return search(elem).bind(function (focused) {
-            return realm.system().getByDom(focused).toOption();
+            return realm.system.getByDom(focused).toOptional();
           });
         };
         var outerWindow = targetNode.ownerDocument.defaultView;
-        var orientation = Orientation.onChange(outerWindow, {
+        var orientation = onChange(outerWindow, {
           onChange: function () {
-            var alloy = realm.system();
-            alloy.broadcastOn([TinyChannels.orientationChanged()], { width: Orientation.getActualWidth(outerWindow) });
+            var alloy = realm.system;
+            alloy.broadcastOn([orientationChanged], { width: getActualWidth(outerWindow) });
           },
           onReady: noop
         });
@@ -13664,7 +13418,7 @@
           var toolbars = configureToolbar(dynamicGroup, readOnlyGroups, mainGroups);
           realm.setToolbarGroups(ro === true ? toolbars.readOnly : toolbars.main);
           editor.setMode(ro === true ? 'readonly' : 'design');
-          editor.fire(ro === true ? READING() : EDITING());
+          editor.fire(ro === true ? READING : EDITING);
           realm.updateMode(ro);
         };
         var configureToolbar = function (dynamicGroup, readOnlyGroups, mainGroups) {
@@ -13687,16 +13441,16 @@
           realm.init({
             editor: {
               getFrame: function () {
-                return Element.fromDom(editor.contentAreaContainer.querySelector('iframe'));
+                return SugarElement.fromDom(editor.contentAreaContainer.querySelector('iframe'));
               },
               onDomChanged: function () {
                 return { unbind: noop };
               },
               onToReading: function (handler) {
-                return bindHandler(READING(), handler);
+                return bindHandler(READING, handler);
               },
               onToEditing: function (handler) {
-                return bindHandler(EDITING(), handler);
+                return bindHandler(EDITING, handler);
               },
               onScrollToCursor: function (handler) {
                 editor.on('ScrollIntoView', function (tinyEvent) {
@@ -13712,32 +13466,32 @@
                 hideDropup();
               },
               onTouchContent: function () {
-                var toolbar = Element.fromDom(editor.editorContainer.querySelector('.' + Styles.resolve('toolbar')));
+                var toolbar = SugarElement.fromDom(editor.editorContainer.querySelector('.' + resolve('toolbar')));
                 findFocusIn(toolbar).each(emitExecute);
                 realm.restoreToolbar();
                 hideDropup();
               },
               onTapContent: function (evt) {
-                var target = evt.target();
+                var target = evt.target;
                 if (name(target) === 'img') {
-                  editor.selection.select(target.dom());
+                  editor.selection.select(target.dom);
                   evt.kill();
                 } else if (name(target) === 'a') {
-                  var component = realm.system().getByDom(Element.fromDom(editor.editorContainer));
+                  var component = realm.system.getByDom(SugarElement.fromDom(editor.editorContainer));
                   component.each(function (container) {
                     if (Swapping.isAlpha(container)) {
-                      TinyCodeDupe.openLink(target.dom());
+                      openLink(target.dom);
                     }
                   });
                 }
               }
             },
-            container: Element.fromDom(editor.editorContainer),
-            socket: Element.fromDom(editor.contentAreaContainer),
-            toolstrip: Element.fromDom(editor.editorContainer.querySelector('.' + Styles.resolve('toolstrip'))),
-            toolbar: Element.fromDom(editor.editorContainer.querySelector('.' + Styles.resolve('toolbar'))),
-            dropup: realm.dropup(),
-            alloy: realm.system(),
+            container: SugarElement.fromDom(editor.editorContainer),
+            socket: SugarElement.fromDom(editor.contentAreaContainer),
+            toolstrip: SugarElement.fromDom(editor.editorContainer.querySelector('.' + resolve('toolstrip'))),
+            toolbar: SugarElement.fromDom(editor.editorContainer.querySelector('.' + resolve('toolbar'))),
+            dropup: realm.dropup,
+            alloy: realm.system,
             translate: noop,
             setReadOnly: function (ro) {
               setReadOnly(dynamicGroup, readOnlyGroups, mainGroups, ro);
@@ -13747,14 +13501,14 @@
             }
           });
           var hideDropup = function () {
-            realm.dropup().disappear(function () {
-              realm.system().broadcastOn([TinyChannels.dropupDismissed()], {});
+            realm.dropup.disappear(function () {
+              realm.system.broadcastOn([dropupDismissed], {});
             });
           };
           var backToMaskGroup = {
             label: 'The first group',
             scrollable: false,
-            items: [Buttons.forToolbar('back', function () {
+            items: [forToolbar('back', function () {
                 editor.selection.collapse();
                 realm.exit();
               }, {}, editor)]
@@ -13762,7 +13516,7 @@
           var backToReadOnlyGroup = {
             label: 'Back to read only',
             scrollable: false,
-            items: [Buttons.forToolbar('readonly-back', function () {
+            items: [forToolbar('readonly-back', function () {
                 setReadOnly(dynamicGroup, readOnlyGroups, mainGroups, true);
               }, {}, editor)]
           };
@@ -13771,8 +13525,8 @@
             scrollable: true,
             items: []
           };
-          var features = Features.setup(realm, editor);
-          var items = Features.detect(editor.settings, features);
+          var features = setup(realm, editor);
+          var items = detect$4(editor, features);
           var actionGroup = {
             label: 'the action group',
             scrollable: true,
@@ -13795,18 +13549,18 @@
             backToMask: [backToMaskGroup],
             backToReadOnly: [backToReadOnlyGroup]
           });
-          FormatChangers.init(realm, editor);
+          init$5(realm, editor);
         });
         editor.on('remove', function () {
           realm.exit();
         });
         editor.on('detach', function () {
-          detachSystem(realm.system());
-          realm.system().destroy();
+          detachSystem(realm.system);
+          realm.system.destroy();
         });
         return {
-          iframeContainer: realm.socket().element().dom(),
-          editorContainer: realm.element().dom()
+          iframeContainer: realm.socket.element.dom,
+          editorContainer: realm.element.dom
         };
       };
       return {
@@ -13815,7 +13569,11 @@
             open: constant({
               progressBar: { value: noop },
               close: noop,
-              text: noop
+              text: noop,
+              getEl: constant(null),
+              moveTo: noop,
+              moveRel: noop,
+              settings: {}
             }),
             close: noop,
             reposition: noop,
@@ -13831,4 +13589,4 @@
 
     Theme();
 
-}(window));
+}());
