@@ -350,7 +350,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 			layer.open({
 				type: 1,
 				offset: 'r',
-				area: ['340px', '100%'],
+				area: ['320px', '100%'],
 				title: false,
 				shade: 0.1,
 				closeBtn: 0,

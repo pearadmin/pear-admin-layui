@@ -60,13 +60,13 @@
 
 .pear-btn-primary[plain] {
 	color: #409eff !important;
-	background: #ecf5ff !important;
+	background: #ecf5ff 10% !important;
 	border-color: #b3d8ff !important;
 }
 
 .pear-btn-primary[plain]:hover {
 	color: #fff !important;
-	background-color: #2d8cf0 !important
+	background-color: #2d8cf0!important
 }
 
 .pear-btn-success[plain] {

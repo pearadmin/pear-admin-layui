@@ -1,5 +1,6 @@
 .pear-notice .layui-this {
 	color: #5FB878 !important;
+	font-weight: 600;
 }
 
 .pear-notice li {
@@ -30,11 +31,6 @@
 	height: 45px!important;
 	line-height: 45px!important;
 }
-
-.pear-notice .layui-tab-title{
-	border: whitesmoke;
-}
-
 
 /** 滚动条样式 */
 .pear-notice *::-webkit-scrollbar{width:0px;height:0px;}
