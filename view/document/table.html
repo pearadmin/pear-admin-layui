@@ -36,8 +36,8 @@
 			</div>
 		</div>
 
-		<script type="text/html" id="user-toolbar">
-			<button class="pear-btn pear-btn-primary pear-btn-md" lay-event="add">
+	<script type="text/html" id="user-toolbar">
+		<button class="pear-btn pear-btn-primary pear-btn-md" lay-event="add">
 			<i class="layui-icon layui-icon-add-1"></i>
 			新增
 		</button>
@@ -47,14 +47,14 @@
 		</button>
 	</script>
 
-		<script type="text/html" id="user-bar">
-			<button class="pear-btn pear-btn-primary pear-btn-sm" lay-event="edit"><i class="layui-icon layui-icon-edit"></i></button>
+	<script type="text/html" id="user-bar">
+		<button class="pear-btn pear-btn-primary pear-btn-sm" lay-event="edit"><i class="layui-icon layui-icon-edit"></i></button>
 		<button class="pear-btn pear-btn-danger pear-btn-sm" lay-event="remove"><i class="layui-icon layui-icon-delete"></i></button>
-		<button class="pear-btn pear-btn-sm" id="more{{d.id}}"><i class="layui-icon layui-icon-triangle-d"></i></button>
+		<button class="pear-btn pear-btn-danger pear-btn-sm" id="more"+d.id><i class="layui-icon layui-icon-delete"></i></button>
 	</script>
 
-		<script type="text/html" id="user-enable">
-			<input type="checkbox" name="enable" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="user-enable" checked = "{{ d.enable == 0 ? 'true' : 'false' }}">
+	<script type="text/html" id="user-enable">
+		<input type="checkbox" name="enable" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="user-enable" checked = "{{ d.enable == 0 ? 'true' : 'false' }}">
 	</script>
 
 	<script type="text/html" id="user-sex">
@@ -75,14 +75,6 @@
 
 	<script type="text/html" id="user-createTime">
 		{{layui.util.toDateString(d.createTime, 'yyyy-MM-dd')}}
-	</script>
-
-	<script type="text/plain" id="moreTool">
-		[
-			[{txt: "导出信息", event: "progress"}]
-			[{txt: "下载文件", event: "resolve"}]
-			[{txt: "查看详情", event: "reopen"}]
-		]
 	</script>
 
 	<div style="display: none;">
@@ -168,21 +160,7 @@
 					defaultToolbar: [{
 						layEvent: 'refresh',
 						icon: 'layui-icon-refresh',
-					}, 'filter', 'print', 'exports'],
-					done: function(res) {
-						for (var i = 0; i < res.data.length; i++) {
-							if (res.data[i].id == "5" || res.data[i].id == "8") {
-								$("#more" + res.data[i].id).hide();
-								continue;
-							}
-
-							dropdown.suite("#more" + res.data[i].id, {
-								align: 'left',
-								data: res.data[i],
-								templateMenu: "moreTool",
-							});
-						}
-					}
+					}, 'filter', 'print', 'exports']
 				});
 
 				table.on('tool(user-table)', function(obj) {

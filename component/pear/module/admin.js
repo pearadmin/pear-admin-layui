@@ -465,7 +465,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 				colors += "<span class='select-color-item' color-id='" + value.id + "' style='background-color:" + value.color +
 					";'></span>";
 			})
-			return "<div class='select-color'><div class='select-color-title'>主题色</div><div class='select-color-content'>" +
+			return "<div class='select-color'><div class='select-color-title'>主题配色</div><div class='select-color-content'>" +
 				colors + "</div></div>"
 		}
 
