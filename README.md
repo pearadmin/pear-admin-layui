@@ -44,6 +44,25 @@
 
 </p>
 
+#### 项目结构
+
+```
+Pear Admin Layui
+│
+├─admin 资源
+│
+├─component 组件
+│
+├─config 配置
+│
+├─view 视图
+│
+├─index.html 入口
+│
+└─login.html 登录
+
+```
+
 #### 开源地址
 
 <p style="padding:10px;"  width="90%">

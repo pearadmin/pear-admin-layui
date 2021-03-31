@@ -22,6 +22,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 			var notice = createHtml(option);
 			$(option.elem).html(notice);
 		}
+		element.init();
 		return new message(option);
 	}
 	
@@ -36,7 +37,6 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 		})
 	}
 	
-
 	/** 同 步 请 求 获 取 数 据 */
 	function getData(url) {
 		$.ajaxSettings.async = false;
