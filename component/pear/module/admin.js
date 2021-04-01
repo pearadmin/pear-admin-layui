@@ -507,6 +507,19 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 				res("返回值");
 			});
 		}
+		
+		function isFullscreen(){
+		    return document.fullscreenElement    ||
+		           document.msFullscreenElement  ||
+		           document.mozFullScreenElement ||
+		           document.webkitFullscreenElement || false;
+		}
+		
+		window.onresize = function() {
+			if (!isFullscreen()) {
+			    $(".fullScreen").eq(0).removeClass("layui-icon-screen-restore");
+			}
+		}
 
 		exports('admin', pearAdmin);
 	})

@@ -22,7 +22,9 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 			var notice = createHtml(option);
 			$(option.elem).html(notice);
 		}
-		element.init();
+		setTimeout(function(){
+			element.init();
+		},300);
 		return new message(option);
 	}
 	
