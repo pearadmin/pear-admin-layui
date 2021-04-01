@@ -50,7 +50,7 @@
 	<script type="text/html" id="user-bar">
 		<button class="pear-btn pear-btn-primary pear-btn-sm" lay-event="edit"><i class="layui-icon layui-icon-edit"></i></button>
 		<button class="pear-btn pear-btn-danger pear-btn-sm" lay-event="remove"><i class="layui-icon layui-icon-delete"></i></button>
-		<button class="pear-btn pear-btn-danger pear-btn-sm" id="more"+d.id><i class="layui-icon layui-icon-delete"></i></button>
+        <button class="pear-btn pear-btn-sm" id="more_{{d.userId}}"><i class="layui-icon layui-icon-triangle-d"></i></button>
 	</script>
 
 	<script type="text/html" id="user-enable">
@@ -145,7 +145,7 @@
 							title: '操作',
 							toolbar: '#user-bar',
 							align: 'left',
-							width: 170
+							width: 160
 						}
 					]
 				]
@@ -160,7 +160,28 @@
 					defaultToolbar: [{
 						layEvent: 'refresh',
 						icon: 'layui-icon-refresh',
-					}, 'filter', 'print', 'exports']
+					}, 'filter', 'print', 'exports'],
+					done: function(res, curr, count) {
+                              for (var i = 0; i < res.data.length; i++) {
+                                 dropdown.render({
+                                     elem: '#more_' + res.data[i].userId
+                                 , data: [{
+                                         title: 'menu item11'
+                                         , id: 100
+                                     }, {
+                                         title: 'menu item22'
+                                         , id: 101
+                                     }, {
+                                         title: 'menu item33'
+                                         , id: 102
+                                         }]
+                                     , id: '#more_' + res.data[i].userId
+                                     , click: function (obj) {
+                                         layer.tips('点击了：' + obj.title, this.elem, { tips: [1, '#5FB878'] })
+                                     }
+                                 });
+					         }
+                        }
 				});
 
 				table.on('tool(user-table)', function(obj) {
