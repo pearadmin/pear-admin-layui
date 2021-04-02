@@ -70,6 +70,7 @@ layui.define(["jquery","layer"], function (exports) {
 		style += '.pear-tab-menu .item:hover{background-color:'+color+'!important}'
 		style += '.layui-form-danger:focus {border-color:#FF5722 !important}'
 		style += '.pear-admin .user a:hover{color:'+color+'!important}'
+		style += '.pear-admin .user .layui-this a:hover{color:white!important}'
 		var colorPane = $("#pear-admin-color");
 		if(colorPane.length>0){
 			colorPane.html(style);

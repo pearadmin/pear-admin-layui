@@ -53,7 +53,7 @@ colors:
 - id: "4"
   color: "#f56c6c"
 - id: "5"
-  color: "darkgray"
+  color: "#3963bc"
 ## 主题面板的链接列表配置
 links: 
 - icon: "layui-icon layui-icon-website"
