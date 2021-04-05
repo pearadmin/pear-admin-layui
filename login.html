@@ -24,11 +24,11 @@
 				<input placeholder="密 码 : admin " lay-verify="required" hover class="layui-input"  />
 			</div>
 			<div class="layui-form-item">
-				<input placeholder="验证码 : "  hover class="code layui-input layui-input-inline"  />
+				<input placeholder="验证码 : "  hover  lay-verify="required" class="code layui-input layui-input-inline"  />
 				<img src="admin/images/captcha.gif" class="codeImage" />
 			</div>
 			<div class="layui-form-item">
-				<input type="checkbox" lay-verify="required" name="" title="记住密码" lay-skin="primary" checked>
+				<input type="checkbox" name="" title="记住密码" lay-skin="primary" checked>
 			</div>
 			<div class="layui-form-item">
 				<button type="button" class="pear-btn pear-btn-success login" lay-submit lay-filter="login">
@@ -49,7 +49,10 @@
 				form.on('submit(login)', function(data) {
 					
 					/// 验证
-				
+					
+					/// 登录
+					
+					/// 动画
 					button.load({
 						elem: '.login',
 						time: 1500,
