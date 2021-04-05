@@ -1,0 +1,22 @@
+.pear-admin.pear-admin-horizontal{
+	
+}
+
+.pear-admin.pear-admin-horizontal .layui-side{
+	width: 0px;
+}
+
+.pear-admin.pear-admin-horizontal .layui-body{
+
+	left: 0px;
+}
+
+.pear-admin.pear-admin-horizontal .layui-header{
+	left: 0px;
+	width: 100%;
+}
+
+.pear-admin.pear-admin-horizontal .collaspe{
+	display: none;
+}
+
