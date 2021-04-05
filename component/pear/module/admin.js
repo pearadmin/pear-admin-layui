@@ -38,7 +38,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 
 			this.setAvatar = function(url, username) {
 				var image = new Image();
-				image.src = "admin/images/avatar.jpg";
+				image.src = url || "admin/images/avatar.jpg";
 				image.onload = function() {
 					$(".layui-nav-img").attr("src", convert.imageToBase64(image));
 				}
