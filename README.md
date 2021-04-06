@@ -17,13 +17,13 @@
 
 <p align="center">
     <a href="#">
-        <img src="https://img.shields.io/badge/Pear Admin Layui-3.6.5+-green.svg" alt="Pear Admin Layui Version">
+        <img src="https://img.shields.io/badge/Pear Admin Layui-3.7.8+-green.svg" alt="Pear Admin Layui Version">
     </a>
     <a href="#">
         <img src="https://img.shields.io/badge/JQuery-2.0+-green.svg" alt="Jquery Version">
     </a>
       <a href="#">
-        <img src="https://img.shields.io/badge/Layui-2.5.7+-green.svg" alt="Layui Version">
+        <img src="https://img.shields.io/badge/Layui-2.6.4+-green.svg" alt="Layui Version">
     </a>
 </p>
 <br>
