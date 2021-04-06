@@ -42,7 +42,7 @@ layui.define(['jquery'], function(exports) {
 	 * */
 	button.prototype.stop = function(success) {
 		$(this.option.elem).html(this.option.text);
-		success();
+		success && success();
 	} 
 
 	exports(MOD_NAME, new button());
