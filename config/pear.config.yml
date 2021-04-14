@@ -39,7 +39,7 @@ theme:
   ## 默认主题色，对应 colors 配置中的 ID 标识
   defaultColor: "2"
   ## 默认的菜单主题 dark-theme 黑 / light-theme 白
-  defaultMenu: "dark-theme"
+  defaultMenu: "light-theme"
   ## 是否允许用户切换主题，false 时关闭自定义主题面板
   allowCustom: true
 ## 供选择的主题色配置列表

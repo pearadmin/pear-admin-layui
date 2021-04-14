@@ -206,7 +206,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 				localStorage.setItem("theme-color-context", currentColor.color);
 				pearTheme.changeTheme(window, option.other.autoHead);
 				var menu = localStorage.getItem("theme-menu");
-				if (menu === "null") {
+				if (menu == null) {
 					menu = option.theme.defaultMenu;
 				} else {
 					if (option.theme.allowCustom === false) {
@@ -239,13 +239,12 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 			this.jump = function(id, title, url) {
 				if (config.tab.muiltTab) {
 					bodyTab.addTabOnly({
-							id: id,
-							title: title,
-							url: url,
-							icon: null,
-							close: true
-						},
-						300);
+						id: id,
+						title: title,
+						url: url,
+						icon: null,
+						close: true
+					}, 300);
 				} else {
 					sideMenu.selectItem(id);
 					bodyFrame.changePage(url, title, true);
@@ -366,7 +365,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 				move: false,
 				content: html + buildColorHtml() + buildLinkHtml() + bottomTool(),
 				success: function(layero, index) {
-		
+
 					var color = localStorage.getItem("theme-color");
 					var menu = localStorage.getItem("theme-menu");
 
