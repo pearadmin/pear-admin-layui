@@ -23,13 +23,13 @@ menu:
 tab: 
   ## 是否开启多选项卡
   muiltTab: true
-  ## 切换选项卡时，是否刷新页面状态
+  ## 保持视图状态
   keepState: true
-  ## 是否开启 Tab 记忆
+  ## 开启选项卡记忆
   session: true
   ## 最大可打开的选项卡数量
   tabMax: "30"
-  ## 默认选项卡数据
+  ## 首页
   index: 
     id: "10" ## 标识 ID , 建议与菜单项中的 ID 一致
     href: "view/console/console1.html" ## 页面地址
@@ -42,7 +42,7 @@ theme:
   defaultMenu: "dark-theme"
   ## 是否允许用户切换主题，false 时关闭自定义主题面板
   allowCustom: true
-## 供选择的主题色配置列表
+## 主题色配置列表
 colors: 
 - id: "1"
   color: "#2d8cf0"
@@ -54,7 +54,7 @@ colors:
   color: "#f56c6c"
 - id: "5"
   color: "#3963bc"
-## 主题面板的链接列表配置
+## 主题面板的链接列表
 links: 
 - icon: "layui-icon layui-icon-website"
   title: "官方网站"
