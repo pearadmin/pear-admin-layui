@@ -25,10 +25,13 @@ layui.define(['jquery'], function(exports) {
 		
 		$(option.elem).html("<i class='layui-anim layui-anim-rotate layui-icon layui-anim-loop layui-icon-loading'/>");
 		
+		$(option.elem).attr("disabled", "disabled");
+		
 		var buttons = $(option.elem);
 		
 		if (option.time != "" || option.time !=false) {
 			setTimeout(function() {
+				$(option.elem).attr("disabled", false);
 				buttons.html(text);
 				option.done();
 			}, option.time);
@@ -41,6 +44,7 @@ layui.define(['jquery'], function(exports) {
 	 * Button stop loaded
 	 * */
 	button.prototype.stop = function(success) {
+		$(this.option.elem).attr("disabled", false);
 		$(this.option.elem).html(this.option.text);
 		success && success();
 	} 
