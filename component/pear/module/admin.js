@@ -454,6 +454,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 		function buildLinkHtml() {
 			var links = "";
 			$.each(config.links, function(i, value) {
+                // value.target 存在，则为新窗口打开，增加 target="_blank" 属性
 				links += '<a class="more-menu-item" href="' + value.href + '" '+(value.target?' target="_blank" ':'')+'>' +
 					'<i class="' + value.icon + '" style="font-size: 19px;"></i> ' + value.title +
 					'</a>'
