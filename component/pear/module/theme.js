@@ -72,6 +72,7 @@ layui.define(["jquery","layer"], function (exports) {
 		style += '.pear-admin .user a:hover{color:'+color+'!important}'
 		style += '.pear-admin .user .layui-this a:hover{color:white!important}'
 		style += '.pear-notice .layui-this{color:'+color+'!important}'
+        style += '.layui-form-radio:hover *, .layui-form-radioed, .layui-form-radioed>i{color:' + color + ' !important}';
 		var colorPane = $("#pear-admin-color");
 		if(colorPane.length>0){
 			colorPane.html(style);
