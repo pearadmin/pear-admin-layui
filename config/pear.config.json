@@ -5,6 +5,7 @@
 	},
 	"menu": {
 		"data": "admin/data/menu.json",
+		"collaspe": true,
 		"accordion": true,
 		"method": "GET",
 		"control": false,

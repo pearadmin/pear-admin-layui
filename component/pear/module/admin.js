@@ -195,6 +195,14 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 					$(".loader-main").fadeOut(200);
 				}, param.other.keepLoad)
 			}
+			
+			this.collaspe = function(param) {
+				if(param.menu.collaspe) {
+					if ($(window).width() >= 768) {
+						collaspe()
+					}
+				}
+			}
 
 			this.themeRender = function(option) {
 				if (option.theme.allowCustom === false) {
@@ -427,6 +435,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 			pearAdmin.bodyRender(param);
 			pearAdmin.themeRender(param);
 			pearAdmin.keepLoad(param);
+			pearAdmin.collaspe(param)
 			if (param.header.message != false) {
 				pearAdmin.messageRender(param);
 			}
