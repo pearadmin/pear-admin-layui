@@ -103,6 +103,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 					},
 					done: function() {
 						sideMenu.selectItem(param.menu.select);
+						pearAdmin.collaspe(param);
 					}
 				});
 			}
@@ -435,7 +436,6 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 			pearAdmin.bodyRender(param);
 			pearAdmin.themeRender(param);
 			pearAdmin.keepLoad(param);
-			pearAdmin.collaspe(param)
 			if (param.header.message != false) {
 				pearAdmin.messageRender(param);
 			}
