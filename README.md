@@ -31,6 +31,18 @@
 </div>
 <br>
 
+#### 项目介绍
+
+<p style="padding:10px;"  width="90%">
+
+基于Layui的后台管理系统模板，扩展Layui原生UI样式，大量开源组件，提供便捷快速的开发方式，延续LayuiAdmin
+
+的设计风格。基于异步Ajax的菜单构建，多标签页，单标签页的共存，多主题，多布局切换，为开发者提
+
+供相对完善的开发方案，只为成为更好的轮子，项目不定时更新
+
+</p>
+
 #### 项目结构
 
 ```
@@ -112,3 +124,4 @@ GitHub 开源地址 ：https://github.com/PearAdmin/pear-admin-layui
 |![输入图片说明](https://images.gitee.com/uploads/images/2021/0331/222453_b02034b2_4835367.png "屏幕截图.png")| ![输入图片说明](https://images.gitee.com/uploads/images/2021/0331/222508_fec3ad5e_4835367.png "屏幕截图.png")   |
 |![输入图片说明](https://images.gitee.com/uploads/images/2021/0331/222533_abda701e_4835367.png "屏幕截图.png")|![输入图片说明](https://images.gitee.com/uploads/images/2021/0331/222547_db49f0b8_4835367.png "屏幕截图.png")   |
 |![输入图片说明](https://images.gitee.com/uploads/images/2021/0331/222611_7ffd378b_4835367.png "屏幕截图.png")|![输入图片说明](https://images.gitee.com/uploads/images/2021/0331/222625_55e092f3_4835367.png "屏幕截图.png")   |
+
