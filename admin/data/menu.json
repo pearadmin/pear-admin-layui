@@ -405,5 +405,13 @@
 			"openType": "_iframe",
 			"href": "component/code/index.html"
 		}]
+	},
+	{
+		"id": "space",
+		"title": "空白目录",
+		"icon": "layui-icon layui-icon-util",
+		"type": 0,
+		"href": "",
+		"children": []
 	}
 ]

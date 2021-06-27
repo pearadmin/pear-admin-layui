@@ -353,7 +353,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 			});
 			// 封 装
 		} else {
-			content += '<div class="toast"> 无 内 容 </div>';
+			content += '<dd style="background-color: transparent!important;"><a style="background-color: transparent!important;margin-left: 26px">目录为空</a></dd>';
 		}
 		content += '</dl>';
 		return content;
