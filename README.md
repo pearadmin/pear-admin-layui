@@ -96,16 +96,6 @@ GitHub 开源地址 ：https://github.com/PearAdmin/pear-admin-layui
 
 </p>
 
-#### 开源贡献
-
-<p style="padding:10px;"  width="90%">
-
-1. 欢迎提交 [pull request](https://gitee.com/pear-admin/Pear-Admin-Layui/pulls)，注意对应提交对应 `master` 分支
-
-2. 欢迎提交 [issue](https://gitee.com/pear-admin/Pear-Admin-Layui/issues)，请写清楚遇到问题的原因、开发环境、复显步骤。
-
-</p>
-
 #### 项目截图
 
 |  |  |
@@ -121,3 +111,22 @@ GitHub 开源地址 ：https://github.com/PearAdmin/pear-admin-layui
 |![输入图片说明](https://images.gitee.com/uploads/images/2021/0331/222533_abda701e_4835367.png "屏幕截图.png")|![输入图片说明](https://images.gitee.com/uploads/images/2021/0331/222547_db49f0b8_4835367.png "屏幕截图.png")   |
 |![输入图片说明](https://images.gitee.com/uploads/images/2021/0331/222611_7ffd378b_4835367.png "屏幕截图.png")|![输入图片说明](https://images.gitee.com/uploads/images/2021/0331/222625_55e092f3_4835367.png "屏幕截图.png")   |
 
+#### Star 趋势
+
+[![Giteye chart](https://chart.giteye.net/gitee/pear-admin/Pear-Admin-Layui/MZ26N8HL.png)](https://giteye.net/chart/MZ26N8HL)
+
+#### 开源贡献
+
+<p style="padding:10px;"  width="90%">
+
+1. 欢迎提交 [pull request](https://gitee.com/pear-admin/Pear-Admin-Layui/pulls)，注意对应提交对应 `master` 分支
+
+2. 欢迎提交 [issue](https://gitee.com/pear-admin/Pear-Admin-Layui/issues)，请写清楚遇到问题的原因、开发环境、复显步骤。
+
+</p>
+
+感谢每一位贡献代码的朋友。
+
+[![Giteye chart](https://chart.giteye.net/gitee/pear-admin/Pear-Admin-Layui/RSZTK22D.png)](https://giteye.net/chart/RSZTK22D)
+
+如果对您有帮助，您可以点右上角 💘Star💘支持
