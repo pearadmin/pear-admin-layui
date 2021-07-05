@@ -29,12 +29,10 @@
 	"colors": [{
 			"id": "1",
 			"color": "#2d8cf0"
-		},
-		{
+		},{
 			"id": "2",
 			"color": "#5FB878"
-		},
-		{
+		},{
 			"id": "3",
 			"color": "#1E9FFF"
 		}, {
@@ -49,13 +47,11 @@
 			"icon": "layui-icon layui-icon-auz",
 			"title": "官方网站",
 			"href": "http://www.pearadmin.com"
-		},
-		{
+		},{
 			"icon": "layui-icon layui-icon-auz",
 			"title": "开发文档",
 			"href": "http://www.pearadmin.com"
-		},
-		{
+		},{
 			"icon": "layui-icon layui-icon-auz",
 			"title": "开源地址",
 			"href": "https://gitee.com/Jmysy/Pear-Admin-Layui"
