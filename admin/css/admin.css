@@ -37,10 +37,6 @@ body,
 .pear-admin .layui-layout-control {
 	left: 140px;
 	position: absolute;
-	width: 505px;
-	white-space: nowrap;
-	overflow-x: scroll;
-	overflow: hidden;
 }
 
 .pear-admin .layui-layout-control .layui-nav{

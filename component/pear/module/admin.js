@@ -93,6 +93,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 					height: '100%',
 					method: param.menu.method,
 					control: param.menu.control ? 'control' : false, // control
+					controlWidth: param.menu.controlWidth,
 					defaultMenu: 0,
 					accordion: param.menu.accordion,
 					url: param.menu.data,
@@ -533,32 +534,6 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 				$(".fullScreen").eq(0).removeClass("layui-icon-screen-restore");
 			}
 		}
-
-		$("#control").on("mousewheel DOMMouseScroll", function(event) {
-
-			var delta = (event.originalEvent.wheelDelta && (event.originalEvent.wheelDelta > 0 ? 1 : -1)) || // chrome & ie
-				(event.originalEvent.detail && (event.originalEvent.detail > 0 ? -1 : 1)); // firefox
-
-			if (delta > 0) {
-				for (var num = 1; num < 20; num++) {
-					setTimeout(function() {
-						if ($("#control ul").css('left').replace("px", "") < 0) {
-							$("#control ul").css("left", "+=2px");
-						}
-					}, 10)
-				}
-			} else if (delta < 0) {
-			
-				if(( (Number)($("#control ul").css("left").replace("px","")) + ($("#control ul").width() - $("#control").width())) > 0){
-					for (var num = 1; num < 20; num++) {
-						setTimeout(function() {
-							$("#control ul").css("left", "-=2px");
-						}, 10)
-					}
-				}
-			}
-			console.log(delta);
-		});
 
 		exports('admin', pearAdmin);
 	})

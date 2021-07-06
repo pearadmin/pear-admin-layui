@@ -20,6 +20,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 			defaultOpen: opt.defaultOpen,
 			defaultSelect: opt.defaultSelect,
 			control: opt.control,
+			controlWidth: opt.controlWidth ? opt.controlWidth: 500,
 			defaultMenu: opt.defaultMenu,
 			accordion: opt.accordion,
 			height: opt.height,
@@ -47,6 +48,33 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 		
 		// 处理高度
 		$("#"+opt.elem).height(option.height)
+		
+		setTimeout(function(){
+			$("#"+opt.control+" .control").on("mousewheel DOMMouseScroll", function(event) {
+				
+				var delta = (event.originalEvent.wheelDelta && (event.originalEvent.wheelDelta > 0 ? 1 : -1)) || // chrome & ie
+					(event.originalEvent.detail && (event.originalEvent.detail > 0 ? -1 : 1)); // firefox
+			
+				if (delta > 0) {
+					for (var num = 1; num < 20; num++) {
+						setTimeout(function() {
+							if ($("#"+opt.control+" .control ul").css('left').replace("px", "") < 0) {
+								$("#"+opt.control+" .control ul").css("left", "+=2px");
+							}
+						}, 10)
+					}
+				} else if (delta < 0) {
+					if(( (Number)($("#"+opt.control+" .control ul").css("left").replace("px","")) + ($("#"+opt.control+" .control ul").width() - $("#"+opt.control+" .control").width())) > 0){
+						for (var num = 1; num < 20; num++) {
+							setTimeout(function() {
+								$("#"+opt.control+" .control ul").css("left", "-=2px");
+							}, 10)
+						}
+					}
+				}
+			});
+		},1000)
+		
 		return new pearMenu(opt);
 	}
 
@@ -234,7 +262,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 	}
 
 	function createMenuAndControl(option) {
-		var control = '<ul class="layui-nav pear-nav-control pc layui-hide-xs" style="width: fit-content;margin: auto;">';
+		var control = '<div style="width: '+ option.controlWidth +'px;white-space: nowrap;overflow-x: scroll;overflow: hidden;" class="control"><ul class="layui-nav pear-nav-control pc layui-hide-xs" style="width: fit-content;margin: auto;">';
 		var controlPe = '<ul class="layui-nav pear-nav-control layui-hide-sm">';
 		// 声 明 头 部
 		var menu = '<div class="layui-side-scroll ' + option.theme + '">'
@@ -297,7 +325,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 		})
 		controlItemPe += "</li></dl></ul>"
 		controlPe += controlItemPe;
-		$("#" + option.control).html(control);
+		$("#" + option.control).html(control+"</div>");
 		$("#" + option.control).append(controlPe);
 		$("#" + option.elem).html(menu);
 		$("#" + option.control + " .pear-nav-control").on("click", "[pear-id]", function() {
