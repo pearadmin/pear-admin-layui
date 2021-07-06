@@ -196,9 +196,9 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 					$(".loader-main").fadeOut(200);
 				}, param.other.keepLoad)
 			}
-			
+
 			this.collaspe = function(param) {
-				if(param.menu.collaspe) {
+				if (param.menu.collaspe) {
 					if ($(window).width() >= 768) {
 						collaspe()
 					}
@@ -463,8 +463,9 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 		function buildLinkHtml() {
 			var links = "";
 			$.each(config.links, function(i, value) {
-                // value.target 存在，则为新窗口打开，增加 target="_blank" 属性
-				links += '<a class="more-menu-item" href="' + value.href + '" '+(value.target?' target="_blank" ':'')+'>' +
+				// value.target 存在，则为新窗口打开，增加 target="_blank" 属性
+				links += '<a class="more-menu-item" href="' + value.href + '" ' + (value.target ? ' target="_blank" ' : '') +
+					'>' +
 					'<i class="' + value.icon + '" style="font-size: 19px;"></i> ' + value.title +
 					'</a>'
 			})
@@ -532,6 +533,36 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 				$(".fullScreen").eq(0).removeClass("layui-icon-screen-restore");
 			}
 		}
+
+		$("#control").on("mousewheel DOMMouseScroll", function(event) {
+
+			var delta = (event.originalEvent.wheelDelta && (event.originalEvent.wheelDelta > 0 ? 1 : -1)) || // chrome & ie
+				(event.originalEvent.detail && (event.originalEvent.detail > 0 ? -1 : 1)); // firefox
+
+			if (delta > 0) {
+				for (var num = 1; num < 20; num++) {
+					setTimeout(function() {
+						if ($("#control ul").css('left').replace("px", "") < 0) {
+							$("#control ul").css("left", "+=2px");
+						}
+					}, 10)
+				}
+			} else if (delta < 0) {
+				
+				console.log("差别"+ ($("#control ul").width() - $("#control").width()))
+				
+				console.log("左" + $("#control ul").css("left").replace("px",""))
+				
+				if(( (Number)($("#control ul").css("left").replace("px","")) + ($("#control ul").width() - $("#control").width())) > 0){
+					for (var num = 1; num < 20; num++) {
+						setTimeout(function() {
+							$("#control ul").css("left", "-=2px");
+						}, 10)
+					}
+				}
+			}
+			console.log(delta);
+		});
 
 		exports('admin', pearAdmin);
 	})

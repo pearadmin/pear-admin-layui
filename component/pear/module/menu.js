@@ -234,7 +234,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 	}
 
 	function createMenuAndControl(option) {
-		var control = '<ul class="layui-nav  pear-nav-control pc layui-hide-xs">';
+		var control = '<ul class="layui-nav pear-nav-control pc layui-hide-xs" style="width: fit-content;margin: auto;">';
 		var controlPe = '<ul class="layui-nav pear-nav-control layui-hide-sm">';
 		// 声 明 头 部
 		var menu = '<div class="layui-side-scroll ' + option.theme + '">'

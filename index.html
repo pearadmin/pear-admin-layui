@@ -21,9 +21,9 @@
 					<li class="collaspe layui-nav-item"><a href="#" class="layui-icon layui-icon-shrink-right"></a></li>
 					<li class="refresh layui-nav-item"><a href="#" class="layui-icon layui-icon-refresh-1" loading = 600></a></li>
 				</ul>
-				<!-- 顶 部 右 侧 菜 单 -->
+				<!-- 多 系 统 菜 单 -->
 				<div id="control" class="layui-layout-control"></div>
-				
+				<!-- 顶 部 右 侧 菜 单 -->
 				<ul class="layui-nav layui-layout-right">
 					<li class="layui-nav-item layui-hide-xs"><a href="#" class="fullScreen layui-icon layui-icon-screen-full"></a></li>
 					<li class="layui-nav-item layui-hide-xs"><a href="http://www.pearadmin.com" class="layui-icon layui-icon-website"></a></li>
@@ -84,14 +84,11 @@
 				var convert = layui.convert;
 				var popup = layui.popup;
 		
-				// 初始化顶部用户信息
 				admin.setAvatar("admin/images/avatar.jpg","就眠仪式");
 				
-				// 根目录下 pear.config.yml 文件为初始化配置
-				// 你可以通过 admin.setConfigPath 方法修改配置文件位置
-				// 你可以通过 admin.setConfigType 方法修改配置文件类型
 				admin.setConfigType("yml");
 				admin.setConfigPath("config/pear.config.yml");
+				
 				admin.render();
 				
 				// 登出逻辑 
