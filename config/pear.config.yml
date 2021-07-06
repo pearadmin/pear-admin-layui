@@ -16,7 +16,7 @@ menu:
   ## 侧边默认折叠状态
   collaspe: false
   ## 是否开启多系统菜单模式
-  control: false
+  control: true
   ## 默认选中的菜单项
   select: "10"
   ## 是否开启异步菜单，false 时 data 属性设置为菜单数据，false 时为 json 文件或后端接口

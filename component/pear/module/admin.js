@@ -548,11 +548,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 					}, 10)
 				}
 			} else if (delta < 0) {
-				
-				console.log("差别"+ ($("#control ul").width() - $("#control").width()))
-				
-				console.log("左" + $("#control ul").css("left").replace("px",""))
-				
+			
 				if(( (Number)($("#control ul").css("left").replace("px","")) + ($("#control ul").width() - $("#control").width())) > 0){
 					for (var num = 1; num < 20; num++) {
 						setTimeout(function() {
