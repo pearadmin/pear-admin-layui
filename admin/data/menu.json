@@ -1,8 +1,8 @@
 [{
 		"id": 1,
 		"title": "工作空间",
-		"type": 0,
 		"icon": "layui-icon layui-icon-console",
+		"type": 0,
 		"href": "",
 		"children": [{
 			"id": 10,
