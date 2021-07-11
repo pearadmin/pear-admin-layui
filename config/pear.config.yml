@@ -16,7 +16,7 @@ menu:
   ## 侧边默认折叠状态
   collaspe: false
   ## 是否开启多系统菜单模式
-  control: true
+  control: false
   ## 顶部菜单宽度 PX
   controlWidth: 500
   ## 默认选中的菜单项
