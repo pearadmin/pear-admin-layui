@@ -6,6 +6,9 @@ layui.define(['layer', 'table'], function (exports) {
     var treetable = {
         // 渲染树形表格
         render: function (param) {
+			
+			param.method = param.method?param.method:"GET";
+			
             // 检查参数
             if (!treetable.checkParam(param)) {
                 return;
@@ -14,13 +17,24 @@ layui.define(['layer', 'table'], function (exports) {
             if (param.data) {
                 treetable.init(param, param.data);
             } else {
-                $.getJSON(param.url, param.where, function (res) {
-                    if(param.parseData){
-                        res = param.parseData(res);
-                        param.data = res.data;
-                    }
-                    treetable.init(param, res.data);
-                });
+				
+				if(param.method === 'post' || param.method === 'POST') {
+					$.post(param.url, param.where, function(res){
+						if(param.parseData){
+						    res = param.parseData(res);
+						    param.data = res.data;
+						}
+						treetable.init(param, res.data);
+					});
+				} else {
+					$.get(param.url, param.where, function(res){
+						if(param.parseData){
+						    res = param.parseData(res);
+						    param.data = res.data;
+						}
+						treetable.init(param, res.data);
+					});
+				}
             }
         },
         // 渲染表格
