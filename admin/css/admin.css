@@ -45,10 +45,11 @@ body,
 
 .pear-admin .layui-logo {
 	width: 230px;
-	height: 60px;
-	line-height: 60px;
+	height: 59px;
+	line-height: 59px;
 	position: relative;
 	background-color: #28333E;
+	border-bottom: 1px solid rgba(0,0,0,.12);
 }
 
 .pear-admin .layui-logo img {
@@ -296,6 +297,7 @@ body,
 .light-theme .layui-logo {
 	background-color: white !important;
 	color: black !important;
+	border-bottom: 1px whitesmoke solid;
 }
 
 .light-theme .layui-side-scroll {
