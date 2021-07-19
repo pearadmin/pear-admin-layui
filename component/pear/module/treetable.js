@@ -3,7 +3,14 @@ layui.define(['layer', 'table'], function (exports) {
     var layer = layui.layer;
     var table = layui.table;
 
+	var treetableInstance = function(param){
+		this.param = param;
+	}
+	
+	var instances = [];
+
     var treetable = {
+		
         // 渲染树形表格
         render: function (param) {
 			
@@ -120,7 +127,22 @@ layui.define(['layer', 'table'], function (exports) {
 
             // 渲染表格
             table.render(param);
+			var result = instances.some(item=>item.key===param.elem);
+			if(!result){
+				instances.push({key:param.elem,value:param});
+			}
         },
+		// 表格重载
+		reload: function(elem) {
+			var result = instances.some(item=>item.key===elem);
+			instances.forEach(function(item){
+				if(item.key === elem) {
+					// 清空
+					$(elem).next().remove();
+					treetable.render(item.value);
+				}
+			})
+		},
         // 计算缩进的数量
         getEmptyNum: function (pid, data) {
             var num = 0;

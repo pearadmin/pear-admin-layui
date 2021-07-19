@@ -77,5 +77,6 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 		        '</div></div>';
 	     $("#"+option.elem).html("<div class='pear-frame'>"+header+iframe+loading+"</div>");	
 	}
+	
 	exports(MOD_NAME,new pearFrame());
 })

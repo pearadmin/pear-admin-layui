@@ -50,6 +50,10 @@
 	    <i class="layui-icon layui-icon-shrink-right"></i>
 	    折叠
 	</button>
+	<button class="pear-btn pear-btn-success pear-btn-md" lay-event="reload">
+	    <i class="layui-icon layui-icon-refresh"></i>
+	    重载
+	</button>
 </script>
 
 <script type="text/html" id="power-bar">
@@ -86,8 +90,7 @@
 
         let MODULE_PATH = "../system/operate/";
 
-        window.render = function(){
-            treetable.render({
+        treetable.render({
                 treeColIndex: 1,
                 treeSpid: 0,
                 treeIdName: 'powerId',
@@ -109,10 +112,7 @@
                     {title: '操作',templet: '#power-bar', width: 150, align: 'center'}
                     ]
                 ]
-            });
-        }
-
-        render();
+        });
 
         table.on('tool(power-table)',function(obj){
             if (obj.event === 'remove') {
@@ -133,6 +133,8 @@
 				 treetable.expandAll("#power-table");
 			} else if(obj.event === 'foldAll'){
 				 treetable.foldAll("#power-table");
+			} else if(obj.event === 'reload'){
+				 treetable.reload("#power-table");
 			}
         });
 
