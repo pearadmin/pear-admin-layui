@@ -2,10 +2,6 @@ layui.define(['layer', 'table'], function (exports) {
     var $ = layui.jquery;
     var layer = layui.layer;
     var table = layui.table;
-
-	var treetableInstance = function(param){
-		this.param = param;
-	}
 	
 	var instances = [];
 
@@ -134,7 +130,6 @@ layui.define(['layer', 'table'], function (exports) {
         },
 		// 表格重载
 		reload: function(elem) {
-			var result = instances.some(item=>item.key===elem);
 			instances.forEach(function(item){
 				if(item.key === elem) {
 					// 清空
