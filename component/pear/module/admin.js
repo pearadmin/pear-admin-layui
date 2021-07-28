@@ -110,23 +110,11 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 			}
 
 			this.bodyRender = function(param) {
+				
 				body.on("click", ".refresh", function() {
-					var refreshA = $(".refresh a");
-					refreshA.removeClass("layui-icon-refresh-1");
-					refreshA.addClass("layui-anim");
-					refreshA.addClass("layui-anim-rotate");
-					refreshA.addClass("layui-anim-loop");
-					refreshA.addClass("layui-icon-loading");
-					if (param.tab.muiltTab) bodyTab.refresh(400);
-					else bodyFrame.refresh(400);
-					setTimeout(function() {
-						refreshA.addClass("layui-icon-refresh-1");
-						refreshA.removeClass("layui-anim");
-						refreshA.removeClass("layui-anim-rotate");
-						refreshA.removeClass("layui-anim-loop");
-						refreshA.removeClass("layui-icon-loading");
-					}, 600)
+					refresh();
 				})
+				
 				if (param.tab.muiltTab) {
 					bodyTab = pearTab.render({
 						elem: 'content',
@@ -155,6 +143,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 							}
 						}
 					});
+					
 					bodyTab.click(function(id) {
 						if (!param.tab.keepState) {
 							bodyTab.refresh(false);
@@ -198,14 +187,6 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 				}, param.other.keepLoad)
 			}
 
-			this.collaspe = function(param) {
-				if (param.menu.collaspe) {
-					if ($(window).width() >= 768) {
-						collaspe()
-					}
-				}
-			}
-
 			this.themeRender = function(option) {
 				if (option.theme.allowCustom === false) {
 					$(".setting").remove();
@@ -226,7 +207,20 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 				localStorage.setItem("theme-menu", menu);
 				this.menuSkin(menu);
 			}
+			
+			this.collaspe = function(param) {
+				if (param.menu.collaspe) {
+					if ($(window).width() >= 768) {
+						collaspe()
+					}
+				}
+			}
 
+			/**
+			 * 主题切换
+			 * 
+			 * @param theme 目标主题
+			 * */
 			this.menuSkin = function(theme) {
 				var pearAdmin = $(".pear-admin");
 				pearAdmin.removeClass("light-theme");
@@ -234,18 +228,34 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 				pearAdmin.addClass(theme);
 			}
 
+			/**
+			 * 注销事件
+			 * 
+			 * @param callback 回调实现
+			 * */
 			this.logout = function(callback) {
 				logout = callback;
 			}
 
+			/**
+			 * 消息点击
+			 * 
+			 * @param callback 回调实现
+			 * */
 			this.message = function(callback) {
 				if (callback != null) {
 					msgInstance.click(callback);
-				} else {
-					msgInstance.click(messageTip);
 				}
 			}
 
+			/**
+			 * 页面切换
+			 * 
+			 * @param id 编号
+			 * @param title 标题
+			 * @param url 路径
+			 * @param load 动画
+			 * */
 			this.jump = function(id, title, url) {
 				if (config.tab.muiltTab) {
 					bodyTab.addTabOnly({
@@ -254,30 +264,40 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 						url: url,
 						icon: null,
 						close: true
-					}, 300);
+					}, 400);
 				} else {
 					sideMenu.selectItem(id);
 					bodyFrame.changePage(url, title, true);
 				}
 			}
+			
+			/**
+			 * 页面刷新
+			 * 
+			 * @param null 无
+			 * @param null 无
+			 * */
+			this.refresh = function() {
+				refresh();
+			}
 		};
-
-		var messageTip = function(id, title, context, form) {
-			layer.open({
-				type: 1,
-				title: '消息', //标题
-				area: ['390px', '330px'], //宽高
-				shade: 0.4, //遮罩透明度
-				content: "<div style='background-color:whitesmoke;'><div class='layui-card'><div class='layui-card-body'>来源 : &nbsp; " +
-					form + "</div><div class='layui-card-header' >标题 : &nbsp; " + title +
-					"</div><div class='layui-card-body' >内容 : &nbsp; " + context + "</div></div></div>", //支持获取DOM元素
-				btn: ['确认'], //按钮组
-				scrollbar: false, //屏蔽浏览器滚动条
-				yes: function(index) { //layer.msg('yes');    //点击确定回调
-					layer.close(index);
-					showToast();
-				}
-			});
+		
+		function refresh() {
+			var refreshA = $(".refresh a");
+			refreshA.removeClass("layui-icon-refresh-1");
+			refreshA.addClass("layui-anim");
+			refreshA.addClass("layui-anim-rotate");
+			refreshA.addClass("layui-anim-loop");
+			refreshA.addClass("layui-icon-loading");
+			if (config.tab.muiltTab) bodyTab.refresh(400);
+			else bodyFrame.refresh(400);
+			setTimeout(function() {
+				refreshA.addClass("layui-icon-refresh-1");
+				refreshA.removeClass("layui-anim");
+				refreshA.removeClass("layui-anim-rotate");
+				refreshA.removeClass("layui-anim-loop");
+				refreshA.removeClass("layui-icon-loading");
+			}, 600)
 		}
 
 		function collaspe() {
@@ -297,11 +317,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 		}
 
 		body.on("click", ".logout", function() {
-			// 回调
-			var result = logout();
-
-			if (result) {
-				// 清空缓存
+			if (logout()) {
 				bodyTab.clear();
 			}
 		})
@@ -464,7 +480,6 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 		function buildLinkHtml() {
 			var links = "";
 			$.each(config.links, function(i, value) {
-				// value.target 存在，则为新窗口打开，增加 target="_blank" 属性
 				links += '<a class="more-menu-item" href="' + value.href + '" ' + (value.target ? ' target="_blank" ' : '') +
 					'>' +
 					'<i class="' + value.icon + '" style="font-size: 19px;"></i> ' + value.title +

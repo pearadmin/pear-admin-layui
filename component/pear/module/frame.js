@@ -50,7 +50,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	     	var loading = $("#"+elem).find(".pear-frame-loading");
 			setTimeout(function(){
 				loading.css({display:'none'});
-			},800)	
+			},400)	
 	     }
 	}
 	
