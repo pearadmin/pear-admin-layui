@@ -24,7 +24,6 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 
 		var pearAdmin = new function() {
 
-			// 默认配置
 			var configType = 'yml';
 			var configPath = 'pear.config.yml';
 
