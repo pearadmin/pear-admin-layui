@@ -4,7 +4,6 @@
 <br/>
 <br/>
 
-<img src="admin/images/logo.png" width="90px" style="margin-top:30px;"/>
   <h1 align="center">
     Pear Admin Layui
   </h1>
