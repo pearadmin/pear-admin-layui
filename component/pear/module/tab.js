@@ -66,7 +66,7 @@ layui.define(['jquery', 'element'], function(exports) {
 
 		option.success(sessionStorage.getItem(option.elem + "-pear-tab-data-current"));
 
-		$("body .layui-tab[lay-filter='" + option.elem + "']").on("contextmenu", "li", function(e) {
+		$("body .layui-tab[lay-filter='" + option.elem + "'] .layui-tab-title").on("contextmenu", "li", function(e) {
 
 			// 获取当前元素位置
 			var top = e.clientY;

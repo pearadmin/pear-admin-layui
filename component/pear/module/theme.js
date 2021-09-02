@@ -33,7 +33,7 @@ layui.define(["jquery","layer"], function (exports) {
 		style += '.layui-header .layui-nav-child .layui-this a{background-color:' + color +'!important;color:white!important;}';
 		style += '#preloader{background-color:' + color + '!important;}';
 		style += '.pearone-color .color-content li.layui-this:after, .pearone-color .color-content li:hover:after {border: ' +color + ' 3px solid!important;}';
-		style += '.layui-nav .layui-nav-child dd.layui-this a, .layui-nav-child dd.layui-this{background-color:' + color + '!important}';	
+		style += '.layui-nav .layui-nav-child dd.layui-this a, .layui-nav-child dd.layui-this{background-color:' + color + ';color:white!important}';	
 		style += '.pear-social-entrance {background-color:' + color + '!important}';
 		style += '.pear-admin .pe-collaspe {background-color:' + color + '!important}';
 		style += '.layui-fixbar li {background-color:' + color + '!important}';
@@ -70,7 +70,6 @@ layui.define(["jquery","layer"], function (exports) {
 		style += '.layui-form-checkbox[lay-skin=primary]:hover i{border-color:'+color+'!important}'
 		style += '.pear-tab-menu .item:hover{background-color:'+color+'!important}'
 		style += '.layui-form-danger:focus {border-color:#FF5722 !important}'
-		style += '.pear-admin .user a:hover{color:'+color+'!important}'
 		style += '.pear-admin .user .layui-this a:hover{color:white!important}'
 		style += '.pear-notice .layui-this{color:'+color+'!important}'
         style += '.layui-form-radio:hover *, .layui-form-radioed, .layui-form-radioed>i{color:' + color + ' !important}';
