@@ -26,13 +26,13 @@ menu:
 ## 视图内容配置
 tab: 
   ## 是否开启多选项卡
-  muiltTab: true
+  enable: true
   ## 保持视图状态
   keepState: true
   ## 开启选项卡记忆
   session: true
   ## 最大可打开的选项卡数量
-  tabMax: "30"
+  max: "30"
   ## 首页
   index: 
     id: "10" ## 标识 ID , 建议与菜单项中的 ID 一致
@@ -60,17 +60,17 @@ colors:
   color: "#3963bc"
 ## 主题面板的链接列表
 links: 
-- icon: "layui-icon layui-icon-website"
-  title: "官方网站"
+- text: "官方网站"
   href: "http://www.pearadmin.com"
+  icon: "layui-icon layui-icon-website"
 - icon: "layui-icon layui-icon-read"
-  title: "开发文档"
+  text: "开发文档"
   href: "http://www.pearadmin.com/doc/"
 - icon: "layui-icon layui-icon-fonts-code"
-  title: "开源地址"
+  text: "开源地址"
   href: "https://gitee.com/pear-admin/Pear-Admin-Layui/"
 - icon: "layui-icon layui-icon-survey"
-  title: "问答社区"
+  text: "问答社区"
   href: "http://forum.pearadmin.com/"
 ## 其他配置
 other: 

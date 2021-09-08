@@ -114,7 +114,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 					refresh();
 				})
 				
-				if (param.tab.muiltTab) {
+				if (param.tab.enable) {
 					bodyTab = pearTab.render({
 						elem: 'content',
 						roll: true,
@@ -123,7 +123,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 						height: '100%',
 						session: param.tab.session,
 						index: 0,
-						tabMax: param.tab.tabMax,
+						tabMax: param.tab.max,
 						closeEvent: function(id) {
 							sideMenu.selectItem(id);
 						},
@@ -256,7 +256,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 			 * @param load 动画
 			 * */
 			this.jump = function(id, title, url) {
-				if (config.tab.muiltTab) {
+				if (config.tab.enable) {
 					bodyTab.addTabOnly({
 						id: id,
 						title: title,
@@ -288,7 +288,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 			refreshA.addClass("layui-anim-rotate");
 			refreshA.addClass("layui-anim-loop");
 			refreshA.addClass("layui-icon-loading");
-			if (config.tab.muiltTab) bodyTab.refresh(400);
+			if (config.tab.enable) bodyTab.refresh(400);
 			else bodyFrame.refresh(400);
 			setTimeout(function() {
 				refreshA.addClass("layui-icon-refresh-1");
@@ -338,7 +338,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 		});
 
 		body.on("click", '[user-menu-id]', function() {
-			if (config.tab.muiltTab) {
+			if (config.tab.enable) {
 				bodyTab.addTabOnly({
 					id: $(this).attr("user-menu-id"),
 					title: $(this).attr("user-menu-title"),
@@ -481,7 +481,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 			$.each(config.links, function(i, value) {
 				links += '<a class="more-menu-item" href="' + value.href + '" ' + (value.target ? ' target="_blank" ' : '') +
 					'>' +
-					'<i class="' + value.icon + '" style="font-size: 19px;"></i> ' + value.title +
+					'<i class="' + value.icon + '" style="font-size: 19px;"></i> ' + value.text +
 					'</a>'
 			})
 			return '<div class="more-menu-list">' + links + '</div>';
