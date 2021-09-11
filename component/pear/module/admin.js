@@ -114,7 +114,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 					refresh();
 				})
 
-				if (param.tab.enable) {
+				if (isMuiltTab(param) === "true" || isMuiltTab(param) === true) {
 					bodyTab = pearTab.render({
 						elem: 'content',
 						roll: true,
@@ -234,7 +234,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 			}
 
 			this.jump = function(id, title, url) {
-				if (config.tab.enable) {
+				if (isMuiltTab(config)==="true" || isMuiltTab(param) === true) {
 					bodyTab.addTabOnly({
 						id: id,
 						title: title,
@@ -260,7 +260,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 			refreshA.addClass("layui-anim-rotate");
 			refreshA.addClass("layui-anim-loop");
 			refreshA.addClass("layui-icon-loading");
-			if (config.tab.enable) bodyTab.refresh(400);
+			if (isMuiltTab(config) === "true" || isMuiltTab(param) === true) bodyTab.refresh(400);
 			else bodyFrame.refresh(400);
 			setTimeout(function() {
 				refreshA.addClass("layui-icon-refresh-1");
@@ -310,7 +310,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 		});
 
 		body.on("click", '[user-menu-id]', function() {
-			if (config.tab.enable) {
+			if (isMuiltTab(config) === "true" || isMuiltTab(param) === true) {
 				bodyTab.addTabOnly({
 					id: $(this).attr("user-menu-id"),
 					title: $(this).attr("user-menu-title"),
@@ -351,6 +351,10 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 
 			var moreItem =
 				'<div class="layui-form-item"><div class="layui-input-inline"><input type="checkbox" name="control" lay-filter="control" lay-skin="switch" lay-text="开|关"></div><span class="set-text">多菜单</span></div>';
+
+			moreItem += 
+				'<div class="layui-form-item"><div class="layui-input-inline"><input type="checkbox" name="muilt-tab" lay-filter="muilt-tab" lay-skin="switch" lay-text="开|关"></div><span class="set-text">多视图</span></div>';
+
 
 			var moreHtml = '<br><div class="pearone-color">\n' +
 				'<div class="color-title">更多设置</div>\n' +
@@ -411,11 +415,23 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 						window.location.reload();
 					})
 
+					form.on('switch(muilt-tab)', function(data) {
+						localStorage.setItem("muilt-tab", this.checked);
+						window.location.reload();
+					})
+
 					if (localStorage.getItem('control') === 'true') {
 						$('input[name="control"]').attr('checked', 'checked')
 					} else {
 						$('input[name="control"]').removeAttr('checked')
 					}
+					
+					if (localStorage.getItem('muilt-tab') === 'true') {
+						$('input[name="muilt-tab"]').attr('checked', 'checked')
+					} else {
+						$('input[name="muilt-tab"]').removeAttr('checked')
+					}
+					
 					form.render('checkbox');
 
 				}
@@ -543,6 +559,20 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 				}
 			} else {
 				return option.menu.control
+			}
+		}
+		
+		function isMuiltTab(option) {
+			var control = localStorage.getItem("muilt-tab");
+		
+			if (option.theme.allowCustom) {
+				if (localStorage.getItem("muilt-tab") != "null") {
+					return localStorage.getItem("muilt-tab")
+				} else {
+					return option.tab.enable
+				}
+			} else {
+				return option.tab.enable
 			}
 		}
 
