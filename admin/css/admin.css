@@ -104,7 +104,7 @@ body,
 	left: 0px;
 }
 
-/** 隐 藏 布 局 样 式 */
+/** 收缩布局 */
 .pear-mini .layui-logo .title {
 	display: none;
 }
@@ -213,8 +213,7 @@ body,
 	.pear-mini .layui-side-scroll {
 		height: calc(100% - 62px);
 	}
-
-	/** 隐 藏 布 局 样 式 */
+	
 	.pear-mini .layui-side {
 		width: 0px;
 	}
@@ -293,7 +292,11 @@ body,
 
 }
 
-/** 亮色侧边风格 */
+/** 侧边主题 (亮) */
+.light-theme.layui-side {
+	box-shadow: 2px 0 8px 0 rgba(29, 35, 41, .05) !important;
+}
+
 .light-theme .layui-logo {
 	background-color: white !important;
 	color: black !important;
@@ -305,11 +308,12 @@ body,
 	color: black !important;
 }
 
-.light-theme .layui-side {
-	box-shadow: 2px 0 8px 0 rgba(29, 35, 41, .05) !important;
+/** 主题面板 */
+.pearone-color .set-text {
+	height: 42px;
+	line-height: 42px;
 }
 
-/** 主 题 选 择 界 面 样 式 */
 .pearone-color .color-title {
 	padding: 15px 0 0px 20px;
 	margin-bottom: 4px;

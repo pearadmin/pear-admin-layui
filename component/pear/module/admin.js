@@ -91,7 +91,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 					theme: "dark-theme",
 					height: '100%',
 					method: param.menu.method,
-					control: param.menu.control ? 'control' : false, // control
+					control: isControl(param) === 'true' ? 'control' : false, // control
 					controlWidth: param.menu.controlWidth,
 					defaultMenu: 0,
 					accordion: param.menu.accordion,
@@ -109,11 +109,11 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 			}
 
 			this.bodyRender = function(param) {
-				
+
 				body.on("click", ".refresh", function() {
 					refresh();
 				})
-				
+
 				if (param.tab.enable) {
 					bodyTab = pearTab.render({
 						elem: 'content',
@@ -142,7 +142,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 							}
 						}
 					});
-					
+
 					bodyTab.click(function(id) {
 						if (!param.tab.keepState) {
 							bodyTab.refresh(false);
@@ -207,7 +207,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 				localStorage.setItem("theme-menu", menu);
 				this.menuSkin(menu);
 			}
-			
+
 			this.collaspe = function(param) {
 				if (param.menu.collaspe) {
 					if ($(window).width() >= 768) {
@@ -216,46 +216,23 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 				}
 			}
 
-			/**
-			 * 主题切换
-			 * 
-			 * @param theme 目标主题
-			 * */
 			this.menuSkin = function(theme) {
-				var pearAdmin = $(".pear-admin");
+				var pearAdmin = $(".pear-admin .layui-side");
 				pearAdmin.removeClass("light-theme");
 				pearAdmin.removeClass("dark-theme");
 				pearAdmin.addClass(theme);
 			}
 
-			/**
-			 * 注销事件
-			 * 
-			 * @param callback 回调实现
-			 * */
 			this.logout = function(callback) {
 				logout = callback;
 			}
 
-			/**
-			 * 消息点击
-			 * 
-			 * @param callback 回调实现
-			 * */
 			this.message = function(callback) {
 				if (callback != null) {
 					msgInstance.click(callback);
 				}
 			}
 
-			/**
-			 * 页面切换
-			 * 
-			 * @param id 编号
-			 * @param title 标题
-			 * @param url 路径
-			 * @param load 动画
-			 * */
 			this.jump = function(id, title, url) {
 				if (config.tab.enable) {
 					bodyTab.addTabOnly({
@@ -270,18 +247,12 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 					bodyFrame.changePage(url, title, true);
 				}
 			}
-			
-			/**
-			 * 页面刷新
-			 * 
-			 * @param null 无
-			 * @param null 无
-			 * */
+
 			this.refresh = function() {
 				refresh();
 			}
 		};
-		
+
 		function refresh() {
 			var refreshA = $(".refresh a");
 			refreshA.removeClass("layui-icon-refresh-1");
@@ -372,9 +343,19 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 
 			var html =
 				'<div class="pearone-color">\n' +
-				'<div class="color-title">整体风格</div>\n' +
+				'<div class="color-title">菜单风格</div>\n' +
 				'<div class="color-content">\n' +
 				'<ul>\n' + bgColorHtml + '</ul>\n' +
+				'</div>\n' +
+				'</div>';
+
+			var moreItem =
+				'<div class="layui-form-item"><div class="layui-input-inline"><input type="checkbox" name="control" lay-filter="control" lay-skin="switch" lay-text="开|关"></div><span class="set-text">多菜单</span></div>';
+
+			var moreHtml = '<br><div class="pearone-color">\n' +
+				'<div class="color-title">更多设置</div>\n' +
+				'<div class="color-content">\n' +
+				'<form class="layui-form">\n' + moreItem + '</form>\n' +
 				'</div>\n' +
 				'</div>';
 
@@ -389,8 +370,10 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 				anim: -1,
 				skin: 'layer-anim-right',
 				move: false,
-				content: html + buildColorHtml() + bottomTool(),
+				content: html + buildColorHtml() + moreHtml + bottomTool(),
 				success: function(layero, index) {
+
+					form.render();
 
 					var color = localStorage.getItem("theme-color");
 					var menu = localStorage.getItem("theme-menu");
@@ -399,10 +382,12 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 						$(".select-color-item").removeClass("layui-icon").removeClass("layui-icon-ok");
 						$("*[color-id='" + color + "']").addClass("layui-icon").addClass("layui-icon-ok");
 					}
+
 					if (menu !== "null") {
 						$("*[data-select-bgcolor]").removeClass("layui-this");
 						$("[data-select-bgcolor='" + menu + "']").addClass("layui-this");
 					}
+
 					$('#layui-layer-shade' + index).click(function() {
 						var $layero = $('#layui-layer' + index);
 						$layero.animate({
@@ -420,6 +405,19 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 							layer.close(index);
 						});
 					})
+
+					form.on('switch(control)', function(data) {
+						localStorage.setItem("control", this.checked);
+						window.location.reload();
+					})
+
+					if (localStorage.getItem('control') === 'true') {
+						$('input[name="control"]').attr('checked', 'checked')
+					} else {
+						$('input[name="control"]').removeAttr('checked')
+					}
+					form.render('checkbox');
+
 				}
 			});
 		});
@@ -532,6 +530,20 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 				document.msFullscreenElement ||
 				document.mozFullScreenElement ||
 				document.webkitFullscreenElement || false;
+		}
+
+		function isControl(option) {
+			var control = localStorage.getItem("control");
+
+			if (option.theme.allowCustom) {
+				if (localStorage.getItem("control") != "null") {
+					return localStorage.getItem("control")
+				} else {
+					return option.menu.control
+				}
+			} else {
+				return option.menu.control
+			}
 		}
 
 		window.onresize = function() {
