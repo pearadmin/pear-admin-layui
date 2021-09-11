@@ -58,20 +58,6 @@ colors:
   color: "#f56c6c"
 - id: "5"
   color: "#3963bc"
-## 主题面板的链接列表
-links: 
-- text: "官方网站"
-  href: "http://www.pearadmin.com"
-  icon: "layui-icon layui-icon-website"
-- icon: "layui-icon layui-icon-read"
-  text: "开发文档"
-  href: "http://www.pearadmin.com/doc/"
-- icon: "layui-icon layui-icon-fonts-code"
-  text: "开源地址"
-  href: "https://gitee.com/pear-admin/Pear-Admin-Layui/"
-- icon: "layui-icon layui-icon-survey"
-  text: "问答社区"
-  href: "http://forum.pearadmin.com/"
 ## 其他配置
 other: 
   ## 主页动画时长

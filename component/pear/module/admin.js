@@ -388,7 +388,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 				anim: -1,
 				skin: 'layer-anim-right',
 				move: false,
-				content: html + buildColorHtml() + buildLinkHtml() + bottomTool(),
+				content: html + buildColorHtml() + bottomTool(),
 				success: function(layero, index) {
 
 					var color = localStorage.getItem("theme-color");
@@ -474,17 +474,6 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 				})
 			}
 			return color;
-		}
-
-		function buildLinkHtml() {
-			var links = "";
-			$.each(config.links, function(i, value) {
-				links += '<a class="more-menu-item" href="' + value.href + '" ' + (value.target ? ' target="_blank" ' : '') +
-					'>' +
-					'<i class="' + value.icon + '" style="font-size: 19px;"></i> ' + value.text +
-					'</a>'
-			})
-			return '<div class="more-menu-list">' + links + '</div>';
 		}
 
 		function buildColorHtml() {
