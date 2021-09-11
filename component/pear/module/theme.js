@@ -7,8 +7,9 @@ layui.define(["jquery","layer"], function (exports) {
 
 	theme.changeTheme = function (target, autoHead) {
 		this.autoHead = autoHead;
-		const color = localStorage.getItem("theme-color-context");
-		this.colorSet(color);
+		const color = localStorage.getItem("theme-color-color");
+		const second = localStorage.getItem("theme-color-second");
+		this.colorSet(color, second);
 		if (target.frames.length == 0) return;
 		for (var i = 0; i < target.frames.length; i++) {
 			try {
@@ -21,7 +22,7 @@ layui.define(["jquery","layer"], function (exports) {
 		}
 	}
 
-	theme.colorSet = function(color) {
+	theme.colorSet = function(color, second) {
 		
 		let style = '';
 		style += '.light-theme .pear-nav-tree .layui-this a:hover,.light-theme .pear-nav-tree .layui-this,.light-theme .pear-nav-tree .layui-this a,.pear-nav-tree .layui-this a,.pear-nav-tree .layui-this{background-color: ' +color + '!important;}';
@@ -73,6 +74,10 @@ layui.define(["jquery","layer"], function (exports) {
 		style += '.pear-admin .user .layui-this a:hover{color:white!important}'
 		style += '.pear-notice .layui-this{color:'+color+'!important}'
         style += '.layui-form-radio:hover *, .layui-form-radioed, .layui-form-radioed>i{color:' + color + ' !important}';
+		style += '.pear-btn:hover {color: '+color+';background-color: ' + second + ';}'
+		style += '.pear-btn-primary[plain] {color: '+ color +' !important;background: ' + second + ' !important;}'
+		style += '.pear-btn-primary[plain]:hover {background-color: ' + color + '!important}'
+		
 		var colorPane = $("#pear-admin-color");
 		if(colorPane.length>0){
 			colorPane.html(style);

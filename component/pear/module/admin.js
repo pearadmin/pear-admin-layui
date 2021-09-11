@@ -193,7 +193,8 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 				var colorId = localStorage.getItem("theme-color");
 				var currentColor = getColorById(colorId);
 				localStorage.setItem("theme-color", currentColor.id);
-				localStorage.setItem("theme-color-context", currentColor.color);
+				localStorage.setItem("theme-color-color", currentColor.color);
+				localStorage.setItem("theme-color-second", currentColor.second);
 				pearTheme.changeTheme(window, option.other.autoHead);
 				var menu = localStorage.getItem("theme-menu");
 				if (menu == null) {
@@ -441,7 +442,8 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 			var colorId = $(".select-color-item.layui-icon-ok").attr("color-id");
 			var currentColor = getColorById(colorId);
 			localStorage.setItem("theme-color", currentColor.id);
-			localStorage.setItem("theme-color-context", currentColor.color);
+			localStorage.setItem("theme-color-color", currentColor.color);
+			localStorage.setItem("theme-color-second", currentColor.second);
 			pearTheme.changeTheme(window, config.other.autoHead);
 		});
 
