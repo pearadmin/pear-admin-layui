@@ -4,6 +4,12 @@ body,
 	height: 100%;
 }
 
+.light-theme .pear-nav-tree .layui-this a:hover,
+.light-theme .pear-nav-tree .layui-this,
+.light-theme .pear-nav-tree .layui-this a {
+	
+}
+
 .pear-admin .layui-header,
 .pear-admin .layui-body,
 .pear-admin .layui-logo,
@@ -39,7 +45,7 @@ body,
 	position: absolute;
 }
 
-.pear-admin .layui-layout-control .layui-nav{
+.pear-admin .layui-layout-control .layui-nav {
 	padding: 0px;
 }
 
@@ -49,7 +55,7 @@ body,
 	line-height: 59px;
 	position: relative;
 	background-color: #28333E;
-	border-bottom: 1px solid rgba(0,0,0,.12);
+	border-bottom: 1px solid rgba(0, 0, 0, .12);
 }
 
 .pear-admin .layui-logo img {
@@ -213,7 +219,7 @@ body,
 	.pear-mini .layui-side-scroll {
 		height: calc(100% - 62px);
 	}
-	
+
 	.pear-mini .layui-side {
 		width: 0px;
 	}
