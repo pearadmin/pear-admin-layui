@@ -10,11 +10,11 @@
     <div class="layui-card-body">
         <form class="layui-form" action="">
             <div class="layui-form-item">
-                <label class="layui-form-label">权限名称</label>
+                <label class="layui-form-label">关键字</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="powerName" placeholder="" class="layui-input">
+                    <input type="text" name="keyword" placeholder="" class="layui-input">
                 </div>
-                <button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="user-query">
+                <button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="power-query">
                     <i class="layui-icon layui-icon-search"></i>
                     查询
                 </button>
@@ -137,7 +137,13 @@
 				 treetable.reload("#power-table");
 			}
         });
-
+		
+		form.on('submit(power-query)', function(data) {
+            var keyword = data.field.keyword;
+            treetable.search('#power-table',keyword);
+            return false;
+		});
+	
         window.add = function(){
             layer.open({
                 type: 2,

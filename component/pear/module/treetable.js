@@ -127,6 +127,31 @@ layui.define(['layer', 'table'], function (exports) {
                 }
             })
         },
+		search: function(elem,keyword) {
+			var $tds = $(elem).next('.treeTable').find('.layui-table-body tbody tr td');
+			if (!keyword) {
+			    $tds.css('background-color', 'transparent');
+			    layer.msg("请输入关键字", {icon: 5});
+			    return;
+			}
+			var searchCount = 0;
+			$tds.each(function () {
+			    $(this).css('background-color', 'transparent');
+			    if ($(this).text().indexOf(keyword) >= 0) {
+			        $(this).css('background-color', 'rgba(250,230,160,0.5)');
+			        if (searchCount == 0) {
+			            $('body,html').stop(true);
+			            $('body,html').animate({scrollTop: $(this).offset().top - 150}, 500);
+			        }
+			        searchCount++;
+			    }
+			});
+			if (searchCount == 0) {
+			    layer.msg("没有匹配结果", {icon: 5});
+			} else {
+			    treetable.expandAll(elem);
+			}
+		},
         getEmptyNum: function (pid, data) {
             var num = 0;
             if (!pid) {
