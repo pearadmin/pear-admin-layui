@@ -3,6 +3,10 @@
 	font-weight: 500;
 }
 
+.pear-notice {
+	box-shadow: 0 6px 16px -8px rgb(0 0 0 / 8%), 0 9px 28px 0 rgb(0 0 0 / 5%), 0 12px 48px 16px rgb(0 0 0 / 3%)!important;
+}
+
 .pear-notice li {
 	border-right: 1px solid whitesmoke;
 }
@@ -11,32 +15,47 @@
 	color: dimgray !important;
 }
 
-.pear-notice{
-	width: 285px!important;
+.pear-notice {
+	width: 285px !important;
 }
 
-.pear-notice span{
+.pear-notice span {
 	margin-left: 20px;
 	font-size: 13px;
 }
 
-.pear-notice img{
+.pear-notice img {
 	margin-left: 8px;
-	width: 33px!important;
-	height: 33px!important;
+	width: 33px !important;
+	height: 33px !important;
 	border-radius: 50px;
 }
 
-.pear-notice-item{
-	height: 45px!important;
-	line-height: 45px!important;
+.pear-notice-item {
+	height: 45px !important;
+	line-height: 45px !important;
 }
 
 /** 滚动条样式 */
-.pear-notice *::-webkit-scrollbar{width:0px;height:0px;}
-.pear-notice *::-webkit-scrollbar-track{background: white;border-radius:2px;}
-.pear-notice *::-webkit-scrollbar-thumb{background: #E6E6E6;border-radius:2px;}
-.pear-notice *::-webkit-scrollbar-thumb:hover{background: #E6E6E6;}
-.pear-notice *::-webkit-scrollbar-corner{background: #f6f6f6;}
+.pear-notice *::-webkit-scrollbar {
+	width: 0px;
+	height: 0px;
+}
 
+.pear-notice *::-webkit-scrollbar-track {
+	background: white;
+	border-radius: 2px;
+}
 
+.pear-notice *::-webkit-scrollbar-thumb {
+	background: #E6E6E6;
+	border-radius: 2px;
+}
+
+.pear-notice *::-webkit-scrollbar-thumb:hover {
+	background: #E6E6E6;
+}
+
+.pear-notice *::-webkit-scrollbar-corner {
+	background: #f6f6f6;
+}

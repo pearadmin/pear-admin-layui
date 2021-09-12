@@ -34,7 +34,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	     if(loading){
 	     	var loading = $("#"+this.option.elem).find(".pear-frame-loading");
 			setTimeout(function(){
-				loading.css({display:'none'});
+				loading.fadeOut(500);
 			},800)	
 	     }
 	}
@@ -60,7 +60,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 			loading.css({display:'block'});
 			if(time!=0){
 				setTimeout(function(){
-					loading.css({display:'none'});
+					loading.fadeOut(500);
 				},time)
 			}
 		}

@@ -260,7 +260,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 			refreshA.addClass("layui-anim-rotate");
 			refreshA.addClass("layui-anim-loop");
 			refreshA.addClass("layui-icon-loading");
-			if (isMuiltTab(config) === "true" || isMuiltTab(param) === true) bodyTab.refresh(400);
+			if (isMuiltTab(config) === "true" || isMuiltTab(config) === true) bodyTab.refresh(400);
 			else bodyFrame.refresh(400);
 			setTimeout(function() {
 				refreshA.addClass("layui-icon-refresh-1");
