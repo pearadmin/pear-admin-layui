@@ -12,6 +12,34 @@ body,
 	transition: all .3s;
 }
 
+.pear-admin.banner-layout .layui-side {
+	top: 60px!important;
+}
+.pear-admin.banner-layout .layui-side .layui-logo {
+	display: none;
+}
+.pear-admin.banner-layout .layui-header .layui-logo {
+	display: inline-block;
+}
+.pear-admin.banner-layout .layui-side .layui-side-scroll {
+	height: 100%!important;
+}
+.pear-admin.banner-layout .layui-header {
+	z-index: 99999;
+	width: 100%;
+	left: 0px;
+}
+.pear-admin.banner-layout .layui-header .layui-layout-left {
+	left: 230px;
+}
+.pear-admin.banner-layout .layui-header .layui-logo .title {
+	top: 2px;
+}
+
+.pear-admin .layui-header .layui-logo {
+	display: none;
+}
+
 .pear-admin .layui-logo .title {
 	font-size: 20px;
 }
@@ -100,11 +128,11 @@ body,
 }
 
 /** 收缩布局 */
-.pear-mini .layui-logo .title {
+.pear-mini .layui-side .layui-logo .title {
 	display: none;
 }
 
-.pear-mini .layui-logo .logo {
+.pear-mini .layui-side .layui-logo .logo {
 	display: inline-block;
 }
 
@@ -121,7 +149,7 @@ body,
 	left: 60px;
 }
 
-.pear-mini .layui-logo {
+.pear-mini .layui-side .layui-logo {
 	width: 60px;
 }
 
@@ -305,12 +333,25 @@ body,
 
 /** 顶部主题 (黑) */
 .dark-theme.layui-header {
+	border-bottom: none;
 	background-color: #28333E;
 	color: white;
 }
 
 .dark-theme.layui-header li>a{
 	color: white!important;
+}
+
+.dark-theme.layui-header .layui-logo {
+	box-shadow: none;
+	border: none;
+}
+
+/** 顶部主题 (白) */
+.light-theme.layui-header .layui-logo {
+	background-color: white;
+	border: none;
+	box-shadow: none;
 }
 
 /** 主题面板 */

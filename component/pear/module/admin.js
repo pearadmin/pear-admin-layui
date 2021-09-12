@@ -205,10 +205,29 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 					}
 				}
 				
+				var banner = localStorage.getItem("theme-banner");
+				if (banner == null) {
+					banner = option.theme.banner;
+				} else {
+					if (option.theme.allowCustom === false) {
+						banner = option.theme.banner;
+					}
+				}
+				
+				localStorage.setItem("theme-banner", banner);
 				localStorage.setItem("theme-menu", menu);
 				localStorage.setItem("theme-header", header);
 				this.menuSkin(menu);
 				this.headerSkin(header);
+				this.bannerSkin(banner);
+			}
+			
+			this.bannerSkin = function(theme) {
+				var pearAdmin = $(".pear-admin");
+				pearAdmin.removeClass("banner-layout");
+				if(theme === true || theme === "true") {
+					pearAdmin.addClass("banner-layout");
+				}
 			}
 
 			this.collaspe = function(param) {
@@ -384,10 +403,13 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 				'</div>';
 
 			var moreItem =
-				'<div class="layui-form-item"><div class="layui-input-inline"><input type="checkbox" name="control" lay-filter="control" lay-skin="switch" lay-text="开|关"></div><span class="set-text">多菜单</span></div>';
+				'<div class="layui-form-item"><div class="layui-input-inline"><input type="checkbox" name="control" lay-filter="control" lay-skin="switch" lay-text="开|关"></div><span class="set-text">菜单</span></div>';
 
 			moreItem += 
-				'<div class="layui-form-item"><div class="layui-input-inline"><input type="checkbox" name="muilt-tab" lay-filter="muilt-tab" lay-skin="switch" lay-text="开|关"></div><span class="set-text">多视图</span></div>';
+				'<div class="layui-form-item"><div class="layui-input-inline"><input type="checkbox" name="muilt-tab" lay-filter="muilt-tab" lay-skin="switch" lay-text="开|关"></div><span class="set-text">视图</span></div>';
+
+			moreItem += 
+				'<div class="layui-form-item"><div class="layui-input-inline"><input type="checkbox" name="banner" lay-filter="banner" lay-skin="switch" lay-text="开|关"></div><span class="set-text">通栏</span></div>';
 
 
 			var moreHtml = '<br><div class="pearone-color">\n' +
@@ -459,6 +481,17 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 						localStorage.setItem("muilt-tab", this.checked);
 						window.location.reload();
 					})
+					
+					form.on('switch(banner)', function(data) {
+						localStorage.setItem("theme-banner", this.checked);
+						pearAdmin.bannerSkin(this.checked);
+					})
+					
+					if (localStorage.getItem('theme-banner') === 'true') {
+						$('input[name="banner"]').attr('checked', 'checked')
+					} else {
+						$('input[name="banner"]').removeAttr('checked')
+					}
 
 					if (localStorage.getItem('control') === 'true') {
 						$('input[name="control"]').attr('checked', 'checked')

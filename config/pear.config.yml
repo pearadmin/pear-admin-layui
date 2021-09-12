@@ -46,6 +46,8 @@ theme:
   defaultMenu: "dark-theme"
   ## 是否允许用户切换主题，false 时关闭自定义主题面板
   allowCustom: true
+  ## 通栏配置
+  banner: true
 ## 主题色配置列表
 colors: 
 - id: "1"

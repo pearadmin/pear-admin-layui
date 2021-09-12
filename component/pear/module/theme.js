@@ -39,7 +39,7 @@ layui.define(["jquery","layer"], function (exports) {
 		style += '.pear-admin .pe-collaspe {background-color:' + color + '!important}';
 		style += '.layui-fixbar li {background-color:' + color + '!important}';
 		if(this.autoHead){
-			style += '.pear-admin .layui-header{background-color:' + color + '!important;}.pear-admin .layui-header .layui-nav .layui-nav-item>a{color:white!important;}';
+			style += '.pear-admin.banner-layout .layui-header .layui-logo,.pear-admin .layui-header{background-color:' + color + '!important;}.pear-admin.banner-layout .layui-header .layui-logo .title,.pear-admin .layui-header .layui-nav .layui-nav-item>a{color:white!important;}';
 		}
 		style += '.pear-btn-primary {background-color:' + color + '!important}';
 		style += '.layui-input:focus,.layui-textarea:focus {border-color: '+ color +'!important;box-shadow: 0 0 0 3px '+ second +' !important;}'
