@@ -96,7 +96,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 					defaultMenu: 0,
 					accordion: param.menu.accordion,
 					url: param.menu.data,
-					data: param.menu.data, //async为false时，传入菜单数组
+					data: param.menu.data,
 					parseData: false,
 					change: function() {
 						compatible();
@@ -325,7 +325,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 
 		body.on("click", ".setting", function() {
 
-			var bgColorHtml =
+			var menuItem =
 				'<li class="layui-this" data-select-bgcolor="dark-theme" >' +
 				'<a href="javascript:;" data-skin="skin-blue" style="" class="clearfix full-opacity-hover">' +
 				'<div><span style="display:block; width: 20%; float: left; height: 12px; background: #28333E;"></span><span style="display:block; width: 80%; float: left; height: 12px; background: white;"></span></div>' +
@@ -333,7 +333,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 				'</a>' +
 				'</li>';
 
-			bgColorHtml +=
+			menuItem +=
 				'<li  data-select-bgcolor="light-theme" >' +
 				'<a href="javascript:;" data-skin="skin-blue" style="" class="clearfix full-opacity-hover">' +
 				'<div><span style="display:block; width: 20%; float: left; height: 12px; background: white;"></span><span style="display:block; width: 80%; float: left; height: 12px; background: white;"></span></div>' +
@@ -341,11 +341,11 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 				'</a>' +
 				'</li>';
 
-			var html =
+			var menuHtml =
 				'<div class="pearone-color">\n' +
 				'<div class="color-title">菜单风格</div>\n' +
 				'<div class="color-content">\n' +
-				'<ul>\n' + bgColorHtml + '</ul>\n' +
+				'<ul>\n' + menuItem + '</ul>\n' +
 				'</div>\n' +
 				'</div>';
 
@@ -374,7 +374,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 				anim: -1,
 				skin: 'layer-anim-right',
 				move: false,
-				content: html + buildColorHtml() + moreHtml + bottomTool(),
+				content: menuHtml + buildColorHtml() + moreHtml + bottomTool(),
 				success: function(layero, index) {
 
 					form.render();

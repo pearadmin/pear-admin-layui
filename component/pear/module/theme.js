@@ -42,7 +42,7 @@ layui.define(["jquery","layer"], function (exports) {
 			style += '.pear-admin .layui-header{background-color:' + color + '!important;}.pear-admin .layui-header .layui-nav .layui-nav-item>a{color:white!important;}';
 		}
 		style += '.pear-btn-primary {background-color:' + color + '!important}';
-		style += '.layui-input:focus,.layui-textarea:focus {border-color: '+ color +'!important;}'
+		style += '.layui-input:focus,.layui-textarea:focus {border-color: '+ color +'!important;box-shadow: 0 0 0 3px '+ second +' !important;}'
 		style += '.layui-form-checked[lay-skin=primary] i {border-color: '+ color +'!important;background-color: ' + color + ';}'
 		style += '.layui-form-onswitch { border-color: ' + color + '; background-color: '+color+';}'
 		style += '.layui-form-radio>i:hover, .layui-form-radioed>i {color: ' + color + ';}'
