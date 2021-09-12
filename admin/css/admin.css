@@ -4,12 +4,6 @@ body,
 	height: 100%;
 }
 
-.light-theme .pear-nav-tree .layui-this a:hover,
-.light-theme .pear-nav-tree .layui-this,
-.light-theme .pear-nav-tree .layui-this a {
-	
-}
-
 .pear-admin .layui-header,
 .pear-admin .layui-body,
 .pear-admin .layui-logo,
