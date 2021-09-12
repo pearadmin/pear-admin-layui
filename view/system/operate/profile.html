@@ -44,7 +44,6 @@
             };
             
             $("#sourceImage").attr("src", parent.layui.$("#userAvatar").attr("src"));
-            console.log(parent.layui.$("#userAvatar").attr("src"));
             $("#sourceImage").cropper(options);
 
             window.submitForm = function () {
@@ -59,20 +58,7 @@
                     formData.append('file', blob, fileName);
                     formData.append('fileName', fileName);
                     formData.append('fileToken', timeStamp);
-                    
-					// $.ajax({
-                    //     method: "post",
-                    //     url: "", //用于文件上传的服务器端请求地址
-                    //     data: formData,
-                    //     processData: false,
-                    //     contentType: false,
-                    //     success: function (result) {
-                    //         //后续操作
-                    //     }
-                    // });
-                    
-                    //demo环境，直接返回
-                    console.log(blob);
+                  
                     var reader = new FileReader();
                     reader.readAsDataURL(blob);
                     reader.onload = function (e) {

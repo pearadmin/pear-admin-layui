@@ -31,8 +31,8 @@
 					<li class="layui-nav-item layui-hide-xs message"></li>
 					<li class="layui-nav-item user">
 						<!-- 头 像 -->
-						<a href="javascript:;">
-							<img src="admin/images/avatar.jpg" class="layui-nav-img">
+						<a class="layui-icon layui-icon-username" href="javascript:;">
+							
 						</a>
 						<!-- 功 能 菜 单 -->
 						<dl class="layui-nav-child">
@@ -80,13 +80,10 @@
 		<script src="component/pear/pear.js"></script>
 		<!-- 框 架 初 始 化 -->
 		<script>
-			layui.use(['admin','jquery','convert','popup'], function() {
+			layui.use(['admin','jquery','popup'], function() {
 				var admin = layui.admin;
 				var $ = layui.jquery;
-				var convert = layui.convert;
 				var popup = layui.popup;
-		
-				admin.setAvatar("admin/images/avatar.jpg","就眠仪式");
 				
 				admin.setConfigType("yml");
 				admin.setConfigPath("config/pear.config.yml");

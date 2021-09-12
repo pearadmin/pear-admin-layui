@@ -29,11 +29,6 @@ body,
 	border-bottom: 1px solid whitesmoke;
 }
 
-.pear-admin .layui-header .layui-nav-img {
-	width: 30px;
-	height: 30px;
-}
-
 .pear-admin .layui-layout-control {
 	left: 140px;
 	position: absolute;
@@ -297,15 +292,25 @@ body,
 	box-shadow: 2px 0 8px 0 rgba(29, 35, 41, .05) !important;
 }
 
-.light-theme .layui-logo {
+.light-theme.layui-side .layui-logo {
 	background-color: white !important;
 	color: black !important;
 	border-bottom: 1px whitesmoke solid;
 }
 
-.light-theme .layui-side-scroll {
+.light-theme.layui-side .layui-side-scroll {
 	background-color: white !important;
 	color: black !important;
+}
+
+/** 顶部主题 (黑) */
+.dark-theme.layui-header {
+	background-color: #28333E;
+	color: white;
+}
+
+.dark-theme.layui-header li>a{
+	color: white!important;
 }
 
 /** 主题面板 */
