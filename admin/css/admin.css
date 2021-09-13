@@ -39,6 +39,9 @@ body,
 	display: inline-block;
 	left: 370px;
 }
+.pear-admin.banner-layout .layui-header.dark-theme {
+	box-shadow: 2px 0 6px rgb(0 21 41 / 35%);
+}
 
 .pear-admin .layui-header .layui-logo {
 	display: none;

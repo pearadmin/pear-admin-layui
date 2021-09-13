@@ -79,6 +79,7 @@ layui.define(["jquery","layer"], function (exports) {
 		style += '.light-theme .pear-nav-tree .layui-this{ border-right: 3px solid '+color+'!important}'
 		if(this.autoHead === true || this.autoHead === "true"){
 			style += '.pear-admin.banner-layout .layui-header .layui-logo,.pear-admin .layui-header{border:none;background-color:' + color + '!important;}.pear-admin.banner-layout .layui-header .layui-logo .title,.pear-admin .layui-header .layui-nav .layui-nav-item>a{color:white!important;}';
+			style += '.pear-admin.banner-layout .layui-header{box-shadow: 2px 0 6px rgb(0 21 41 / 35%)}'
 		}
 		var colorPane = $("#pear-admin-color");
 		if(colorPane.length>0){

@@ -215,9 +215,19 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 					}
 				}
 				
+				var autoHead = localStorage.getItem("auto-head");
+				if (autoHead === null) {
+					autoHead = option.other.autoHead;
+				} else {
+					if (option.theme.allowCustom === false) {
+						autoHead = option.other.autoHead;
+					}
+				}
+				
 				localStorage.setItem("theme-banner", banner);
 				localStorage.setItem("theme-menu", menu);
 				localStorage.setItem("theme-header", header);
+				localStorage.setItem("auto-head", autoHead);
 				this.menuSkin(menu);
 				this.headerSkin(header);
 				this.bannerSkin(banner);
