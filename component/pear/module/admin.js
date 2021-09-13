@@ -187,8 +187,9 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 				localStorage.setItem("theme-color-color", currentColor.color);
 				localStorage.setItem("theme-color-second", currentColor.second);
 				pearTheme.changeTheme(window, isAutoHead(config));
+				
 				var menu = localStorage.getItem("theme-menu");
-				if (menu == null) {
+				if (menu === null) {
 					menu = option.theme.defaultMenu;
 				} else {
 					if (option.theme.allowCustom === false) {
@@ -197,7 +198,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 				}
 				
 				var header = localStorage.getItem("theme-header");
-				if (header == null) {
+				if (header === null) {
 					header = option.theme.defaultHeader;
 				} else {
 					if (option.theme.allowCustom === false) {
@@ -206,7 +207,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 				}
 				
 				var banner = localStorage.getItem("theme-banner");
-				if (banner == null) {
+				if (banner === null) {
 					banner = option.theme.banner;
 				} else {
 					if (option.theme.allowCustom === false) {
@@ -656,7 +657,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 		
 		function isAutoHead(option) {
 			if(option.theme.allowCustom) {
-				if(localStorage.getItem("auto-head") != "null") {
+				if(localStorage.getItem("auto-head") != null) {
 					console.log(localStorage.getItem("auto-head"))
 					return localStorage.getItem("auto-head");
 				} else {
@@ -668,9 +669,8 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 		}
 		
 		function isMuiltTab(option) {
-			var control = localStorage.getItem("muilt-tab");
 			if (option.theme.allowCustom) {
-				if (localStorage.getItem("muilt-tab") != "null") {
+				if (localStorage.getItem("muilt-tab") != null) {
 					return localStorage.getItem("muilt-tab")
 				} else {
 					return option.tab.enable

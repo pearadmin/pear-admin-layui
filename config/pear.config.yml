@@ -26,7 +26,7 @@ menu:
 ## 视图内容配置
 tab: 
   ## 是否开启多选项卡
-  enable: true
+  enable: false
   ## 保持视图状态
   keepState: true
   ## 开启选项卡记忆
@@ -44,6 +44,8 @@ theme:
   defaultColor: "2"
   ## 默认的菜单主题 dark-theme 黑 / light-theme 白
   defaultMenu: "dark-theme"
+  ## 默认的顶部主题 dark-theme 黑 / light-theme 白
+  defaultHeader: "dark-theme"
   ## 是否允许用户切换主题，false 时关闭自定义主题面板
   allowCustom: true
   ## 通栏配置
