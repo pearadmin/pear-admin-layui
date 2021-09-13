@@ -164,7 +164,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 					});
 
 					sideMenu.click(function(dom, data) {
-						bodyFrame.changePage(data.menuUrl, data.menuPath, true);
+						bodyFrame.changePage(data.menuUrl, true);
 						compatible()
 					})
 				}
@@ -186,7 +186,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 				localStorage.setItem("theme-color", currentColor.id);
 				localStorage.setItem("theme-color-color", currentColor.color);
 				localStorage.setItem("theme-color-second", currentColor.second);
-				pearTheme.changeTheme(window, option.other.autoHead);
+				pearTheme.changeTheme(window, isAutoHead(config));
 				var menu = localStorage.getItem("theme-menu");
 				if (menu == null) {
 					menu = option.theme.defaultMenu;
@@ -273,7 +273,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 					}, 400);
 				} else {
 					sideMenu.selectItem(id);
-					bodyFrame.changePage(url, title, true);
+					bodyFrame.changePage(url, true);
 				}
 			}
 
@@ -348,7 +348,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 					close: true
 				}, 300);
 			} else {
-				bodyFrame.changePage($(this).attr("user-menu-url"), "", true);
+				bodyFrame.changePage($(this).attr("user-menu-url"), true);
 			}
 		});
 
@@ -411,7 +411,9 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 			moreItem += 
 				'<div class="layui-form-item"><div class="layui-input-inline"><input type="checkbox" name="banner" lay-filter="banner" lay-skin="switch" lay-text="开|关"></div><span class="set-text">通栏</span></div>';
 
-
+			moreItem +=
+				'<div class="layui-form-item"><div class="layui-input-inline"><input type="checkbox" name="auto-head" lay-filter="auto-head" lay-skin="switch" lay-text="开|关"></div><span class="set-text">通色</span></div>';
+			
 			var moreHtml = '<br><div class="pearone-color">\n' +
 				'<div class="color-title">更多设置</div>\n' +
 				'<div class="color-content">\n' +
@@ -482,6 +484,11 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 						window.location.reload();
 					})
 					
+					form.on('switch(auto-head)', function(data) {
+						localStorage.setItem("auto-head", this.checked);
+						pearTheme.changeTheme(window, this.checked);
+					})
+					
 					form.on('switch(banner)', function(data) {
 						localStorage.setItem("theme-banner", this.checked);
 						pearAdmin.bannerSkin(this.checked);
@@ -503,6 +510,12 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 						$('input[name="muilt-tab"]').attr('checked', 'checked')
 					} else {
 						$('input[name="muilt-tab"]').removeAttr('checked')
+					}
+					
+					if (localStorage.getItem('auto-head') === 'true') {
+						$('input[name="auto-head"]').attr('checked', 'checked')
+					} else {
+						$('input[name="auto-head"]').removeAttr('checked')
 					}
 					
 					form.render('checkbox');
@@ -539,7 +552,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 			localStorage.setItem("theme-color", currentColor.id);
 			localStorage.setItem("theme-color-color", currentColor.color);
 			localStorage.setItem("theme-color-second", currentColor.second);
-			pearTheme.changeTheme(window, config.other.autoHead);
+			pearTheme.changeTheme(window, isAutoHead(config));
 		});
 
 		function applyConfig(param) {
@@ -630,8 +643,6 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 		}
 
 		function isControl(option) {
-			var control = localStorage.getItem("control");
-
 			if (option.theme.allowCustom) {
 				if (localStorage.getItem("control") != "null") {
 					return localStorage.getItem("control")
@@ -643,9 +654,21 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 			}
 		}
 		
+		function isAutoHead(option) {
+			if(option.theme.allowCustom) {
+				if(localStorage.getItem("auto-head") != "null") {
+					console.log(localStorage.getItem("auto-head"))
+					return localStorage.getItem("auto-head");
+				} else {
+					return option.other.autoHead; 
+				}
+			} else {
+				return option.other.autoHead;
+			}
+		}
+		
 		function isMuiltTab(option) {
 			var control = localStorage.getItem("muilt-tab");
-		
 			if (option.theme.allowCustom) {
 				if (localStorage.getItem("muilt-tab") != "null") {
 					return localStorage.getItem("muilt-tab")

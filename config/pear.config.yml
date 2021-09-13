@@ -70,7 +70,7 @@ other:
   ## 主页动画时长
   keepLoad: "1200"
   ## 布局顶部主题
-  autoHead: false
+  autoHead: true
 ## 头部配置
 header:
   ## 站内消息，通过 false 设置关闭

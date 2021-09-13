@@ -35,6 +35,10 @@ body,
 .pear-admin.banner-layout .layui-header .layui-logo .title {
 	top: 2px;
 }
+.pear-admin.banner-layout .layui-header .layui-layout-control {
+	display: inline-block;
+	left: 370px;
+}
 
 .pear-admin .layui-header .layui-logo {
 	display: none;
@@ -331,7 +335,6 @@ body,
 	color: black !important;
 }
 
-/** 顶部主题 (黑) */
 .dark-theme.layui-header {
 	border-bottom: none;
 	background-color: #28333E;
