@@ -116,9 +116,11 @@
 .pear-nav-control.pc .layui-this * {
 	background-color: whitesmoke;
 }
+
 .pear-nav-control.pc *{
 	color: darkslategray!important;
 }
+
 .pear-nav-control.pc .layui-nav-bar{
 	display: none!important;
 }

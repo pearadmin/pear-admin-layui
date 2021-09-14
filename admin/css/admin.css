@@ -15,30 +15,38 @@ body,
 .pear-admin.banner-layout .layui-side {
 	top: 60px!important;
 }
+
 .pear-admin.banner-layout .layui-side .layui-logo {
 	display: none;
 }
+
 .pear-admin.banner-layout .layui-header .layui-logo {
 	display: inline-block;
 }
+
 .pear-admin.banner-layout .layui-side .layui-side-scroll {
 	height: 100%!important;
 }
+
 .pear-admin.banner-layout .layui-header {
 	z-index: 99999;
 	width: 100%;
 	left: 0px;
 }
+
 .pear-admin.banner-layout .layui-header .layui-layout-left {
 	left: 230px;
 }
+
 .pear-admin.banner-layout .layui-header .layui-logo .title {
 	top: 2px;
 }
+
 .pear-admin.banner-layout .layui-header .layui-layout-control {
 	display: inline-block;
 	left: 370px;
 }
+
 .pear-admin.banner-layout .layui-header.dark-theme {
 	box-shadow: 2px 0 6px rgb(0 21 41 / 35%);
 }

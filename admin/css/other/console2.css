@@ -98,6 +98,8 @@
 	position: absolute;
 	right: 20px;
 	bottom: 12px;
+	height: 24px;
+	line-height: 24px;
 }
 
 .person .title {
