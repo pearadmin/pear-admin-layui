@@ -82,7 +82,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 					theme: "dark-theme",
 					height: '100%',
 					method: param.menu.method,
-					control: isControl(param) === 'true' ? 'control' : false, // control
+					control: isControl(param) === 'true' || isControl(param) === true ? 'control' : false, // control
 					controlWidth: param.menu.controlWidth,
 					defaultMenu: 0,
 					accordion: param.menu.accordion,
@@ -224,10 +224,30 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 					}
 				}
 				
+				var muiltTab = localStorage.getItem("muilt-tab");
+				if (muiltTab === null) {
+					muiltTab = option.tab.enable;
+				} else {
+					if (option.theme.allowCustom === false) {
+						muiltTab = option.tab.enable;
+					}
+				}
+				
+				var control = localStorage.getItem("control");
+				if (control === null) {
+					control = option.menu.control;
+				} else {
+					if (option.theme.allowCustom === false) {
+						control = option.menu.control;
+					}
+				}
+				
+				localStorage.setItem("muilt-tab",muiltTab);
 				localStorage.setItem("theme-banner", banner);
 				localStorage.setItem("theme-menu", menu);
 				localStorage.setItem("theme-header", header);
 				localStorage.setItem("auto-head", autoHead);
+				localStorage.setItem("control",control);
 				this.menuSkin(menu);
 				this.headerSkin(header);
 				this.bannerSkin(banner);
@@ -655,7 +675,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 
 		function isControl(option) {
 			if (option.theme.allowCustom) {
-				if (localStorage.getItem("control") != "null") {
+				if (localStorage.getItem("control") != null) {
 					return localStorage.getItem("control")
 				} else {
 					return option.menu.control
@@ -668,7 +688,6 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 		function isAutoHead(option) {
 			if(option.theme.allowCustom) {
 				if(localStorage.getItem("auto-head") != null) {
-					console.log(localStorage.getItem("auto-head"))
 					return localStorage.getItem("auto-head");
 				} else {
 					return option.other.autoHead; 
