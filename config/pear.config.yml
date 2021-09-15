@@ -26,7 +26,7 @@ menu:
 ## 视图内容配置
 tab: 
   ## 是否开启多选项卡
-  enable: false
+  enable: true
   ## 保持视图状态
   keepState: true
   ## 开启选项卡记忆
@@ -45,11 +45,11 @@ theme:
   ## 默认的菜单主题 dark-theme 黑 / light-theme 白
   defaultMenu: "dark-theme"
   ## 默认的顶部主题 dark-theme 黑 / light-theme 白
-  defaultHeader: "dark-theme"
+  defaultHeader: "light-theme"
   ## 是否允许用户切换主题，false 时关闭自定义主题面板
   allowCustom: true
   ## 通栏配置
-  banner: true
+  banner: false
 ## 主题色配置列表
 colors: 
 - id: "1"
@@ -72,7 +72,7 @@ other:
   ## 主页动画时长
   keepLoad: "1200"
   ## 布局顶部主题
-  autoHead: true
+  autoHead: false
 ## 头部配置
 header:
   ## 站内消息，通过 false 设置关闭
