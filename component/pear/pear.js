@@ -5,7 +5,7 @@ window.rootPath = (function(src) {
 
 layui.config({
 	base: rootPath + "module/",
-	version: "4.0.0"
+	version: "3.9.0"
 }).extend({
 	admin: "admin", 	// 框架布局组件
 	menu: "menu",		// 数据菜单组件

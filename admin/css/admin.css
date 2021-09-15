@@ -28,6 +28,14 @@ body,
 	height: 100%!important;
 }
 
+.pear-admin.banner-layout .layui-side .layui-side-scroll {
+	height: 100%!important;
+}
+
+.pear-admin .layui-header.dark-theme .layui-layout-control .layui-this *{
+	background-color: rgba(0,0,0,.1)!important;
+}
+
 .pear-admin.banner-layout .layui-header {
 	z-index: 99999;
 	width: 100%;
@@ -349,11 +357,11 @@ body,
 .dark-theme.layui-header {
 	border-bottom: none;
 	background-color: #28333E;
-	color: white;
+	color: whitesmoke;
 }
 
 .dark-theme.layui-header li>a{
-	color: white!important;
+	color: whitesmoke!important;
 }
 
 .dark-theme.layui-header .layui-logo {
