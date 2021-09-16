@@ -370,7 +370,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 		});
 
 		body.on("click", '[user-menu-id]', function() {
-			if (isMuiltTab(config) === "true" || isMuiltTab(param) === true) {
+			if (isMuiltTab(config) === "true" || isMuiltTab(config) === true) {
 				bodyTab.addTabOnly({
 					id: $(this).attr("user-menu-id"),
 					title: $(this).attr("user-menu-title"),
