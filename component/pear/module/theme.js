@@ -53,7 +53,7 @@ layui.define(["jquery","layer"], function (exports) {
 		style += '.pear-this,.pear-text{color:' + color + '!important}';
 		style += '.pear-back{background-color:'+ color +'!important}';
 		style += '.pear-collasped-pe{background-color:'+color+'!important}'
-		style += '.layui-form-select dl dd.layui-this{background-color:'+color+'}'
+		style += '.layui-form-select dl dd.layui-this{background-color:'+color+';color:white}'
 		style += '.tag-item-normal{background:'+color+'!important}';
 		style += '.step-item-head.step-item-head-active{background-color:'+color+'}'
 		style += '.step-item-head{border: 3px solid '+color+';}'
