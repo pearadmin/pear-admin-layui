@@ -1224,7 +1224,5 @@
 
 		that.toast = $DOM.toast;		
 	};
-	// 加载css
-	layui.link(layui.cache.base + 'iziToast/iziToast.css'); 
 	return $iziToast;
 });
