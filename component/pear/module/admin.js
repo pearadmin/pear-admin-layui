@@ -714,6 +714,5 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 				$(".fullScreen").eq(0).removeClass("layui-icon-screen-restore");
 			}
 		}
-
 		exports('admin', pearAdmin);
 	})
