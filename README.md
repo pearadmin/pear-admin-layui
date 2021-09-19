@@ -17,7 +17,7 @@
 
 <p align="center">
     <a href="#">
-        <img src="https://img.shields.io/badge/Pear Admin Layui-4.0.0+-green.svg" alt="Pear Admin Layui Version">
+        <img src="https://img.shields.io/badge/Pear Admin Layui-3.9.0+-green.svg" alt="Pear Admin Layui Version">
     </a>
     <a href="#">
         <img src="https://img.shields.io/badge/JQuery-2.0+-green.svg" alt="Jquery Version">
