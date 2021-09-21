@@ -1,4 +1,3 @@
-/** Buttom 默认*/
 .pear-btn {
 	display: inline-block;
 	line-height: 38px;
@@ -36,22 +35,19 @@
 	line-height: 37px;
 	color: #fff !important
 }
+
 /** Button 主题 */
 .pear-btn-primary {
 	background-color: #2D8CF0 !important;
-	border: #2D8CF0;
 }
 .pear-btn-danger {
 	background-color: #f56c6c !important;
-	border: #f56c6c;
 }
 .pear-btn-warming {
 	background-color: #f6ad55 !important;
-	border: #f6ad55;
 }
 .pear-btn-success {
 	background-color: #36b368 !important;
-	border: #36b368;
 }
 
 .pear-btn[round] {
