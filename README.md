@@ -116,6 +116,10 @@ GitHub 开源地址 ：https://github.com/PearAdmin/pear-admin-layui
 
 [![Giteye chart](https://chart.giteye.net/gitee/pear-admin/Pear-Admin-Layui/MZ26N8HL.png)](https://giteye.net/chart/MZ26N8HL)
 
+### 💐 特别鸣谢
+
+- 👉 layui：[https://gitee.com/sentsin/layui](https://gitee.com/sentsin/layui)
+
 #### 开源贡献
 
 <p style="padding:10px;"  width="90%">
