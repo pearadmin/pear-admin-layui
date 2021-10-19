@@ -23,7 +23,7 @@ layui.config({
 	treetable:"treetable",   // 树状表格
 	dtree:"dtree",			// 树结构
 	tinymce:"tinymce/tinymce", // 编辑器
-	area:"area",			// 省市级联  使用方法:https://gitee.com/fesiong/layarea
+	area:"area",			// 省市级联  
 	count:"count",			// 数字滚动组件
 	topBar: "topBar",		// 置顶组件
 	button: "button",		// 加载按钮
