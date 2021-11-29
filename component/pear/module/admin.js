@@ -299,6 +299,10 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 				refresh()
 			}
 
+			this.refresh = function(id) {
+				$("iframe[id='"+ id +"']").attr('src', $("iframe[id='"+ id +"']").attr('src'));
+			}
+
 			this.addTab = function(id, title, url) {
 				if (isMuiltTab(config) === "true" || isMuiltTab(config) === true) {
 					bodyTab.addTabOnly({
@@ -533,7 +537,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 				anim: -1,
 				skin: 'layer-anim-right',
 				move: false,
-				content: menuHtml + headHtml + buildColorHtml() + moreHtml + bottomTool(),
+				content: menuHtml + headHtml + buildColorHtml() + moreHtml,
 				success: function(layero, index) {
 
 					form.render();
@@ -558,15 +562,6 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 					}
 
 					$('#layui-layer-shade' + index).click(function() {
-						var $layero = $('#layui-layer' + index);
-						$layero.animate({
-							left: $layero.offset().left + $layero.width()
-						}, 200, function() {
-							layer.close(index);
-						});
-					})
-
-					$('#closeTheme').click(function() {
 						var $layero = $('#layui-layer' + index);
 						$layero.animate({
 							left: $layero.offset().left + $layero.width()
@@ -623,10 +618,6 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 				}
 			});
 		});
-
-		function bottomTool() {
-			return "<button id='closeTheme' style='position: absolute;bottom: 20px;left: 20px;' class='pear-btn'>关闭</button>"
-		}
 
 		body.on('click', '[data-select-bgcolor]', function() {
 			var theme = $(this).attr('data-select-bgcolor');
