@@ -222,7 +222,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 		var defer = $.Deferred();
 		$.get(url + "?fresh=" + Math.random(), function (result) {
 			defer.resolve(result)
-		});
+		}, "json");
 		return defer.promise();
 	}
 
@@ -230,7 +230,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 		var defer = $.Deferred();
 		$.post(url + "?fresh=" + Math.random(), function (result) {
 			defer.resolve(result)
-		});
+		}, "json");
 		return defer.promise();
 	}
 
