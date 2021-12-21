@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="UTF-8">
-		<title>修改页面</title>
+		<title>Title</title>
 		<link rel="stylesheet" href="../../../component/pear/css/pear.css" />
 	</head>
 	<body>
@@ -56,7 +56,7 @@
 			<div class="bottom">
 				<div class="button-container">
 					<button type="submit" class="pear-btn pear-btn-primary pear-btn-sm" lay-submit=""
-						lay-filter="user-save">
+						lay-filter="form-save">
 						<i class="layui-icon layui-icon-ok"></i>
 						提交
 					</button>
@@ -74,7 +74,7 @@
 				let form = layui.form;
 				let $ = layui.jquery;
 
-				form.on('submit(user-save)', function(data) {
+				form.on('submit(form-save)', function(data) {
 					$.ajax({
 						url: '/system/user/save',
 						data: JSON.stringify(data.field),
@@ -89,7 +89,7 @@
 								}, function() {
 									parent.layer.close(parent.layer.getFrameIndex(window
 										.name)); //关闭当前页
-									parent.layui.table.reload("user-table");
+									parent.layui.table.reload("form-table");
 								});
 							} else {
 								layer.msg(result.msg, {
