@@ -36,53 +36,56 @@
 			</div>
 		</div>
 
-	<script type="text/html" id="user-toolbar">
-		<button class="pear-btn pear-btn-primary pear-btn-md" lay-event="add">
-			<i class="layui-icon layui-icon-add-1"></i>
-			新增
-		</button>
-		<button class="pear-btn pear-btn-danger pear-btn-md" lay-event="batchRemove">
-			<i class="layui-icon layui-icon-delete"></i>
-			删除
-		</button>
-	</script>
+		<script type="text/html" id="user-toolbar">
+			<button class="pear-btn pear-btn-primary pear-btn-md" lay-event="add">
+				<i class="layui-icon layui-icon-add-1"></i>
+				新增
+			</button>
+			<button class="pear-btn pear-btn-danger pear-btn-md" lay-event="batchRemove">
+				<i class="layui-icon layui-icon-delete"></i>
+				删除
+			</button>
+		</script>
 
-	<script type="text/html" id="user-bar">
-		<button class="pear-btn pear-btn-primary pear-btn-sm" lay-event="edit"><i class="layui-icon layui-icon-edit"></i></button>
-		<button class="pear-btn pear-btn-danger pear-btn-sm" lay-event="remove"><i class="layui-icon layui-icon-delete"></i></button>
-        <button class="pear-btn pear-btn-sm" id="more_{{d.userId}}"><i class="layui-icon layui-icon-triangle-d"></i></button>
-	</script>
+		<script type="text/html" id="user-bar">
+			<button class="pear-btn pear-btn-primary pear-btn-sm" lay-event="edit"><i
+					class="layui-icon layui-icon-edit"></i></button>
+			<button class="pear-btn pear-btn-danger pear-btn-sm" lay-event="remove"><i
+					class="layui-icon layui-icon-delete"></i></button>
+			<button class="pear-btn pear-btn-sm" id="more_{{d.userId}}"><i class="layui-icon layui-icon-triangle-d"></i></button>
+		</script>
 
-	<script type="text/html" id="user-enable">
-		<input type="checkbox" name="enable" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="user-enable" checked = "{{ d.enable == 0 ? 'true' : 'false' }}">
-	</script>
+		<script type="text/html" id="user-enable">
+			<input type="checkbox" name="enable" value="{{d.id}}" lay-skin="switch" lay-text="启用|禁用" lay-filter="user-enable"
+				checked="{{ d.enable == 0 ? 'true' : 'false' }}">
+		</script>
 
-	<script type="text/html" id="user-sex">
+		<script type="text/html" id="user-sex">
 		{{#if (d.sex == 1) { }}
-		<span>男</span>
-		{{# }else if(d.sex == 2){ }}
-		<span>女</span>
-		{{# } }}
-	</script>
+			<span>男</span>
+			{{# }else if(d.sex == 2){ }}
+				<span>女</span>
+				{{# } }}
+		</script>
 
-	<script type="text/html" id="user-login">
+		<script type="text/html" id="user-login">
 		{{#if (d.login == 0) { }}
-		<span>在线</span>
-		{{# }else if(d.sex == 1){ }}
-		<span>离线</span>
-		{{# } }}
-	</script>
+			<span>在线</span>
+			{{# }else if(d.sex == 1){ }}
+				<span>离线</span>
+				{{# } }}
+		</script>
 
-	<script type="text/html" id="user-createTime">
+		<script type="text/html" id="user-createTime">
 		{{layui.util.toDateString(d.createTime, 'yyyy-MM-dd')}}
-	</script>
+		</script>
 
-	<div style="display: none;">
-		<div class="layer-top">
-			<br />
-			<h3>上侧弹层内容...</h3>
+		<div style="display: none;">
+			<div class="layer-top">
+				<br />
+				<h3>上侧弹层内容...</h3>
+			</div>
 		</div>
-	</div>
 
 		<script src="../../component/layui/layui.js"></script>
 		<script src="../../component/pear/pear.js"></script>
@@ -163,26 +166,28 @@
 						icon: 'layui-icon-refresh',
 					}, 'filter', 'print', 'exports'],
 					done: function(res, curr, count) {
-                              for (var i = 0; i < res.data.length; i++) {
-                                 dropdown.render({
-                                     elem: '#more_' + res.data[i].userId
-                                 , data: [{
-                                         title: 'menu item11'
-                                         , id: 100
-                                     }, {
-                                         title: 'menu item22'
-                                         , id: 101
-                                     }, {
-                                         title: 'menu item33'
-                                         , id: 102
-                                         }]
-                                     , id: '#more_' + res.data[i].userId
-                                     , click: function (obj) {
-                                         layer.tips('点击了：' + obj.title, this.elem, { tips: [1, '#5FB878'] })
-                                     }
-                                 });
-					         }
-                        }
+						for (var i = 0; i < res.data.length; i++) {
+							dropdown.render({
+								elem: '#more_' + res.data[i].userId,
+								data: [{
+									title: 'menu item11',
+									id: 100
+								}, {
+									title: 'menu item22',
+									id: 101
+								}, {
+									title: 'menu item33',
+									id: 102
+								}],
+								id: '#more_' + res.data[i].userId,
+								click: function(obj) {
+									layer.tips('点击了：' + obj.title, this.elem, {
+										tips: [1, '#5FB878']
+									})
+								}
+							});
+						}
+					}
 				});
 
 				table.on('tool(user-table)', function(obj) {
@@ -190,7 +195,7 @@
 						window.remove(obj);
 					} else if (obj.event === 'edit') {
 						window.edit(obj);
-					} 
+					}
 				});
 
 				table.on('toolbar(user-table)', function(obj) {
@@ -305,7 +310,6 @@
 					table.reload('user-table');
 				}
 			})
-            
 		</script>
 	</body>
 </html>
