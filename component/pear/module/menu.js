@@ -166,7 +166,9 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 						openEle = $(this);
 					} else {
 						$(this).parent().addClass('layui-nav-itemed');
-						$(this).css({height:'auto'});
+						$(this).css({
+							height:'auto',
+						});
 					}
 					openEleHeight += $(this).children("dd").length * 48;
 				}
@@ -175,7 +177,9 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 				if(openEleHeight > 0){
 					var currentDom = openEle.parent().siblings('.layui-nav-itemed').children(".layui-nav-child");
 					currentDom.animate({
-						height: "0px"
+						height: "0px",
+						paddingTop: "0px",
+						paddingBottom: "0px"
 					}, 200, function () {
 						currentDom.css({
 							height: "auto"
@@ -189,7 +193,9 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 				openEle.parent().addClass("layui-nav-itemed");
 				openEle.height(0);
 				openEle.animate({
-					height: openEleHeight + "px"
+					height: openEleHeight + "px",
+					paddingTop: "5px",
+					paddingBottom: "5px"
 				}, 200, function () {
 					$(this).css({height:'auto'});
 				});
@@ -433,19 +439,22 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 					if (option.accordion) {
 						var currentDom = $(this).parent().siblings('.layui-nav-itemed').children('.layui-nav-child');
 						currentDom.animate({
-							height: '0px'
+							height: '0px',
+							paddingTop: '0px',
+							paddingBottom: '0px'
 						}, 200, function(){
 							currentDom.css({
-								height: "auto"
+								height: "auto",
 							});
 							$(this).parent().removeClass("layui-nav-itemed");
 							$(this).find('.layui-nav-itemed').removeClass("layui-nav-itemed");
 						});
-						
 					}
 					ele.height(0);
 					ele.animate({
-						height: heights + "px"
+						height: heights + "px",
+						paddingTop: '5px',
+						paddingBottom: '5px'
 					}, 200, function () {
 						ele.css({
 							height: "auto"
