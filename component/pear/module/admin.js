@@ -357,6 +357,10 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 				}
 			}
 			
+			this.changeTabTitle = function(id, title) {
+				pearTab.changeTabTitleById('content', id ,title);
+			}
+			
 			this.changeIframe = function(id, title, url) {
 				if (isMuiltTab(config) === "true" || isMuiltTab(config) === true) {
 					return;

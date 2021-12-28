@@ -14,9 +14,6 @@
 
 	'use strict';
 
-	//
-	// Variables
-	//
 	var $iziToast = {},
 		PLUGIN_NAME = 'iziToast',
 		BODY = document.querySelector('body'),

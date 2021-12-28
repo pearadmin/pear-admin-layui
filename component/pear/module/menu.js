@@ -105,7 +105,6 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 				}
 			}
 			if (domss != null) {
-
 				var domsss = hash(domss);
 				if (domsss != null) {
 					if (domsss.text() != '') {
@@ -188,6 +187,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 			}
 			if(openEleHeight > 0){
 				openEle.parent().addClass("layui-nav-itemed");
+				openEle.height(0);
 				openEle.animate({
 					height: openEleHeight + "px"
 				}, 200, function () {

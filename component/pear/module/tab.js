@@ -83,6 +83,8 @@ layui.define(['jquery', 'element'], function(exports) {
 				closeBtn: false,
 				area: ['100px', '108px'],
 				fixed: true,
+				anim: false,
+				isOutAnim: false,
 				offset: [top, left],
 				content: menu, //iframe的url,
 				success: function(layero, index) {
@@ -146,10 +148,10 @@ layui.define(['jquery', 'element'], function(exports) {
 	pearTab.prototype.addTab = function(opt) {
 		var title = '';
 		if (opt.close) {
-			title += '<span class="pear-tab-active"></span><span class="able-close">' + opt.title +
+			title += '<span class="pear-tab-active"></span><span class="able-close title">' + opt.title +
 				'</span><i class="layui-icon layui-unselect layui-tab-close">ဆ</i>';
 		} else {
-			title += '<span class="pear-tab-active"></span><span class="disable-close">' + opt.title +
+			title += '<span class="pear-tab-active"></span><span class="disable-close title">' + opt.title +
 				'</span><i class="layui-icon layui-unselect layui-tab-close">ဆ</i>';
 		}
 		element.tabAdd(this.option.elem, {
@@ -165,6 +167,12 @@ layui.define(['jquery', 'element'], function(exports) {
 	}
 
 	var index = 0;
+	
+	// 根据过滤 fliter 标识, 重置选项卡标题
+	pearTab.prototype.changeTabTitleById = function(elem, id, title) {
+		var currentTab = $(".layui-tab[lay-filter='" + elem + "'] .layui-tab-title [lay-id='" + id + "'] .title");
+		currentTab.html(title);
+	}
 
 	// 根据过滤 filter 标识, 删除指定选项卡
 	pearTab.prototype.delTabByElem = function(elem, id, callback) {
@@ -211,10 +219,10 @@ layui.define(['jquery', 'element'], function(exports) {
 	pearTab.prototype.addTabOnlyByElem = function(elem, opt, time) {
 		var title = '';
 		if (opt.close) {
-			title += '<span class="pear-tab-active"></span><span class="able-close">' + opt.title +
+			title += '<span class="pear-tab-active"></span><span class="able-close title">' + opt.title +
 				'</span><i class="layui-icon layui-unselect layui-tab-close">ဆ</i>'
 		} else {
-			title += '<span class="pear-tab-active"></span><span class="disable-close">' + opt.title +
+			title += '<span class="pear-tab-active"></span><span class="disable-close title">' + opt.title +
 				'</span><i class="layui-icon layui-unselect layui-tab-close">ဆ</i>'
 		}
 		if ($(".layui-tab[lay-filter='" + elem + "'] .layui-tab-title li[lay-id]").length <= 0) {
@@ -289,10 +297,10 @@ layui.define(['jquery', 'element'], function(exports) {
 	pearTab.prototype.addTabOnly = function(opt, time) {
 		var title = '';
 		if (opt.close) {
-			title += '<span class="pear-tab-active"></span><span class="able-close">' + opt.title +
+			title += '<span class="pear-tab-active"></span><span class="able-close title">' + opt.title +
 				'</span><i class="layui-icon layui-unselect layui-tab-close">ဆ</i>';
 		} else {
-			title += '<span class="pear-tab-active"></span><span class="disable-close">' + opt.title +
+			title += '<span class="pear-tab-active"></span><span class="disable-close title">' + opt.title +
 				'</span><i class="layui-icon layui-unselect layui-tab-close">ဆ</i>';
 		}
 		if ($(".layui-tab[lay-filter='" + this.option.elem + "'] .layui-tab-title li[lay-id]").length <= 0) {
@@ -483,10 +491,10 @@ layui.define(['jquery', 'element'], function(exports) {
 
 			if (item.close) {
 				// 当 前 选 项 卡 可 以 关 闭
-				TitleItem += '<span class="able-close">' + item.title + '</span>';
+				TitleItem += '<span class="able-close title">' + item.title + '</span>';
 			} else {
 				// 当 前 选 项 卡 不 允 许 关 闭
-				TitleItem += '<span class="disable-close">' + item.title + '</span>';
+				TitleItem += '<span class="disable-close title">' + item.title + '</span>';
 			}
 			TitleItem += '<i class="layui-icon layui-unselect layui-tab-close">ဆ</i></li>';
 			title += TitleItem;

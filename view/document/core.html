@@ -28,6 +28,11 @@
 		</div>
 		<div class="layui-card">
 			<div class="layui-card-body">
+				<button id="changeTabTitle" class="pear-btn">修改标题</button>
+			</div>
+		</div>
+		<div class="layui-card">
+			<div class="layui-card-body">
 				<button id="closeTab" class="pear-btn">删除卡片</button>
 			</div>
 		</div>
@@ -100,6 +105,12 @@
 					  <td>admin.addTab</td>
 					  <td>新增卡片</td>
 					  <td>id:编号,title:标题,url:路径</td>
+					  <td>仅限 TAB 模式</td>
+					</tr>
+					<tr>
+					  <td>admin.changeTabTitle</td>
+					  <td>修改标题</td>
+					  <td>id:编号,title:标题</td>
 					  <td>仅限 TAB 模式</td>
 					</tr>
 					<tr>
@@ -180,6 +191,10 @@
 				
 				$("#closeAll").click(function(){
 					parent.layui.admin.closeAllTab()
+				})
+				
+				$("#changeTabTitle").click(function(){
+					parent.layui.admin.changeTabTitle(16,"修改标题")
 				})
 				
 				$("#closeOther").click(function(){
