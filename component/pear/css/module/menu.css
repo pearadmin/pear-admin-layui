@@ -28,11 +28,6 @@
 	width: 230px;
 }
 
-.pear-nav-tree .layui-nav-child {
-	padding-top: 0px;
-	padding-bottom: 0px;
-}
-
 .pear-nav-tree .layui-nav-child dd.layui-this,
 .layui-nav-tree .layui-nav-child dd.layui-this a,
 .layui-nav-tree .layui-this,
@@ -159,10 +154,11 @@
 .pear-nav-tree .layui-nav-hover dd a span {
 	margin-left: 0px !important;
 }
+.pear-nav-tree dl {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
 /** 亮 样 式*/
-
-/** 亮 样 式*/
-
 .dark-theme .layui-nav-tree{
 	background-color: #28333E!important; 
 }
@@ -185,11 +181,6 @@
 .light-theme .pear-nav-tree .layui-nav-itemed>a>.layui-nav-more{
 	border-top-color: white!important;
 	border-bottom-color: dimgray!important;
-}
-
-.light-theme .pear-nav-tree .layui-nav-child{
-	padding-top: 0px;
-	padding-bottom: 0px;
 }
 
 .light-theme .pear-nav-tree .layui-this a,
