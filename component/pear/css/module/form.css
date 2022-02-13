@@ -25,9 +25,10 @@ textarea::-webkit-input-placeholder {
 	border: #5FB878 1px solid!important;
 }
 
-.layui-input[failure] {
-	box-shadow: 0px 0px 0px 3px #fef0f0 !important;
-	border: #F56C6C 1px solid;
+.layui-input[failure],
+.layui-form-item .layui-form-danger:focus {
+    box-shadow: 0px 0px 0px 3px #fef0f0 !important;
+    border: #F56C6C 1px solid!important;
 }
 
 .layui-input,
