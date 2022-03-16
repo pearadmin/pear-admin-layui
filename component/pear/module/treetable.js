@@ -42,17 +42,9 @@ layui.define(['layer', 'table'], function (exports) {
             for (var i = 0; i < tNodes.length; i++) {
                 var tt = tNodes[i];
                 if (!tt.id) {
-                    if (!param.treeIdName) {
-                        layer.msg('参数treeIdName不能为空', {icon: 5});
-                        return;
-                    }
                     tt.id = tt[param.treeIdName];
                 }
                 if (!tt.pid) {
-                    if (!param.treePidName) {
-                        layer.msg('参数treePidName不能为空', {icon: 5});
-                        return;
-                    }
                     tt.pid = tt[param.treePidName];
                 }
             }
@@ -204,6 +196,16 @@ layui.define(['layer', 'table'], function (exports) {
         checkParam: function (param) {
             if (!param.treeSpid && param.treeSpid != 0) {
                 layer.msg('参数treeSpid不能为空', {icon: 5});
+                return false;
+            }
+
+            if (!param.treeIdName) {
+                layer.msg('参数treeIdName不能为空', {icon: 5});
+                return false;
+            }
+
+            if (!param.treePidName) {
+                layer.msg('参数treePidName不能为空', {icon: 5});
                 return false;
             }
 
