@@ -155,8 +155,8 @@
 	margin-left: 0px !important;
 }
 .pear-nav-tree dl {
-	padding-top: 5px;
-	padding-bottom: 5px;
+	padding-top: 0;
+	padding-bottom: 0;
 }
 /** 亮 样 式*/
 .dark-theme .layui-nav-tree{
