@@ -42,7 +42,8 @@ layui.define(['jquery', 'layer'], function (exports) {
             contentType: 'application/json',
             headers: {
                 'X-Requested-With': 'XMLHttpRequest'
-            }
+            },
+            customHandleError: true
         },
 
         defaultError: {
@@ -112,7 +113,7 @@ layui.define(['jquery', 'layer'], function (exports) {
         },
 
         handleErrorResponse: function (jqXHR, userOptions, $dfd) {
-            if (userOptions.customHandleError !== false) {
+            if (!userOptions.customHandleError) {
                 switch (jqXHR.status) {
                     case 401:
                         http.ajax.showErrorAndRedirectUrl(http.ajax.defaultError401, http.appPath);
