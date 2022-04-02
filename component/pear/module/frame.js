@@ -23,30 +23,28 @@ layui.define(['jquery', 'element'], function (exports) {
 	}
 
 	pearFrame.prototype.changePage = function (url, loading) {
+		var $frameLoad = $("#" + this.option.elem).find(".pear-frame-loading");
 		if (loading) {
-			var loading = $("#" + this.option.elem).find(".pear-frame-loading");
 			loading.css({ display: 'block' });
 		}
 		$("#" + this.option.elem + " iframe").attr("src", url);
 		if (loading) {
-			var loading = $("#" + this.option.elem).find(".pear-frame-loading");
 			setTimeout(function () {
-				loading.fadeOut(500);
+				$frameLoad.fadeOut(500);
 			}, 800)
 		}
 	}
 
 	pearFrame.prototype.changePageByElement = function (elem, url, title, loading) {
+		var $frameLoad = $("#" + elem).find(".pear-frame-loading");
 		if (loading) {
-			var loading = $("#" + elem).find(".pear-frame-loading");
-			loading.css({ display: 'block' });
+			$frameLoad.css({ display: 'block' });
 		}
 		$("#" + elem + " iframe").attr("src", url);
 		$("#" + elem + " .title").html(title);
 		if (loading) {
-			var loading = $("#" + elem).find(".pear-frame-loading");
 			setTimeout(function () {
-				loading.css({ display: 'none' });
+				$frameLoad.css({ display: 'none' });
 			}, 400)
 		}
 	}
