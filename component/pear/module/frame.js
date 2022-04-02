@@ -1,10 +1,8 @@
-layui.define(['table', 'jquery', 'element'], function (exports) {
+layui.define(['jquery', 'element'], function (exports) {
     "use strict";
 
-    var MOD_NAME = 'frame',
-        $ = layui.jquery,
-		element = layui.element;
-		
+    var $ = layui.jquery;
+
     var pearFrame = function (opt) {
         this.option = opt;
     };
@@ -22,11 +20,11 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	    $("#"+option.elem).width(option.width);
 	    $("#"+option.elem).height(option.height);
 		return new pearFrame(option);
-    } 
-	
+    }
+
 	pearFrame.prototype.changePage = function(url,loading){
 		if(loading){
-			var loading = $("#"+this.option.elem).find(".pear-frame-loading");	
+			var loading = $("#"+this.option.elem).find(".pear-frame-loading");
 			loading.css({display:'block'});
 		}
 		$("#"+this.option.elem+" iframe").attr("src",url);
@@ -34,13 +32,13 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	     	var loading = $("#"+this.option.elem).find(".pear-frame-loading");
 			setTimeout(function(){
 				loading.fadeOut(500);
-			},800)	
+			},800)
 	     }
 	}
-	
+
 	pearFrame.prototype.changePageByElement = function(elem,url,title,loading){
 		if(loading){
-			var loading = $("#"+elem).find(".pear-frame-loading");	
+			var loading = $("#"+elem).find(".pear-frame-loading");
 			loading.css({display:'block'});
 		}
 		$("#"+elem+" iframe").attr("src",url);
@@ -49,10 +47,10 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	     	var loading = $("#"+elem).find(".pear-frame-loading");
 			setTimeout(function(){
 				loading.css({display:'none'});
-			},400)	
+			},400)
 	     }
 	}
-	
+
 	pearFrame.prototype.refresh = function (time) {
 		if(time!=false){
 			var loading = $("#"+this.option.elem).find(".pear-frame-loading");
@@ -65,7 +63,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 		}
 		$("#"+this.option.elem).find("iframe")[0].contentWindow.location.reload(true);
 	}
-	
+
 	function createFrameHTML(option){
 		 var iframe = "<iframe class='pear-frame-content' style='width:100%;height:100%;'  scrolling='auto' frameborder='0' src='"+option.url+"' ></iframe>";
 	     var loading = '<div class="pear-frame-loading">'+
@@ -73,8 +71,8 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 				      '<span></span><span></span><span></span><span></span>'+
 			       '</div>'+
 		        '</div></div>';
-	     $("#"+option.elem).html("<div class='pear-frame'>"+ iframe + loading +"</div>");	
+	     $("#"+option.elem).html("<div class='pear-frame'>"+ iframe + loading +"</div>");
 	}
-	
-	exports(MOD_NAME,new pearFrame());
-})
+
+	exports('frame', new pearFrame());
+});
