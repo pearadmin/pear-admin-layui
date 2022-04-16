@@ -24,7 +24,18 @@ layui.define(['jquery', 'element'], function (exports) {
 
 	pearFrame.prototype.changePage = function (url, loading) {
 		var $frameLoad = $("#" + this.option.elem).find(".pear-frame-loading");
-		if (loading) {
+        
+        /**
+         * 非视图模式下，切换侧栏导航上条目时，会产生 loading.css 非 function错误
+         * frame.js?v=3.9.4:28 Uncaught TypeError: loading.css is not a function
+            at pearFrame.changePage (frame.js?v=3.9.4:28:12)
+            at admin.js?v=3.9.4:165:17
+            at HTMLAnchorElement.<anonymous> (menu.js?v=3.9.4:122:4)
+            at HTMLBodyElement.dispatch (layui.js:2:22295)
+            at HTMLBodyElement.m.handle (layui.js:2:18997)
+         * 
+        */
+		if (loading && typeof loading.css ==='function') {
 			loading.css({ display: 'block' });
 		}
 		$("#" + this.option.elem + " iframe").attr("src", url);
