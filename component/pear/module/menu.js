@@ -226,7 +226,8 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 
 	function getData(url) {
 		var defer = $.Deferred();
-		$.get(url + "?fresh=" + Math.random(), function (result) {
+        var symbol = url.indexOf('?') !== -1 ? '&' : '?';
+		$.get(url + symbol + "fresh=" + Math.random(), function (result) {
 			defer.resolve(result)
 		});
 		return defer.promise();
@@ -234,7 +235,8 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 
 	function postData(url) {
 		var defer = $.Deferred();
-		$.post(url + "?fresh=" + Math.random(), function (result) {
+		var symbol = url.indexOf('?') !== -1 ? '&' : '?';
+		$.post(url + symbol + "fresh=" + Math.random(), function (result) {
 			defer.resolve(result)
 		}, "json");
 		return defer.promise();
