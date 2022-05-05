@@ -39,13 +39,13 @@ layui.define(["jquery","layer"], function (exports) {
 		style += '.pear-admin .pe-collaspe {background-color:' + color + '!important}';
 		style += '.layui-fixbar li {background-color:' + color + '!important}';
 		style += '.pear-btn-primary {background-color:' + color + '!important}';
-		style += '.layui-input:focus,.layui-textarea:focus {border-color: '+ color +'!important;box-shadow: 0 0 0 3px '+ second +' !important;}'
-    	style += '.layui-form-checkbox[lay-skin=primary]:hover span {background-color: initial;}'
-		style += '.layui-form-checked[lay-skin=primary] i {border-color: '+ color +'!important;background-color: ' + color + ';}'
-    	style += '.layui-form-checked,.layui-form-checked:hover {border-color: ' + color + '!important;}'
-    	style += '.layui-form-checked span,.layui-form-checked:hover span {background-color: ' + color + ';}'
-    	style += '.layui-form-checked i,.layui-form-checked:hover i {color: ' + color + ';}'
-		style += '.layui-form-onswitch { border-color: ' + color + '; background-color: '+color+';}'
+		style += '.layui-input:focus,.layui-textarea:focus {border-color: ' + color + '!important;box-shadow: 0 0 0 3px ' + second + ' !important;}'
+		style += '.layui-form-checkbox[lay-skin=primary]:hover span {background-color: initial;}'
+		style += '.layui-form-checked[lay-skin=primary] i {border-color: ' + color + '!important;background-color: ' + color + ';}'
+		style += '.layui-form-checked,.layui-form-checked:hover {border-color: ' + color + '!important;}'
+		style += '.layui-form-checked span,.layui-form-checked:hover span {background-color: ' + color + ';}'
+		style += '.layui-form-checked i,.layui-form-checked:hover i {color: ' + color + ';}'
+		style += '.layui-form-onswitch { border-color: ' + color + '; background-color: ' + color + ';}'
 		style += '.layui-form-radio>i:hover, .layui-form-radioed>i {color: ' + color + ';}'
 		style += '.layui-laypage .layui-laypage-curr .layui-laypage-em{background-color:'+ color +'!important}'
 		style += '.layui-tab-brief>.layui-tab-more li.layui-this:after, .layui-tab-brief>.layui-tab-title .layui-this:after{border-bottom: 3px solid '+color+'!important}'
