@@ -22,24 +22,24 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 			var notice = createHtml(option);
 			$(option.elem).html(notice);
      
-      var targetNode =  document.querySelector(option.elem + ' .pear-notice')
-      var mutationObserver = new MutationObserver((mutationsList, observer) => {
-        if (getComputedStyle(targetNode).display !== 'none'){
-          var rect = targetNode.getBoundingClientRect();
-          //是否超出右侧屏幕
-          if (rect.right > $(window).width()) {      
-            targetNode.style.right = '-59px';
-            targetNode.style.left = 'unset';
-          }
-        }
-      });
-      mutationObserver.observe(targetNode, { 
-        attributes: true, 
-        childList: false, 
-        subtree: false, 
-        attributeOldValue: false, 
-        attributeFilter:['class'] 
-      });
+            var targetNode =  document.querySelector(option.elem + ' .pear-notice')
+            var mutationObserver = new MutationObserver((mutationsList, observer) => {
+                if (getComputedStyle(targetNode).display !== 'none'){
+                	var rect = targetNode.getBoundingClientRect();
+          			//是否超出右侧屏幕
+          			if (rect.right > $(window).width()) {      
+            			targetNode.style.right = '-59px';
+            			targetNode.style.left = 'unset';
+                	}
+                }
+      		});
+      		mutationObserver.observe(targetNode, { 
+        		attributes: true, 
+        		childList: false, 
+        		subtree: false, 
+        		attributeOldValue: false, 
+        		attributeFilter:['class'] 
+      		});
 		}
 		setTimeout(function() {
 			element.init();

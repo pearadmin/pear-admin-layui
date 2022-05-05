@@ -71,8 +71,8 @@ body,
 	border: 1px solid whitesmoke;
 	border-radius: 4px;
 	width: auto;
-  left: auto;
-  right: -23px;
+    left: auto;
+    right: -23px;
 }
 
 .pear-admin .layui-header {
