@@ -70,7 +70,9 @@ body,
 .pear-admin .layui-layout-right .layui-nav-child {
 	border: 1px solid whitesmoke;
 	border-radius: 4px;
-	width: 150px;
+	width: auto;
+  left: auto;
+  right: -23px;
 }
 
 .pear-admin .layui-header {
