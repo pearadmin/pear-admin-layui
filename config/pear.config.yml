@@ -13,7 +13,7 @@ menu:
   ## 是否同时只打开一个菜单目录
   accordion: true
   ## 侧边默认折叠状态
-  collaspe: false
+  collapse: false
   ## 是否开启多系统菜单模式
   control: false
   ## 顶部菜单宽度 PX

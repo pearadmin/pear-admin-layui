@@ -8,7 +8,7 @@
 	<body class="pear-container">
 		<div class="layui-card">
 			<div class="layui-card-body">
-				<button id="collaspeSide" class="pear-btn">侧边切换</button>
+				<button id="collapseSide" class="pear-btn">侧边切换</button>
 			</div>
 		</div>
 		<div class="layui-card">
@@ -84,7 +84,7 @@
 				  </thead>
 				  <tbody>
 				    <tr>
-				      <td>admin.collaspeSide</td>
+				      <td>admin.collapseSide</td>
 				      <td>侧边收缩</td>
 				      <td>无</td>
 					  <td>无模式限制</td>
@@ -165,8 +165,8 @@
 			layui.use(['jquery','layer'], function() {
 				var $ = layui.jquery;
 				
-				$("#collaspeSide").click(function(){
-					parent.layui.admin.collaspeSide()
+				$("#collapseSide").click(function(){
+					parent.layui.admin.collapseSide()
 				})
 				
 				$("#refreshThis").click(function(){

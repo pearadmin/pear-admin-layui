@@ -201,7 +201,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	}
 
 	var activeMenus;
-	pearMenu.prototype.collaspe = function (time) {
+	pearMenu.prototype.collapse = function (time) {
 		var elem = this.option.elem;
 		var config = this.option;
 		if ($("#" + this.option.elem).is(".pear-nav-mini")) {
