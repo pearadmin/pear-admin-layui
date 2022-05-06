@@ -7,7 +7,7 @@
 		"data": "admin/data/menu.json",
 		"method": "GET",
 		"accordion": true,
-		"collaspe": false,
+		"collapse": false,
 		"control": false,
 		"controlWidth": 500,
 		"select": "10",

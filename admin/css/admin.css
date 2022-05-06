@@ -204,7 +204,7 @@ body,
 	display: none;
 }
 
-.pear-collasped-pe {
+.pear-collapsed-pe {
 	display: none;
 	width: 50px;
 	position: absolute;
@@ -219,7 +219,7 @@ body,
 	box-shadow: 2px 0 6px rgba(0, 21, 41, .35);
 }
 
-.pear-collasped-pe a {
+.pear-collapsed-pe a {
 	color: white !important;
 }
 
@@ -237,11 +237,11 @@ body,
 
 /** 新增兼容 */
 @media screen and (max-width:768px) {
-	.collaspe {
+	.collapse {
 		display: none !important;
 	}
 
-	.pear-collasped-pe {
+	.pear-collapsed-pe {
 		display: inline-block !important;
 	}
 
