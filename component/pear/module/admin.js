@@ -93,6 +93,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 						compatible();
 					},
 					done: function() {
+						sideMenu.isCollapse = param.menu.collapse;
 						sideMenu.selectItem(param.menu.select);
 						pearAdmin.collapse(param);
 					}
@@ -418,10 +419,12 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 				left.addClass("layui-icon-shrink-right")
 				left.removeClass("layui-icon-spread-left")
 				admin.removeClass("pear-mini");
+				sideMenu.isCollapse = false;
 			} else {
 				right.addClass("layui-icon-spread-left")
 				right.removeClass("layui-icon-shrink-right")
 				admin.addClass("pear-mini");
+				sideMenu.isCollapse = true;
 			}
 		}
 
@@ -776,6 +779,25 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 		window.onresize = function() {
 			if (!isFullscreen()) {
 				$(".fullScreen").eq(0).removeClass("layui-icon-screen-restore");
+			}
+		}
+ 
+		$(window).on('resize', debounce(function () {
+			if (!sideMenu.isCollapse && $(window).width() <= 768) {
+				collapse();
+			}
+		},500));
+
+		function debounce(fn,await) {
+			var timerID = null
+			return function () {
+				var arg = arguments[0]
+				if (timerID) {
+					clearTimeout(timerID)
+				}
+				timerID = setTimeout(function () {
+					fn(arg)
+				}, await)
 			}
 		}
 		exports('admin', pearAdmin);
