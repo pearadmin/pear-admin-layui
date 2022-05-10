@@ -15,6 +15,7 @@ layui.define(['jquery', 'element'], function(exports) {
 		 * */
 		this.open = function(option) {
 			var obj = new mSlider({
+        target:option.target,
 				dom: option.dom,
 				direction: option.direction,
 				distance: option.distance,
@@ -36,6 +37,7 @@ layui.define(['jquery', 'element'], function(exports) {
 (function(b, c) {
 	function a(d) {
 		this.opts = {
+      "target": d.target || "body",
 			"direction": d.direction || "left",
 			"distance": d.distance || "60%",
 			"dom": this.Q(d.dom),
@@ -44,6 +46,7 @@ layui.define(['jquery', 'element'], function(exports) {
 			"callback": d.callback || ""
 		};
 		this.rnd = this.rnd();
+    this.target = this.opts.target;
 		this.dom = this.opts.dom[0];
 		this.wrap = "";
 		this.inner = "";
@@ -79,7 +82,7 @@ layui.define(['jquery', 'element'], function(exports) {
 			d.setAttribute("class", "mSlider-main ms-" + g.rnd);
 			e.setAttribute("class", "mSlider-inner");
 			f.setAttribute("class", "mSlider-mask");
-			g.Q("body")[0].appendChild(d);
+			g.Q(g.target)[0].appendChild(d);
 			g.Q(".ms-" + g.rnd)[0].appendChild(e);
 			g.Q(".ms-" + g.rnd)[0].appendChild(f);
 			g.wrap = g.Q(".ms-" + g.rnd)[0];
@@ -116,7 +119,7 @@ layui.define(['jquery', 'element'], function(exports) {
 					g.translate = "-100%,0,0"
 			}
 			g.wrap.style.display = "none";
-			g.wrap.style.position = "fixed";
+      g.wrap.style.position = g.target === "body" ? "fixed" : "absolute";
 			g.wrap.style.top = "0";
 			g.wrap.style.left = "0";
 			g.wrap.style.width = "100%";
