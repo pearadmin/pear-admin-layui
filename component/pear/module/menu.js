@@ -220,7 +220,10 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 			$("#" + this.option.elem).animate({
 				width: "60px"
 			}, 400);
-			isHoverMenu(true, config);
+      // 使菜单在折叠动画过程中不触发 hover
+      setTimeout(function(){
+        isHoverMenu(true, config);
+      },100);
 		}
 	}
 
