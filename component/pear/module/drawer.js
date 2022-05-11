@@ -1,4 +1,4 @@
-layui.define(['jquery', 'element'], function (exports) {
+layui.define(['jquery', 'element', 'layer'], function (exports) {
 	"use strict";
 
 	/**
@@ -6,7 +6,9 @@ layui.define(['jquery', 'element'], function (exports) {
 	 * */
 	var MOD_NAME = 'drawer',
 		$ = layui.jquery,
-		element = layui.element;
+		element = layui.element,
+		layer = layui.layer;
+
 
 	var drawer = new function () {
 
@@ -14,19 +16,131 @@ layui.define(['jquery', 'element'], function (exports) {
 		 * open drawer
 		 * */
 		this.open = function (option) {
-			var obj = new mSlider({
-				target: option.target,
-				dom: option.dom,
-				direction: option.direction,
-				distance: option.distance,
-				time: option.time ? option.time : 0,
-				maskClose: option.maskClose,
-				callback: option.success
-			});
-			obj.open();
-			return obj;
+			// 默认使用 legacy 模式
+			if (option.legacy === undefined) {
+				option.legacy = true;
+				console.log("PearModule[drawer]: Legacy API Mode");
+			};
+			if (option.legacy) {
+				var obj = new mSlider({
+					target: option.target,
+					dom: option.dom,
+					direction: option.direction,
+					distance: option.distance,
+					time: option.time ? option.time : 0,
+					maskClose: option.maskClose,
+					callback: option.success
+				});
+				obj.open();
+				return obj;
+			} else {
+				return layerDrawer(option);
+			}
+		}
+		this.title = layer.title;
+		this.style = layer.style;
+		this.close = layer.close;
+		this.closeAll = layer.closeAll;
+	}
+
+	/**
+	 * 
+	 * 封装 layer.open
+	 * type,anim,move 不可用,其它参数和 layer.open 一致
+	 * @param {LayerOption} option 
+	 * @returns 原生 layer 的 index
+	 */
+	function layerDrawer(option) {
+
+		var opt = normalizeOption(option)
+		var layerIndex = layer.open(opt);
+
+		return layerIndex;
+	}
+
+	/**
+		* 规格化 layer.open 选项
+		* @param {*} option layer.open 的选项
+		* @returns 规格化后的 layer.open 选项 
+		*/
+	function normalizeOption(option) {
+		// 兼容旧版 API, target 选项无法兼容
+		if (option.direction && !option.offset) {
+			if (option.direction === "right") {
+				option.offset = "r";
+			} else if (option.direction === "left") {
+				option.offset = "l";
+			} else if (option.direction === "top") {
+				option.offset = "t";
+			} else if (option.direction === "bottom") {
+				option.offset = "b";
+			}
+		}
+		if (option.distance && !option.area) {
+			option.area = option.distance;
+		}
+		if (option.dom && !option.content) {
+			option.content = $("#test").html();
+			console.log(option.dom, option.content);
+		}
+		if (option.maskClose && !option.shadeClose) {
+			option.shadeClose = (option.maskClose + "").toString() !== "false" ? true : false; 
 		}
 
+		option.type = 1
+		option.anim = -1; // 关闭原生入场动画
+		option.move = false;
+		option.fixed = true;
+		if (option.offset === undefined) option.offset = "r";
+		option.area = calcDrawerArea(option.offset, option.area);
+		if (option.title === undefined) option.title = false;
+		if (option.closeBtn === undefined) option.closeBtn = false;
+		if (option.shadeClose === undefined) option.shadeClose = true;
+		if (option.skin === undefined) option.skin = getDrawerAnimationClass(option.offset);
+		if (option.resize === undefined) option.resize = false;
+
+		return option;
+	}
+
+	/**
+	 * 计算抽屉宽高
+	 * @param {string} offset 抽屉方向 l = 左, r = 右, t = 上, b = 下 
+	 * @param {string[] | string} drawerArea 抽屉大小,字符串数组格式：[width, height]，字符串格式：百分比或单位 px。
+	 * @returns 抽屉宽高数组
+	 */
+	function calcDrawerArea(offset, drawerArea = "30%") {
+		if (drawerArea instanceof Array) {
+			return drawerArea;
+		}
+		if (drawerArea === "auto") {
+			drawerArea = "30%";
+		}
+		if (offset === "l" || offset === "r") {
+			return [drawerArea, "100%"];
+		} else if (offset === "t" || offset === "b") {
+			return ["100%", drawerArea];
+		}
+		return [drawerArea, "100%"];
+	}
+
+	/**
+	 * 获取抽屉入场动画类
+	 * @param {string} offset 抽屉方向
+	 * @returns 抽屉入场动画类
+	 */
+	function getDrawerAnimationClass(offset) {
+		const prefix = "pear-drawer-anim layui-anim layer-anim";
+		let suffix = "rl";
+		if (offset === "l") {
+			suffix = "lr";
+		} else if (offset === "r") {
+			suffix = "rl";
+		} else if (offset === "t") {
+			suffix = "tb";
+		} else if (offset === "b") {
+			suffix = "bt";
+		}
+		return `${prefix}-${suffix}`;
 	}
 	exports(MOD_NAME, drawer);
 });

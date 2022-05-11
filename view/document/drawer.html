@@ -190,13 +190,107 @@
 									      dom: ".layer-right",
 									      distance: "30%",
 									      });
-									  })
+									})
+							</pre>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 新版 API -->
+			<div class="layui-col-md12">
+				<div class="layui-card">
+					<div class="layui-card-header">基于 layer 的抽屉扩展</div>
+					<div class="layui-card-body">
+						<p>兼容原版 drawer 除 target 外的参数,要使用 layer 扩展,设置 legacy 选项为 false 即可</p>
+						<button id="layerDrawerLeft" class="pear-btn pear-btn-success">left</button>
+						<button id="layerDrawerRight" class="pear-btn pear-btn-success">right</button>
+						<button id="layerDrawerTop" class="pear-btn pear-btn-success">top</button>
+						<button id="layerDrawerBottom" class="pear-btn pear-btn-success">bottom</button>
+						<button id="layerDrawer" class="pear-btn pear-btn-success">更过参数示例</button>
+						<button id="layerDrawerParent" class="pear-btn pear-btn-success">父窗口打开</button>
+					</div>
+				</div>
+			</div>
+			<div class="layui-col-md12">
+				<div class="layui-collapse">
+					<div class="layui-colla-item">
+						<h2 class="layui-colla-title">显示代码</h2>
+						<div class="layui-colla-content">
+							<pre class="layui-code" lay-encode="true">
+											$("#layerDrawerLeft").click(function(){
+											  drawer.open({
+											    legacy: false,
+											    offset: 'l',
+											    area: "50%",
+											    content: "left内容",
+											  })
+											})
+											$("#layerDrawerRight").click(function () {
+											  drawer.open({
+											    legacy: false,
+											    offset: 'r',
+											    area: "30%",
+											    content: "right内容",
+											  })
+											})
+											$("#layerDrawerTop").click(function () {
+											  drawer.open({
+											    legacy: false,
+										      offset: "t",
+											    content: "top内容",
+											  })
+											})
+											$("#layerDrawerBottom").click(function () {
+											  drawer.open({
+											    legacy: false,
+											    offset: "b",
+											    content: "bottom内容",
+											  })
+											})
+											
+											$("#layerDrawer").click(function () {
+											  var index = drawer.open({
+											    legacy: false,
+											    title: ['标题', 'font-size:16px;color:#2d8cf0'],
+											    maxmin: true,
+											    offset: "r",
+											    area: "30%",
+											    content: "抽屉内容",
+											    btn:"关闭",
+											    yes:function(index,layero){
+											      drawer.close(index);
+											      console.log(index,layero);
+											    },
+											    btnAlign: "l",
+											    closeBtn: 1,
+											  })
+											})
+
+											$("#layerDrawerParent").click(function () {
+											    
+											  var index = parent.layui.drawer.open({
+												    legacy: false,
+												    title: ['标题', 'font-size:16px;color:#2d8cf0'],
+												    maxmin: true,
+												    offset: "r",
+												    area: "30%",
+												    content: "抽屉内容",
+												    btn:"关闭",
+												    yes:function(index,layero){
+												      drawer.close(index);
+												      console.log(index,layero);
+												    },
+												    btnAlign: "l",
+												    closeBtn: 1,
+												})
+											})
 							</pre>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+
 		<div class="wrap">
 			<div class="layer-left">
 				<br />
@@ -229,6 +323,7 @@
 		</div>
 
 	</body>
+
 	<script src="../../component/layui/layui.js"></script>
 	<script src="../../component/pear/pear.js"></script>
 	<script>
@@ -239,6 +334,73 @@
 			var layer = layui.layer;
 
 			layui.code();
+
+			$("#layerDrawerLeft").click(function(){
+				drawer.open({
+					legacy: false,
+					offset: 'l',
+					area: "50%",
+					content: "left内容",
+				})
+			})
+			$("#layerDrawerRight").click(function () {
+				drawer.open({
+					legacy: false,
+					offset: 'r',
+					area: "30%",
+					content: "right内容",
+				})
+			})
+			$("#layerDrawerTop").click(function () {
+				drawer.open({
+					legacy: false,
+					offset: "t",
+					content: "top内容",
+				})
+			})
+			$("#layerDrawerBottom").click(function () {
+				drawer.open({
+					legacy: false,
+					offset: "b",
+					content: "bottom内容",
+				})
+			})
+
+			$("#layerDrawer").click(function () {
+				var index = drawer.open({
+					legacy: false,
+					title: ['标题', 'font-size:16px;color:#2d8cf0'],
+					maxmin: true,
+					offset: "r",
+					area: "30%",
+					content: "抽屉内容",
+					btn:"关闭",
+					yes:function(index,layero){
+						drawer.close(index);
+						console.log(index,layero);
+					},
+					btnAlign: "l",
+					closeBtn: 1,
+				})
+			})
+
+			$("#layerDrawerParent").click(function () {
+				var index = parent.layui.drawer.open({
+					legacy: false,
+					title: ['标题', 'font-size:16px;color:#2d8cf0'],
+					maxmin: true,
+					offset: "r",
+					area: "30%",
+					content: "抽屉内容",
+					btn: "关闭",
+					yes: function (index, layero) {
+						parent.layui.drawer.close(index);
+						console.log(index, layero);
+					},
+					btnAlign: "l",
+					closeBtn: 1,
+				})
+			})
 
 			$(".drawer-right").click(function() {
 				drawer.open({
