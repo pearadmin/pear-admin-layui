@@ -128,16 +128,24 @@
 
 /** 隐 藏 后 子 级 悬 浮 菜 单 */
 .pear-nav-tree .layui-nav-hover {
-	border-radius: 4px;
-	overflow: hidden;
-	background-color: #28333E;
-	display: block;
 	position: fixed;
 	min-width: 130px;
-	margin-left: 62px;
-	padding-top: 4px !important;
-	padding-bottom: 4px !important;
-	box-shadow: 0px 0px 3px lightgray;
+	padding: 4px;
+	display: block !important;
+	background: transparent !important;
+}
+.pear-nav-tree .layui-nav-hover:before {
+	content: '';
+	position: absolute;
+	right: 4px;
+	left: 4px;
+	bottom: 0;
+	top: 0;
+  border-radius: 4px;
+  overflow: hidden;
+  background-color: #28333E;
+  display: block;
+  box-shadow: 0px 0px 3px lightgray;
 }
 .pear-nav-tree .layui-nav-hover a span {
 	display: inline-block !important;
@@ -168,6 +176,7 @@
 }
 
 .light-theme .pear-nav-tree,
+.light-theme .pear-nav-tree .layui-nav-hover:before,
 .light-theme .pear-nav-tree .layui-nav-child{
 	background-color: white!important;
 }
