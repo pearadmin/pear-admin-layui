@@ -119,7 +119,7 @@ layui.define(['jquery', 'element'], function (exports) {
 					g.translate = "-100%,0,0"
 			}
 			g.wrap.style.display = "none";
-			g.wrap.style.position = g.target === "body" ? "fixed" : "absolute";
+			g.wrap.style.position = (g.target === "body" ? "fixed" : "absolute");
 			g.wrap.style.top = "0";
 			g.wrap.style.left = "0";
 			g.wrap.style.width = "100%";
@@ -131,7 +131,7 @@ layui.define(['jquery', 'element'], function (exports) {
 			g.inner.style.left = g.left;
 			g.inner.style.right = g.right;
 			g.inner.style.width = g.width;
-			g.inner.style.height = g.height;
+			g.inner.style.height = (g.target === "body" ? g.height : "100%");
 			g.inner.style.backgroundColor = "#fff";
 			g.inner.style.transform = "translate3d(" + g.translate + ")";
 			g.inner.style.webkitTransition = "all .2s ease-out";
