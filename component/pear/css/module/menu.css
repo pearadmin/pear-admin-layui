@@ -247,10 +247,21 @@
 	width: 12px;
 	text-align: center;
 }
+.pear-nav-tree.arrow .layui-nav-child.layui-nav-hover>dd>a>.layui-nav-more {
+	display: inline-block !important;
+	transform: rotate(270deg);
+	-ms-transform: rotate(270deg);
+	-moz-transform: rotate(270deg);
+	-webkit-transform: rotate(270deg);
+	-o-transform: rotate(270deg);
+	width: 12px;
+	text-align: center;
+	background-color: transparent !important;
+}
 
+.pear-nav-tree.arrow .layui-nav-child.layui-nav-hover>a>.layui-nav-more:before,
 .pear-nav-tree.arrow .layui-nav-itemed>a>.layui-nav-more:before {
 	content: '\e61a';
-	background-color: transparent;
 	display: inline-block;
 	vertical-align: middle;
 }
