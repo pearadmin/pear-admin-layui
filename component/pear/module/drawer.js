@@ -1,4 +1,4 @@
-layui.define(['jquery', 'element'], function(exports) {
+layui.define(['jquery', 'element'], function (exports) {
 	"use strict";
 
 	/**
@@ -8,14 +8,14 @@ layui.define(['jquery', 'element'], function(exports) {
 		$ = layui.jquery,
 		element = layui.element;
 
-	var drawer = new function() {
+	var drawer = new function () {
 
 		/**
 		 * open drawer
 		 * */
-		this.open = function(option) {
+		this.open = function (option) {
 			var obj = new mSlider({
-        target:option.target,
+				target: option.target,
 				dom: option.dom,
 				direction: option.direction,
 				distance: option.distance,
@@ -34,10 +34,10 @@ layui.define(['jquery', 'element'], function(exports) {
 /**
  * 源码
  * */
-(function(b, c) {
+(function (b, c) {
 	function a(d) {
 		this.opts = {
-      "target": d.target || "body",
+			"target": d.target || "body",
 			"direction": d.direction || "left",
 			"distance": d.distance || "60%",
 			"dom": this.Q(d.dom),
@@ -46,7 +46,7 @@ layui.define(['jquery', 'element'], function(exports) {
 			"callback": d.callback || ""
 		};
 		this.rnd = this.rnd();
-    this.target = this.opts.target;
+		this.target = this.opts.target;
 		this.dom = this.opts.dom[0];
 		this.wrap = "";
 		this.inner = "";
@@ -54,23 +54,23 @@ layui.define(['jquery', 'element'], function(exports) {
 		this.init()
 	}
 	a.prototype = {
-		Q: function(d) {
+		Q: function (d) {
 			return document.querySelectorAll(d)
 		},
-		isMobile: function() {
+		isMobile: function () {
 			return navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i) ? true : false
 		},
-		addEvent: function(f, e, d) {
+		addEvent: function (f, e, d) {
 			if (f.attachEvent) {
 				f.attachEvent("on" + e, d)
 			} else {
 				f.addEventListener(e, d, false)
 			}
 		},
-		rnd: function() {
+		rnd: function () {
 			return Math.random().toString(36).substr(2, 6)
 		},
-		init: function() {
+		init: function () {
 			var g = this;
 			if (!g.dom) {
 				console.log("未正确绑定弹窗容器");
@@ -119,7 +119,7 @@ layui.define(['jquery', 'element'], function(exports) {
 					g.translate = "-100%,0,0"
 			}
 			g.wrap.style.display = "none";
-      g.wrap.style.position = g.target === "body" ? "fixed" : "absolute";
+			g.wrap.style.position = g.target === "body" ? "fixed" : "absolute";
 			g.wrap.style.top = "0";
 			g.wrap.style.left = "0";
 			g.wrap.style.width = "100%";
@@ -145,39 +145,39 @@ layui.define(['jquery', 'element'], function(exports) {
 			g.mask.style.webkitBackfaceVisibility = "hidden";
 			g.events()
 		},
-		open: function() {
+		open: function () {
 			var d = this;
 			d.wrap.style.display = "block";
 
-			setTimeout(function() {
+			setTimeout(function () {
 				d.inner.style.transform = "translate3d(0,0,0)";
 				d.inner.style.webkitTransform = "translate3d(0,0,0)";
 				d.mask.style.opacity = 0.1
 			}, 30);
 			if (d.opts.time) {
-				d.timer = setTimeout(function() {
+				d.timer = setTimeout(function () {
 					d.close()
 				}, d.opts.time)
 			}
 		},
-		close: function() {
+		close: function () {
 			var d = this;
 			d.timer && clearTimeout(d.timer);
 			d.inner.style.webkitTransform = "translate3d(" + d.translate + ")";
 			d.inner.style.transform = "translate3d(" + d.translate + ")";
 			d.mask.style.opacity = 0;
-			setTimeout(function() {
+			setTimeout(function () {
 				d.wrap.style.display = "none";
 				d.timer = null;
 				d.opts.callback && d.opts.callback()
 			}, 300)
 		},
-		events: function() {
+		events: function () {
 			var d = this;
-			d.addEvent(d.mask, "touchmove", function(f) {
+			d.addEvent(d.mask, "touchmove", function (f) {
 				f.preventDefault()
 			});
-			d.addEvent(d.mask, (d.isMobile() ? "touchend" : "click"), function(f) {
+			d.addEvent(d.mask, (d.isMobile() ? "touchend" : "click"), function (f) {
 				if (d.opts.maskClose) {
 					d.close()
 				}
