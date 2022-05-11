@@ -69,6 +69,12 @@
 .layui-table-view .layui-table[lay-skin=line] {
 	border: none !important;
 }
+
+.layui-table-init .layui-icon{
+    font-size: 40px !important;
+    margin: -15px 0 0 -15px;
+}
+
 .layui-table-body::-webkit-scrollbar {
 	width: 0px;
 	height: 0px;
