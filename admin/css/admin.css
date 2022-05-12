@@ -153,6 +153,9 @@ body,
 }
 
 .pear-admin .layui-footer {
+	position: absolute;
+  display: flex;
+  justify-content: space-between;
 	left: 230px;
 	background: #fff;
 	border-top: 1px solid #F2F2F2;

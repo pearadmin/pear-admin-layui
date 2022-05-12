@@ -268,7 +268,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 				var footerDOM = $(".pear-admin .layui-footer");
 				if (footer === true || footer === "true") {
 					footerDOM.removeClass("close");
-					bodyDOM.css("bottom","60px");
+          bodyDOM.css("bottom", footerDOM.outerHeight());
 				} else {
 					footerDOM.addClass("close");
 					bodyDOM.css("bottom", "");
