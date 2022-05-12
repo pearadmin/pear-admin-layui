@@ -37,7 +37,13 @@
 
 <p style="padding:10px;"  width="90%">
 
-Pear Admin 是 一 款 开 箱 即 用 的 前 端 开 发 模 板
+Pear Admin 是一款开箱即用的前端开发模板，扩展Layui原生UI样式，整合第三方开源组件，提供便捷快速的开发方式，延续LayuiAdmin
+
+的设计风格，持续完善的样式与组件的维护，基于异步Ajax的菜单构建，相对完善的多标签页，单标签页的共存，为使用者提
+
+供相对完善的开发方案，只为成为更好的轮子，项目不定时更新，建议 Star watch 一份
+
+若你需要更多版本，请前往 [Pear Admin](https://gitee.com/pear-admin)
 
 </p>
 
