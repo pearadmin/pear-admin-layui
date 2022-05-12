@@ -67,12 +67,17 @@ layui.define(['jquery', 'element'], function(exports) {
 		$("body .layui-tab[lay-filter='" + option.elem + "'] .layui-tab-title").on("contextmenu", "li", function(e) {
 			// 获取当前元素位置
 			var top = e.clientY;
-			var left = e.clientX;
+			var left = e.clientX; 
+			var menuWidth = 100;
 			var currentId = $(this).attr("lay-id");
 			var menu = "<ul><li class='item' id='" + option.elem + "closeThis'>关闭当前</li><li class='item' id='" + option.elem +
 				"closeOther'>关闭其他</li><li class='item' id='" + option.elem + "closeAll'>关闭所有</li></ul>";
 
 			contextTabDOM = $(this);
+			var isOutsideBounds = (left + menuWidth) > $(window).width();
+			if(isOutsideBounds){
+				left = $(window).width() - menuWidth;
+			}
 			// 初始化
 			layer.open({
 				type: 1,
@@ -80,7 +85,7 @@ layui.define(['jquery', 'element'], function(exports) {
 				shade: false,
 				skin: 'pear-tab-menu',
 				closeBtn: false,
-				area: ['100px', '108px'],
+				area: [menuWidth + 'px', '108px'],
 				fixed: true,
 				anim: false,
 				isOutAnim: false,
