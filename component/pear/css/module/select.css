@@ -820,8 +820,3 @@ div[xm-select-search-type="1"] .xm-select .xm-select-input {
 .icon-expand:before {
 	content: "\e641";
 }
-
-.xm-select-parent .xm-form-select dl{
-   position: relative;
-   top: 5px!important;
-}
