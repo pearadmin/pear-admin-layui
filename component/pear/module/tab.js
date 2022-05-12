@@ -11,6 +11,7 @@ layui.define(['jquery', 'element'], function(exports) {
 
 	var tabData = new Array();
 	var tabDataCurrent = 0;
+	var contextTabDOM;
 
 	pearTab.prototype.render = function(opt) {
 
@@ -64,16 +65,14 @@ layui.define(['jquery', 'element'], function(exports) {
 		option.success(sessionStorage.getItem(option.elem + "-pear-tab-data-current"));
 
 		$("body .layui-tab[lay-filter='" + option.elem + "'] .layui-tab-title").on("contextmenu", "li", function(e) {
-
 			// 获取当前元素位置
 			var top = e.clientY;
 			var left = e.clientX;
-
 			var currentId = $(this).attr("lay-id");
-
 			var menu = "<ul><li class='item' id='" + option.elem + "closeThis'>关闭当前</li><li class='item' id='" + option.elem +
 				"closeOther'>关闭其他</li><li class='item' id='" + option.elem + "closeAll'>关闭所有</li></ul>";
 
+			contextTabDOM = $(this);
 			// 初始化
 			layer.open({
 				type: 1,
@@ -552,7 +551,7 @@ layui.define(['jquery', 'element'], function(exports) {
 	function menuEvent(option, index) {
 
 		$("#" + option.elem + "closeThis").click(function() {
-			var currentTab = $(".layui-tab[lay-filter='" + option.elem + "'] .layui-tab-title .layui-this");
+			var currentTab = contextTabDOM;
 
 			if (currentTab.find("span").is(".able-close")) {
 				var currentId = currentTab.attr("lay-id");
@@ -567,7 +566,7 @@ layui.define(['jquery', 'element'], function(exports) {
 		})
 
 		$("#" + option.elem + "closeOther").click(function() {
-			var currentId = $(".layui-tab[lay-filter='" + option.elem + "'] .layui-tab-title .layui-this").attr("lay-id");
+			var currentId = contextTabDOM.attr("lay-id");
 			var tabtitle = $(".layui-tab[lay-filter='" + option.elem + "'] .layui-tab-title li");
 			$.each(tabtitle, function(i) {
 				if ($(this).attr("lay-id") != currentId) {
@@ -580,7 +579,7 @@ layui.define(['jquery', 'element'], function(exports) {
 		})
 
 		$("#" + option.elem + "closeAll").click(function() {
-			var currentId = $(".layui-tab[lay-filter='" + option.elem + "'] .layui-tab-title .layui-this").attr("lay-id");
+			var currentId = contextTabDOM.attr("lay-id");
 			var tabtitle = $(".layui-tab[lay-filter='" + option.elem + "'] .layui-tab-title li");
 			$.each(tabtitle, function(i) {
 				if ($(this).find("span").is(".able-close")) {
