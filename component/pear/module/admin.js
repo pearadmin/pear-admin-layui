@@ -786,7 +786,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 			if (!sideMenu.isCollapse && $(window).width() <= 768) {
 				collapse();
 			}
-		},500));
+		},50));
 
 		function debounce(fn,await) {
 			var timerID = null
