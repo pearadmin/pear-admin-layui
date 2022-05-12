@@ -72,6 +72,8 @@ other:
   keepLoad: "1200"
   ## 布局顶部主题
   autoHead: false
+  ## 页脚
+  footer: false
 ## 头部配置
 header:
   ## 站内消息，通过 false 设置关闭

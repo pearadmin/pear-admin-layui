@@ -152,6 +152,19 @@ body,
 	left: 0px;
 }
 
+.pear-admin .layui-footer {
+	left: 230px;
+	background: #fff;
+	border-top: 1px solid #F2F2F2;
+	box-shadow: none;
+	-webkit-transition: left .3s;
+	transition: left .3s;
+	overflow: hidden;
+}
+
+.pear-admin .layui-footer.close {
+	display: none;
+}
 /** 收缩布局 */
 .pear-mini .layui-side .layui-logo .title {
 	display: none;
@@ -176,6 +189,10 @@ body,
 
 .pear-mini .layui-side .layui-logo {
 	width: 60px;
+}
+
+.pear-mini .layui-footer {
+	left: 60px;
 }
 
 .pear-mini .layui-nav-tree .layui-nav-item span {
@@ -272,6 +289,10 @@ body,
 	}
 
 	.pear-mini .layui-body {
+		left: 0px;
+	}
+
+	.pear-mini .layui-footer {
 		left: 0px;
 	}
 

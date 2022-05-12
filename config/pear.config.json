@@ -31,7 +31,8 @@
 		"allowCustom": true,
 		"banner": false
 	},
-	"colors": [{
+	"colors": [
+		{
 			"id": "1",
 			"color": "#2d8cf0",
 			"second": "#ecf5ff"
@@ -59,7 +60,8 @@
 	],
 	"other": {
 		"keepLoad": "1200",
-		"autoHead": false
+		"autoHead": false,
+		"footer": false
 	},
 	"header": {
 		"message": "admin/data/message.json"

@@ -241,15 +241,35 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 					}
 				}
 
+				var footer = localStorage.getItem("footer");
+				if( footer === null) {
+					footer = option.other.footer;
+				}else{
+					if (option.theme.allowCustom === false) {
+						footer = option.other.footer;
+					}
+				}
+
 				localStorage.setItem("muilt-tab", muiltTab);
 				localStorage.setItem("theme-banner", banner);
 				localStorage.setItem("theme-menu", menu);
 				localStorage.setItem("theme-header", header);
 				localStorage.setItem("auto-head", autoHead);
 				localStorage.setItem("control", control);
+				localStorage.setItem("footer", footer);
 				this.menuSkin(menu);
 				this.headerSkin(header);
 				this.bannerSkin(banner);
+				this.footer(footer);
+			}
+
+			this.footer = function(footer){
+				var footerDOM = $(".pear-admin .layui-footer");
+				if (footer === true || footer === "true") {
+					footerDOM.removeClass("close");
+				} else {
+					footerDOM.addClass("close");
+				}
 			}
 
 			this.bannerSkin = function(theme) {
@@ -526,6 +546,9 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 			moreItem +=
 				'<div class="layui-form-item"><div class="layui-input-inline"><input type="checkbox" name="auto-head" lay-filter="auto-head" lay-skin="switch" lay-text="开|关"></div><span class="set-text">通色</span></div>';
 
+			moreItem +=
+				'<div class="layui-form-item"><div class="layui-input-inline"><input type="checkbox" name="footer" lay-filter="footer" lay-skin="switch" lay-text="开|关"></div><span class="set-text">页脚</span></div>';
+
 			var moreHtml = '<br><div class="pearone-color">\n' +
 				'<div class="color-title">更多设置</div>\n' +
 				'<div class="color-content">\n' +
@@ -597,6 +620,11 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 						pearAdmin.bannerSkin(this.checked);
 					})
 
+					form.on('switch(footer)', function (data) {
+						localStorage.setItem("footer", this.checked);
+						pearAdmin.footer(this.checked);
+					})
+
 					if (localStorage.getItem('theme-banner') === 'true') {
 						$('input[name="banner"]').attr('checked', 'checked')
 					} else {
@@ -619,6 +647,12 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 						$('input[name="auto-head"]').attr('checked', 'checked')
 					} else {
 						$('input[name="auto-head"]').removeAttr('checked')
+					}
+
+					if (localStorage.getItem('footer') === 'true') {
+						$('input[name="footer"]').attr('checked', 'checked')
+					} else {
+						$('input[name="footer"]').removeAttr('checked')
 					}
 
 					form.render('checkbox');
