@@ -264,11 +264,14 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 			}
 
 			this.footer = function(footer){
+				var bodyDOM = $(".pear-admin .layui-body");
 				var footerDOM = $(".pear-admin .layui-footer");
 				if (footer === true || footer === "true") {
 					footerDOM.removeClass("close");
+					bodyDOM.css("bottom","60px");
 				} else {
 					footerDOM.addClass("close");
+					bodyDOM.css("bottom", "");
 				}
 			}
 
