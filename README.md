@@ -117,6 +117,12 @@ GitHub 开源地址 ：https://github.com/PearAdmin/pear-admin-layui
 
 - 👉 layui：[https://gitee.com/sentsin/layui](https://gitee.com/sentsin/layui)
 
+### 联系我们
+
+- 申请加入：[contact@pearadmin.com](mailto:contact@pearadmin.com)
+- 意见反馈：[contact@pearadmin.com](mailto:contact@pearadmin.com)
+- 社区交流：[➀ 682110771](https://qm.qq.com/cgi-bin/qm/qr?k=wguN0SYYFVTX9K-5Muf36E_J77bCzdDD&authKey=Ye5voDJGOphYUvypWJHOEyHoYBcgzk1l7djAS4fWcmls1jybLnYjwLrzwsS6Jdo3&group_code=682110771), [➁ 864581125](https://jq.qq.com/?_wv=1027&k=3K8GjF2G)
+
 ### 开源共建
 
 <p style="padding:10px;"  width="90%">
@@ -130,10 +136,3 @@ GitHub 开源地址 ：https://github.com/PearAdmin/pear-admin-layui
 感谢每一位贡献代码的朋友。
 
 如果对您有帮助，您可以点右上角 💘Star💘支持
-
-### 联系我们
-
-- 申请加入：[contact@pearadmin.com](mailto:contact@pearadmin.com)
-- 意见反馈：[contact@pearadmin.com](mailto:contact@pearadmin.com)
-- 社区交流：[➀ 682110771](https://qm.qq.com/cgi-bin/qm/qr?k=wguN0SYYFVTX9K-5Muf36E_J77bCzdDD&authKey=Ye5voDJGOphYUvypWJHOEyHoYBcgzk1l7djAS4fWcmls1jybLnYjwLrzwsS6Jdo3&group_code=682110771), [➁ 864581125](https://jq.qq.com/?_wv=1027&k=3K8GjF2G)
-
