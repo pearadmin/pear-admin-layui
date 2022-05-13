@@ -58,12 +58,11 @@ layui.define(['jquery', 'element', 'layer'], function (exports) {
 	}
 
 	/**
-		* 规格化 layer.open 选项
-		* @param {*} option layer.open 的选项
+		* 规格化 layer.open 选项，兼容原版 Drawer 所有选项
+		* @param {LayerOption} option layer.open 的选项
 		* @returns 规格化后的 layer.open 选项 
 		*/
 	function normalizeOption(option) {
-		// 兼容旧版 API, target 选项无法兼容
 		if (option.direction && !option.offset) {
 			if (option.direction === "right") {
 				option.offset = "r";
@@ -83,31 +82,36 @@ layui.define(['jquery', 'element', 'layer'], function (exports) {
 		if (option.dom && !option.content) {
 			option.content = $(option.dom);
 		}
-		if (option.maskClose && !option.shadeClose) {
+		if (option.maskClose && option.shadeClose === undefined) {
 			option.shadeClose = (option.maskClose + "").toString() !== "false" ? true : false;
 		}
-		if (option.offset === undefined) {
-			option.offset = "r"
-		};
 
 		option.type = 1
 		option.anim = -1;
 		option.move = false;
 		option.fixed = true;
+		if (option.offset === undefined) option.offset = "r";
 		option.area = calcDrawerArea(option.offset, option.area);
 		if (option.title === undefined) option.title = false;
 		if (option.closeBtn === undefined) option.closeBtn = false;
+		if (option.shade === undefined) option.shade = 0.3;
 		if (option.shadeClose === undefined) option.shadeClose = true;
 		if (option.skin === undefined) option.skin = getDrawerAnimationClass(option.offset);
 		if (option.resize === undefined) option.resize = false;
+		if (option.success === undefined) option.success = function () { }; // 处理遮罩需要
 		if (option.target) {
 			var targetDOM = $(option.target);
 			var contentDOM = $(option.content);
 			contentDOM.appendTo(targetDOM);
 			option.skin = getDrawerAnimationClass(option.offset, true);
 			option.offset = calcOffset(option.offset, option.area, targetDOM);
-			// TODO 指定 target 时动画优化
-
+			if (option.shade) {
+				option.success = beforeAdvice(option.success, function (layero) {
+					var shadeDOM = $(".layui-layer-shade");
+					shadeDOM.css("position", "absolute");
+					shadeDOM.appendTo(layero.parent());
+				})
+			}
 		}
 
 		return option;
@@ -135,7 +139,7 @@ layui.define(['jquery', 'element', 'layer'], function (exports) {
 	}
 
 	/**
-	 * 获取抽屉入场动画类
+	 * 获取抽屉动画类
 	 * @param {string} offset 抽屉方向
 	 * @param {boolean} 是否 absolute 布局
 	 * @returns 抽屉入场动画类
@@ -161,7 +165,7 @@ layui.define(['jquery', 'element', 'layer'], function (exports) {
 	}
 
 	/**
-	 * 指定 target 时重新计算 offset
+	 * 指定挂载容器重新计算 offset
 	 * @param {*} offset 位置
 	 * @param {*} area  范围大小
 	 * @param {*} targetEl 挂载节点
@@ -180,7 +184,7 @@ layui.define(['jquery', 'element', 'layer'], function (exports) {
 			} else {
 				left = targetEl.innerWidth() - area;
 			}
-			offset = ["auto", left];
+			offset = [0, left];
 		} else if (offset === "b") {
 			var top;
 			if (area instanceof Array) {
@@ -191,10 +195,18 @@ layui.define(['jquery', 'element', 'layer'], function (exports) {
 			} else {
 				top = targetEl.innerHeight() - area;
 			}
-			offset = [top, "auto"];
+			offset = [top, 0];
 		}
 
 		return offset;
+	}
+
+	function beforeAdvice(func, before) {
+		function ret() {
+			before.apply(this, arguments)
+			func.apply(this, arguments);
+		}
+		return ret;
 	}
 
 	exports(MOD_NAME, drawer);
