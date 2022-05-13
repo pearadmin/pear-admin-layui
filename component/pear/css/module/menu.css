@@ -51,6 +51,14 @@
 	margin-right: 12px;
 }
 
+.pear-nav-tree .layui-nav-item dd a i {
+	margin-left: 26px;
+}
+
+.pear-nav-tree .layui-nav-item dd dl dd a i{
+	margin-left: 38px;
+}
+
 .pear-nav-tree .layui-nav-item a span {
 	letter-spacing: 2px;
 	font-size: 13.5px;
@@ -153,11 +161,13 @@
 .pear-nav-tree .layui-nav-hover a i {
 	display: none;
 }
+/*
 .pear-nav-tree .layui-nav-child dd a span {
 	margin-left: 26px !important;
-}
+}*/
 .pear-nav-tree .layui-nav-child dd a i {
-	display: none;
+	/*display: none;*/
+	visibility: visible;
 }
 .pear-nav-tree .layui-nav-hover dd a span {
 	margin-left: 0px !important;
