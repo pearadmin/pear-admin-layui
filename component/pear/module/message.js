@@ -62,6 +62,11 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 			callback(id, title, context, form);
 		})
 	}
+	
+	/** 刷 新 消 息 */
+	message.prototype.reload = function() {
+		
+	}
 
 	/** 同 步 请 求 获 取 数 据 */
 	function getData(url) {

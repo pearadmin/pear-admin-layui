@@ -71,7 +71,6 @@
 			<!-- 页脚 -->
 			<div class="layui-footer layui-text">
 				<span class="left">
-					Pear Admin Layui &nbsp
 					<span>
 						官网：<a href="http://www.pearadmin.com/team.html" target="_blank">www.pearadmin.com</a>&nbsp;&nbsp;&nbsp;
 						仓库：<a href="https://gitee.com/pear-admin/Pear-Admin-Layui" target="_blank">gitee.com/pear-admin</a>
@@ -116,10 +115,8 @@
 					return true;
 				})
 				
-				// 初始化消息回调
-				admin.message();
-				
-				// admin.message(function(id, title, context, form) {});
+				// 自定义消息点击回调
+				admin.message(function(id, title, context, form) {});
 			})
 		</script>		
 	</body>

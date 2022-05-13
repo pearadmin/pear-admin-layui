@@ -154,8 +154,8 @@ body,
 
 .pear-admin .layui-footer {
 	position: absolute;
-  display: flex;
-  justify-content: space-between;
+    display: flex;
+    justify-content: space-between;
 	left: 230px;
 	background: #fff;
 	border-top: 1px solid #F2F2F2;
@@ -168,6 +168,7 @@ body,
 .pear-admin .layui-footer.close {
 	display: none;
 }
+
 /** 收缩布局 */
 .pear-mini .layui-side .layui-logo .title {
 	display: none;
