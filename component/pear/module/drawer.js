@@ -16,10 +16,9 @@ layui.define(['jquery', 'element', 'layer'], function (exports) {
 		 * open drawer
 		 * */
 		this.open = function (option) {
-			// 默认使用 legacy 模式
+			//	默认使用 legacy 模式
 			if (option.legacy === undefined) {
 				option.legacy = true;
-				console.log("PearModule[drawer]: Legacy API Mode");
 			};
 			if (option.legacy) {
 				var obj = new mSlider({
@@ -46,7 +45,7 @@ layui.define(['jquery', 'element', 'layer'], function (exports) {
 	/**
 	 * 
 	 * 封装 layer.open
-	 * type,anim,move 不可用,其它参数和 layer.open 一致
+	 * type,anim,move,fixed不可用,其它参数和 layer.open 一致
 	 * @param {LayerOption} option 
 	 * @returns 原生 layer 的 index
 	 */
@@ -74,30 +73,42 @@ layui.define(['jquery', 'element', 'layer'], function (exports) {
 				option.offset = "t";
 			} else if (option.direction === "bottom") {
 				option.offset = "b";
+			} else {
+				option.offset = "r";
 			}
 		}
 		if (option.distance && !option.area) {
 			option.area = option.distance;
 		}
 		if (option.dom && !option.content) {
-			option.content = $("#test").html();
-			console.log(option.dom, option.content);
+			option.content = $(option.dom);
 		}
 		if (option.maskClose && !option.shadeClose) {
-			option.shadeClose = (option.maskClose + "").toString() !== "false" ? true : false; 
+			option.shadeClose = (option.maskClose + "").toString() !== "false" ? true : false;
 		}
+		if (option.offset === undefined) {
+			option.offset = "r"
+		};
 
 		option.type = 1
-		option.anim = -1; // 关闭原生入场动画
+		option.anim = -1;
 		option.move = false;
 		option.fixed = true;
-		if (option.offset === undefined) option.offset = "r";
 		option.area = calcDrawerArea(option.offset, option.area);
 		if (option.title === undefined) option.title = false;
 		if (option.closeBtn === undefined) option.closeBtn = false;
 		if (option.shadeClose === undefined) option.shadeClose = true;
 		if (option.skin === undefined) option.skin = getDrawerAnimationClass(option.offset);
 		if (option.resize === undefined) option.resize = false;
+		if (option.target) {
+			var targetDOM = $(option.target);
+			var contentDOM = $(option.content);
+			contentDOM.appendTo(targetDOM);
+			option.skin = getDrawerAnimationClass(option.offset, true);
+			option.offset = calcOffset(option.offset, option.area, targetDOM);
+			// TODO 指定 target 时动画优化
+
+		}
 
 		return option;
 	}
@@ -126,11 +137,17 @@ layui.define(['jquery', 'element', 'layer'], function (exports) {
 	/**
 	 * 获取抽屉入场动画类
 	 * @param {string} offset 抽屉方向
+	 * @param {boolean} 是否 absolute 布局
 	 * @returns 抽屉入场动画类
 	 */
-	function getDrawerAnimationClass(offset) {
-		const prefix = "pear-drawer-anim layui-anim layer-anim";
-		let suffix = "rl";
+	function getDrawerAnimationClass(offset, isAbsolute) {
+		var positionAbsoluteClass = "position-absolute ";
+		var prefixClass = "pear-drawer pear-drawer-anim layui-anim layer-anim";
+		var suffix = "rl";
+
+		if (isAbsolute) {
+			prefixClass = positionAbsoluteClass + prefixClass;
+		}
 		if (offset === "l") {
 			suffix = "lr";
 		} else if (offset === "r") {
@@ -140,8 +157,46 @@ layui.define(['jquery', 'element', 'layer'], function (exports) {
 		} else if (offset === "b") {
 			suffix = "bt";
 		}
-		return `${prefix}-${suffix}`;
+		return `${prefixClass}-${suffix}`;
 	}
+
+	/**
+	 * 指定 target 时重新计算 offset
+	 * @param {*} offset 位置
+	 * @param {*} area  范围大小
+	 * @param {*} targetEl 挂载节点
+	 * @returns 
+	 */
+	function calcOffset(offset = "lt", area, targetEl) {
+		if (offset === "l" || offset === "t") {
+			offset = "lt";
+		} else if (offset === "r") {
+			var left;
+			if (area instanceof Array) {
+				area = area[0];
+			}
+			if (area.includes("%")) {
+				left = targetEl.innerWidth() * (1 - area.replace("%", "") / 100);
+			} else {
+				left = targetEl.innerWidth() - area;
+			}
+			offset = ["auto", left];
+		} else if (offset === "b") {
+			var top;
+			if (area instanceof Array) {
+				area = area[1];
+			}
+			if (area.includes("%")) {
+				top = targetEl.innerHeight() * (1 - area.replace("%", "") / 100);
+			} else {
+				top = targetEl.innerHeight() - area;
+			}
+			offset = [top, "auto"];
+		}
+
+		return offset;
+	}
+
 	exports(MOD_NAME, drawer);
 });
 
@@ -190,6 +245,7 @@ layui.define(['jquery', 'element', 'layer'], function (exports) {
 				console.log("未正确绑定弹窗容器");
 				return
 			}
+			g.dom.style.display = "block";  // 兼容 layer 捕获层
 			var d = document.createElement("div");
 			var e = document.createElement("div");
 			var f = document.createElement("div");
