@@ -52,6 +52,25 @@ layui.define(['jquery', 'element', 'layer'], function (exports) {
 	function layerDrawer(option) {
 
 		var opt = normalizeOption(option)
+		if (opt.target) {
+			var targetDOM = $(opt.target);
+			var contentDOM = $(opt.content);
+			contentDOM.appendTo(targetDOM);
+			opt.skin = getDrawerAnimationClass(opt.offset, true);
+			opt.offset = calcOffset(opt.offset, opt.area, targetDOM);
+			// 处理关闭后偶现 DOM 仍显示的问题，layer 的 BUG
+			opt.end = Aspect(opt.end,function(){
+				contentDOM.css("display", "none");
+			})
+			if (opt.shade) {
+				// 遮罩和弹层同级处理
+				opt.success = Aspect(opt.success, function (layero) {
+					var shadeDOM = $(".layui-layer-shade");
+					shadeDOM.css("position", "absolute");
+					shadeDOM.appendTo(layero.parent());
+				})
+			}
+		}
 		var layerIndex = layer.open(opt);
 
 		return layerIndex;
@@ -99,20 +118,7 @@ layui.define(['jquery', 'element', 'layer'], function (exports) {
 		if (option.skin === undefined) option.skin = getDrawerAnimationClass(option.offset);
 		if (option.resize === undefined) option.resize = false;
 		if (option.success === undefined) option.success = function () { }; // 处理遮罩需要
-		if (option.target) {
-			var targetDOM = $(option.target);
-			var contentDOM = $(option.content);
-			contentDOM.appendTo(targetDOM);
-			option.skin = getDrawerAnimationClass(option.offset, true);
-			option.offset = calcOffset(option.offset, option.area, targetDOM);
-			if (option.shade) {
-				option.success = beforeAdvice(option.success, function (layero) {
-					var shadeDOM = $(".layui-layer-shade");
-					shadeDOM.css("position", "absolute");
-					shadeDOM.appendTo(layero.parent());
-				})
-			}
-		}
+		if (option.end === undefined) option.end = function () { };
 
 		return option;
 	}
@@ -169,7 +175,7 @@ layui.define(['jquery', 'element', 'layer'], function (exports) {
 	 * @param {*} offset 位置
 	 * @param {*} area  范围大小
 	 * @param {*} targetEl 挂载节点
-	 * @returns 
+	 * @returns 包含抽屉位置信息的数组，[top,left]
 	 */
 	function calcOffset(offset = "lt", area, targetEl) {
 		if (offset === "l" || offset === "t") {
@@ -201,12 +207,24 @@ layui.define(['jquery', 'element', 'layer'], function (exports) {
 		return offset;
 	}
 
-	function beforeAdvice(func, before) {
-		function ret() {
-			before.apply(this, arguments)
-			func.apply(this, arguments);
+	/**
+	 * 一个简易的切面
+	 * @param {Function} func 被通知的对象，原函数
+	 * @param {Function} before 前置通知
+	 * @param {Function} after 后置通知
+	 * @returns 代理函数
+	 */
+	function Aspect(target, before, after) {
+		function proxyFunc() {
+			if(before && typeof before === "function"){
+				before.apply(this, arguments)
+			}
+			target.apply(this, arguments);
+			if (after && typeof after === "function") {
+				after.apply(this, arguments)
+			}
 		}
-		return ret;
+		return proxyFunc;
 	}
 
 	exports(MOD_NAME, drawer);
