@@ -8,6 +8,13 @@
 }
 
 .pear-notice .layui-tab-title {
+	display: flex;
+	text-align: center;
+	border-right: 1px solid whitesmoke;
+}
+
+.pear-notice .layui-tab-title li {
+	flex: 1;
 	text-align: center;
 	border-right: 1px solid whitesmoke;
 }
