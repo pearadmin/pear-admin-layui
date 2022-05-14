@@ -30,7 +30,7 @@ tab:
   keepState: true
   ## 开启选项卡记忆
   session: true
-  ## 最大可打开的选项卡数量
+  ## 可打开的数量, false 不限制极值
   max: "30"
   ## 首页
   index: 

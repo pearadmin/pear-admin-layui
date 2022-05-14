@@ -342,13 +342,15 @@ layui.define(['jquery', 'element'], function(exports) {
 			})
 			if (isData == false) {
 
-				if ($(".layui-tab[lay-filter='" + this.option.elem + "'] .layui-tab-title li[lay-id]").length >= this.option.tabMax) {
-					layer.msg("最多打开" + this.option.tabMax + "个标签页", {
-						icon: 2,
-						time: 1000,
-						shift: 6
-					});
-					return false;
+				if(this.option.tabMax != false) {
+					if ($(".layui-tab[lay-filter='" + this.option.elem + "'] .layui-tab-title li[lay-id]").length >= this.option.tabMax) {
+						layer.msg("最多打开" + this.option.tabMax + "个标签页", {
+							icon: 2,
+							time: 1000,
+							shift: 6
+						});
+						return false;
+					}
 				}
 
 				if (time != false && time != 0) {
