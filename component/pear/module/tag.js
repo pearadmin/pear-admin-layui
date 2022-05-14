@@ -11,7 +11,6 @@ layui.define('jquery', function(exports){
   DEFAULT_SKIN ='layui-btn layui-btn-primary layui-btn-sm'
   ,tag = function(){
     this.config = {
-      likeHref:'../css/module/tag.css',
       skin: DEFAULT_SKIN,
       tagText:'+ New Tag'
     };
@@ -142,9 +141,7 @@ layui.define('jquery', function(exports){
     }
   };
   
-  //初始化元素操作
   tag.prototype.init = function(filter, options){
-    layui.addcss(tag.config.likeHref);
     if(filter){
       tag.configs[filter] = $.extend({}, tag.config, tag.configs[filter] || {}, options);
     }
