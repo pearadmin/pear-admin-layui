@@ -50,7 +50,7 @@
 		"children": [{
 			"id": 201,
 			"title": "基础组件",
-			"icon": "layui-icon ",
+			"icon": "layui-icon layui-icon-console",
 			"type": 0,
 			"children": [
 			{
