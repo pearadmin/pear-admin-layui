@@ -1,5 +1,6 @@
 window.rootPath = (function (src) {
-	src = document.scripts[document.scripts.length - 1].src || document.currentScript.src;
+	src = document.scripts[document.scripts.length - 1].src;
+  src = (src ? src : document.currentScript.src);
 	return src.substring(0, src.lastIndexOf("/") + 1);
 })();
 layui.config({
