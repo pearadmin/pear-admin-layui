@@ -22,7 +22,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 			var notice = createHtml(option);
 			$(option.elem).html(notice);
 			var targetNode = document.querySelector(option.elem + ' .pear-notice')
-			var mutationObserver = new MutationObserver((mutationsList, observer) => {
+			var mutationObserver = new MutationObserver(function(mutationsList, observer) {
 				if (getComputedStyle(targetNode).display !== 'none') {
 					var rect = targetNode.getBoundingClientRect();
 					//是否超出右侧屏幕

@@ -129,11 +129,11 @@ layui.define(['jquery', 'element', 'layer'], function (exports) {
 	 * @param {string[] | string} drawerArea 抽屉大小,字符串数组格式：[width, height]，字符串格式：百分比或单位 px。
 	 * @returns 抽屉宽高数组
 	 */
-	function calcDrawerArea(offset, drawerArea = "30%") {
+	function calcDrawerArea(offset, drawerArea) {
 		if (drawerArea instanceof Array) {
 			return drawerArea;
 		}
-		if (drawerArea === "auto") {
+    if (drawerArea === undefined || drawerArea === "auto") {
 			drawerArea = "30%";
 		}
 		if (offset === "l" || offset === "r") {
@@ -152,7 +152,7 @@ layui.define(['jquery', 'element', 'layer'], function (exports) {
 	 */
 	function getDrawerAnimationClass(offset, isAbsolute) {
 		var positionAbsoluteClass = "position-absolute ";
-		var prefixClass = "pear-drawer pear-drawer-anim layui-anim layer-anim";
+		var prefixClass = "pear-drawer pear-drawer-anim layui-anim layer-anim-";
 		var suffix = "rl";
 
 		if (isAbsolute) {
@@ -167,7 +167,7 @@ layui.define(['jquery', 'element', 'layer'], function (exports) {
 		} else if (offset === "b") {
 			suffix = "bt";
 		}
-		return `${prefixClass}-${suffix}`;
+    return prefixClass + suffix;
 	}
 
 	/**
@@ -177,8 +177,8 @@ layui.define(['jquery', 'element', 'layer'], function (exports) {
 	 * @param {*} targetEl 挂载节点
 	 * @returns 包含抽屉位置信息的数组，[top,left]
 	 */
-	function calcOffset(offset = "lt", area, targetEl) {
-		if (offset === "l" || offset === "t") {
+	function calcOffset(offset, area, targetEl) {
+    if (offset === undefined || offset === "l" || offset === "t") {
 			offset = "lt";
 		} else if (offset === "r") {
 			var left;
