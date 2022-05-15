@@ -1,15 +1,15 @@
-layui.define(['table', 'jquery', 'element'], function(exports) {
+layui.define(['table', 'jquery', 'element'], function (exports) {
 	"use strict";
 
 	var MOD_NAME = 'message',
 		$ = layui.jquery,
 		element = layui.element;
 
-	var message = function(opt) {
+	var message = function (opt) {
 		this.option = opt;
 	};
 
-	message.prototype.render = function(opt) {
+	message.prototype.render = function (opt) {
 		//默认配置值
 		var option = {
 			elem: opt.elem,
@@ -22,7 +22,7 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 			var notice = createHtml(option);
 			$(option.elem).html(notice);
 			var targetNode = document.querySelector(option.elem + ' .pear-notice')
-			var mutationObserver = new MutationObserver(function(mutationsList, observer) {
+			var mutationObserver = new MutationObserver(function (mutationsList, observer) {
 				if (getComputedStyle(targetNode).display !== 'none') {
 					var rect = targetNode.getBoundingClientRect();
 					//是否超出右侧屏幕
@@ -42,9 +42,9 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 				attributeFilter: ['class']
 			});
 		}
-		setTimeout(function() {
+		setTimeout(function () {
 			element.init();
-			$(opt.elem + " li").click(function(e) {
+			$(opt.elem + " li").click(function (e) {
 				$(this).siblings().removeClass('pear-this');
 				$(this).addClass('pear-this');
 			})
@@ -52,8 +52,8 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 		return new message(option);
 	}
 
-	message.prototype.click = function(callback) {
-		$("*[notice-id]").click(function(event) {
+	message.prototype.click = function (callback) {
+		$("*[notice-id]").click(function (event) {
 			event.preventDefault();
 			var id = $(this).attr("notice-id");
 			var title = $(this).attr("notice-title");
@@ -62,17 +62,17 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 			callback(id, title, context, form);
 		})
 	}
-	
+
 	/** 刷 新 消 息 */
-	message.prototype.reload = function() {
-		
+	message.prototype.reload = function () {
+
 	}
 
 	/** 同 步 请 求 获 取 数 据 */
 	function getData(url) {
 		$.ajaxSettings.async = false;
 		var data = null;
-		$.get(url, function(result) {
+		$.get(url, function (result) {
 			data = result;
 		});
 		$.ajaxSettings.async = true;
@@ -84,11 +84,11 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 		var count = 0;
 		var noticeTitle = '<ul class="layui-tab-title">';
 		var noticeContent = '<div class="layui-tab-content" style="height:' + option.height + ';overflow-x: hidden;">';
-		
-		
+
+
 		// 根据 data 便利数据
-		$.each(option.data, function(i, item) {
-			
+		$.each(option.data, function (i, item) {
+
 			if (i === 0) {
 				noticeTitle += '<li class="pear-this">' + item.title + '</li>';
 				noticeContent += '<div class="layui-tab-item layui-show">';
@@ -97,11 +97,11 @@ layui.define(['table', 'jquery', 'element'], function(exports) {
 				noticeContent += '<div class="layui-tab-item">';
 			}
 
-			$.each(item.children, function(i, note) {
+			$.each(item.children, function (i, note) {
 				noticeContent += '<div class="pear-notice-item" notice-form="' + note.form + '" notice-context="' + note.context +
 					'" notice-title="' + note.title + '" notice-id="' + note.id + '">' +
 					'<img src="' + note.avatar + '"/>' +
-					'<div style="display:inline-block;">' + note.title + '</div>'+
+					'<div style="display:inline-block;">' + note.title + '</div>' +
 					'<div class="pear-notice-end">' + note.time + '</div>' +
 					'</div>';
 			})

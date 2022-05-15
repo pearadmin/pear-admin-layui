@@ -59,7 +59,7 @@ layui.define(['jquery', 'element', 'layer'], function (exports) {
 			opt.skin = getDrawerAnimationClass(opt.offset, true);
 			opt.offset = calcOffset(opt.offset, opt.area, targetDOM);
 			// 处理关闭后偶现 DOM 仍显示的问题，layer 的 BUG
-			opt.end = Aspect(opt.end,function(){
+			opt.end = Aspect(opt.end, function () {
 				contentDOM.css("display", "none");
 			})
 			if (opt.shade) {
@@ -133,7 +133,7 @@ layui.define(['jquery', 'element', 'layer'], function (exports) {
 		if (drawerArea instanceof Array) {
 			return drawerArea;
 		}
-    if (drawerArea === undefined || drawerArea === "auto") {
+		if (drawerArea === undefined || drawerArea === "auto") {
 			drawerArea = "30%";
 		}
 		if (offset === "l" || offset === "r") {
@@ -167,7 +167,7 @@ layui.define(['jquery', 'element', 'layer'], function (exports) {
 		} else if (offset === "b") {
 			suffix = "bt";
 		}
-    return prefixClass + suffix;
+		return prefixClass + suffix;
 	}
 
 	/**
@@ -178,7 +178,7 @@ layui.define(['jquery', 'element', 'layer'], function (exports) {
 	 * @returns 包含抽屉位置信息的数组，[top,left]
 	 */
 	function calcOffset(offset, area, targetEl) {
-    if (offset === undefined || offset === "l" || offset === "t") {
+		if (offset === undefined || offset === "l" || offset === "t") {
 			offset = "lt";
 		} else if (offset === "r") {
 			var left;
@@ -216,7 +216,7 @@ layui.define(['jquery', 'element', 'layer'], function (exports) {
 	 */
 	function Aspect(target, before, after) {
 		function proxyFunc() {
-			if(before && typeof before === "function"){
+			if (before && typeof before === "function") {
 				before.apply(this, arguments)
 			}
 			target.apply(this, arguments);
