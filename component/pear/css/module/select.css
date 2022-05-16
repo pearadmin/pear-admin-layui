@@ -439,13 +439,13 @@ div[xm-select-skin=default].xm-form-selected .xm-select:hover {
 }
 
 div[xm-select-skin=primary] .xm-select-title div.xm-select-label>span {
-	background-color: #5FB878!important
+	background-color: #5FB878!important;
 	color: #FFF;
 	border: 1px solid #5FB878!important
 }
 
 div[xm-select-skin=primary] .xm-select-title div.xm-select-label>span i {
-	background-color: #5FB878!important
+	background-color: #5FB878!important;
 	color: #FFF
 }
 
@@ -517,7 +517,7 @@ div[xm-select-skin=danger] .xm-select-title div.xm-select-label>span {
 }
 
 div[xm-select-skin=danger] .xm-select-title div.xm-select-label>span i {
-	background-color:#f56c6c!important
+	background-color:#f56c6c!important;
 	color: #FFF
 }
 
