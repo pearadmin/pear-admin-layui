@@ -137,16 +137,16 @@
 
 			let MODULE_PATH = "/system/user/";
 
-	    formToogle({
-				elem:"#userForm",
+			formToggle({
+				elem: "#userForm",
 			});
 
-			function formToogle(options){
+			function formToggle(options) {
 				var defaultsOpt = {
 					isExpand: false,
 					prefixIcon: "layui-icon",
 					toggleIcon: ['layui-icon-down', 'layui-icon-up'],
-          toggleText: ['展开','折叠'],
+					toggleText: ['展开', '折叠'],
 				}
 				var opt = $.extend({}, defaultsOpt, options);
 				var elem = opt.elem; // 绑定的表单元素,必填
@@ -154,7 +154,7 @@
 				var isExpand = opt.isExpand; // 初始展开
 				var prefixIcon = opt.prefixIcon + " "; // 图标前缀
 				var toggleIcon = opt.toggleIcon; // 折叠和展开时的图标类[unExpandIcon, ExpandIcon]
-        var toggleText = opt.toggleText; // 折叠和展开时的文本
+				var toggleText = opt.toggleText; // 折叠和展开时的文本
 
 				var eleDOM = $(elem + " .layui-inline");
 				var firstElTop = eleDOM.first().offset().top;
@@ -162,33 +162,33 @@
 					var isGtMin = (index + 1) > min;
 					var isGtFirstElTop = $(this).offset().top > firstElTop;
 					var isNeqLast = (index + 1) != eleDOM.length;
-					return min 
-          ? isGtMin && isNeqLast 
-          : isGtFirstElTop && isNeqLast;
+					return min
+						? isGtMin && isNeqLast
+						: isGtFirstElTop && isNeqLast;
 				});
 
 				var unExpandIcon = prefixIcon + toggleIcon[0];
 				var expandIcon = prefixIcon + toggleIcon[1];
-        var unExpandText = toggleText[0];
-        var expandText = toggleText[1];
-        var btnSelector = elem + " .expand";
-        $(btnSelector).append("<i></i>")
-				if(isExpand){
-          $(btnSelector).prepend("<span>"+ expandText +"</span>");
+				var unExpandText = toggleText[0];
+				var expandText = toggleText[1];
+				var btnSelector = elem + " .expand";
+				$(btnSelector).append("<i></i>")
+				if (isExpand) {
+					$(btnSelector).prepend("<span>" + expandText + "</span>");
 					$(btnSelector + ">i").addClass(expandIcon);
-				}else{
-          $(btnSelector).prepend("<span>" + unExpandText + "</span>")
+				} else {
+					$(btnSelector).prepend("<span>" + unExpandText + "</span>")
 					$(btnSelector + ">i").addClass(unExpandIcon)
 					targetEl.addClass("layui-hide");
 				}
 				$(btnSelector).click(function () {
 					isExpand = !isExpand;
-					if(isExpand){
-            $(btnSelector + ">span").html(expandText);
+					if (isExpand) {
+						$(btnSelector + ">span").html(expandText);
 						$(btnSelector + ">i").removeClass(unExpandIcon).addClass(expandIcon);
 						targetEl.removeClass("layui-hide")
-					}else{
-            $(btnSelector + ">span").html(unExpandText);
+					} else {
+						$(btnSelector + ">span").html(unExpandText);
 						$(btnSelector + ">i").removeClass(expandIcon).addClass(unExpandIcon);
 						targetEl.addClass("layui-hide")
 					}
