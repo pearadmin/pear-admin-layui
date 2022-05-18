@@ -520,7 +520,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 					// 树转路径
 					var tiledHandle = function(data, content){
 						var path = "";
-						var separator = "/";
+						var separator = " / ";
 						if(!content)content = "";
 						data.forEach(function(item,index){
 							if(item.children && item.children.length){
