@@ -6,7 +6,7 @@ window.rootPath = (function (src) {
 })();
 layui.config({
 	base: rootPath + "module/",
-	version: "3.9.6"
+	version: "3.9.7"
 }).extend({
 	admin: "admin", 	// 框架布局组件
 	menu: "menu",		// 数据菜单组件
@@ -25,7 +25,7 @@ layui.config({
 	dtree:"dtree",			// 树结构
 	tinymce:"tinymce/tinymce", // 编辑器
 	area:"area",			// 省市级联  
-	count:"count",			// 数字滚动组件
+	count:"count",			// 数字滚动
 	topBar: "topBar",		// 置顶组件
 	button: "button",		// 加载按钮
 	design: "design",		// 表单设计
@@ -38,7 +38,8 @@ layui.config({
 	http: "http",			// ajax请求组件
 	theme: "theme",			// 主题转换
 	message: "message",     // 通知组件
-	toast: "toast"          // 消息通知
+	toast: "toast",         // 消息通知
+	iconPicker: "iconPicker"// 图标选择
 }).use(['layer', 'theme'], function () {
 	layui.theme.changeTheme(window, false);
 });
