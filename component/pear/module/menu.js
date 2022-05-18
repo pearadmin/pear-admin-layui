@@ -75,7 +75,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 			});
 		}, 1000)
 
-		return new pearMenu(opt);
+    return new pearMenu(option);
 	}
 
 	pearMenu.prototype.click = function (clickEvent) {

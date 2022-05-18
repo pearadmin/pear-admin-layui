@@ -461,6 +461,137 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 			collapse();
 		});
 
+		body.on("click", ".menuSearch", function () {
+			var _html = [
+				'<div class="menu-search-content">',
+				'  <div class="layui-form menu-search-input-wrapper">',
+				'    <div class=" layui-input-wrap layui-input-wrap-prefix">',
+				'      <div class="layui-input-prefix">',
+				'        <i class="layui-icon layui-icon-search"></i>',
+				'      </div>',
+				'      <input type="text" name="menuSearch" value="" placeholder="搜索菜单" autocomplete="off" class="layui-input" lay-affix="clear">',
+				'    </div>',
+				'  </div>',
+				'  <div class="menu-search-no-data">暂无搜索结果</div>',
+				'  <ul class="menu-search-list">',
+				'  </ul>',
+				'</div>'
+			].join('');
+
+			layer.open({
+				type: 1,
+				offset: "10%",
+				area: ['600px', '200px'],
+				title: false,
+				closeBtn: 0,
+				shadeClose: true,
+				anim: 0,
+				move: false,
+				content: _html,
+				success: function(layero,layeridx){
+					var $layer = layero;
+					var $content = $(layero).children('.layui-layer-content');
+					var $input = $(".menu-search-input-wrapper input");
+					var $noData = $(".menu-search-no-data");
+					var $list = $(".menu-search-list");
+					var menuData = sideMenu.option.data;
+					var tiledMenus = [];
+					// 过滤菜单
+					var filterHandle = function (filterData, val) {
+						if(!val)return [];
+						var filteredMenus = [];
+						filterData.forEach(function (item) {
+							if (item.children && item.children.length) {
+								var children = filterHandle(item.children, val)
+								var obj = {...item,children}
+								if (children && children.length) {
+									filteredMenus.push(obj);
+								} else if (item.title.includes(val)){
+									item.children = []; 
+									filteredMenus.push({...item}); 
+								}
+							} else if (item.title.includes(val)){
+									filteredMenus.push(item);
+							}
+						})
+						return filteredMenus;
+					}
+
+					// 树转路径
+					var tiledHandle = function(data, content){
+						var path = "";
+						var separator = "/";
+						if(!content)content = "";
+						data.forEach(function(item,index){
+							if(item.children && item.children.length){
+								path += content + item.title + separator;
+								var childPath = tiledHandle(item.children, path);
+								path += childPath;
+								if (!childPath) path = ""; // 重置路径
+							}else{
+								path += content + item.title
+								tiledMenus.push({
+									path:path, 
+									info:item
+								});
+								path = ""; //重置路径
+							}
+						})
+						return path;
+					}
+
+					var createList = function(data){
+						var _listHtml = '';
+						data.forEach(function(item,index){
+							var path = item.path;
+							var id = item.info.id;
+							var icon = item.info.icon;
+							var url = item.info.href;
+							var title = item.info.title;
+							
+							_listHtml += '<li smenu-id=' + id + ' smenu-url='+ url + ' smenu-title='+ title +'>';
+							_listHtml += '<span><i style="margin-right:10px" class=" ' + icon + '"></i>' + path +'</span>';
+							_listHtml += '<i class="layui-icon layui-icon-right"></i>';
+							_listHtml += '</li>'
+						})
+						return _listHtml;
+					}
+
+					$input.focus();
+					$layer.css("border-radius", "6px");
+					$list.on("click", "li", function(){
+						var menuId = $(this).attr("smenu-id");
+						sideMenu.selectItem(menuId);
+						layer.close(layeridx);
+					})
+					$input.off("input").on("input",debounce(function(){
+						var keywords = $input.val().trim();
+						var filteredMenus = filterHandle(menuData, keywords);
+						
+						if(filteredMenus.length){
+							$noData.css("display","none");
+							tiledMenus = [];
+							tiledHandle(filteredMenus);
+							var listHtml = createList(tiledMenus);
+							$list.html("").append(listHtml).children(":first").addClass("this").hover(function(){
+								$(this).addClass("this");
+							},function(){
+								$(this).removeClass("this");
+							});
+						}else{
+							$list.html("");
+							$noData.css("display", "flex");
+						}
+						var currentHeight = $(".menu-search-content").outerHeight()
+						$layer.css("height", currentHeight);
+						$content.css("height", currentHeight);
+					},500)
+					)
+				}
+			})
+		});
+		
+		
 		body.on("click", ".fullScreen", function() {
 			if ($(this).hasClass("layui-icon-screen-restore")) {
 				screenFun(2).then(function() {
