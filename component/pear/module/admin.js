@@ -500,17 +500,17 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 					var filterHandle = function (filterData, val) {
 						if(!val)return [];
 						var filteredMenus = [];
-						filterData.forEach(function (item) {
+						$.each(filterData, function (index,item) {
 							if (item.children && item.children.length) {
 								var children = filterHandle(item.children, val)
-								var obj = {...item,children}
+								var obj = $.extend({}, item, { children: children});
 								if (children && children.length) {
 									filteredMenus.push(obj);
-								} else if (item.title.includes(val)){
+								} else if (item.title.indexOf(val) >= 0){
 									item.children = []; 
-									filteredMenus.push({...item}); 
+									filteredMenus.push($.extend({}, item)); 
 								}
-							} else if (item.title.includes(val)){
+							} else if (item.title.indexOf(val) >= 0){
 									filteredMenus.push(item);
 							}
 						})
@@ -522,7 +522,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 						var path = "";
 						var separator = " / ";
 						if(!content)content = "";
-						data.forEach(function(item,index){
+						$.each(data, function(index, item){
 							if(item.children && item.children.length){
 								path += content + item.title + separator;
 								var childPath = tiledHandle(item.children, path);
@@ -542,7 +542,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 
 					var createList = function(data){
 						var _listHtml = '';
-						data.forEach(function(item,index){
+						$.each(data, function(index, item){
 							var path = item.path;
 							var id = item.info.id;
 							var icon = item.info.icon;
