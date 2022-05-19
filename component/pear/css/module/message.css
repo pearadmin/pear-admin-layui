@@ -19,6 +19,11 @@
 	border-right: 1px solid whitesmoke;
 }
 
+/*排除最后一个 li 右边框*/
+.pear-notice .layui-tab-title li:last-child {
+    border-right: none;
+}
+
 .pear-notice * {
 	color: dimgray !important;
 }
