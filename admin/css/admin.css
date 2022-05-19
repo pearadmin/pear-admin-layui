@@ -539,10 +539,12 @@ body,
 
 .menu-search-list li:hover {
 	background-color: #5FB878;
+	color: white;
 }
 
 .menu-search-list li.this {
 	background-color: #5FB878;
+	color: white;
 }
 
 /* 搜索面板结束 */
