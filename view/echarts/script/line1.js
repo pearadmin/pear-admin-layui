@@ -1,17 +1,17 @@
 layui.use(['echarts'], function() {
 	let echarts = layui.echarts;
-
-	var line2 = echarts.init(document.getElementById('line2'));
+	var line2 = echarts.init(document.getElementById('line2'),null, {
+		width: 600,
+		height: 400
+	});
 
 	const colorList = ["#9E87FF", '#73DDFF', '#fe9a8b', '#F56948', '#9E87FF']
 	option = {
 		backgroundColor: '#fff',
 		title: {
 			text: '全国6月销售统计',
-			textStyle: {
-				fontSize: 12,
-				fontWeight: 400
-			},
+			fontSize: 12,
+			fontWeight: 400,
 			left: 'center',
 			top: '5%'
 		},
@@ -21,9 +21,7 @@ layui.use(['echarts'], function() {
 			right: '5%',
 			itemWidth: 6,
 			itemGap: 20,
-			textStyle: {
-				color: '#556677'
-			}
+			color: '#556677'
 		},
 		tooltip: {
 			trigger: 'axis',
@@ -41,9 +39,7 @@ layui.use(['echarts'], function() {
 				}
 			},
 			backgroundColor: '#fff',
-			textStyle: {
-				color: '#5c6c7c'
-			},
+			color: '#5c6c7c',
 			padding: [10, 10],
 			extraCssText: 'box-shadow: 1px 0 2px 0 rgba(163,163,163,0.5)'
 		},
@@ -63,9 +59,7 @@ layui.use(['echarts'], function() {
 			},
 			axisLabel: {
 				interval: 0,
-				textStyle: {
-					color: '#556677'
-				},
+				color: '#556677',
 				// 默认x轴字体大小
 				fontSize: 12,
 				// margin:文字到x轴的距离
@@ -119,9 +113,7 @@ layui.use(['echarts'], function() {
 				}
 			},
 			axisLabel: {
-				textStyle: {
-					color: '#556677'
-				}
+				color: '#556677',
 			},
 			splitLine: {
 				show: false
@@ -133,9 +125,7 @@ layui.use(['echarts'], function() {
 				show: false
 			},
 			axisLabel: {
-				textStyle: {
-					color: '#556677'
-				},
+				color: '#556677',
 				formatter: '{value}'
 			},
 			axisLine: {
@@ -156,7 +146,7 @@ layui.use(['echarts'], function() {
 				symbol: 'circle',
 				smooth: true,
 				yAxisIndex: 0,
-				showSymbol: false,
+				showSymbol: true,
 				lineStyle: {
 					width: 5,
 					color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [{
@@ -173,10 +163,8 @@ layui.use(['echarts'], function() {
 					shadowOffsetY: 20
 				},
 				itemStyle: {
-					normal: {
-						color: colorList[0],
-						borderColor: colorList[0]
-					}
+					color: colorList[0],
+					borderColor: colorList[0]
 				}
 			}, {
 				name: 'Nike',
@@ -186,7 +174,7 @@ layui.use(['echarts'], function() {
 				symbol: 'circle',
 				smooth: true,
 				yAxisIndex: 0,
-				showSymbol: false,
+				showSymbol: true,
 				lineStyle: {
 					width: 5,
 					color: new echarts.graphic.LinearGradient(1, 1, 0, 0, [{
@@ -202,11 +190,9 @@ layui.use(['echarts'], function() {
 					shadowBlur: 10,
 					shadowOffsetY: 20
 				},
-				itemStyle: {
-					normal: {
-						color: colorList[1],
-						borderColor: colorList[1]
-					}
+				itemStyle: {					
+					color: colorList[1],
+					borderColor: colorList[1]					
 				}
 			},
 			{
@@ -217,7 +203,7 @@ layui.use(['echarts'], function() {
 				yAxisIndex: 1,
 				symbol: 'circle',
 				smooth: true,
-				showSymbol: false,
+				showSymbol: true,
 				lineStyle: {
 					width: 5,
 					color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
@@ -233,11 +219,9 @@ layui.use(['echarts'], function() {
 					shadowBlur: 10,
 					shadowOffsetY: 20
 				},
-				itemStyle: {
-					normal: {
-						color: colorList[2],
-						borderColor: colorList[2]
-					}
+				itemStyle: {					
+					color: colorList[2],
+					borderColor: colorList[2]					
 				}
 			}
 		]
@@ -248,4 +232,5 @@ layui.use(['echarts'], function() {
 	window.onresize = function() {
 		line2.resize();
 	}
+	
 })
