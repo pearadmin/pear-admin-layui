@@ -21,14 +21,10 @@ layui.define(function(exports) {
             },
             "line": {
                 "itemStyle": {
-                    "normal": {
                         "borderWidth": "3"
-                    }
                 },
                 "lineStyle": {
-                    "normal": {
                         "width": "4"
-                    }
                 },
                 "symbolSize": "10",
                 "symbol": "emptyCircle",
@@ -36,14 +32,10 @@ layui.define(function(exports) {
             },
             "radar": {
                 "itemStyle": {
-                    "normal": {
                         "borderWidth": "3"
-                    }
                 },
                 "lineStyle": {
-                    "normal": {
                         "width": "4"
-                    }
                 },
                 "symbolSize": "10",
                 "symbol": "emptyCircle",
@@ -51,11 +43,11 @@ layui.define(function(exports) {
             },
             "bar": {
                 "itemStyle": {
-                    "normal": {
                         "barBorderWidth": 0,
                         "barBorderColor": "#ccc"
-                    },
-                    "emphasis": {
+                },
+                "emphasis": {
+                    "itemStyle": {
                         "barBorderWidth": 0,
                         "barBorderColor": "#ccc"
                     }
@@ -63,11 +55,11 @@ layui.define(function(exports) {
             },
             "pie": {
                 "itemStyle": {
-                    "normal": {
                         "borderWidth": 0,
                         "borderColor": "#ccc"
-                    },
-                    "emphasis": {
+                },
+                "emphasis": {
+                    "itemStyle": {
                         "borderWidth": 0,
                         "borderColor": "#ccc"
                     }
@@ -75,11 +67,11 @@ layui.define(function(exports) {
             },
             "scatter": {
                 "itemStyle": {
-                    "normal": {
                         "borderWidth": 0,
                         "borderColor": "#ccc"
-                    },
-                    "emphasis": {
+                },
+                "emphasis": {
+                    "itemStyle": {
                         "borderWidth": 0,
                         "borderColor": "#ccc"
                     }
@@ -87,11 +79,12 @@ layui.define(function(exports) {
             },
             "boxplot": {
                 "itemStyle": {
-                    "normal": {
-                        "borderWidth": 0,
-                        "borderColor": "#ccc"
-                    },
-                    "emphasis": {
+                    "borderWidth": 0,
+                    "borderColor": "#ccc"
+                    
+                },
+                "emphasis": {
+                    "itemStyle": {
                         "borderWidth": 0,
                         "borderColor": "#ccc"
                     }
@@ -99,11 +92,11 @@ layui.define(function(exports) {
             },
             "parallel": {
                 "itemStyle": {
-                    "normal": {
                         "borderWidth": 0,
                         "borderColor": "#ccc"
-                    },
-                    "emphasis": {
+                },
+                "emphasis": {
+                    "itemStyle": {
                         "borderWidth": 0,
                         "borderColor": "#ccc"
                     }
@@ -111,11 +104,11 @@ layui.define(function(exports) {
             },
             "sankey": {
                 "itemStyle": {
-                    "normal": {
-                        "borderWidth": 0,
-                        "borderColor": "#ccc"
-                    },
-                    "emphasis": {
+                    "borderWidth": 0,
+                    "borderColor": "#ccc"
+                },
+                "emphasis": {
+                    "itemStyle": {
                         "borderWidth": 0,
                         "borderColor": "#ccc"
                     }
@@ -123,11 +116,11 @@ layui.define(function(exports) {
             },
             "funnel": {
                 "itemStyle": {
-                    "normal": {
-                        "borderWidth": 0,
-                        "borderColor": "#ccc"
-                    },
-                    "emphasis": {
+                    "borderWidth": 0,
+                    "borderColor": "#ccc"
+                },
+                "emphasis": {
+                    "itemStyle": {
                         "borderWidth": 0,
                         "borderColor": "#ccc"
                     }
@@ -135,11 +128,11 @@ layui.define(function(exports) {
             },
             "gauge": {
                 "itemStyle": {
-                    "normal": {
-                        "borderWidth": 0,
-                        "borderColor": "#ccc"
-                    },
-                    "emphasis": {
+                    "borderWidth": 0,
+                    "borderColor": "#ccc"
+                },
+                "emphasis": {
+                    "itemStyle": {
                         "borderWidth": 0,
                         "borderColor": "#ccc"
                     }
@@ -147,27 +140,21 @@ layui.define(function(exports) {
             },
             "candlestick": {
                 "itemStyle": {
-                    "normal": {
-                        "color": "#e6a0d2",
-                        "color0": "transparent",
-                        "borderColor": "#e6a0d2",
-                        "borderColor0": "#3fb1e3",
-                        "borderWidth": "2"
-                    }
+                    "color": "#e6a0d2",
+                    "color0": "transparent",
+                    "borderColor": "#e6a0d2",
+                    "borderColor0": "#3fb1e3",
+                    "borderWidth": "2"
                 }
             },
             "graph": {
                 "itemStyle": {
-                    "normal": {
-                        "borderWidth": 0,
-                        "borderColor": "#ccc"
-                    }
+                    "borderWidth": 0,
+                    "borderColor": "#ccc"
                 },
                 "lineStyle": {
-                    "normal": {
                         "width": "1",
                         "color": "#cccccc"
-                    }
                 },
                 "symbolSize": "10",
                 "symbol": "emptyCircle",
@@ -180,63 +167,47 @@ layui.define(function(exports) {
                     "#c4ebad",
                     "#96dee8"
                 ],
-                "label": {
-                    "normal": {
-                        "textStyle": {
-                            "color": "#ffffff"
-                        }
-                    }
+                "label": {                       
+                    "color": "#ffffff"                        
                 }
             },
             "map": {
                 "itemStyle": {
-                    "normal": {
-                        "areaColor": "#eeeeee",
-                        "borderColor": "#aaaaaa",
-                        "borderWidth": 0.5
-                    },
-                    "emphasis": {
+                    "areaColor": "#eeeeee",
+                    "borderColor": "#aaaaaa",
+                    "borderWidth": 0.5
+                },
+                "label": {                    
+                    "color": "#ffffff"
+                },
+                "emphasis": {
+                    "itemStyle": {
                         "areaColor": "rgba(63,177,227,0.25)",
                         "borderColor": "#3fb1e3",
                         "borderWidth": 1
-                    }
-                },
-                "label": {
-                    "normal": {
-                        "textStyle": {
-                            "color": "#ffffff"
-                        }
                     },
-                    "emphasis": {
-                        "textStyle": {
-                            "color": "rgb(63,177,227)"
-                        }
+                    "label":{
+                        "color": "rgb(63,177,227)"
                     }
                 }
             },
             "geo": {
                 "itemStyle": {
-                    "normal": {
-                        "areaColor": "#eeeeee",
-                        "borderColor": "#aaaaaa",
-                        "borderWidth": 0.5
-                    },
-                    "emphasis": {
+                    "areaColor": "#eeeeee",
+                    "borderColor": "#aaaaaa",
+                    "borderWidth": 0.5
+                },
+                "label": {
+                    "color": "#ffffff"
+                },
+                "emphasis": {
+                    "itemStyle": {
                         "areaColor": "rgba(63,177,227,0.25)",
                         "borderColor": "#3fb1e3",
                         "borderWidth": 1
-                    }
-                },
-                "label": {
-                    "normal": {
-                        "textStyle": {
-                            "color": "#ffffff"
-                        }
                     },
-                    "emphasis": {
-                        "textStyle": {
-                            "color": "rgb(63,177,227)"
-                        }
+                    "label":{
+                        "color": "rgb(63,177,227)"
                     }
                 }
             },
@@ -255,9 +226,9 @@ layui.define(function(exports) {
                 },
                 "axisLabel": {
                     "show": true,
-                    "textStyle": {
-                        "color": "#999999"
-                    }
+                   
+                    "color": "#999999"
+                    
                 },
                 "splitLine": {
                     "show": true,
@@ -291,10 +262,9 @@ layui.define(function(exports) {
                     }
                 },
                 "axisLabel": {
-                    "show": true,
-                    "textStyle": {
-                        "color": "#999999"
-                    }
+                    "show": true,                    
+                    "color": "#999999"
+                    
                 },
                 "splitLine": {
                     "show": true,
@@ -328,10 +298,9 @@ layui.define(function(exports) {
                     }
                 },
                 "axisLabel": {
-                    "show": true,
-                    "textStyle": {
-                        "color": "#999999"
-                    }
+                    "show": true,                   
+                    "color": "#999999"
+                    
                 },
                 "splitLine": {
                     "show": true,
@@ -366,9 +335,9 @@ layui.define(function(exports) {
                 },
                 "axisLabel": {
                     "show": true,
-                    "textStyle": {
-                        "color": "#999999"
-                    }
+                   
+                    "color": "#999999"
+                    
                 },
                 "splitLine": {
                     "show": true,
@@ -390,10 +359,10 @@ layui.define(function(exports) {
             },
             "toolbox": {
                 "iconStyle": {
-                    "normal": {
-                        "borderColor": "#999999"
-                    },
-                    "emphasis": {
+                    "borderColor": "#999999"                   
+                },
+                "emphasis": {
+                    "iconStyle": {
                         "borderColor": "#666666"
                     }
                 }
@@ -420,41 +389,34 @@ layui.define(function(exports) {
                     "color": "#626c91",
                     "width": 1
                 },
-                "itemStyle": {
-                    "normal": {
-                        "color": "#626c91",
-                        "borderWidth": 1
-                    },
-                    "emphasis": {
-                        "color": "#626c91"
-                    }
-                },
-                "controlStyle": {
-                    "normal": {
-                        "color": "#626c91",
-                        "borderColor": "#626c91",
-                        "borderWidth": 0.5
-                    },
-                    "emphasis": {
-                        "color": "#626c91",
-                        "borderColor": "#626c91",
-                        "borderWidth": 0.5
-                    }
+                "itemStyle": {               
+                    "color": "#626c91",
+                    "borderWidth": 1                
+                  
+                },                
+                "controlStyle": {                    
+                    "color": "#626c91",
+                    "borderColor": "#626c91",
+                    "borderWidth": 0.5                   
                 },
                 "checkpointStyle": {
                     "color": "#3fb1e3",
                     "borderColor": "rgba(63,177,227,0.15)"
                 },
-                "label": {
-                    "normal": {
-                        "textStyle": {
-                            "color": "#626c91"
-                        }
+                "label": {                   
+                    "color": "#626c91"                    
+                },
+                "emphasis": {
+                    "itemStyle": {
+                        "color": "#626c91"
                     },
-                    "emphasis": {
-                        "textStyle": {
-                            "color": "#626c91"
-                        }
+                    "controlStyle":{
+                        "color": "#626c91",
+                        "borderColor": "#626c91",
+                        "borderWidth": 0.5
+                    },
+                    "label":{
+                        "color": "#626c91"
                     }
                 }
             },
@@ -475,16 +437,12 @@ layui.define(function(exports) {
                 }
             },
             "markPoint": {
-                "label": {
-                    "normal": {
-                        "textStyle": {
-                            "color": "#ffffff"
-                        }
-                    },
-                    "emphasis": {
-                        "textStyle": {
-                            "color": "#ffffff"
-                        }
+                "label": {                    
+                    "color": "#ffffff"                        
+                },
+                "emphasis": {
+                    "label": {
+                        "color": "#ffffff"
                     }
                 }
             }
