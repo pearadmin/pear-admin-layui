@@ -462,6 +462,67 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 		});
 
 		body.on("click", ".menuSearch", function () {
+			// 过滤菜单
+			var filterHandle = function (filterData, val) {
+				if (!val) return [];
+				var filteredMenus = [];
+				filterData = $.extend(true, {}, filterData);
+				$.each(filterData, function (index, item) {
+					if (item.children && item.children.length) {
+						var children = filterHandle(item.children, val)
+						var obj = $.extend({}, item, { children: children });
+						if (children && children.length) {
+							filteredMenus.push(obj);
+						} else if (item.title.indexOf(val) >= 0) {
+							item.children = []; // 父级匹配但子级不匹配,就去除子级
+							filteredMenus.push($.extend({}, item));
+						}
+					} else if (item.title.indexOf(val) >= 0) {
+						filteredMenus.push(item);
+					}
+				})
+				return filteredMenus;
+			}
+
+			// 树转路径
+			var tiledHandle = function (data) {
+				var tiledMenus = [];
+				var treeTiled = function (data, content) {
+					var path = "";
+					var separator = " / ";
+					// 上级路径
+					if (!content) content = "";
+					$.each(data, function (index, item) {
+						if (item.children && item.children.length) {
+							path += content + item.title + separator;
+							var childPath = treeTiled(item.children, path);
+							path += childPath;
+							if (!childPath) path = ""; // 重置路径
+						} else {
+							path += content + item.title
+							tiledMenus.push({ path: path, info: item });
+							path = ""; //重置路径
+						}
+					})
+					return path;
+				};
+				treeTiled(data);
+
+				return tiledMenus;
+			}
+
+			// 创建搜索列表
+			var createList = function (data) {
+				var _listHtml = '';
+				$.each(data, function (index, item) {
+					_listHtml += '<li smenu-id=' + item.info.id + ' smenu-url=' + item.info.href + ' smenu-title=' + item.info.title + '>';
+					_listHtml += '  <span><i style="margin-right:10px" class=" ' + item.info.icon + '"></i>' + item.path + '</span>';
+					_listHtml += '  <i class="layui-icon layui-icon-right"></i>';
+					_listHtml += '</li>'
+				})
+				return _listHtml;
+			}
+
 			var _html = [
 				'<div class="menu-search-content">',
 				'  <div class="layui-form menu-search-input-wrapper">',
@@ -495,89 +556,20 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 					var $noData = $(".menu-search-no-data");
 					var $list = $(".menu-search-list");
 					var menuData = sideMenu.option.data;
-					var tiledMenus = [];
-					// 过滤菜单
-					var filterHandle = function (filterData, val) {
-						if(!val)return [];
-						var filteredMenus = [];
-						$.each(filterData, function (index,item) {
-							if (item.children && item.children.length) {
-								var children = filterHandle(item.children, val)
-								var obj = $.extend({}, item, { children: children});
-								if (children && children.length) {
-									filteredMenus.push(obj);
-								} else if (item.title.indexOf(val) >= 0){
-									item.children = []; 
-									filteredMenus.push($.extend({}, item)); 
-								}
-							} else if (item.title.indexOf(val) >= 0){
-									filteredMenus.push(item);
-							}
-						})
-						return filteredMenus;
-					}
+					
 
-					// 树转路径
-					var tiledHandle = function(data, content){
-						var path = "";
-						var separator = " / ";
-						if(!content)content = "";
-						$.each(data, function(index, item){
-							if(item.children && item.children.length){
-								path += content + item.title + separator;
-								var childPath = tiledHandle(item.children, path);
-								path += childPath;
-								if (!childPath) path = ""; // 重置路径
-							}else{
-								path += content + item.title
-								tiledMenus.push({
-									path:path, 
-									info:item
-								});
-								path = ""; //重置路径
-							}
-						})
-						return path;
-					}
-
-					var createList = function(data){
-						var _listHtml = '';
-						$.each(data, function(index, item){
-							var path = item.path;
-							var id = item.info.id;
-							var icon = item.info.icon;
-							var url = item.info.href;
-							var title = item.info.title;
-							
-							_listHtml += '<li smenu-id=' + id + ' smenu-url='+ url + ' smenu-title='+ title +'>';
-							_listHtml += '<span><i style="margin-right:10px" class=" ' + icon + '"></i>' + path +'</span>';
-							_listHtml += '<i class="layui-icon layui-icon-right"></i>';
-							_listHtml += '</li>'
-						})
-						return _listHtml;
-					}
-
-					$input.focus();
 					$layer.css("border-radius", "6px");
-					$list.on("click", "li", function(){
-						var menuId = $(this).attr("smenu-id");
-						sideMenu.selectItem(menuId);
-						layer.close(layeridx);
-					})
-					$input.off("input").on("input",debounce(function(){
+					$input.off("focus").focus();
+					// 搜索菜单
+					$input.off("input").on("input", debounce(function(){
 						var keywords = $input.val().trim();
 						var filteredMenus = filterHandle(menuData, keywords);
 						
 						if(filteredMenus.length){
-							$noData.css("display","none");
-							tiledMenus = [];
-							tiledHandle(filteredMenus);
+							var tiledMenus = tiledHandle(filteredMenus);
 							var listHtml = createList(tiledMenus);
-							$list.html("").append(listHtml).children(":first").addClass("this").hover(function(){
-								$(this).addClass("this");
-							},function(){
-								$(this).removeClass("this");
-							});
+							$noData.css("display", "none");
+							$list.html("").append(listHtml).children(":first").addClass("this")
 						}else{
 							$list.html("");
 							$noData.css("display", "flex");
@@ -585,8 +577,56 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 						var currentHeight = $(".menu-search-content").outerHeight()
 						$layer.css("height", currentHeight);
 						$content.css("height", currentHeight);
-					},500)
+					}, 500)
 					)
+					// 搜索列表点击事件
+					$list.off("click").on("click", "li", function () {
+						var menuId = $(this).attr("smenu-id");
+						if(sideMenu.isCollapse){
+							collapse();
+						}
+						sideMenu.selectItem(menuId);
+						layer.close(layeridx);
+					})
+
+					$list.off('mouseenter').on("mouseenter", "li", function () {
+						$(".menu-search-list li.this").removeClass("this");
+						$(this).addClass("this");
+					}).off("mouseleave").on("mouseleave", "li", function(){
+						$(this).removeClass("this");
+					})
+
+					// 监听键盘事件 
+					// Enter:13 Spacebar:32 UpArrow:38 DownArrow:40
+					$(document).off("keydown").keydown(function (e) {
+						if (e.keyCode === 13 || e.keyCode === 32) {
+							e.preventDefault();
+							var menuId = $(".menu-search-list li.this").attr("smenu-id");
+							if (sideMenu.isCollapse) {
+								collapse();
+							}
+							sideMenu.selectItem(menuId);
+							layer.close(layeridx);
+						}else if(e.keyCode === 38){
+							e.preventDefault();
+							var prevEl = $(".menu-search-list li.this").prev();
+							$(".menu-search-list li.this").removeClass("this");
+							if(prevEl.length !== 0){
+								prevEl.addClass("this");
+							}else{
+								$list.children().last().addClass("this");
+							}
+						}else if(e.keyCode === 40){
+							e.preventDefault();
+							var nextEl = $(".menu-search-list li.this").next();
+							$(".menu-search-list li.this").removeClass("this");
+							if(nextEl.length !== 0){
+								nextEl.addClass("this");
+							}else{
+								$list.children().first().addClass("this");
+							}
+						}
+					})
 				}
 			})
 		});
