@@ -43,5 +43,3 @@ layui.config({
 }).use(['layer', 'theme'], function () {
 	layui.theme.changeTheme(window, false);
 });
-
-
