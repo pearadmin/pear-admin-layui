@@ -1771,5 +1771,5 @@ layui.define(function (exports) {
     pearHash.Base64Decode = function (str) {
         return Base64.decode(str);
     }
-    exports('hash', pearHash);
+    exports('encrypt', pearHash);
 });

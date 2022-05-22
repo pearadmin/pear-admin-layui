@@ -492,5 +492,69 @@ body,
 }
 
 .message .layui-tab-title li:not(:last-child) {
-    border-right: 1px solid #eee;
+	border-right: 1px solid #eee;
 }
+
+/* 搜索面板 */
+.menu-search-content .layui-input-prefix {
+	position: absolute;
+	margin-top: 10px;
+	margin-left: 10px;
+}
+
+.menu-search-content .layui-input {
+	padding-left: 30px;
+}
+
+.menu-search-content {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.menu-search-input-wrapper {
+	width: 100%;
+	padding: 15px 15px;
+}
+
+.menu-search-no-data {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	height: 122px;
+	align-items: center;
+}
+
+.menu-search-list {
+	width: 100%;
+	padding: 5px 15px;
+}
+
+.menu-search-list li {
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: nowrap;
+	height: 50px;
+	margin-bottom: 8px;
+	padding: 0px 10px;
+	color: currentColor;
+	font-size: 14px;
+	border-radius: 4px;
+	box-shadow: 0 1px 3px #d4d9e1;
+	cursor: pointer;
+	background-color: #fff;
+}
+
+.menu-search-list li:hover {
+	background-color: #5FB878;
+	color: white;
+}
+
+.menu-search-list li.this {
+	background-color: #5FB878;
+	color: white;
+}
+
+/* 搜索面板结束 */

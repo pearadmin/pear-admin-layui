@@ -14,7 +14,7 @@ layui.config({
 	tab: "tab",			// 多选项卡组件
 	echarts: "echarts", // 数据图表组件
 	echartsTheme: "echartsTheme", // 数据图表主题
-	hash: "hash",		// 数据加密组件
+	encrypt: "encrypt",		// 数据加密组件
 	select: "select",	// 下拉多选组件
 	drawer: "drawer",	// 抽屉弹层组件
 	notice: "notice",	// 消息提示组件

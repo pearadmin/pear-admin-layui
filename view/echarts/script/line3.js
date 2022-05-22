@@ -1,7 +1,10 @@
 layui.use(['echarts'], function() {
 	let echarts = layui.echarts;
 
-	var line3 = echarts.init(document.getElementById('line3'));
+	var line3 = echarts.init(document.getElementById('line3'),null, {
+		width: 600,
+		height: 400
+	});
 
 	const colorList = ["#9E87FF", '#73DDFF', '#fe9a8b', '#F56948', '#9E87FF']
 
@@ -10,12 +13,10 @@ layui.use(['echarts'], function() {
 		title: {
 			text: "告警数",
 			left: "18px",
-			top: "0",
-			textStyle: {
-				color: "#999",
-				fontSize: 12,
-				fontWeight: '400'
-			}
+			top: "0",			
+			color: "#999",
+			fontSize: 12,
+			fontWeight: '400'			
 		},
 		color: ['#73A0FA', '#73DEB3', '#FFB761'],
 		tooltip: {
@@ -61,10 +62,8 @@ layui.use(['echarts'], function() {
 		yAxis: {
 			type: 'value',
 			axisLabel: {
-				color: '#999',
-				textStyle: {
-					fontSize: 12
-				},
+				color: '#999',				
+				fontSize: 12				
 			},
 			splitLine: {
 				show: true,
@@ -99,4 +98,5 @@ layui.use(['echarts'], function() {
 	window.onresize = function() {
 		line3.resize();
 	}
+	
 })
