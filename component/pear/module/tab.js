@@ -230,30 +230,15 @@ layui.define(['jquery', 'element'], function(exports) {
 				'</span><i class="layui-icon layui-unselect layui-tab-close">ဆ</i>'
 		}
 		if ($(".layui-tab[lay-filter='" + elem + "'] .layui-tab-title li[lay-id]").length <= 0) {
-
-			if (time != false && time != 0) {
-
-				var load = '<div id="pear-tab-loading' + index + '" class="pear-tab-loading">' +
-					'<div class="ball-loader">' +
-					'<span></span><span></span><span></span><span></span>' +
-					'</div>' +
-					'</div>'
-				$("#" + elem).find(".pear-tab").append(load);
-				var pearLoad = $("#" + elem).find("#pear-tab-loading" + index);
-				pearLoad.css({
-					display: "block"
-				});
-				setTimeout(function() {
-					pearLoad.fadeOut(500);
-				}, time);
-				index++;
-			}
 			element.tabAdd(elem, {
 				title: title,
 				content: '<iframe id="' + opt.id + '" data-frameid="' + opt.id + '" scrolling="auto" frameborder="0" src="' +
 					opt.url + '" style="width:100%;height:100%;"></iframe>',
 				id: opt.id
 			});
+			if (time != false && time != 0) {
+				tabIframeLoading(elem, opt.id);
+			}
 			tabData.push(opt);
 			sessionStorage.setItem(elem + "-pear-tab-data", JSON.stringify(tabData));
 		} else {
@@ -265,29 +250,15 @@ layui.define(['jquery', 'element'], function(exports) {
 			})
 
 			if (isData == false) {
-				if (time != false && time != 0) {
-					var load = '<div id="pear-tab-loading' + index + '" class="pear-tab-loading">' +
-						'<div class="ball-loader">' +
-						'<span></span><span></span><span></span><span></span>' +
-						'</div>' +
-						'</div>'
-
-					$("#" + elem).find(".pear-tab").append(load);
-					var pearLoad = $("#" + elem).find("#pear-tab-loading" + index);
-					pearLoad.css({
-						display: "block"
-					});
-					setTimeout(function() {
-						pearLoad.fadeOut(500);
-					}, time);
-					index++;
-				}
 				element.tabAdd(elem, {
 					title: title,
 					content: '<iframe id="' + opt.id + '" data-frameid="' + opt.id + '" scrolling="auto" frameborder="0" src="' +
 						opt.url + '" style="width:100%;height:100%;"></iframe>',
 					id: opt.id
 				});
+				if (time != false && time != 0) {
+					tabIframeLoading(this.option.elem, opt.id);
+				}
 				tabData.push(opt);
 				sessionStorage.setItem(elem + "-pear-tab-data", JSON.stringify(tabData));
 
@@ -308,28 +279,15 @@ layui.define(['jquery', 'element'], function(exports) {
 				'</span><i class="layui-icon layui-unselect layui-tab-close">ဆ</i>';
 		}
 		if ($(".layui-tab[lay-filter='" + this.option.elem + "'] .layui-tab-title li[lay-id]").length <= 0) {
-			if (time != false && time != 0) {
-				var load = '<div id="pear-tab-loading' + index + '" class="pear-tab-loading">' +
-					'<div class="ball-loader">' +
-					'<span></span><span></span><span></span><span></span>' +
-					'</div>' +
-					'</div>';
-				$("#" + this.option.elem).find(".pear-tab").append(load);
-				var pearLoad = $("#" + this.option.elem).find("#pear-tab-loading" + index);
-				pearLoad.css({
-					display: "block"
-				});
-				setTimeout(function() {
-					pearLoad.fadeOut(500);
-				}, time);
-				index++;
-			}
 			element.tabAdd(this.option.elem, {
 				title: title,
 				content: '<iframe id="' + opt.id + '" data-frameid="' + opt.id + '" scrolling="auto" frameborder="0" src="' +
 					opt.url + '" style="width:100%;height:100%;"></iframe>',
 				id: opt.id
 			});
+			if (time != false && time != 0) {
+				tabIframeLoading(this.option.elem, opt.id);
+			}
 			tabData.push(opt);
 			sessionStorage.setItem(this.option.elem + "-pear-tab-data", JSON.stringify(tabData));
 			sessionStorage.setItem(this.option.elem + "-pear-tab-data-current", opt.id);
@@ -353,29 +311,15 @@ layui.define(['jquery', 'element'], function(exports) {
 					}
 				}
 
-				if (time != false && time != 0) {
-					var load = '<div id="pear-tab-loading' + index + '" class="pear-tab-loading">' +
-						'<div class="ball-loader">' +
-						'<span></span><span></span><span></span><span></span>' +
-						'</div>' +
-						'</div>'
-
-					$("#" + this.option.elem).find(".pear-tab").append(load);
-					var pearLoad = $("#" + this.option.elem).find("#pear-tab-loading" + index);
-					pearLoad.css({
-						display: "block"
-					});
-					setTimeout(function() {
-						pearLoad.fadeOut(500);
-					}, time);
-					index++;
-				}
 				element.tabAdd(this.option.elem, {
 					title: title,
 					content: '<iframe id="' + opt.id + '" data-frameid="' + opt.id + '" scrolling="auto" frameborder="0" src="' +
 						opt.url + '" style="width:100%;height:100%;"></iframe>',
 					id: opt.id
 				});
+				if (time != false && time != 0) {
+					tabIframeLoading(this.option.elem, opt.id);
+				}
 				tabData.push(opt);
 				sessionStorage.setItem(this.option.elem + "-pear-tab-data", JSON.stringify(tabData));
 				sessionStorage.setItem(this.option.elem + "-pear-tab-data-current", opt.id);
@@ -386,33 +330,37 @@ layui.define(['jquery', 'element'], function(exports) {
 	}
 
 	// 刷 新 指 定 的 选 项 卡
-	pearTab.prototype.refresh = function(time) {
+	pearTab.prototype.refresh = function (time) {
 		// 刷 新 指 定 的 选 项 卡
 		if (time != false && time != 0) {
-			var load = '<div id="pear-tab-loading' + index + '" class="pear-tab-loading">' +
-				'<div class="ball-loader">' +
-				'<span></span><span></span><span></span><span></span>' +
-				'</div>' +
-				'</div>'
-
-			var elem = this.option.elem;
-			$("#" + this.option.elem).find(".pear-tab").append(load);
-			var pearLoad = $("#" + this.option.elem).find("#pear-tab-loading" + index);
-			pearLoad.css({
-				display: "block"
-			});
-			index++;
-			setTimeout(function() {
-				pearLoad.fadeOut(500, function() {
-					pearLoad.remove();
-				});
-			}, time);
-			$(".layui-tab[lay-filter='" + elem + "'] .layui-tab-content .layui-show").find("iframe")[0].contentWindow
-				.location.reload(true);
+			tabIframeLoading(this.option.elem);
 		} else {
-			$(".layui-tab[lay-filter='" + this.option.elem + "'] .layui-tab-content .layui-show").find("iframe")[0].contentWindow
-				.location.reload(true);
+			var $iframe = $(".layui-tab[lay-filter='" + this.option.elem + "'] .layui-tab-content .layui-show").find("iframe");
+			$iframe.attr("src", $iframe.attr("src"));
 		}
+	}
+
+	function tabIframeLoading(elem, id) {
+		var load = '<div id="pear-tab-loading' + index + '" class="pear-tab-loading">' +
+			'<div class="ball-loader">' +
+			'<span></span><span></span><span></span><span></span>' +
+			'</div>' +
+			'</div>'
+		var $iframe = $(".layui-tab[lay-filter='" + elem + "'] .layui-tab-content .layui-show").find("iframe");
+		if(id){
+			$iframe = $(".layui-tab[lay-filter='" + elem + "'] .layui-tab-content").find("iframe[id='"+ id +"']");
+		}
+		// loading 和 iframe 同级处理, 避免一个 tab 加载,其它 tab 无法查看的问题
+		$iframe.parent().append(load);
+		var pearLoad = $("#" + elem).find("#pear-tab-loading" + index);
+		pearLoad.css({ display: "block" });
+		index++;
+		$iframe.attr("src", $iframe.attr("src")); // 支持跨域刷新 iframe
+		$iframe.load(function () {
+			pearLoad.fadeOut(1000, function () {
+				pearLoad.remove();
+			});
+		})
 	}
 
 
