@@ -66,3 +66,9 @@ textarea::-webkit-input-placeholder {
 .layui-form-select dl::-webkit-scrollbar-corner {
 	background: #f6f6f6;
 }
+
+/* layui 2.6.9 样式变化 */
+.layui-form-select dl dd.layui-this{
+  background-color: #F6F6F6;
+	font-weight: 700;
+}
