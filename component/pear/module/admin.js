@@ -515,7 +515,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 			var createList = function (data) {
 				var _listHtml = '';
 				$.each(data, function (index, item) {
-					_listHtml += '<li smenu-id=' + item.info.id + ' smenu-icon=' + item.info.icon + ' smenu-url=' + item.info.href + ' smenu-title=' + item.info.title + '>';
+					_listHtml += '<li smenu-id=' + item.info.id + ' smenu-icon=' + item.info.icon + ' smenu-url=' + item.info.href + ' smenu-title=' + item.info.title + ' smenu-type=' + item.info.type + '>';
 					_listHtml += '  <span><i style="margin-right:10px" class=" ' + item.info.icon + '"></i>' + item.path + '</span>';
 					_listHtml += '  <i class="layui-icon layui-icon-right"></i>';
 					_listHtml += '</li>'
@@ -585,13 +585,17 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 						var menuUrl = $(this).attr("smenu-url");
 						var menuIcon = $(this).attr("smenu-icon");
 						var menuTitle = $(this).attr("smenu-title");
+						var menuType = $(this).attr("smenu-type");
+						var openableWindow = menuType === "1" || menuType === 1;
 						
 						if(sideMenu.isCollapse){
 							collapse();
 						}
-						
-						pearAdmin.jump(menuId,menuTitle,menuUrl)
-						
+						if (openableWindow) {
+							pearAdmin.jump(menuId, menuTitle, menuUrl)
+						} else {
+							sideMenu.selectItem(menuId);
+						}
 						compatible();
 						layer.close(layeridx);
 					})
@@ -604,15 +608,24 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 					})
 
 					// 监听键盘事件 
-					// Enter:13 Spacebar:32 UpArrow:38 DownArrow:40
+					// Enter:13 Spacebar:32 UpArrow:38 DownArrow:40 Esc:27
 					$(document).off("keydown").keydown(function (e) {
 						if (e.keyCode === 13 || e.keyCode === 32) {
 							e.preventDefault();
 							var menuId = $(".menu-search-list li.this").attr("smenu-id");
+							var menuUrl = $(".menu-search-list li.this").attr("smenu-url");
+							var menuTitle = $(".menu-search-list li.this").attr("smenu-title");
+							var menuType = $(".menu-search-list li.this").attr("smenu-type");
+							var openableWindow = menuType === "1" || menuType === 1;
 							if (sideMenu.isCollapse) {
 								collapse();
 							}
-							sideMenu.selectItem(menuId);
+							if (openableWindow) {
+								pearAdmin.jump(menuId, menuTitle, menuUrl)
+							} else {
+								sideMenu.selectItem(menuId);
+							}
+							compatible();
 							layer.close(layeridx);
 						}else if(e.keyCode === 38){
 							e.preventDefault();
@@ -632,6 +645,9 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 							}else{
 								$list.children().first().addClass("this");
 							}
+						}else if(e.keyCode === 27){
+							e.preventDefault();
+							layer.close(layeridx);
 						}
 					})
 				}
