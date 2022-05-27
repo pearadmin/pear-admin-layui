@@ -1019,7 +1019,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 			}
 		},50));
 
-		function debounce(fn,await) {
+		function debounce(fn, awaitTime) {
 			var timerID = null
 			return function () {
 				var arg = arguments[0]
@@ -1028,7 +1028,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 				}
 				timerID = setTimeout(function () {
 					fn(arg)
-				}, await)
+				}, awaitTime)
 			}
 		}
 		exports('admin', pearAdmin);
