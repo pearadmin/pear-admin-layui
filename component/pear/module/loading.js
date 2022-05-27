@@ -4,15 +4,11 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
     var MOD_NAME = 'loading',
         $ = layui.jquery,
 		element = layui.element;
-		
     var pearOper = new function () {
-        
 		this.blockRemove = function(dom,time){
 			Notiflix.Block.Remove(dom, time);
 		}
-		
 		this.block = function(option){
-			
 			if(option.type==1){
 				Notiflix.Block.Standard(
 				option.elem
@@ -29,7 +25,6 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 				,option.msg);
 			}
 			else if(option.type==4){
-				
 				Notiflix.Block.Arrows(
 				option.elem
 				,option.msg);
@@ -45,46 +40,45 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 				,option.msg);
 			}
 		}
-		
 		this.report = function(option){
 			if(option.type=="success"){
 				Notiflix.Report.Success(
 				    option.title,
-				    option.message,'确认');	
+				    option.message,'确认');
 			}else if(option.type=="failure"){
 				Notiflix.Report.Failure(
 				    option.title,
-				    option.message,'确认');	
+				    option.message,'确认');
 			}else if(option.type=="warning"){
 				Notiflix.Report.Warning(
 				    option.title,
-				    option.message,'确认');	
+				    option.message,'确认');
 			}else if(option.type=="info"){
 				Notiflix.Report.Info(
 				    option.title,
-				    option.message,'确认');	
+				    option.message,'确认');
 			}
 		}
-		
+
 		this.notice = function(option){
 			Notiflix.Notify.Init({
 				position:option.position?"right-top":option.position,
 				});
 			if(option.type=="success"){
-				
+
 				Notiflix.Notify.Success(option.title);
 			}else if(option.type=="failure"){
-				
+
 				Notiflix.Notify.Failure(option.title);
 			}else if(option.type=="warning"){
-				
-				Notiflix.Notify.Warning(option.title);	
+
+				Notiflix.Notify.Warning(option.title);
 			}else if(option.type=="info"){
-				
-				Notiflix.Notify.Info(option.title);	
+
+				Notiflix.Notify.Info(option.title);
 			}
 		}
-		
+
 		this.confirm = function(option){
 			Notiflix.Confirm.Show(
 			option.title,
@@ -95,7 +89,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 			option.cancle
 			);
 		}
-		
+
 		this.drawer = function(position,dom,distance){
 			var _right = new mSlider({
 			    dom: dom,
@@ -104,11 +98,11 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 			});
 		    _right.open();
 		}
-		
+
 		this.loadRemove = function(time){
 			Notiflix.Loading.Remove(time);
 		}
-		
+
 		this.Load = function(type,message){
 			if(type==1){
 				Notiflix.Loading.Standard(message);
@@ -122,27 +116,27 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 				Notiflix.Loading.Pulse(message);
 			}
 		}
-		
+
 		this.msg = function(option){
 			if(option.type=="success"){
-						   
+
 						   layer.msg(option.title,{icon:1,time:option.time},option.callback);
-						   
+
 			}else if(option.type=="failure"){
-						   
+
 						   layer.msg(option.title,{icon:2,time:option.time},option.callback);
-						   
+
 			}else if(option.type=="warning"){
-						   
+
 						   layer.msg(option.title,{icon:3,time:option.time},option.callback);
-						   
+
 			}else if(option.type=="info"){
-						   
+
 						   layer.msg(option.title,{icon:4,time:option.time},option.callback);
 			}
 		}
     };
-	
+
 	// Notiflix: Notify Default Settings on
 	var notifySettings = {
 	    wrapID: 'NotiflixNotifyWrap', // can not customizable
@@ -159,7 +153,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	    plainText: true,
 	    showOnlyTheLastOne: false,
 	    clickToClose: false,
-	
+
 	    ID: 'NotiflixNotify',
 	    className: 'notiflix-notify',
 	    zindex: 4001,
@@ -174,7 +168,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	    useFontAwesome: false,
 	    fontAwesomeIconStyle: 'basic', // 'basic' - 'shadow'
 	    fontAwesomeIconSize: '34px',
-	
+
 	    success: {
 	        background: '#32c682',
 	        textColor: '#fff',
@@ -183,7 +177,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	        fontAwesomeClassName: 'fas fa-check-circle',
 	        fontAwesomeIconColor: 'rgba(0,0,0,0.2)',
 	    },
-	
+
 	    failure: {
 	        background: '#ff5549',
 	        textColor: '#fff',
@@ -192,7 +186,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	        fontAwesomeClassName: 'fas fa-times-circle',
 	        fontAwesomeIconColor: 'rgba(0,0,0,0.2)',
 	    },
-	
+
 	    warning: {
 	        background: '#eebf31',
 	        textColor: '#fff',
@@ -201,7 +195,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	        fontAwesomeClassName: 'fas fa-exclamation-circle',
 	        fontAwesomeIconColor: 'rgba(0,0,0,0.2)',
 	    },
-	
+
 	    info: {
 	        background: '#26c0d3',
 	        textColor: '#fff',
@@ -212,7 +206,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	    },
 	};
 	// Notiflix: Notify Default Settings off
-	
+
 	// Notiflix: Report Default Settings on
 	var reportSettings = {
 	    ID: 'NotiflixReportWrap', // can not customizable
@@ -237,7 +231,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	    cssAnimation: true,
 	    cssAnimationDuration: 360,
 	    cssAnimationStyle: 'fade', // 'fade' - 'zoom'
-	
+
 	    success: {
 	        svgColor: '#32c682',
 	        titleColor: '#1e1e1e',
@@ -245,7 +239,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	        buttonBackground: '#32c682',
 	        buttonColor: '#fff',
 	    },
-	
+
 	    failure: {
 	        svgColor: '#ff5549',
 	        titleColor: '#1e1e1e',
@@ -253,7 +247,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	        buttonBackground: '#ff5549',
 	        buttonColor: '#fff',
 	    },
-	
+
 	    warning: {
 	        svgColor: '#eebf31',
 	        titleColor: '#1e1e1e',
@@ -261,7 +255,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	        buttonBackground: '#eebf31',
 	        buttonColor: '#fff',
 	    },
-	
+
 	    info: {
 	        svgColor: '#26c0d3',
 	        titleColor: '#1e1e1e',
@@ -271,7 +265,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	    },
 	};
 	// Notiflix: Report Default Settings off
-	
+
 	// Notiflix: Confirm Default Settings on
 	var confirmSettings = {
 	    ID: 'NotiflixConfirmWrap', // can not customizable
@@ -291,15 +285,15 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	    cssAnimationStyle: 'fade', // 'zoom' - 'fade'
 	    cssAnimationDuration: 300,
 	    plainText: true,
-	
+
 	    titleColor: '#32c682',
 	    titleFontSize: '16px',
 	    titleMaxLength: 34,
-	
+
 	    messageColor: '#1e1e1e',
 	    messageFontSize: '14px',
 	    messageMaxLength: 110,
-	
+
 	    buttonsFontSize: '15px',
 	    buttonsMaxLength: 34,
 	    okButtonColor: '#f8f8f8',
@@ -308,7 +302,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	    cancelButtonBackground: '#a9a9a9',
 	};
 	// Notiflix: Confirm Default Settings off
-	
+
 	// Notiflix: Loading Default Settings on
 	var loadingSettings = {
 	    ID: 'NotiflixLoadingWrap', // can not customizable
@@ -330,7 +324,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	    messageColor: '#dcdcdc',
 	};
 	// Notiflix: Loading Default Settings off
-	
+
 	// Notiflix: Block Default Settings on
 	var blockSettings = {
 	    ID: 'NotiflixBlockWrap', // can not customizable
@@ -351,7 +345,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	    messageColor: '#383838',
 	};
 	// Notiflix: Block Default Settings off
-	
+
 	// Notiflix: Extend on
 	var extendNotiflix = function () {
 	    // variables
@@ -383,7 +377,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	    return extended;
 	};
 	// Notiflix: Extend off
-	
+
 	// Notiflix: Plaintext on
 	var notiflixPlaintext = function (html) {
 	    var htmlPool = document.createElement('div');
@@ -391,7 +385,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	    return htmlPool.textContent || htmlPool.innerText || '';
 	};
 	// Notiflix: Plaintext off
-	
+
 	// Notiflix: GoogleFont on
 	var notiflixGoogleFont = function (use, family) {
 	    if (!document.getElementById('NotiflixQuicksand') && use && (family && typeof family === 'string' && family.toLowerCase() === 'quicksand')) {
@@ -402,7 +396,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	        var dnsFragment = dnsRange.createContextualFragment(dns);
 	        document.head.appendChild(dnsFragment);
 	        // google fonts dns prefetch off
-	
+
 	        // google fonts style on
 	        var font = '<link id="NotiflixQuicksand" href="https://fonts.googleapis.com/css?family=Quicksand:300,400,500,700&amp;subset=latin-ext" rel="stylesheet" />';
 	        var fontRange = document.createRange();
@@ -413,19 +407,19 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	    }
 	};
 	// Notiflix: GoogleFont off
-	
+
 	// Notiflix: Console Error on
 	var notiflixConsoleError = function (title, message) {
 	    return console.error('%c ' + title + ' ', 'padding:2px;border-radius:20px;color:#fff;background:#ff5549', '\n' + message + '\nVisit documentation page to learn more: https://www.notiflix.com/documentation');
 	};
 	// Notiflix: Console Error off
-	
+
 	// Notiflix: Console Log on
 	var notiflixConsoleLog = function (title, message) {
 	    return console.log('%c ' + title + ' ', 'padding:2px;border-radius:20px;color:#fff;background:#26c0d3', '\n' + message + '\nVisit documentation page to learn more: https://www.notiflix.com/documentation');
 	};
 	// Notiflix: Console Log off
-	
+
 	// Notiflix: Main on
 	var newNotifySettings;
 	var newReportSettings;
@@ -435,7 +429,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	var Notiflix = {
 	    // Notify on
 	    Notify: {
-	
+
 	        // Init
 	        Init: function (userNotifyOpt) {
 	            // extend options
@@ -443,7 +437,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	            // use GoogleFonts if "Quicksand"
 	            notiflixGoogleFont(newNotifySettings.useGoogleFont, newNotifySettings.fontFamily);
 	        },
-	
+
 	        // Merge First Init
 	        Merge: function (userNotifyExtend) {
 	            // if initialized already
@@ -456,7 +450,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	                return false;
 	            }
 	        },
-	
+
 	        // Display Notification: Success
 	        Success: function (message, callback) {
 	            // if not initialized pretend like init
@@ -466,7 +460,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	            var theType = newNotifySettings.success;
 	            NotiflixNotify(message, callback, theType, 'Success');
 	        },
-	
+
 	        // Display Notification: Failure
 	        Failure: function (message, callback) {
 	            // if not initialized pretend like init
@@ -476,7 +470,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	            var theType = newNotifySettings.failure;
 	            NotiflixNotify(message, callback, theType, 'Failure');
 	        },
-	
+
 	        // Display Notification: Warning
 	        Warning: function (message, callback) {
 	            // if not initialized pretend like init
@@ -486,7 +480,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	            var theType = newNotifySettings.warning;
 	            NotiflixNotify(message, callback, theType, 'Warning');
 	        },
-	
+
 	        // Display Notification: Info
 	        Info: function (message, callback) {
 	            // if not initialized pretend like init
@@ -498,10 +492,10 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	        },
 	    },
 	    // Notify off
-	
+
 	    // Report on
 	    Report: {
-	
+
 	        // Init
 	        Init: function (userReportOpt) {
 	            // extend options
@@ -509,7 +503,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	            // use GoogleFonts if "Quicksand"
 	            notiflixGoogleFont(newReportSettings.useGoogleFont, newReportSettings.fontFamily);
 	        },
-	
+
 	        // Merge First Init
 	        Merge: function (userReportExtend) {
 	            // if initialized already
@@ -522,7 +516,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	                return false;
 	            }
 	        },
-	
+
 	        // Display Report: Success
 	        Success: function (title, message, buttonText, buttonCallback) {
 	            // if not initialized pretend like init
@@ -532,7 +526,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	            var theType = newReportSettings.success;
 	            NotiflixReport(title, message, buttonText, buttonCallback, theType, 'Success');
 	        },
-	
+
 	        // Display Report: Failure
 	        Failure: function (title, message, buttonText, buttonCallback) {
 	            // if not initialized pretend like init
@@ -542,7 +536,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	            var theType = newReportSettings.failure;
 	            NotiflixReport(title, message, buttonText, buttonCallback, theType, 'Failure');
 	        },
-	
+
 	        // Display Report: Warning
 	        Warning: function (title, message, buttonText, buttonCallback) {
 	            // if not initialized pretend like init
@@ -552,7 +546,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	            var theType = newReportSettings.warning;
 	            NotiflixReport(title, message, buttonText, buttonCallback, theType, 'Warning');
 	        },
-	
+
 	        // Display Report: Info
 	        Info: function (title, message, buttonText, buttonCallback) {
 	            // if not initialized pretend like init
@@ -564,10 +558,10 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	        },
 	    },
 	    // Report off
-	
+
 	    // Confirm on
 	    Confirm: {
-	
+
 	        // Init
 	        Init: function (userConfirmOpt) {
 	            // extend options
@@ -575,7 +569,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	            // use GoogleFonts if "Quicksand"
 	            notiflixGoogleFont(newConfirmSettings.useGoogleFont, newConfirmSettings.fontFamily);
 	        },
-	
+
 	        // Merge First Init
 	        Merge: function (userConfirmExtend) {
 	            // if initialized already
@@ -588,7 +582,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	                return false;
 	            }
 	        },
-	
+
 	        // Display Confirm: Show
 	        Show: function (title, message, okText, cancelText, okCallback, cancelCallback) {
 	            if (!title) { title = 'Notiflix Confirm'; }
@@ -601,10 +595,10 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	        },
 	    },
 	    // Confirm off
-	
+
 	    // Loading on
 	    Loading: {
-	
+
 	        // Init
 	        Init: function (userLoadingOpt) {
 	            // extend options
@@ -612,7 +606,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	            // use GoogleFonts if "Quicksand"
 	            notiflixGoogleFont(newLoadingSettings.useGoogleFont, newLoadingSettings.fontFamily);
 	        },
-	
+
 	        // Merge First Init
 	        Merge: function (userLoadingExtend) {
 	            // if initialized already
@@ -625,63 +619,63 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	                return false;
 	            }
 	        },
-	
+
 	        // Display Loading: Standard
 	        Standard: function (message) {
 	            NotiflixLoading(message, 'standard', true, 0); // true => display || 0 => delay
 	        },
-	
+
 	        // Display Loading: Hourglass
 	        Hourglass: function (message) {
 	            NotiflixLoading(message, 'hourglass', true, 0); // true => display || 0 => delay
 	        },
-	
+
 	        // Display Loading: Circle
 	        Circle: function (message) {
 	            NotiflixLoading(message, 'circle', true, 0); // true => display || 0 => delay
 	        },
-	
+
 	        // Display Loading: Arrows
 	        Arrows: function (message) {
 	            NotiflixLoading(message, 'arrows', true, 0); // true => display || 0 => delay
 	        },
-	
+
 	        // Display Loading: Dots
 	        Dots: function (message) {
 	            NotiflixLoading(message, 'dots', true, 0); // true => display || 0 => delay
 	        },
-	
+
 	        // Display Loading: Pulse
 	        Pulse: function (message) {
 	            NotiflixLoading(message, 'pulse', true, 0); // true => display || 0 => delay
 	        },
-	
+
 	        // Display Loading: Custom
 	        Custom: function (message) {
 	            NotiflixLoading(message, 'custom', true, 0); // true => display || 0 => delay
 	        },
-	
+
 	        // Display Loading: Notiflix
 	        Notiflix: function (message) {
 	            NotiflixLoading(message, 'notiflix', true, 0); // true => display || 0 => delay
 	        },
-	
+
 	        // Remove Loading
 	        Remove: function (theDelay) {
 	            if (!theDelay) { theDelay = 0; }
 	            NotiflixLoading(false, false, false, theDelay); // false = Remove
 	        },
-	
+
 	        // Change The Message
 	        Change: function (newMessage) {
 	            NotiflixLoadingChange(newMessage);
 	        },
 	    },
 	    // Loading off
-	
+
 	    // Block on
 	    Block: {
-	
+
 	        // Initialize
 	        Init: function (userBlockOpt) {
 	            // extend options
@@ -689,7 +683,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	            // use GoogleFonts if "Quicksand"
 	            notiflixGoogleFont(newBlockSettings.useGoogleFont, newBlockSettings.fontFamily);
 	        },
-	
+
 	        // Merge First Initialize
 	        Merge: function (userBlockExtend) {
 	            // if initialized already
@@ -702,49 +696,49 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	                return false;
 	            }
 	        },
-	
+
 	        // Display Block: Standard
 	        Standard: function (selector, message) {
 	            var block = true;
 	            var theIcon = 'standard';
 	            NotiflixBlockUnblockElement(block, selector, theIcon, message);
 	        },
-	
+
 	        // Display Block: Hourglass
 	        Hourglass: function (selector, message) {
 	            var block = true;
 	            var theIcon = 'hourglass';
 	            NotiflixBlockUnblockElement(block, selector, theIcon, message);
 	        },
-	
+
 	        // Display Block: Circle
 	        Circle: function (selector, message) {
 	            var block = true;
 	            var theIcon = 'circle';
 	            NotiflixBlockUnblockElement(block, selector, theIcon, message);
 	        },
-	
+
 	        // Display Block: Arrows
 	        Arrows: function (selector, message) {
 	            var block = true;
 	            var theIcon = 'arrows';
 	            NotiflixBlockUnblockElement(block, selector, theIcon, message);
 	        },
-	
+
 	        // Display Block: Dots
 	        Dots: function (selector, message) {
 	            var block = true;
 	            var theIcon = 'dots';
 	            NotiflixBlockUnblockElement(block, selector, theIcon, message);
 	        },
-	
+
 	        // Display Block: Pulse
 	        Pulse: function (selector, message) {
 	            var block = true;
 	            var theIcon = 'pulse';
 	            NotiflixBlockUnblockElement(block, selector, theIcon, message);
 	        },
-	
+
 	        // Remove Block
 	        Remove: function (selector, delay) {
 	            var block = false;
@@ -756,54 +750,54 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	    // Block off
 	};
 	// Notiflix: Main off
-	
-	
+
+
 	// Notiflix: Notify Single on
 	var notiflixNotifyCount = 0;
 	var NotiflixNotify = function (message, callback, theType, staticType) {
 	    if (arguments && arguments.length === 4) {
-	
+
 	        // notify counter on
 	        notiflixNotifyCount++;
 	        // notify counter off
-	
+
 	        // if no message on
 	        if (!message) {
 	            message = 'Notiflix ' + staticType;
 	        }
 	        // if no message off
-	
-	        // if plainText true = HTML tags not allowed on      
+
+	        // if plainText true = HTML tags not allowed on
 	        if (newNotifySettings.plainText) {
 	            message = notiflixPlaintext(message); // message plain text
 	        }
 	        // if plainText true = HTML tags not allowed off
-	
+
 	        // if plainText false but the message length more than messageMaxLength = HTML tags error on
 	        if (!newNotifySettings.plainText && message.length > newNotifySettings.messageMaxLength) {
 	            Notiflix.Notify.Merge({ closeButton: true, plainText: false, });
 	            message = '<b>HTML Tags Error:</b> Your content length is more than "messageMaxLength" option.'; // message html error
 	        }
 	        // if plainText false but the message length more than messageMaxLength = HTML tags error off
-	
+
 	        // message max length substring on
 	        if (message.length > newNotifySettings.messageMaxLength) {
 	            message = message.substring(0, newNotifySettings.messageMaxLength) + '...';
 	        }
 	        // message max length substring off
-	
+
 	        // font awesome icon style on
 	        if (newNotifySettings.fontAwesomeIconStyle === 'shadow') {
 	            theType.fontAwesomeIconColor = theType.background;
 	        }
 	        // font awesome icon style off
-	
+
 	        // if cssAnimaion false -> duration on
 	        if (!newNotifySettings.cssAnimation) {
 	            newNotifySettings.cssAnimationDuration = 0;
 	        }
 	        // if cssAnimaion false -> duration off
-	
+
 	        // notify wrap on
 	        var docBody = document.body;
 	        var ntflxNotifyWrap = document.createElement('div');
@@ -811,7 +805,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	        ntflxNotifyWrap.style.width = newNotifySettings.width;
 	        ntflxNotifyWrap.style.zIndex = newNotifySettings.zindex;
 	        ntflxNotifyWrap.style.opacity = newNotifySettings.opacity;
-	
+
 	        // wrap position on
 	        if (newNotifySettings.position === 'right-bottom') {
 	            ntflxNotifyWrap.style.right = newNotifySettings.distance;
@@ -835,7 +829,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	            ntflxNotifyWrap.style.bottom = 'auto';
 	        }
 	        // wrap position off
-	
+
 	        // if background overlay true on
 	        var notifyOverlay;
 	        if (newNotifySettings.backOverlay) {
@@ -857,12 +851,12 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	            }
 	        }
 	        // if background overlay true off
-	
+
 	        if (!document.getElementById(ntflxNotifyWrap.id)) {
 	            docBody.appendChild(ntflxNotifyWrap);
 	        }
 	        // notify wrap off
-	
+
 	        // notify content on
 	        var ntflxNotify = document.createElement('div');
 	        ntflxNotify.id = newNotifySettings.ID + '-' + notiflixNotifyCount;
@@ -871,31 +865,31 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	        ntflxNotify.style.color = theType.textColor;
 	        ntflxNotify.style.background = theType.background;
 	        ntflxNotify.style.borderRadius = newNotifySettings.borderRadius;
-	
+
 	        // rtl on
 	        if (newNotifySettings.rtl) {
 	            ntflxNotify.setAttribute('dir', 'rtl');
 	            ntflxNotify.classList.add('rtl-on');
 	        }
 	        // rtl off
-	
+
 	        // font-family on
 	        ntflxNotify.style.fontFamily = '"' + newNotifySettings.fontFamily + '"' + ', sans-serif';
 	        // font-family off
-	
+
 	        // use css animation on
 	        if (newNotifySettings.cssAnimation) {
 	            ntflxNotify.style.animationDuration = newNotifySettings.cssAnimationDuration + 'ms';
 	        }
 	        // use css animation off
-	
+
 	        // close button element on
 	        var closeButtonHTML = '';
 	        if (newNotifySettings.closeButton && !callback) {
 	            closeButtonHTML = '<span class="notify-close-button"><svg class="clck2cls" xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="20px" height="20px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"viewBox="0 0 20 20"xmlns:xlink="http://www.w3.org/1999/xlink"><defs><style type="text/css">.click2close{fill:' + theType.notiflixIconColor + '}</style></defs><g><path class="click2close" d="M0.38 2.19l7.8 7.81 -7.8 7.81c-0.51,0.5 -0.51,1.31 -0.01,1.81 0.25,0.25 0.57,0.38 0.91,0.38 0.34,0 0.67,-0.14 0.91,-0.38l7.81 -7.81 7.81 7.81c0.24,0.24 0.57,0.38 0.91,0.38 0.34,0 0.66,-0.14 0.9,-0.38 0.51,-0.5 0.51,-1.31 0,-1.81l-7.81 -7.81 7.81 -7.81c0.51,-0.5 0.51,-1.31 0,-1.82 -0.5,-0.5 -1.31,-0.5 -1.81,0l-7.81 7.81 -7.81 -7.81c-0.5,-0.5 -1.31,-0.5 -1.81,0 -0.51,0.51 -0.51,1.32 0,1.82z"/></g></svg></span>';
 	        }
 	        // close buttpon element off
-	
+
 	        // use icon on
 	        if (newNotifySettings.useIcon) {
 	            // use font awesome
@@ -925,7 +919,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	        }
 	        // use icon off
 	        // notify content off
-	
+
 	        // notify append or prepend on
 	        if (newNotifySettings.position === 'left-bottom' || newNotifySettings.position === 'right-bottom') { // the new one will be first
 	            var notifyWrap = document.getElementById(ntflxNotifyWrap.id);
@@ -933,7 +927,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	        } else {
 	            document.getElementById(ntflxNotifyWrap.id).appendChild(ntflxNotify);
 	        }
-	
+
 	        if (newNotifySettings.useIcon) { // if useIcon, dynamically vertical align the contents
 	            var messageIcon = document.getElementById(ntflxNotify.id).querySelectorAll('.nmi')[0];
 	            var messageIconH = 40;
@@ -954,7 +948,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	            }
 	        }
 	        // notify append or prepend off
-	
+
 	        // remove by timeout or click on
 	        if (document.getElementById(ntflxNotify.id)) {
 	            // set elements on
@@ -965,12 +959,12 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	                removeOverlay = document.getElementById(notifyOverlay.id);
 	            }
 	            // set elements on
-	
+
 	            // timeout vars on
 	            var timeoutHide;
 	            var timeoutRemove;
 	            // timeout vars off
-	
+
 	            // hide notify elm and hide overlay on
 	            var hideNotifyElementsAndOverlay = function () {
 	                removeDiv.classList.add('remove');
@@ -980,7 +974,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	                clearTimeout(timeoutHide);
 	            };
 	            // hide notify elm and hide overlay off
-	
+
 	            // remove notify elm and wrapper on
 	            var removeNotifyElmentsAndWrapper = function () {
 	                var notifyExist = document.getElementById(ntflxNotify.id);
@@ -996,8 +990,8 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	                clearTimeout(timeoutRemove);
 	            };
 	            // remove notify elm and wrapper off
-	
-	            // if close button and callback undefined on            
+
+	            // if close button and callback undefined on
 	            if (newNotifySettings.closeButton && !callback) {
 	                var closeButtonElm = document.getElementById(ntflxNotify.id).querySelectorAll('span.notify-close-button')[0];
 	                closeButtonElm.addEventListener('click', function () {
@@ -1009,7 +1003,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	                });
 	            }
 	            // if close button and callback undefined off
-	
+
 	            // if callback or click to close on
 	            if ((callback && typeof callback === 'function') || newNotifySettings.clickToClose) {
 	                removeDiv.addEventListener('click', function (e) {
@@ -1024,7 +1018,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	                });
 	            }
 	            // if callback or click to close off
-	
+
 	            // else auto remove on
 	            if (!newNotifySettings.closeButton && !callback) {
 	                timeoutHide = setTimeout(function () {
@@ -1037,7 +1031,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	            // else auto remove off
 	        }
 	        // remove by timeout or click off
-	
+
 	        // notify - show only the last one on
 	        if (newNotifySettings.showOnlyTheLastOne && notiflixNotifyCount > 0) {
 	            var allNotifyElmNotTheLastOne = document.querySelectorAll('[id^=' + newNotifySettings.ID + '-]:not([id=' + newNotifySettings.ID + '-' + notiflixNotifyCount + '])');
@@ -1049,17 +1043,17 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	            }
 	        }
 	        // notify - show only the last one off
-	
+
 	    } else {
 	        notiflixConsoleError('Notiflix Error', 'Where is the arguments?');
 	    }
 	};
 	// Notiflix: Notify Single off
-	
-	
+
+
 	// Notiflix: Report Single on
 	var NotiflixReport = function (title, message, buttonText, buttonCallback, theType, staticType) {
-	
+
 	    // check the arguments on
 	    if (!title) { title = 'Notiflix ' + staticType; }
 	    if (!message) {
@@ -1079,7 +1073,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	    if (!buttonText) { buttonText = 'Okay'; }
 	    if (!buttonCallback) { buttonCallback = undefined; }
 	    // check the arguments off
-	
+
 	    // if plainText true = HTML tags not allowed on
 	    if (newReportSettings.plainText) {
 	        title = notiflixPlaintext(title);
@@ -1087,7 +1081,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	        buttonText = notiflixPlaintext(buttonText);
 	    }
 	    // if plainText true = HTML tags not allowed off
-	
+
 	    // if plainText false but the contents length more than *MaxLength = HTML tags error on
 	    if (!newReportSettings.plainText) {
 	        if (title.length > newReportSettings.titleMaxLength) {
@@ -1107,7 +1101,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	        }
 	    }
 	    // if plainText false but the contents length more than *MaxLength = HTML tags error off
-	
+
 	    // max length on
 	    if (title.length > newReportSettings.titleMaxLength) {
 	        title = title.substring(0, newReportSettings.titleMaxLength) + '...';
@@ -1119,13 +1113,13 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	        buttonText = buttonText.substring(0, newReportSettings.buttonMaxLength) + '...';
 	    }
 	    // max length off
-	
+
 	    // if cssAnimaion false -> duration on
 	    if (!newReportSettings.cssAnimation) {
 	        newReportSettings.cssAnimationDuration = 0;
 	    }
 	    // if cssAnimaion false -> duration off
-	
+
 	    // report wrap on
 	    var docBody = document.body;
 	    var ntflxReportWrap = document.createElement('div');
@@ -1135,21 +1129,21 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	    ntflxReportWrap.style.zIndex = newReportSettings.zindex;
 	    ntflxReportWrap.style.borderRadius = newReportSettings.borderRadius;
 	    ntflxReportWrap.style.fontFamily = '"' + newReportSettings.fontFamily + '"' + ', sans-serif';
-	
+
 	    // rtl on
 	    if (newReportSettings.rtl) {
 	        ntflxReportWrap.setAttribute('dir', 'rtl');
 	        ntflxReportWrap.classList.add('rtl-on');
 	    }
 	    // rtl off
-	
+
 	    // overlay on
 	    var reportOverlay = '';
 	    if (newReportSettings.backOverlay) {
 	        reportOverlay = '<div class="' + newReportSettings.className + '-overlay' + (newReportSettings.cssAnimation ? ' with-animation' : '') + '" style="background:' + newReportSettings.backOverlayColor + ';animation-duration:' + newReportSettings.cssAnimationDuration + 'ms;"></div>';
 	    }
 	    // overlay off
-	
+
 	    // svg icon on
 	    var svgIcon = '';
 	    if (staticType === 'Success') {
@@ -1162,25 +1156,25 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	        svgIcon = notiflixReportSvgInfo(newReportSettings.svgSize, theType.svgColor);
 	    }
 	    // svg icon off
-	
+
 	    ntflxReportWrap.innerHTML = reportOverlay + '<div class="' + newReportSettings.className + '-content' + (newReportSettings.cssAnimation ? ' with-animation ' : '') + ' nx-' + newReportSettings.cssAnimationStyle + '" style="background:' + newReportSettings.backgroundColor + '; animation-duration:' + newReportSettings.cssAnimationDuration + 'ms;">' +
 	        '<div style="width:' + newReportSettings.svgSize + '; height:' + newReportSettings.svgSize + ';" class="' + newReportSettings.className + '-icon">' + svgIcon + '</div>' +
 	        '<h5 class="' + newReportSettings.className + '-title" style="font-weight:500; font-size:' + newReportSettings.titleFontSize + '; color:' + theType.titleColor + ';">' + title + '</h5>' +
 	        '<p class="' + newReportSettings.className + '-message" style="font-size:' + newReportSettings.messageFontSize + '; color:' + theType.messageColor + ';">' + message + '</p>' +
 	        '<a id="NXReportButton" class="' + newReportSettings.className + '-button" style="font-weight:500; font-size:' + newReportSettings.buttonFontSize + '; background:' + theType.buttonBackground + '; color:' + theType.buttonColor + ';">' + buttonText + '</a>' +
 	        '</div>';
-	
+
 	    // if there is no report element
 	    if (!document.getElementById(ntflxReportWrap.id)) {
 	        // append
 	        docBody.appendChild(ntflxReportWrap);
-	
-	        // vertical align on            
+
+	        // vertical align on
 	        var windowH = Math.round(window.innerHeight);
 	        var reportH = Math.round(document.getElementById(ntflxReportWrap.id).offsetHeight);
 	        ntflxReportWrap.style.top = (windowH - reportH) / 2 + 'px';
 	        // vertical align off
-	
+
 	        // callback on
 	        var getReportWrap = document.getElementById(ntflxReportWrap.id);
 	        var reportButton = document.getElementById('NXReportButton');
@@ -1190,7 +1184,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	                buttonCallback();
 	            }
 	            // if callback off
-	
+
 	            // remove element on
 	            getReportWrap.classList.add('remove');
 	            var timeout = setTimeout(function () {
@@ -1202,21 +1196,21 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	            // remove element off
 	        });
 	        // callback off
-	
+
 	    }
 	    // report wrap off
-	
+
 	};
 	// Notiflix: Report Single off
-	
-	
+
+
 	// Notiflix: Confirm Single on
 	var NotiflixConfirm = function (title, message, okButtonText, cancelButtonText, okButtonCallback, cancelButtonCallback) {
 	    // if not initialized pretend like init
 	    if (!newConfirmSettings) {
 	        Notiflix.Confirm.Init({});
 	    }
-	
+
 	    // if plainText true => HTML tags not allowed on
 	    if (newConfirmSettings.plainText) {
 	        title = notiflixPlaintext(title);
@@ -1225,7 +1219,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	        cancelButtonText = notiflixPlaintext(cancelButtonText);
 	    }
 	    // if plainText true => HTML tags not allowed off
-	
+
 	    // if plainText false but the contents length more than *MaxLength = HTML tags error on
 	    if (!newConfirmSettings.plainText) {
 	        if (title.length > newConfirmSettings.titleMaxLength) {
@@ -1248,7 +1242,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	        }
 	    }
 	    // if plainText false but the contents length more than *MaxLength = HTML tags error off
-	
+
 	    // max length on
 	    if (title.length > newConfirmSettings.titleMaxLength) {
 	        title = title.substring(0, newConfirmSettings.titleMaxLength) + '...';
@@ -1263,13 +1257,13 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	        cancelButtonText = cancelButtonText.substring(0, newConfirmSettings.buttonsMaxLength) + '...';
 	    }
 	    // max length off
-	
+
 	    // if cssAnimaion false -> duration on
 	    if (!newConfirmSettings.cssAnimation) {
 	        newConfirmSettings.cssAnimationDuration = 0;
 	    }
 	    // if cssAnimaion false -> duration off
-	
+
 	    // confirm wrap on
 	    var docBody = document.body;
 	    var ntflxConfirmWrap = document.createElement('div');
@@ -1277,32 +1271,32 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	    ntflxConfirmWrap.className = newConfirmSettings.className + (newConfirmSettings.cssAnimation ? ' with-animation nx-' + newConfirmSettings.cssAnimationStyle : '');
 	    ntflxConfirmWrap.style.width = newConfirmSettings.width;
 	    ntflxConfirmWrap.style.zIndex = newConfirmSettings.zindex;
-	
+
 	    // rtl on
 	    if (newConfirmSettings.rtl) {
 	        ntflxConfirmWrap.setAttribute('dir', 'rtl');
 	        ntflxConfirmWrap.classList.add('rtl-on');
 	    }
 	    // rtl off
-	
+
 	    // font-family on
 	    ntflxConfirmWrap.style.fontFamily = '"' + newConfirmSettings.fontFamily + '"' + ', sans-serif';
 	    // font-family off
-	
+
 	    // if background overlay true on
 	    var confirmOverlay = '';
 	    if (newConfirmSettings.backOverlay) {
 	        confirmOverlay = '<div class="' + newConfirmSettings.className + '-overlay' + (newConfirmSettings.cssAnimation ? ' with-animation' : '') + '" style="background:' + newConfirmSettings.backOverlayColor + ';animation-duration:' + newConfirmSettings.cssAnimationDuration + 'ms;"></div>';
 	    }
 	    // if background overlay true off
-	
+
 	    // if have a callback => add cancel button on
 	    var cancelButtonHTML = '';
 	    if (okButtonCallback) {
 	        cancelButtonHTML = '<a id="NXConfirmButtonCancel" class="confirm-button-cancel" style="color:' + newConfirmSettings.cancelButtonColor + ';background:' + newConfirmSettings.cancelButtonBackground + ';font-size:' + newConfirmSettings.buttonsFontSize + ';">' + cancelButtonText + '</a>';
 	    }
 	    // if have a callback => add cancel button off
-	
+
 	    ntflxConfirmWrap.innerHTML = confirmOverlay +
 	        '<div class="' + newConfirmSettings.className + '-content" style="background:' + newConfirmSettings.backgroundColor + '; animation-duration:' + newConfirmSettings.cssAnimationDuration + 'ms; border-radius: ' + newConfirmSettings.borderRadius + ';">' +
 	        '<div class="' + newConfirmSettings.className + '-head">' +
@@ -1315,12 +1309,12 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	        '</div>' +
 	        '</div>';
 	    // confirm wrap off
-	
+
 	    // if there is no confirm box on
 	    if (!document.getElementById(ntflxConfirmWrap.id)) {
 	        docBody.appendChild(ntflxConfirmWrap);
-	
-	        // position on                  
+
+	        // position on
 	        if (newConfirmSettings.position === 'center') { // if center-center
 	            var windowH = Math.round(window.innerHeight);
 	            var confirmH = Math.round(document.getElementById(ntflxConfirmWrap.id).offsetHeight);
@@ -1361,11 +1355,11 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	            ntflxConfirmWrap.style.margin = 'auto';
 	        }
 	        // position off
-	
+
 	        // buttons listener on
 	        var confirmCloseWrap = document.getElementById(ntflxConfirmWrap.id);
 	        var okButton = document.getElementById('NXConfirmButtonOk');
-	
+
 	        // ok button listener on
 	        okButton.addEventListener('click', function () {
 	            // if ok callback && if ok callback is a function
@@ -1373,7 +1367,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	                okButtonCallback();
 	            }
 	            confirmCloseWrap.classList.add('remove');
-	
+
 	            var timeout = setTimeout(function () {
 	                if (confirmCloseWrap.parentNode !== null) {
 	                    confirmCloseWrap.parentNode.removeChild(confirmCloseWrap);
@@ -1382,7 +1376,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	            }, newConfirmSettings.cssAnimationDuration);
 	        });
 	        // ok button listener off
-	
+
 	        // if ok callback && if ok callback a function => add Cancel Button listener on
 	        if (okButtonCallback && typeof okButtonCallback === 'function') {
 	            // cancel button listener on
@@ -1393,7 +1387,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	                    cancelButtonCallback();
 	                }
 	                confirmCloseWrap.classList.add('remove');
-	
+
 	                var timeout = setTimeout(function () {
 	                    if (confirmCloseWrap.parentNode !== null) {
 	                        confirmCloseWrap.parentNode.removeChild(confirmCloseWrap);
@@ -1409,8 +1403,8 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	    // if there is no confirm box off
 	};
 	// Notiflix: Confirm Single off
-	
-	
+
+
 	// Notiflix: Loading Single on
 	var NotiflixLoading = function (message, iconType, display, theDelay) {
 	    // if not initialized pretend like init
@@ -1423,7 +1417,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	    }
 	    // show loading
 	    if (display) {
-	
+
 	        // if message settings on
 	        if (message.toString().length > newLoadingSettings.messageMaxLength) {
 	            message = notiflixPlaintext(message).toString().substring(0, newLoadingSettings.messageMaxLength) + '...';
@@ -1438,13 +1432,13 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	            messageHTML = '<p id="' + newLoadingSettings.messageID + '" class="loading-message" style="color:' + newLoadingSettings.messageColor + ';font-size:' + newLoadingSettings.messageFontSize + ';height:' + messageHeight + '; top:' + messagePosTop + ';">' + message + '</p>';
 	        }
 	        // if message settings off
-	
+
 	        // if cssAnimaion false -> duration on
 	        if (!newLoadingSettings.cssAnimation) {
 	            newLoadingSettings.cssAnimationDuration = 0;
 	        }
 	        // if cssAnimaion false -> duration off
-	
+
 	        // svgIcon on
 	        var svgIcon = '';
 	        if (iconType === 'standard') {
@@ -1473,7 +1467,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	        }
 	        var svgIconHTML = '<div style="top:' + svgPosTop + '; width:' + newLoadingSettings.svgSize + '; height:' + newLoadingSettings.svgSize + ';" class="' + newLoadingSettings.className + '-icon' + (message.length > 0 ? ' with-message' : '') + '">' + svgIcon + '</div>';
 	        // svgIcon off
-	
+
 	        // loading wrap on
 	        var docBody = document.body;
 	        var ntflxLoadingWrap = document.createElement('div');
@@ -1483,23 +1477,23 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	        ntflxLoadingWrap.style.background = newLoadingSettings.backgroundColor;
 	        ntflxLoadingWrap.style.animationDuration = newLoadingSettings.cssAnimationDuration + 'ms';
 	        ntflxLoadingWrap.style.fontFamily = '"' + newLoadingSettings.fontFamily + '"' + ', sans-serif';
-	
+
 	        // rtl on
 	        if (newLoadingSettings.rtl) {
 	            ntflxLoadingWrap.setAttribute('dir', 'rtl');
 	            ntflxLoadingWrap.classList.add('rtl-on');
 	        }
 	        // rtl off
-	
+
 	        // append on
 	        ntflxLoadingWrap.innerHTML = svgIconHTML + messageHTML;
-	
+
 	        // if there is no loading element
 	        if (!document.getElementById(ntflxLoadingWrap.id)) {
 	            // append
 	            docBody.appendChild(ntflxLoadingWrap);
-	
-	            // if click to close           
+
+	            // if click to close
 	            if (newLoadingSettings.clickToClose) {
 	                var loadingWrapElm = document.getElementById(ntflxLoadingWrap.id);
 	                loadingWrapElm.addEventListener('click', function () {
@@ -1514,7 +1508,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	            }
 	        }
 	        // append off
-	
+
 	    }
 	    // remove loading
 	    else {
@@ -1535,7 +1529,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	    }
 	};
 	// Notiflix: Loading Single off
-	
+
 	// Notiflix: Loading Change Message on
 	var NotiflixLoadingChange = function (newMessage) {
 	    // check the new message
@@ -1553,7 +1547,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	                newMessage = notiflixPlaintext(newMessage).toString();
 	            }
 	            // max length off
-	
+
 	            // there is a message element
 	            var oldMessageElm = document.getElementById(loadingSettings.ID).getElementsByTagName('p')[0];
 	            if (oldMessageElm) {
@@ -1576,7 +1570,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	                var messageWrap = document.getElementById(loadingSettings.ID);
 	                messageWrap.appendChild(newMessageHTML);
 	                // create a new message element off
-	
+
 	                // vertical align svg on
 	                var svgDivElm = document.getElementById(loadingSettings.ID).getElementsByTagName('div')[0];
 	                var svgNewPosTop = '-' + Math.round(intSvgSize - (intSvgSize / 4)).toString() + 'px';
@@ -1591,76 +1585,76 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	    }
 	};
 	// Notiflix: Loading Change Message off
-	
-	
+
+
 	// Notiflix: Block or Unblock Element on
 	var notiflixBlockElementCounter = 0;
 	var NotiflixBlockUnblockElement = function (block, selector, iconType, message, theDelay) {
-	
+
 	    // check typeof selector on
 	    if (typeof selector !== 'string') {
 	        notiflixConsoleError('Notiflix Error', 'The selector must be a String.');
 	        return false;
 	    }
 	    // check typeof selector off
-	
+
 	    // check the delay on
 	    if (typeof theDelay !== 'number') {
 	        theDelay = 0;
 	    }
 	    // check the delay off
-	
+
 	    // check the selector on
 	    var getSelector = document.querySelectorAll(selector);
 	    if (getSelector.length > 0) {
-	
+
 	        // if not initialized pretend like init on
 	        if (!newBlockSettings) {
 	            Notiflix.Block.Init({});
 	        }
 	        // if not initialized pretend like init off
-	
+
 	        // check the message on
 	        if (!message || (message && typeof message !== 'string')) {
 	            message = undefined;
 	        }
 	        // check the message off
-	
+
 	    } else {
 	        notiflixConsoleError('Notiflix Error', 'You called the "Notiflix.Block..." function with "' + selector + '" selector, but there is no such element(s) on the document.');
 	        return false;
 	    }
 	    // check the selector off
-	
+
 	    // if cssAnimaion false => duration on
 	    if (!newBlockSettings.cssAnimation) {
 	        newBlockSettings.cssAnimationDuration = 0;
 	    }
 	    // if cssAnimaion false => duration off
-	
+
 	    // check the class name on
 	    var blockClassName = 'notiflix-block';
 	    if (newBlockSettings.className && typeof newBlockSettings.className === 'string') {
 	        blockClassName = newBlockSettings.className.trim();
 	    }
 	    // check the class name off
-	
+
 	    // check query limit on
 	    var getQueryLimit = (typeof newBlockSettings.querySelectorLimit === 'number' ? newBlockSettings.querySelectorLimit : 200);
 	    var checkQueryLimit = (getSelector.length >= getQueryLimit ? getQueryLimit : getSelector.length);
 	    // check query limit off
-	
+
 	    // block
 	    if (block) {
-	
+
 	        // add element(s) and style on
 	        for (var i = 0; i < checkQueryLimit; i++) {
 	            var eachSelector = getSelector[i];
-	
+
 	            // check block element exist on
 	            var eachBlockElement = eachSelector.querySelectorAll('[id^=' + blockSettings.ID + ']');
 	            if (eachBlockElement.length < 1) {
-	
+
 	                // check the icon on
 	                var icon = '';
 	                if (iconType) {
@@ -1683,7 +1677,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	                var svgPosTop = (message && message.length > 0 ? '-' + posRatio : 0);
 	                var iconElement = '<span class="' + blockClassName + '-icon" style="width:' + newBlockSettings.svgSize + ';height:' + newBlockSettings.svgSize + ';top:' + svgPosTop + ';">' + icon + '</span>';
 	                // check the icon off
-	
+
 	                // check the message on
 	                var messageElement = '';
 	                var messageHeight = 0;
@@ -1697,7 +1691,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	                    messageElement = '<span style="top:' + posRatio + ';height:' + messageHeight + ';font-family:' + newBlockSettings.fontFamily + ', sans-serif;font-size:' + newBlockSettings.messageFontSize + ';color:' + newBlockSettings.messageColor + ';" class="' + blockClassName + '-message">' + message + '</span>';
 	                }
 	                // check the message off
-	
+
 	                // block element on
 	                notiflixBlockElementCounter++;
 	                var notiflixBlockWrap = document.createElement('div');
@@ -1709,22 +1703,22 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	                notiflixBlockWrap.style.animationDuration = newBlockSettings.cssAnimationDuration + 'ms';
 	                notiflixBlockWrap.style.fontFamily = '"' + newBlockSettings.fontFamily + '"' + ', sans-serif';
 	                // block element off
-	
+
 	                // block element rtl on
 	                if (newBlockSettings.rtl) {
 	                    notiflixBlockWrap.setAttribute('dir', 'rtl');
 	                    notiflixBlockWrap.classList.add('rtl-on');
 	                }
 	                // block element rtl off
-	
+
 	                // block element data on
 	                notiflixBlockWrap.innerHTML = iconElement + messageElement;
 	                // block element data off
-	
+
 	                // append block element on
 	                var eachSelectorPos = getComputedStyle(eachSelector).getPropertyValue('position');
 	                eachSelectorPos = eachSelectorPos && typeof eachSelectorPos === 'string' ? eachSelectorPos.toLowerCase() : 'relative';
-	
+
 	                // selector internal style on
 	                var eachSelectorIdOrClass = '';
 	                if (eachSelector.getAttribute('id')) {
@@ -1732,7 +1726,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	                } else if (eachSelector.classList[0]) {
 	                    eachSelectorIdOrClass = '.' + eachSelector.classList[0];
 	                }
-	
+
 	                var positions = ['absolute', 'relative', 'fixed', 'sticky'];
 	                if (positions.indexOf(eachSelectorPos) <= -1) {
 	                    var minHeight = Math.round((parseInt(messageHeight) + intSvgSize) * 1.5).toString() + 'px';
@@ -1746,7 +1740,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	                    eachSelector.classList.add(blockClassName + '-position');
 	                }
 	                // selector internal style off
-	
+
 	                // append
 	                eachSelector.appendChild(notiflixBlockWrap);
 	                // append block element off
@@ -1757,26 +1751,26 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	    }
 	    // unblock/remove
 	    else {
-	
+
 	        // Step 3 => Remove each block element on
 	        var removeBlockElements = function (eachOne) {
 	            var timeout = setTimeout(function () {
 	                // remove element
 	                eachOne.remove();
-	
+
 	                // remove this selector internal style
 	                var eachOneId = eachOne.getAttribute('id');
 	                var eachOneStyle = document.getElementById('Style-' + eachOneId);
 	                if (eachOneStyle) {
 	                    eachOneStyle.remove();
 	                }
-	
+
 	                // clear timeout
 	                clearTimeout(timeout);
 	            }, newBlockSettings.cssAnimationDuration);
 	        }
 	        // Step 3 => Remove each block element off
-	
+
 	        // Step 2A => Remove each block element on
 	        var removeClassBlockElements = function (eachBlockElement) {
 	            // if elements exist
@@ -1797,28 +1791,28 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	            }
 	        }
 	        // Step 2A => Remove each block element on
-	
+
 	        // Step 2B => Remove each selector class name on
 	        var removeEachSelectorClassName = function (eachSelector) {
 	            var timeout = setTimeout(function () {
 	                // remove class name
 	                var positionClass = blockClassName + '-position';
 	                eachSelector.classList.remove(positionClass);
-	
+
 	                // clear timeout
 	                clearTimeout(timeout);
 	            }, newBlockSettings.cssAnimationDuration + 300);
 	        }
 	        // Step 2B => Remove each selector class name off
-	
+
 	        // Step 1 => Remove selector class name on
 	        var selectorTimeout = setTimeout(function () {
 	            for (var i = 0; i < checkQueryLimit; i++) {
 	                var eachSelector = getSelector[i];
-	
+
 	                // remove each selector class name
 	                removeEachSelectorClassName(eachSelector);
-	
+
 	                // remove each block element
 	                eachBlockElement = eachSelector.querySelectorAll('[id^=' + blockSettings.ID + ']');
 	                removeClassBlockElements(eachBlockElement);
@@ -1830,8 +1824,8 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	    }
 	};
 	// Notiflix: Block or Unblock Element off
-	
-	
+
+
 	// Notiflix: Report SVG Success on
 	var notiflixReportSvgSuccess = function (width, color) {
 	    if (!width) { width = '110px'; }
@@ -1840,7 +1834,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	    return reportSvgSuccess;
 	};
 	// Notiflix: Report SVG Success off
-	
+
 	// Notiflix: Report SVG Failure on
 	var notiflixReportSvgFailure = function (width, color) {
 	    if (!width) { width = '110px'; }
@@ -1849,7 +1843,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	    return reportSvgFailure;
 	};
 	// Notiflix: Report SVG Failure off
-	
+
 	// Notiflix: Report SVG Warning on
 	var notiflixReportSvgWarning = function (width, color) {
 	    if (!width) { width = '110px'; }
@@ -1858,7 +1852,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	    return reportSvgWarning;
 	};
 	// Notiflix: Report SVG Warning off
-	
+
 	// Notiflix: Report SVG Info on
 	var notiflixReportSvgInfo = function (width, color) {
 	    if (!width) { width = '110px'; }
@@ -1867,8 +1861,8 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	    return reportSvgInfo;
 	};
 	// Notiflix: Report SVG Info off
-	
-	
+
+
 	// Notiflix: Indicator SVG standard on
 	var notiflixIndicatorSvgStandard = function (width, color) {
 	    if (!width) { width = '60px'; }
@@ -1877,7 +1871,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	    return standard;
 	};
 	// Notiflix: Indicator SVG standard off
-	
+
 	// Notiflix: Indicator SVG hourglass on
 	var notiflixIndicatorSvgHourglass = function (width, color) {
 	    if (!width) { width = '60px'; }
@@ -1886,7 +1880,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	    return hourglass;
 	};
 	// Notiflix: Indicator SVG hourglass off
-	
+
 	// Notiflix: Indicator SVG circle on
 	var notiflixIndicatorSvgCircle = function (width, color) {
 	    if (!width) { width = '60px'; }
@@ -1895,7 +1889,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	    return circle;
 	};
 	// Notiflix: Indicator SVG circle off
-	
+
 	// Notiflix: Indicator SVG arrows on
 	var notiflixIndicatorSvgArrows = function (width, color) {
 	    if (!width) { width = '60px'; }
@@ -1904,7 +1898,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	    return arrows;
 	};
 	// Notiflix: Indicator SVG arrows off
-	
+
 	// Notiflix: Indicator SVG dots on
 	var notiflixIndicatorSvgDots = function (width, color) {
 	    if (!width) { width = '60px'; }
@@ -1913,7 +1907,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	    return dots;
 	};
 	// Notiflix: Indicator SVG dots off
-	
+
 	// Notiflix: Indicator SVG pulse on
 	var notiflixIndicatorSvgPulse = function (width, color) {
 	    if (!width) { width = '60px'; }
@@ -1922,7 +1916,7 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	    return pulse;
 	};
 	// Notiflix: Indicator SVG pulse off
-	
+
 	// Notiflix: Indicator SVG notiflix on
 	var notiflixIndicatorSvgNotiflix = function (width, white, green) {
 	    if (!width) { width = '60px'; }
@@ -1932,166 +1926,166 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	    return notiflixIcon;
 	};
 	// Notiflix: Indicator SVG notiflix off
-    
-	
+
+
 	/*
 	 * 侧边滑出弹层插件 mSlider.js
 	 * DH (https://denghao.me)
 	 * 2018-07
 	 */
-	(function(b, c) {
-		function a(d) {
-			this.opts = {
-				"direction": d.direction || "left",
-				"distance": d.distance || "60%",
-				"dom": this.Q(d.dom),
-				"time": d.time || "",
-				"maskClose": (d.maskClose + "").toString() !== "false" ? true : false,
-				"callback": d.callback || ""
-			};
-			this.rnd = this.rnd();
-			this.dom = this.opts.dom[0];
-			this.wrap = "";
-			this.inner = "";
-			this.mask = "";
-			this.init()
-		}
-		a.prototype = {
-			Q: function(d) {
-				return document.querySelectorAll(d)
-			},
-			isMobile: function() {
-				return navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i) ? true : false
-			},
-			addEvent: function(f, e, d) {
-				if (f.attachEvent) {
-					f.attachEvent("on" + e, d)
-				} else {
-					f.addEventListener(e, d, false)
-				}
-			},
-			rnd: function() {
-				return Math.random().toString(36).substr(2, 6)
-			},
-			init: function() {
-				var g = this;
-				if (!g.dom) {
-					console.log("未正确绑定弹窗容器");
-					return
-				}
-				var d = document.createElement("div");
-				var e = document.createElement("div");
-				var f = document.createElement("div");
-				d.setAttribute("class", "mSlider-main ms-" + g.rnd);
-				e.setAttribute("class", "mSlider-inner");
-				f.setAttribute("class", "mSlider-mask");
-				g.Q("body")[0].appendChild(d);
-				g.Q(".ms-" + g.rnd)[0].appendChild(e);
-				g.Q(".ms-" + g.rnd)[0].appendChild(f);
-				g.wrap = g.Q(".ms-" + g.rnd)[0];
-				g.inner = g.Q(".ms-" + g.rnd + " .mSlider-inner")[0];
-				g.mask = g.Q(".ms-" + g.rnd + " .mSlider-mask")[0];
-				g.inner.appendChild(g.dom);
-				switch (g.opts.direction) {
-					case "top":
-						g.top = "0";
-						g.left = "0";
-						g.width = "100%";
-						g.height = g.opts.distance;
-						g.translate = "0,-100%,0";
-						break;
-					case "bottom":
-						g.bottom = "0";
-						g.left = "0";
-						g.width = "100%";
-						g.height = g.opts.distance;
-						g.translate = "0,100%,0";
-						break;
-					case "right":
-						g.top = "0";
-						g.right = "0";
-						g.width = g.opts.distance;
-						g.height = document.documentElement.clientHeight + "px";
-						g.translate = "100%,0,0";
-						break;
-					default:
-						g.top = "0";
-						g.left = "0";
-						g.width = g.opts.distance;
-						g.height = document.documentElement.clientHeight + "px";
-						g.translate = "-100%,0,0"
-				}
-				g.wrap.style.display = "none";
-				g.wrap.style.position = "fixed";
-				g.wrap.style.top = "0";
-				g.wrap.style.left = "0";
-				g.wrap.style.width = "100%";
-				g.wrap.style.height = "100%";
-				g.wrap.style.zIndex = 99;
-				g.inner.style.position = "absolute";
-				g.inner.style.top = g.top;
-				g.inner.style.bottom = g.bottom;
-				g.inner.style.left = g.left;
-				g.inner.style.right = g.right;
-				g.inner.style.width = g.width;
-				g.inner.style.height = g.height;
-				g.inner.style.backgroundColor = "#fff";
-				g.inner.style.transform = "translate3d(" + g.translate + ")";
-				g.inner.style.webkitTransition = "all .2s ease-out";
-				g.inner.style.transition = "all .2s ease-out";
-				g.inner.style.zIndex = 100;
-				g.mask.style.width = "100%";
-				g.mask.style.height = "100%";
-				g.mask.style.opacity = "0";
-				g.mask.style.backgroundColor = "black";
-				g.mask.style.zIndex = "98";
-				g.mask.style.webkitTransition = "all .2s ease-out";
-				g.mask.style.transition = "all .2s ease-out";
-				g.mask.style.webkitBackfaceVisibility = "hidden";
-				g.events()
-			},
-			open: function() {
-				var d = this;
-				d.wrap.style.display = "block";
-	           
-				setTimeout(function() {
-					d.inner.style.transform = "translate3d(0,0,0)";
-					d.inner.style.webkitTransform = "translate3d(0,0,0)";
-					d.mask.style.opacity = 0.5
-				}, 30);
-				if (d.opts.time) {
-					d.timer = setTimeout(function() {
-						d.close()
-					}, d.opts.time)
-				}
-			},
-			close: function() {
-				var d = this;
-				d.timer && clearTimeout(d.timer);
-				d.inner.style.webkitTransform = "translate3d(" + d.translate + ")";
-				d.inner.style.transform = "translate3d(" + d.translate + ")";
-				d.mask.style.opacity = 0;
-				setTimeout(function() {
-					d.wrap.style.display = "none";
-					d.timer = null;
-					d.opts.callback && d.opts.callback()
-				}, 300)
-			},
-			events: function() {
-				var d = this;
-				d.addEvent(d.mask, "touchmove", function(f) {
-					f.preventDefault()
-				});
-				d.addEvent(d.mask, (d.isMobile() ? "touchend" : "click"), function(f) {
-					if (d.opts.maskClose) {
-						d.close()
-					}
-				})
-			}
-		};
-		b.mSlider = a
-	})(window);
-	
+	// (function(b, c) {
+	// 	function a(d) {
+	// 		this.opts = {
+	// 			"direction": d.direction || "left",
+	// 			"distance": d.distance || "60%",
+	// 			"dom": this.Q(d.dom),
+	// 			"time": d.time || "",
+	// 			"maskClose": (d.maskClose + "").toString() !== "false" ? true : false,
+	// 			"callback": d.callback || ""
+	// 		};
+	// 		this.rnd = this.rnd();
+	// 		this.dom = this.opts.dom[0];
+	// 		this.wrap = "";
+	// 		this.inner = "";
+	// 		this.mask = "";
+	// 		this.init()
+	// 	}
+	// 	a.prototype = {
+	// 		Q: function(d) {
+	// 			return document.querySelectorAll(d)
+	// 		},
+	// 		isMobile: function() {
+	// 			return navigator.userAgent.match(/(iPhone|iPod|Android|ios)/i) ? true : false
+	// 		},
+	// 		addEvent: function(f, e, d) {
+	// 			if (f.attachEvent) {
+	// 				f.attachEvent("on" + e, d)
+	// 			} else {
+	// 				f.addEventListener(e, d, false)
+	// 			}
+	// 		},
+	// 		rnd: function() {
+	// 			return Math.random().toString(36).substr(2, 6)
+	// 		},
+	// 		init: function() {
+	// 			var g = this;
+	// 			if (!g.dom) {
+	// 				console.log("未正确绑定弹窗容器");
+	// 				return
+	// 			}
+	// 			var d = document.createElement("div");
+	// 			var e = document.createElement("div");
+	// 			var f = document.createElement("div");
+	// 			d.setAttribute("class", "mSlider-main ms-" + g.rnd);
+	// 			e.setAttribute("class", "mSlider-inner");
+	// 			f.setAttribute("class", "mSlider-mask");
+	// 			g.Q("body")[0].appendChild(d);
+	// 			g.Q(".ms-" + g.rnd)[0].appendChild(e);
+	// 			g.Q(".ms-" + g.rnd)[0].appendChild(f);
+	// 			g.wrap = g.Q(".ms-" + g.rnd)[0];
+	// 			g.inner = g.Q(".ms-" + g.rnd + " .mSlider-inner")[0];
+	// 			g.mask = g.Q(".ms-" + g.rnd + " .mSlider-mask")[0];
+	// 			g.inner.appendChild(g.dom);
+	// 			switch (g.opts.direction) {
+	// 				case "top":
+	// 					g.top = "0";
+	// 					g.left = "0";
+	// 					g.width = "100%";
+	// 					g.height = g.opts.distance;
+	// 					g.translate = "0,-100%,0";
+	// 					break;
+	// 				case "bottom":
+	// 					g.bottom = "0";
+	// 					g.left = "0";
+	// 					g.width = "100%";
+	// 					g.height = g.opts.distance;
+	// 					g.translate = "0,100%,0";
+	// 					break;
+	// 				case "right":
+	// 					g.top = "0";
+	// 					g.right = "0";
+	// 					g.width = g.opts.distance;
+	// 					g.height = document.documentElement.clientHeight + "px";
+	// 					g.translate = "100%,0,0";
+	// 					break;
+	// 				default:
+	// 					g.top = "0";
+	// 					g.left = "0";
+	// 					g.width = g.opts.distance;
+	// 					g.height = document.documentElement.clientHeight + "px";
+	// 					g.translate = "-100%,0,0"
+	// 			}
+	// 			g.wrap.style.display = "none";
+	// 			g.wrap.style.position = "fixed";
+	// 			g.wrap.style.top = "0";
+	// 			g.wrap.style.left = "0";
+	// 			g.wrap.style.width = "100%";
+	// 			g.wrap.style.height = "100%";
+	// 			g.wrap.style.zIndex = 99;
+	// 			g.inner.style.position = "absolute";
+	// 			g.inner.style.top = g.top;
+	// 			g.inner.style.bottom = g.bottom;
+	// 			g.inner.style.left = g.left;
+	// 			g.inner.style.right = g.right;
+	// 			g.inner.style.width = g.width;
+	// 			g.inner.style.height = g.height;
+	// 			g.inner.style.backgroundColor = "#fff";
+	// 			g.inner.style.transform = "translate3d(" + g.translate + ")";
+	// 			g.inner.style.webkitTransition = "all .2s ease-out";
+	// 			g.inner.style.transition = "all .2s ease-out";
+	// 			g.inner.style.zIndex = 100;
+	// 			g.mask.style.width = "100%";
+	// 			g.mask.style.height = "100%";
+	// 			g.mask.style.opacity = "0";
+	// 			g.mask.style.backgroundColor = "black";
+	// 			g.mask.style.zIndex = "98";
+	// 			g.mask.style.webkitTransition = "all .2s ease-out";
+	// 			g.mask.style.transition = "all .2s ease-out";
+	// 			g.mask.style.webkitBackfaceVisibility = "hidden";
+	// 			g.events()
+	// 		},
+	// 		open: function() {
+	// 			var d = this;
+	// 			d.wrap.style.display = "block";
+
+	// 			setTimeout(function() {
+	// 				d.inner.style.transform = "translate3d(0,0,0)";
+	// 				d.inner.style.webkitTransform = "translate3d(0,0,0)";
+	// 				d.mask.style.opacity = 0.5
+	// 			}, 30);
+	// 			if (d.opts.time) {
+	// 				d.timer = setTimeout(function() {
+	// 					d.close()
+	// 				}, d.opts.time)
+	// 			}
+	// 		},
+	// 		close: function() {
+	// 			var d = this;
+	// 			d.timer && clearTimeout(d.timer);
+	// 			d.inner.style.webkitTransform = "translate3d(" + d.translate + ")";
+	// 			d.inner.style.transform = "translate3d(" + d.translate + ")";
+	// 			d.mask.style.opacity = 0;
+	// 			setTimeout(function() {
+	// 				d.wrap.style.display = "none";
+	// 				d.timer = null;
+	// 				d.opts.callback && d.opts.callback()
+	// 			}, 300)
+	// 		},
+	// 		events: function() {
+	// 			var d = this;
+	// 			d.addEvent(d.mask, "touchmove", function(f) {
+	// 				f.preventDefault()
+	// 			});
+	// 			d.addEvent(d.mask, (d.isMobile() ? "touchend" : "click"), function(f) {
+	// 				if (d.opts.maskClose) {
+	// 					d.close()
+	// 				}
+	// 			})
+	// 		}
+	// 	};
+	// 	b.mSlider = a
+	// })(window);
+
 	exports(MOD_NAME,pearOper);
 })
 

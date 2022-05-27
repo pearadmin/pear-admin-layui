@@ -53,7 +53,7 @@
 							<pre class="layui-code" lay-encode="true">
 								layui.use(['drawer'], function() {
 									var drawer = layui.drawer;
-								
+
 								    drawer.open({
 								        direction: "right",
 								        dom: ".layer-top",
@@ -80,7 +80,7 @@
 						<div class="layui-colla-content">
 							<pre class="layui-code" lay-encode="true">
 								var dom;
-								
+
 								$(".drawer-close-mask").click(function() {
 								    dom = drawer.open({
 								        direction: "right",
@@ -89,11 +89,11 @@
 								        maskClose: false
 								    });
 								})
-								
+
 								$("#btnClose").click(function() {
 								    dom.close();
 								})
-								
+
 							</pre>
 						</div>
 					</div>
@@ -115,7 +115,7 @@
 							<pre class="layui-code" lay-encode="true">
 								layui.use(['drawer'], function() {
 									var drawer = layui.drawer;
-								
+
 								    $(".drawer-auto-close").click(function() {
 								        dom = drawer.open({
 								            direction: "right",
@@ -147,14 +147,14 @@
 							<pre class="layui-code" lay-encode="true">
 								layui.use(['drawer'], function() {
 									var drawer = layui.drawer;
-								
+
 								    $(".drawer-auto-close").click(function() {
 								        dom = drawer.open({
 								            direction: "right",
 								            dom: ".layer-auto-close",
 								            distance: "30%",
 								            success:function(){
-								                layer.msg("触发回调函数")； 
+								                layer.msg("触发回调函数");
 								            }
 								        });
 								    })
@@ -170,9 +170,9 @@
 					<div class="layui-card-header">扩展</div>
 					<div class="layui-card-body">
 						<div id="targetEl"
-								style="width: 600px; 
+								style="width: 600px;
 								height: 300px;
-								overflow: hidden; 
+								overflow: hidden;
 								position: relative;
 								border: 1px solid gainsboro;
 								background-color: #EEE;
@@ -219,11 +219,13 @@
 						<button id="layerDrawerBottom" class="pear-btn pear-btn-success">下</button>
 						<button id="layerDrawer" class="pear-btn pear-btn-success">更多参数示例</button>
 						<button id="layerDrawerParent" class="pear-btn pear-btn-success">父窗口打开</button>
-						<div 
+						<button id="layerDrawerIframe" class="pear-btn pear-btn-success">iframe远程页面</button>
+						<button id="layerDrawerURL" class="pear-btn pear-btn-success">URL远程页面</button>
+						<div
 							id="layertargetEl"
-							style="width: 600px; 
+							style="width: 600px;
 								height: 300px;
-								overflow: hidden; 
+								overflow: hidden;
 								position: relative;
 								border: 1px solid gainsboro;
 								background-color: #EEE;
@@ -235,6 +237,9 @@
 						</div>
 						<blockquote class="layui-elem-quote layui-quote-nm">指定容器内打开，需使用 layer 捕获层模式，并设置目标容器 style="overflow: hidden;
 						position: relative;"</blockquote>
+						<blockquote class="layui-elem-quote layui-quote-nm">
+						  使用 url 参数指定抽屉代码片段地址，会使用 ajax 请求将代码片段拼接到抽屉中，和原来的页面在同一个页面上, 传值更方便。注意片段和原页面不能出现相同的 ID。
+						</blockquote>
 					</div>
 				</div>
 			</div>
@@ -274,7 +279,7 @@
 											    content: "bottom内容",
 											  })
 											})
-											
+
 											$("#layerDrawer").click(function () {
 											  var index = drawer.open({
 											    legacy: false,
@@ -294,7 +299,7 @@
 											})
 
 											$("#layerDrawerParent").click(function () {
-											    
+
 											  var index = parent.layui.drawer.open({
 												    legacy: false,
 												    title: ['标题', 'font-size:16px;color:#2d8cf0'],
@@ -321,6 +326,30 @@
 											    distance: "50%",
 											    });
 											})
+
+											$("#layerDrawerIframe").click(function () {
+											  drawer.open({
+											  legacy: false,
+											  title: ['用户管理', 'font-size:16px;color:#2d8cf0'],
+											  offset: 'r',
+											  area: "80%",
+											   maxmin: true,
+											   closeBtn: 1,
+											   iframe: window.location.origin + "/view/document/table.html"
+											  })
+											})
+
+											$("#layerDrawerURL").click(function () {
+											   drawer.open({
+										     legacy: false,
+										     title: ['用户管理', 'font-size:16px;color:#2d8cf0'],
+											   offset: 'r',
+											   area: "80%",
+											   maxmin: true,
+											   closeBtn: 1,
+											   url: window.location.origin + "/view/document/drawerFragment.html"
+											   })
+											})
 							</pre>
 						</div>
 					</div>
@@ -344,7 +373,7 @@
 				<br />
 				<h3>下侧弹层内容...</h3>
 			</div>
-			
+
 			<div class="layer-open-mask" style="display: none;">
 				<br />
 				<h3>点击右侧灰色区域</h3>
@@ -370,6 +399,30 @@
 			var layer = layui.layer;
 
 			layui.code();
+
+			$("#layerDrawerIframe").click(function () {
+				drawer.open({
+					legacy: false,
+					title: ['用户管理', 'font-size:16px;color:#2d8cf0'],
+					offset: 'r',
+					area: "80%",
+					maxmin: true,
+					closeBtn: 1,
+					iframe: window.location.origin + "/view/document/table.html"
+				})
+			})
+
+			$("#layerDrawerURL").click(function () {
+				drawer.open({
+					legacy: false,
+					title: ['用户管理', 'font-size:16px;color:#2d8cf0'],
+					offset: 'r',
+					area: "80%",
+					maxmin: true,
+					closeBtn: 1,
+					url: window.location.origin + "/view/document/drawerFragment.html"
+				})
+			})
 
 			$("#layerDrawerLeft").click(function(){
 				drawer.open({

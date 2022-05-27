@@ -1,4 +1,4 @@
-layui.define(['jquery', 'element', 'layer'], function (exports) {
+layui.define(['jquery', 'element', 'layer', 'loading'], function (exports) {
 	"use strict";
 
 	/**
@@ -7,7 +7,8 @@ layui.define(['jquery', 'element', 'layer'], function (exports) {
 	var MOD_NAME = 'drawer',
 		$ = layui.jquery,
 		element = layui.element,
-		layer = layui.layer;
+		layer = layui.layer,
+		loading = layui.loading;
 
 
 	var drawer = new function () {
@@ -43,43 +44,71 @@ layui.define(['jquery', 'element', 'layer'], function (exports) {
 	}
 
 	/**
-	 * 
+	 *
 	 * 封装 layer.open
 	 * type,anim,move,fixed不可用,其它参数和 layer.open 一致
-	 * @param {LayerOption} option 
+	 * @param {LayerOption} option
 	 * @returns 原生 layer 的 index
 	 */
 	function layerDrawer(option) {
-
 		var opt = normalizeOption(option)
-		if (opt.target) {
-			var targetDOM = $(opt.target);
-			var contentDOM = $(opt.content);
-			contentDOM.appendTo(targetDOM);
-			opt.skin = getDrawerAnimationClass(opt.offset, true);
-			opt.offset = calcOffset(opt.offset, opt.area, targetDOM);
-			// 处理关闭后偶现 DOM 仍显示的问题，layer 的 BUG
-			opt.end = Aspect(opt.end, function () {
-				contentDOM.css("display", "none");
-			})
-			if (opt.shade) {
-				// 遮罩和弹层同级处理
-				opt.success = Aspect(opt.success, function (layero) {
-					var shadeDOM = $(".layui-layer-shade");
-					shadeDOM.css("position", "absolute");
-					shadeDOM.appendTo(layero.parent());
-				})
-			}
-		}
+		if (opt.target) appendToTarget(opt);
+		if (opt.url) loadFragment(opt);
 		var layerIndex = layer.open(opt);
 
 		return layerIndex;
 	}
 
 	/**
+	 * 加载 HTML 片段到 layer content
+	 * @param {*} option
+	 */
+	function loadFragment(option) {
+		option.success = Aspect(option.success, function (layero, index) {
+			var layerID = "#" + layero.attr("id");
+			loading.block({
+				type: 1,
+				elem: layerID,
+				msg: ''
+			});
+			$.ajax({
+				url: option.url,
+				dataType: "html",
+				success: function (result) {
+					layero.children('.layui-layer-content').html(result);
+					loading.blockRemove(layerID);
+				}
+			})
+		})
+	}
+
+	/**
+	 *将 layer 挂载到指定节点
+	 * @param {object} opt
+	 */
+	function appendToTarget(opt) {
+		var targetDOM = $(opt.target);
+		var contentDOM = $(opt.content);
+		contentDOM.appendTo(targetDOM);
+		opt.skin = getDrawerAnimationClass(opt.offset, true);
+		opt.offset = calcOffset(opt.offset, opt.area, targetDOM);
+		// 处理关闭后偶现 DOM 仍显示的问题，layer 的 BUG
+		opt.end = Aspect(opt.end, function () {
+			contentDOM.css("display", "none");
+		})
+		if (opt.shade) {
+			opt.success = Aspect(opt.success, function (layero, index) {
+				var shadeDOM = $("#layui-layer-shade" + index);
+				shadeDOM.css("position", "absolute");
+				shadeDOM.appendTo(layero.parent());
+			})
+		}
+	}
+
+	/**
 		* 规格化 layer.open 选项，兼容原版 Drawer 所有选项
 		* @param {LayerOption} option layer.open 的选项
-		* @returns 规格化后的 layer.open 选项 
+		* @returns 规格化后的 layer.open 选项
 		*/
 	function normalizeOption(option) {
 		if (option.direction && !option.offset) {
@@ -109,6 +138,10 @@ layui.define(['jquery', 'element', 'layer'], function (exports) {
 		option.anim = -1;
 		option.move = false;
 		option.fixed = true;
+		if (option.iframe) {
+			option.type = 2;
+			option.content = option.iframe;
+		}
 		if (option.offset === undefined) option.offset = "r";
 		option.area = calcDrawerArea(option.offset, option.area);
 		if (option.title === undefined) option.title = false;
@@ -125,7 +158,7 @@ layui.define(['jquery', 'element', 'layer'], function (exports) {
 
 	/**
 	 * 计算抽屉宽高
-	 * @param {string} offset 抽屉方向 l = 左, r = 右, t = 上, b = 下 
+	 * @param {string} offset 抽屉方向 l = 左, r = 右, t = 上, b = 下
 	 * @param {string[] | string} drawerArea 抽屉大小,字符串数组格式：[width, height]，字符串格式：百分比或单位 px。
 	 * @returns 抽屉宽高数组
 	 */
@@ -208,10 +241,10 @@ layui.define(['jquery', 'element', 'layer'], function (exports) {
 	}
 
 	/**
-	 * 一个简易的切面
+	 * 简易的切面
 	 * @param {Function} func 被通知的对象，原函数
-	 * @param {Function} before 前置通知
-	 * @param {Function} after 后置通知
+	 * @param {Function | undefined} before 前置通知
+	 * @param {Function | undefined} after 后置通知
 	 * @returns 代理函数
 	 */
 	function Aspect(target, before, after) {
@@ -348,7 +381,6 @@ layui.define(['jquery', 'element', 'layer'], function (exports) {
 		open: function () {
 			var d = this;
 			d.wrap.style.display = "block";
-
 			setTimeout(function () {
 				d.inner.style.transform = "translate3d(0,0,0)";
 				d.inner.style.webkitTransform = "translate3d(0,0,0)";
