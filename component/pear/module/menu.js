@@ -542,14 +542,19 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 	}
 
 	function rationalizeHeaderControlWidth(option) {
-		var $headerControl = $(".layui-layout-control");
-		var $headerRight = $(".layui-layout-right");
-		var rationalizeWidth = $headerRight.position().left - $headerControl.position().left;
+		var $headerControl = $("#" + option.control);
+		var $nextEl = $headerControl.next();
+		var rationalizeWidth;
+		if ($nextEl.length) {
+			rationalizeWidth = $nextEl.position().left - $headerControl.position().left;
+		} else {
+			rationalizeWidth = $headerControl.parent().innerWidth() - $headerControl.position().left;
+		}
+
 		if (option.controlWidth && rationalizeWidth >= option.controlWidth) {
 			rationalizeWidth = option.controlWidth;
 		}
-		$(".layui-layout-control .control").css({ "width": rationalizeWidth, "transition": "width .15s"});
-
+		$("#" + option.control + " .control").css({ "width": rationalizeWidth, "transition": "width .15s" });
 	}
 
 	function rationalizeHeaderControlWidthAuto(option){
