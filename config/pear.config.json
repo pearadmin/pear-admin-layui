@@ -17,6 +17,7 @@
 		"enable": true,
 		"keepState": true,
 		"session": true,
+		"preload": false,
 		"max": "30",
 		"index": {
 			"id": "10",
