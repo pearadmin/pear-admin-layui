@@ -220,11 +220,11 @@ layui.define(['table', 'jquery', 'element'], function (exports) {
 			$("#" + this.option.elem).animate({
 				width: "220px"
 			}, 180);
+			isHoverMenu(false, config);
 			var that = this;
 			$("#" + this.option.elem)
 			.promise()
 			.done(function () {
-				isHoverMenu(false, config);
 				if (that.option.control) {
 					rationalizeHeaderControlWidth(that.option);
 				}
