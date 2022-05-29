@@ -332,10 +332,11 @@ layui.define(['jquery', 'element'], function(exports) {
 	// 刷 新 指 定 的 选 项 卡
 	pearTab.prototype.refresh = function (time) {
 		// 刷 新 指 定 的 选 项 卡
+		var $iframe = $(".layui-tab[lay-filter='" + this.option.elem + "'] .layui-tab-content .layui-show").find("iframe");
 		if (time != false && time != 0) {
 			tabIframeLoading(this.option.elem);
+			$iframe.attr("src", $iframe.attr("src"));
 		} else {
-			var $iframe = $(".layui-tab[lay-filter='" + this.option.elem + "'] .layui-tab-content .layui-show").find("iframe");
 			$iframe.attr("src", $iframe.attr("src"));
 		}
 	}
@@ -355,7 +356,6 @@ layui.define(['jquery', 'element'], function(exports) {
 		var pearLoad = $("#" + elem).find("#pear-tab-loading" + index);
 		pearLoad.css({ display: "block" });
 		index++;
-		$iframe.attr("src", $iframe.attr("src")); // 支持跨域刷新 iframe
 		$iframe.load(function () {
 			pearLoad.fadeOut(1000, function () {
 				pearLoad.remove();
