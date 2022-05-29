@@ -116,6 +116,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 						session: param.tab.session,
 						index: 0,
 						tabMax: param.tab.max,
+						preload: param.tab.preload,
 						closeEvent: function(id) {
 							sideMenu.selectItem(id);
 						},
@@ -380,7 +381,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 					return;
 				}
 			}
-			
+
 			this.changeTabTitle = function(id, title) {
 				pearTab.changeTabTitleById('content', id ,title);
 			}
@@ -556,7 +557,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 					var $noData = $(".menu-search-no-data");
 					var $list = $(".menu-search-list");
 					var menuData = sideMenu.option.data;
-					
+
 
 					$layer.css("border-radius", "6px");
 					$input.off("focus").focus();
@@ -564,7 +565,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 					$input.off("input").on("input", debounce(function(){
 						var keywords = $input.val().trim();
 						var filteredMenus = filterHandle(menuData, keywords);
-						
+
 						if(filteredMenus.length){
 							var tiledMenus = tiledHandle(filteredMenus);
 							var listHtml = createList(tiledMenus);
@@ -587,7 +588,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 						var menuTitle = $(this).attr("smenu-title");
 						var menuType = $(this).attr("smenu-type");
 						var openableWindow = menuType === "1" || menuType === 1;
-						
+
 						if(sideMenu.isCollapse){
 							collapse();
 						}
@@ -607,7 +608,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 						$(this).removeClass("this");
 					})
 
-					// 监听键盘事件 
+					// 监听键盘事件
 					// Enter:13 Spacebar:32 UpArrow:38 DownArrow:40 Esc:27
 					$(document).off("keydown").keydown(function (e) {
 						if (e.keyCode === 13 || e.keyCode === 32) {
@@ -653,8 +654,8 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 				}
 			})
 		});
-		
-		
+
+
 		body.on("click", ".fullScreen", function() {
 			if ($(this).hasClass("layui-icon-screen-restore")) {
 				screenFun(2).then(function() {
@@ -1012,7 +1013,7 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 				$(".fullScreen").eq(0).removeClass("layui-icon-screen-restore");
 			}
 		}
- 
+
 		$(window).on('resize', debounce(function () {
 			if (!sideMenu.isCollapse && $(window).width() <= 768) {
 				collapse();

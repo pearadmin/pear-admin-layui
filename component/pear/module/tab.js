@@ -25,6 +25,7 @@ layui.define(['jquery', 'element'], function(exports) {
 			height: opt.height,
 			tabMax: opt.tabMax,
 			session: opt.session ? opt.session : false,
+			preload: opt.preload ? opt.preload : false,
 			closeEvent: opt.closeEvent,
 			success: opt.success ? opt.success : function(id) {}
 		}
@@ -125,6 +126,20 @@ layui.define(['jquery', 'element'], function(exports) {
 		element.on('tab(' + this.option.elem + ')', function(data) {
 			var id = $("#" + elem + " .layui-tab-title .layui-this").attr("lay-id");
 			sessionStorage.setItem(option.elem + "-pear-tab-data-current", id);
+			if (!option.preload) {
+				var $iframe = $(".layui-tab[lay-filter='" + elem + "'] .layui-tab-content").find("iframe[id='" + id + "']");
+				var iframeUrl = $iframe.attr("src");
+				if (!iframeUrl || iframeUrl === "about:blank") {
+					// 获取 url 并重载
+					tabData.forEach(function (item, index) {
+						if (item.id === id) {
+							iframeUrl = item.url;
+						}
+					})
+					tabIframeLoading(elem);
+					$iframe.attr("src", iframeUrl);
+				}
+			}
 			callback(id);
 		});
 	}
@@ -171,7 +186,6 @@ layui.define(['jquery', 'element'], function(exports) {
 	}
 
 	var index = 0;
-	
 	// 根据过滤 fliter 标识, 重置选项卡标题
 	pearTab.prototype.changeTabTitleById = function(elem, id, title) {
 		var currentTab = $(".layui-tab[lay-filter='" + elem + "'] .layui-tab-title [lay-id='" + id + "'] .title");
@@ -185,7 +199,6 @@ layui.define(['jquery', 'element'], function(exports) {
 			tabDelete(elem, id, callback);
 		}
 	}
-	
 	// 根据过滤 filter 标识, 删除其他选项卡
 	pearTab.prototype.delOtherTabByElem = function(elem, callback) {
 		var currentId = $(".layui-tab[lay-filter='" + elem + "'] .layui-tab-title .layui-this").attr("lay-id");
@@ -209,7 +222,6 @@ layui.define(['jquery', 'element'], function(exports) {
 			}
 		})
 	}
-	
 	// 根据过滤 filter 标识, 删除当前选项卡
 	pearTab.prototype.delCurrentTabByElem = function(elem, callback) {
 		var currentTab = $(".layui-tab[lay-filter='" + elem + "'] .layui-tab-title .layui-this");
@@ -335,10 +347,8 @@ layui.define(['jquery', 'element'], function(exports) {
 		var $iframe = $(".layui-tab[lay-filter='" + this.option.elem + "'] .layui-tab-content .layui-show").find("iframe");
 		if (time != false && time != 0) {
 			tabIframeLoading(this.option.elem);
-			$iframe.attr("src", $iframe.attr("src"));
-		} else {
-			$iframe.attr("src", $iframe.attr("src"));
 		}
+		$iframe.attr("src", $iframe.attr("src"));
 	}
 
 	function tabIframeLoading(elem, id) {
@@ -459,6 +469,9 @@ layui.define(['jquery', 'element'], function(exports) {
 					'"  src="' + item.url +
 					'" frameborder="no" border="0" marginwidth="0" marginheight="0" style="width: 100%;height: 100%;"></iframe></div>'
 			} else {
+				if (!option.preload){
+					item.url = "about:blank";
+				}
 				// 处 理 显 示 内 容
 				content += '<div class="layui-tab-item"><iframe id="' + item.id + '" data-frameid="' + item.id + '"  src="' +
 					item.url +
