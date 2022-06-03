@@ -87,7 +87,7 @@ layui.define(['table', 'laypage','jquery', 'element'], function(exports) {
 					option.count = 0;
 				} else {
 					option.data = data.data;
-					option.count = option.data.length;
+					option.count = data.count;
 				}
 				
 				if (!!option.data && option.data.length > 0) {
