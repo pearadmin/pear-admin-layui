@@ -361,12 +361,11 @@ layui.define(['jquery', 'element'], function(exports) {
 		if(id){
 			$iframe = $(".layui-tab[lay-filter='" + elem + "'] .layui-tab-content").find("iframe[id='"+ id +"']");
 		}
-		// loading 和 iframe 同级处理, 避免一个 tab 加载,其它 tab 无法查看的问题
 		$iframe.parent().append(load);
 		var pearLoad = $("#" + elem).find("#pear-tab-loading" + index);
 		pearLoad.css({ display: "block" });
 		index++;
-		$iframe.load(function () {
+		$iframe.on("load", function () {
 			pearLoad.fadeOut(1000, function () {
 				pearLoad.remove();
 			});
