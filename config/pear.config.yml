@@ -30,7 +30,7 @@ tab:
   keepState: true
   ## 开启选项卡记忆
   session: true
-	## 浏览器刷新时是否预加载非激活标签页
+  ## 浏览器刷新时是否预加载非激活标签页
   preload: true
   ## 可打开的数量, false 不限制极值
   max: "30"
