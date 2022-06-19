@@ -117,6 +117,7 @@ layui.define(['jquery', 'element'], function(exports) {
 			return false;
 		})
 
+    mousewheelAndTouchmoveHandler(option)
 		return new pearTab(option);
 	}
 
@@ -595,6 +596,43 @@ layui.define(['jquery', 'element'], function(exports) {
 			})
 		})
 	}
+
+  function mousewheelAndTouchmoveHandler(option) {
+    var $bodyTab = $("body .layui-tab[lay-filter='" + option.elem + "'] .layui-tab-title")
+    var $tabTitle = $('#' + option.elem + '  .layui-tab-title');
+    var mouseScrollStep = 100
+    // 鼠标滚轮
+    $bodyTab.on("mousewheel DOMMouseScroll", function (e) {
+      e.originalEvent.preventDefault()
+      var delta = (e.originalEvent.wheelDelta && (e.originalEvent.wheelDelta > 0 ? "top" : "down")) ||  // chrome & ie
+        (e.originalEvent.detail && (e.originalEvent.detail > 0 ? "down" : "top"));  // firefox
+      var scrollLeft = $tabTitle.scrollLeft();
+
+      if (delta === "top") {
+        scrollLeft -= mouseScrollStep
+      } else if (delta === "down") {
+        scrollLeft += mouseScrollStep
+      }
+      $tabTitle.scrollLeft(scrollLeft)
+    });
+
+    // 触摸移动
+    var touchX = 0;
+    $bodyTab.on("touchstart", function (e) {
+      var touch = e.originalEvent.targetTouches[0];
+      touchX = touch.pageX
+    })
+    $bodyTab.on("touchmove", function (e) {
+      var event = e.originalEvent;
+      if (event.targetTouches.length > 1) return;
+      event.preventDefault();
+      var touch = event.targetTouches[0];
+      var distanceX = touchX - touch.pageX
+      var scrollLeft = $tabTitle.scrollLeft();
+      touchX = touch.pageX
+      $tabTitle.scrollLeft(scrollLeft += distanceX)
+    });
+  }
 
 	exports(MOD_NAME, new pearTab());
 })
