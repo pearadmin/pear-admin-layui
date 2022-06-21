@@ -19,7 +19,6 @@ layui.define(['message', 'table', 'jquery', 'element', 'yaml', 'form', 'tab', 'm
 		var config;
 		var logout = function() {};
 		var msgInstance;
-
 		var body = $('body');
 
 		var pearAdmin = new function() {
