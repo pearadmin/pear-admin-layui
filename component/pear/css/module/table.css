@@ -17,6 +17,11 @@
 	border: none !important;
 }
 
+/** 兼容 layui 2.7.0 升级 table cell 单元格边距的调整 */
+.layui-table-view .layui-table td, .layui-table-view .layui-table th {
+	padding: 5px 0px;
+}
+
 .layui-table-cell {
 	height: 34px;
 	line-height: 34px;
