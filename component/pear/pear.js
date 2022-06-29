@@ -39,7 +39,8 @@ layui.config({
 	theme: "theme",			// 主题转换
 	message: "message",     // 通知组件
 	toast: "toast",         // 消息通知
-	iconPicker: "iconPicker"// 图标选择
+	iconPicker: "iconPicker",// 图标选择
+	nprogress: "nprogress"  // 进度过渡
 }).use(['layer', 'theme'], function () {
 	layui.theme.changeTheme(window, false);
 });

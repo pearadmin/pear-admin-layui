@@ -95166,7 +95166,6 @@
 
 })));
 
-//# sourceMappingURL=echarts.js.map
 layui.define('echartsTheme', function(exports) {
 	echarts.registerTheme('walden', layui.echartsTheme);
 	exports('echarts', echarts);

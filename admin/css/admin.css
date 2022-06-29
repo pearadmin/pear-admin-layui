@@ -163,6 +163,9 @@ body,
 	-webkit-transition: left .3s;
 	transition: left .3s;
 	overflow: hidden;
+	color: #3c3c3cb3;
+	font-weight: 300;
+	font-size: 13.6px;
 }
 
 .pear-admin .layui-footer.close {
