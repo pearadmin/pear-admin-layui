@@ -20,7 +20,7 @@ layui.define(['layer', 'jquery', 'element'], function(exports) {
 					time: 1000
 				})
 			},
-			this.warming = function(msg) {
+			this.warning = function(msg) {
 				layer.msg(msg, {
 					icon: 3,
 					time: 1000
@@ -38,7 +38,7 @@ layui.define(['layer', 'jquery', 'element'], function(exports) {
 					time: 1000
 				}, callback);
 			},
-			this.warning = function(msg, callback) {
+			this.warming = function(msg, callback) {
 				layer.msg(msg, {
 					icon: 3,
 					time: 1000
